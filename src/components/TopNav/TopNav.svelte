@@ -9,7 +9,7 @@
 	<div class="logo">Schoolinger's Cat</div>
   <nav style="padding:4px;">
     <a href='{base}/'>home</a>
-    <a href='{base}/'>freeDraw</a>
+    <a href='{base}/hello'>freeDraw</a>
 	</nav>
 	<!-- Add any additional content you want in the top navbar -->
 </div>
