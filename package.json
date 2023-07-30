@@ -23,5 +23,10 @@
 		"typescript": "^5.0.0",
 		"vite": "^4.4.2"
 	},
-	"type": "module"
+	"type": "module",
+  "dependencies": {
+		"@types/three": "^0.154.0",
+		"eventemitter3": "^5.0.1",
+		"three": "^0.154.0"
+	}
 }
