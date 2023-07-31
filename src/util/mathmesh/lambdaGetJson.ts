@@ -1,5 +1,5 @@
 export async function callLambdaFunction(char:string) {
-  const url = 'https://bziip7fgsjfz7wnhv3p7bqktl40vxipm.lambda-url.us-west-2.on.aws/?'+'chars='+char;
+  const url = 'https://70z9hnualj.execute-api.us-west-2.amazonaws.com/mathmesh?'+'chars='+char;
   const requestData = {
     name: char,
 
