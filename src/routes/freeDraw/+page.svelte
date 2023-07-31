@@ -17,15 +17,33 @@
 	 * @type {HTMLDivElement}
 	 */
     let div;
+    /**
+	 * @type {World}
+	 */
+    let world;
     onMount(() => {
-        const world = new World(div,eventBroker);
+
+
+        async function foo() {
+            world = new World(div,eventBroker);
         world.start();
         eventBroker.emit("hello", {data:"meow"})
+        await  world.addMathMesh();
+  }
+
+  foo();
+
+
 		return () => {
             if(div.firstChild)
             div.removeChild(div.firstChild);
 		};
 	});
+
+    let addmm = mathmesh()
+    function mathmesh(){
+       
+    }
 </script>
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div bind:this={div} on:mousemove={mouseMove}></div>
@@ -35,3 +53,6 @@
 	height={800}
 />
 <h1>free draw</h1>
+{#await addmm}
+  I'm the child and I loaded .
+{/await}

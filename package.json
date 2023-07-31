@@ -25,9 +25,14 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@types/katex": "^0.16.2",
+		"@types/lodash": "^4.14.196",
 		"@types/three": "^0.154.0",
 		"eventemitter3": "^5.0.1",
-		"mathmesh": "^0.0.6",
+		"fast-xml-parser": "^4.2.7",
+		"katex": "^0.16.8",
+		"lodash": "^4.17.21",
+		"mathjs": "^11.9.1",
 		"three": "^0.154.0"
 	}
 }
