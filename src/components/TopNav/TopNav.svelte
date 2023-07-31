@@ -10,6 +10,7 @@
   <nav style="padding:4px;">
     <a href='{base}/'>home</a>
     <a href='{base}/hello'>hello</a>
+    <a href='{base}/freeDraw'>freeDraw</a>
 	</nav>
 	<!-- Add any additional content you want in the top navbar -->
 </div>
