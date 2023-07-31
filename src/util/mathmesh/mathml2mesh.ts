@@ -1,7 +1,7 @@
 // import * as mathjs from 'mathjs';
 import {Matrix , multiply, identity,index ,matrix} from 'mathjs';
 import {cloneDeep} from 'lodash';
-import { callLambdaFunction } from './lambdaGetJson';
+import type { CharMesh } from './lambdaGetJson';
 
 // var cjson = require('../ubuntu-r.json');
 // var cjson = require('./assets/julia-r.json');
@@ -183,7 +183,10 @@ export class MathMlStringMesh {
     }
 
 
-    public async toTransedMesh() {
+    public toTransedMesh(charMeshes?: Record<string,CharMesh> ) {
+
+        if(this.jsonMeshes.length===0 && !!charMeshes) {
+
         let dizcode=this.mString[0].charCodeAt(0).toString(16).padStart(4, "0");
         if (dizcode==="20d7") { 
             this.mString='⇀';
@@ -195,7 +198,8 @@ export class MathMlStringMesh {
         if (dizcode==="2061"){this.hasMesh=false; return;} //null 
         let key = "U" + dizcode;
 
-        let lambdaData = await callLambdaFunction(key);
+        // let lambdaData = await callLambdaFunction(key);
+        let lambdaData = charMeshes[key];
 
         let newmesh: TMeshJson = {
             char: this.mString[0],
@@ -205,44 +209,30 @@ export class MathMlStringMesh {
             bbox: [0, 0, 0, 0]
         };
         this.jsonMeshes.push(newmesh);
-        
-        let spaceMeshExample = false;
-        if(spaceMeshExample)
-        {
-            let key = "USPACE";
-            let xlen=0.6;
-            let ylen=1.2;
-            let ystart=-0.3;
-            let xstart=0;
-            let newmesh: TMeshJson = {
-                char: this.mString[0],
-                uni: key,
-                verts: [xstart, ystart, 0, xstart, ystart + ylen, 0, xstart+xlen, ystart + ylen, 0, xstart+xlen, ystart, 0],
-                tris: [0, 1, 2, 3, 0, 2],
-                bbox: [0, 0, 0, 0]
-            };
-            this.jsonMeshes.push(newmesh);
+
+        let xoffset = 0;
+        for (let i = 0; i < this.jsonMeshes.length; i++) {
+            let maxx = Number.MIN_SAFE_INTEGER;
+            let maxy = Number.MIN_SAFE_INTEGER;
+            let minx = Number.MAX_SAFE_INTEGER;
+            let miny = Number.MAX_SAFE_INTEGER;
+            let verts = this.jsonMeshes[i].verts;
+            for (let j = 0; j < verts.length; j += 3) {
+                verts[j] += xoffset;
+                if (verts[j] > maxx) maxx = verts[j];
+                if (verts[j] < minx) minx = verts[j];
+                if (verts[j + 1] > maxy) maxy = verts[j + 1];
+                if (verts[j + 1] < miny) miny = verts[j + 1];
+            }
+            this.jsonMeshes[i].bbox = [minx, maxx, miny, maxy];
+            xoffset = maxx;
         }
+    }
+        
+
 
     // };
 
-    let xoffset = 0;
-    for (let i = 0; i < this.jsonMeshes.length; i++) {
-        let maxx = Number.MIN_SAFE_INTEGER;
-        let maxy = Number.MIN_SAFE_INTEGER;
-        let minx = Number.MAX_SAFE_INTEGER;
-        let miny = Number.MAX_SAFE_INTEGER;
-        let verts = this.jsonMeshes[i].verts;
-        for (let j = 0; j < verts.length; j += 3) {
-            verts[j] += xoffset;
-            if (verts[j] > maxx) maxx = verts[j];
-            if (verts[j] < minx) minx = verts[j];
-            if (verts[j + 1] > maxy) maxy = verts[j + 1];
-            if (verts[j + 1] < miny) miny = verts[j + 1];
-        }
-        this.jsonMeshes[i].bbox = [minx, maxx, miny, maxy];
-        xoffset = maxx;
-    }
 
 
 

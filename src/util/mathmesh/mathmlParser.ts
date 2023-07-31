@@ -1,6 +1,9 @@
 import * as lodash from 'lodash';
 import { MathMlStringMesh, TypeMesh } from './mathml2mesh';
 import { EleDim as ED } from './EleDim';
+import { text } from '@sveltejs/kit';
+import { lgamma } from 'mathjs';
+import { callLambdaFunction, type CharMesh } from './lambdaGetJson';
 
 export enum MEleType {
     Start = 0,
@@ -1121,10 +1124,40 @@ export class MMParser {
 
         }
 
+        async assembleCharMeshes():Promise<Record<string,CharMesh>>{
+            let allStrings:Set<string> = new Set();
+            for (let i = 0; i < this.lvlStack.length; i++) {
+                const ele = this.lvlStack[i];
+                if(ele.text != null){
+                    if (ele.type !== LBlockType.mfracmid) {
+                        for (let j = 0; j < ele.text.toString().length; j++) {
+                            const onechar = ele.text.toString()[j];
+                            let dizcode=onechar.charCodeAt(0).toString(16).padStart(4, "0");
+                            //when see /vector change // →  to //⇀
+                            if (dizcode==="20d7") { 
+                                dizcode = '⇀'.charCodeAt(0).toString(16).padStart(4, "0"); 
+                            }
+                            // →  //⇀
+                            if (dizcode==="00a0") {continue;} //NO-BREAK SPACE
+                            if (dizcode==="0020") {continue;} //normal space
+                            if (dizcode==="2061") {continue;} //null 
+                            let key = "U" + dizcode;
+                            allStrings.add(key);
+                        }
+                    }
+                }
+            }
+            const stringParam = [...allStrings].join('_');
+            return callLambdaFunction(stringParam);
+
+        }
+
         async generateMathmesh3D(): Promise<{ positions: number[]; indices: number[]; vertices: Float32Array; }> {
             let xoffset = 0;//-33;
             let xscale = 0.6; // i manaully try and get width=0.6 to be the size of a char that has heigh = 1
             let finalVertexArr = [];
+
+            let charMeshes = await this.assembleCharMeshes();
 
 
             for (let i = 0; i < this.lvlStack.length; i++) {
@@ -1141,7 +1174,7 @@ export class MMParser {
                         let mathtxtMesh = new MathMlStringMesh("mfracmid", box, eledim.scale, TypeMesh.TMmfrac);
 
                         if (mathtxtMesh.hasMesh) {
-                            let vertexArr = await mathtxtMesh.toTransedMesh();
+                            let vertexArr = mathtxtMesh.toTransedMesh();
                             for (let j = 0; j < vertexArr!.length; j++) {
                                 finalVertexArr.push(vertexArr![j]);
                             }
@@ -1152,13 +1185,15 @@ export class MMParser {
 
                         let eledim = ele.edim!.dim;
                         let xinterval = (eledim.xs[1] - eledim.xs[0]) / ele.text.toString().length;
+
                         for (let j = 0; j < ele.text.toString().length; j++) {
                             const onechar = ele.text.toString()[j];
 
                             let box = { x0: xscale * (eledim.xs[0] + j * xinterval + xoffset), x1: -1, y0: eledim.ys[0], y1: -1 };
                             let mathtxtMesh = new MathMlStringMesh(onechar, box, eledim.scale, TypeMesh.TMChar);
                             if (mathtxtMesh.hasMesh) {
-                                let vertexArr = await mathtxtMesh.toTransedMesh();
+
+                                let vertexArr = mathtxtMesh.toTransedMesh(charMeshes);
 
                                 for (let k = 0; k < vertexArr!.length; k++) {
                                     finalVertexArr.push(vertexArr![k]);

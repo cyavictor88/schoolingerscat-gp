@@ -1,7 +1,12 @@
-export async function callLambdaFunction(char:string) {
-  const url = 'https://70z9hnualj.execute-api.us-west-2.amazonaws.com/mathmesh?'+'chars='+char;
+export interface CharMesh {
+  verts: number[];
+  tris: number[];
+}
+
+export async function callLambdaFunction(chars:string) : Promise<Record<string,CharMesh>>{
+  const url = 'https://70z9hnualj.execute-api.us-west-2.amazonaws.com/mathmesh?'+'chars='+chars;
   const requestData = {
-    name: char,
+    name: chars,
 
   };
 
@@ -15,14 +20,14 @@ export async function callLambdaFunction(char:string) {
     },
   };
 
-  const ret = {verts: [],tris:[]}
+  const ret:Record<string,CharMesh> = {}
   try {
     const response = await fetch(url, requestOptions);
     const data = await response.json();
+    for (let i = 0; i < data.length; i++) {
+      ret[data[i].name] = {verts: data[i].verts, tris: data[i].tris};
+    }
     // Handle the Lambda response data here
-    ret.verts = data[0].verts;
-    ret.tris = data[0].tris;
-
     console.log(data);
   } catch (error) {
     // Handle any errors that occurred during the request

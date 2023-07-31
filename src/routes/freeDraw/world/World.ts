@@ -103,7 +103,7 @@ export class World implements Subscriber{
   }
 
 async addMathMesh(){
-    const mm = await mathmesh("\\int_{a}^{b}x^2 \\,dx");
+    const mm = await mathmesh("\\int_{a}^{b}x^2 \\,dx \\frac{3}{4} \\vec{a}");
     const geometry = new THREE.BufferGeometry()
     geometry.setAttribute( 'position', new THREE.BufferAttribute( mm.vertices, 3 ) );
     const material = new THREE.MeshBasicMaterial( { color: 0xff0000 } );
