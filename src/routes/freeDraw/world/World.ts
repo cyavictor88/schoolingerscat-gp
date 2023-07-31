@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { TickingWorld } from './TickingWorld';
 import { FreeDrawLines } from './object/FreeDrawLines';
 import type EventEmitter from 'eventemitter3';
-// import { mathmesh } from 'mathmesh';
+import { mathmesh } from 'mathmesh';
 
 interface Subscriber {
   notify(event: string, data: any): void;
@@ -98,12 +98,12 @@ export class World implements Subscriber{
     this.eventBroker.on("hello",(data)=>{console.log(data)});
 
 
-    // const mm = mathmesh("\\int_{a}^{b}x^2 \\,dx");
-    // const geometry = new THREE.BufferGeometry()
-    // geometry.setAttribute( 'position', new THREE.BufferAttribute( mm.vertices, 3 ) );
-    // const material = new THREE.MeshBasicMaterial( { color: 0xff0000 } );
-    // const mesh = new THREE.Mesh( geometry, material );
-    // this.scene.add(mesh);
+    const mm = mathmesh("\\int_{a}^{b}x^2 \\,dx");
+    const geometry = new THREE.BufferGeometry()
+    geometry.setAttribute( 'position', new THREE.BufferAttribute( mm.vertices, 3 ) );
+    const material = new THREE.MeshBasicMaterial( { color: 0xff0000 } );
+    const mesh = new THREE.Mesh( geometry, material );
+    this.scene.add(mesh);
   }
   notify(event: string, data: any): void {
     console.log("notifying",event,data)

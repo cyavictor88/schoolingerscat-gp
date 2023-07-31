@@ -24,9 +24,10 @@
 		"vite": "^4.4.2"
 	},
 	"type": "module",
-  "dependencies": {
+	"dependencies": {
 		"@types/three": "^0.154.0",
 		"eventemitter3": "^5.0.1",
+		"mathmesh": "^0.0.6",
 		"three": "^0.154.0"
 	}
 }
