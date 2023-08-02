@@ -2,7 +2,8 @@ import * as THREE from 'three';
 import { TickingWorld } from './TickingWorld';
 import { FreeDrawLines } from './object/FreeDrawLines';
 import type EventEmitter from 'eventemitter3';
-import { mathmesh } from '../../../util/mathmesh/mathmesh';
+import { mathmesh } from '$lib/mathmesh/mathmesh';
+
 // import { mathmesh } from 'mathmesh';
 
 interface Subscriber {

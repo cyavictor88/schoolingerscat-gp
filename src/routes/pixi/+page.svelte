@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import * as PIXI from 'pixi.js';
-	import { mathmesh2D } from '../../util/mathmesh/mathmesh';
+	import { mathmesh2D } from '$lib/mathmesh/mathmesh';
 
 	let div: HTMLDivElement;
 	onMount(() => {
