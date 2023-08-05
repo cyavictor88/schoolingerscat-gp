@@ -5,6 +5,7 @@
   export let subRoutes: Route[] = [];
   export let indent = 0;
   export let open = true;
+  export let toggleMenu: any = ()=>{};
   function toggleOpen() {
 		open = !open;
 	}
@@ -15,7 +16,7 @@
   <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
   <h3 style="padding-left: {indent}px" on:click={toggleOpen} >
     {#if path}
-    <a href={path}>a:{label}</a>
+    <a href={path} on:click={toggleMenu}>a:{label}</a>
     {:else}
     <!-- svelte-ignore a11y-invalid-attribute -->
       {#if !open}
@@ -30,7 +31,7 @@
 
 {#if open}
 	{#each subRoutes as child}
-		<svelte:self {...child} indent={indent + 12} open={false}/>
+		<svelte:self {...child} indent={indent + 12} open={false} toggleMenu={toggleMenu}/>
 	{/each}
 {/if}
 

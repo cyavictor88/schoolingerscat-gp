@@ -17,8 +17,8 @@
   
 	{#if open}
   <div class='dropdown-content'>
-    <div id='close' on:click={toggleOpen}><p>X</p></div>
-		<Route {...routes} indent={12} />
+    <div id='close' on:click={toggleOpen}><p style='font-size: 22px;'>&#x274E;</p></div>
+		<Route {...routes} indent={12} toggleMenu={toggleOpen} />
   </div>
 	{/if}
 </div>
