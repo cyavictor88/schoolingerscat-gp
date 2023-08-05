@@ -1,6 +1,6 @@
 <script lang='ts'>
-  import { routes } from "$lib/components/routes";
-  import Link from "./Link.svelte";
+  import { routes } from "./routes";
+  import Route from "./Route.svelte";
   let open = false;
   function toggleOpen(){
     open = !open;
@@ -19,7 +19,7 @@
 </div>
 
 {#if open}
-<Link {...routes}/>
+<Route {...routes}/>
 {/if}
 
 <style>

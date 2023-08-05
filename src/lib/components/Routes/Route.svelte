@@ -1,5 +1,5 @@
 <script lang='ts'>
-	import type { Route } from "../routes";
+	import type { Route } from "./routes";
   export let label: string | null = null;
   export let path: string | null = null;  
   export let subRoutes: Route[] = [];

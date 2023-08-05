@@ -1,10 +1,15 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-	import type { Link } from './SideNav';
   export let sideBarWidth = 200;
   export let topBarHeight = 60;
 
-  let links : Link[] = [
+  interface Link {
+    label: string;
+    subLinks: Link[];
+    showSubLinks?: boolean;
+  }
+
+  let links :Link[]  = [
     {
       label: 'Home',
       subLinks: [],

@@ -1,14 +1,12 @@
 <!-- TopNavbar.svelte -->
 <script lang="ts">
   import { base } from '$app/paths';
-	import Links from './Links.svelte';
   export let topBarHeight = 60;
 </script>
 
 <div class="top-navbar" style="--height: {topBarHeight}px;">
 
 	<div class="logo"><a href='{base}/'>Schoolinger's Cat</a></div>
-	<Links />
   <nav style="padding:4px;">
     <a href='{base}/hello'>hello</a>
     <a href='{base}/freeDraw'>threejs</a>
