@@ -1,10 +1,8 @@
 <script lang='ts'>
   import Katex from "$lib/components/Katex/Katex.svelte";
-	import Routes from "$lib/components/Routes/Routes.svelte";
   const math1 = "x=-\\frac{-b\\pm\\sqrt{b^2-4ac}}{2a}";
 </script>
 
-<Routes />
 
 
 <Katex math={math1}/>

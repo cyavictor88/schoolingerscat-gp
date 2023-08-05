@@ -33,7 +33,7 @@
 
 </script>
 
-<p>eeeeeff</p>
+
 <TopNav {topBarHeight} />
 <!-- <SideNav {topBarHeight} {sideBarWidth} /> -->
 <div id="content" style="top:{topBarHeight}px; 
@@ -45,7 +45,7 @@
 </div>
 
 <style>
-
+	:global(body) { /* this will apply to <body> */ margin: 0; padding: 0; }
 	#content {
 		position: fixed;
 		height: 100%;
@@ -53,5 +53,8 @@
 		border: 1px black solid;
 		padding: 2px;
 		overflow-y: scroll;
+		z-index: 0;
 	}
+
+
 </style>

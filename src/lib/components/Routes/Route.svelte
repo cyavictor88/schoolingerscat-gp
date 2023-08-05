@@ -30,7 +30,7 @@
 
 {#if open}
 	{#each subRoutes as child}
-		<svelte:self {...child} indent={indent + 24} open={false}/>
+		<svelte:self {...child} indent={indent + 12} open={false}/>
 	{/each}
 {/if}
 
@@ -38,5 +38,8 @@
 <style>
   h3 {
     background-color: aqua;
+    margin: 0;
   }
+
+
 </style>
