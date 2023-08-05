@@ -1,7 +1,11 @@
 <script lang='ts'>
   import Katex from "$lib/components/Katex/Katex.svelte";
+	import Links from "$lib/components/TopNav/Links.svelte";
   const math1 = "x=-\\frac{-b\\pm\\sqrt{b^2-4ac}}{2a}";
 </script>
+
+<Links />
+
 
 <Katex math={math1}/>
 
