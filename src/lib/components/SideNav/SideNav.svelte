@@ -48,8 +48,8 @@
 
   .link {
     cursor: pointer;
-    margin: 8px 0;
-    padding: 8px;
+    margin: 2px 0;
+    padding: 2px;
     border-radius: 4px;
   }
 

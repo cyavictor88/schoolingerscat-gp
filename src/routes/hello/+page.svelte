@@ -1,5 +1,5 @@
 <script lang='ts'>
-  import Katex from "../../components/Katex/Katex.svelte";
+  import Katex from "$lib/components/Katex/Katex.svelte";
   const math1 = "x=-\\frac{-b\\pm\\sqrt{b^2-4ac}}{2a}";
 </script>
 
