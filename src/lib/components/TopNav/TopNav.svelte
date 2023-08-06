@@ -9,11 +9,11 @@
 
 	<div class="logo"><a href='{base}/'>Schoolinger's Cat</a></div>
 	<Routes />
-  <nav style="padding:4px;">
+  <!-- <nav style="padding:4px;">
     <a href='{base}/hello'>hello</a>
     <a href='{base}/freeDraw'>threejs</a>
     <a href='{base}/pixi'>pixi</a>
-	</nav>
+	</nav> -->
 	<!-- Add any additional content you want in the top navbar -->
 </div>
 

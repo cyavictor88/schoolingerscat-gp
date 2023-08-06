@@ -5,19 +5,21 @@
 	function toggleOpen() {
 		open = !open;
 	}
-	function click(i: number) {
-		alert(routes.label);
-	}
+
+	let downTriangle = '\u{25BE}';
+	let upTriangle = '\u{25B4}';
+	let cross = '\u{274E}';
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <div class='dropdown'  tabindex="0" role="button" aria-pressed="false">
 	<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-	<p on:click={toggleOpen}>index&blacktriangledown;</p>
-  
+	<p on:click={toggleOpen}>index{!open? downTriangle : upTriangle }</p>
+
 	{#if open}
   <div class='dropdown-content'>
-    <div id='close' on:click={toggleOpen}><p style='font-size: 22px;'>&#x274E;</p></div>
+    <!-- svelte-ignore a11y-no-static-element-interactions -->
+    <div id='close' on:click={toggleOpen}><p>{cross}</p></div>
 		<Route {...routes} indent={12} toggleMenu={toggleOpen} />
   </div>
 	{/if}

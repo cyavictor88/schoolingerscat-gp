@@ -6,8 +6,7 @@
 </script> 
 
 
-<h1>Welcome to SvelteKit b</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<h1>Welcome to Schoolinger's Cat</h1>
 <button on:click={increment}>add 1</button>
 <h1>{cnt}</h1>
 
