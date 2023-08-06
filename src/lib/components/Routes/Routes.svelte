@@ -1,12 +1,11 @@
 <script lang="ts">
-	import { rootRoute } from './routes';
+	import { rootRoute, setOpenPath } from './routes';
 	import { onMount } from 'svelte';
 	import Route from './Route.svelte';
 	
 	let open = false;
 	function toggleOpen() {
 		open = !open;
-		// console.log(setOpenPath(routes,window.location.pathname));
 	}
 
 	let mouseIsOverDropdown = false;
@@ -22,6 +21,13 @@
 			open = false;
 		}
 	}
+
+	function setOpenPathAndToogleOpen(){
+		setOpenPath(rootRoute,window.location.pathname);
+		rootRoute.open = true;
+		console.log(rootRoute);
+		toggleOpen();
+	}
 	onMount(()=>{
 		window.addEventListener('click', closeIfMouseNotOver);
 		return () => {
@@ -30,12 +36,14 @@
 	});
 
 
+
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <div class='dropdown'  tabindex="0" role="button" aria-pressed="false" on:mouseenter={()=>{setMouseIsOverDropdown(true)}} on:mouseleave={()=>{setMouseIsOverDropdown(false)}}>
 	<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-	<p on:click={toggleOpen}>index{!open? downTriangle : upTriangle }</p>
+		
+	<p on:click={setOpenPathAndToogleOpen}>index{!open? downTriangle : upTriangle }</p>
 
 	{#if open}
   <div class='dropdown-content'>
@@ -52,10 +60,11 @@
 	}
 	.dropdown {
 		background-color: aqua;
-		border-radius: 10px;
+		border-radius: 2px;
 		cursor: pointer;
-		padding: 4px;
+		padding: 0px;
 		border: 1px aqua solid;
+		margin-left: 5px;
 	}
   .dropdown-content {
     display: block;

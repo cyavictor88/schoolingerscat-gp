@@ -1,6 +1,4 @@
 
-import { ORIGINAL_XDG_CURRENT_DESKTOP } from '$env/static/private';
-import { writable } from 'svelte/store';
 export interface Route {
   label: string;
   path?: string;
@@ -15,7 +13,9 @@ export const rootRoute : Route = {
   subRoutes: [
     {label: 'FreeDraw', path: '/freeDraw'},
     {label: 'Pixi', path: '/pixi'},
-    {label: 'Hello', path: '/hello'},
+    {label: 'Hello', subRoutes: [
+      {label: 'World', path: '/hello/world'},
+    ]},
     {label: 'Signal Processing', subRoutes: [
       {label: 'Fourier Series', subRoutes:[
         {label: 'Intro', path: '/signalProcessing/fourierSeries/intro'},
@@ -26,28 +26,27 @@ export const rootRoute : Route = {
   ] 
 }
 
-// export const currentRoute = writable('/');
 
 
-// export function setOpenPath(route: Route, currentPath: string){
-//   route.open = false;
-//   if(route.subRoutes) {
-//     for (let i = 0; i < route.subRoutes.length; i++) {
-//       const child = route.subRoutes[i];
-//       child.parent = route;
-//       if(child.path === currentPath) {
-//         route.open = true;
-//         if(route.parent) setOpenForAncestors(route.parent);
-//       }
-//       setOpenPath(child, currentPath);
-//     }
-//   }
-// }
+export function setOpenPath(route: Route, currentPath: string){
+  route.open = false;
+  if(route.subRoutes) {
+    for (let i = 0; i < route.subRoutes.length; i++) {
+      const child = route.subRoutes[i];
+      child.parent = route;
+      if(child.path === currentPath) {
+        route.open = true;
+        if(route.parent) setOpenForAncestors(route.parent);
+      }
+      setOpenPath(child, currentPath);
+    }
+  }
+}
 
-// function setOpenForAncestors(route: Route){
-//   route.open = true;
-//   if(route.parent) {
-//     setOpenForAncestors(route.parent)
-//   }
-// }
+function setOpenForAncestors(route: Route){
+  route.open = true;
+  if(route.parent) {
+    setOpenForAncestors(route.parent)
+  }
+}
 
