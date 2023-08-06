@@ -43,7 +43,7 @@
 <div class='dropdown'  tabindex="0" role="button" aria-pressed="false" on:mouseenter={()=>{setMouseIsOverDropdown(true)}} on:mouseleave={()=>{setMouseIsOverDropdown(false)}}>
 	<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 		
-	<p on:click={setOpenPathAndToogleOpen}>index{!open? downTriangle : upTriangle }</p>
+	<p on:click={setOpenPathAndToogleOpen}>directory{!open? downTriangle : upTriangle }</p>
 
 	{#if open}
   <div class='dropdown-content'>
