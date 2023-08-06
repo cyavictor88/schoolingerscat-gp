@@ -65,13 +65,15 @@
 		padding: 0px;
 		border: 1px aqua solid;
 		margin-left: 5px;
+		box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+
 	}
   .dropdown-content {
     display: block;
     position: absolute;
     background-color: #f9f9f9;
     min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+		box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
     z-index: 2;
 }
 	div:hover {
