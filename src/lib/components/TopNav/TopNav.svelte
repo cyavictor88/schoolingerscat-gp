@@ -6,9 +6,9 @@
 </script>
 
 <div class="top-navbar" style="--height: {topBarHeight}px;">
-
-	<div class="logo"><a href='{base}/'>Schoolinger's Cat</a></div>
 	<Routes />
+	<div class="logo"><a href='{base}/'>Schoolinger's Cat</a></div>
+	
   <!-- <nav style="padding:4px;">
     <a href='{base}/hello'>hello</a>
     <a href='{base}/freeDraw'>threejs</a>
@@ -19,6 +19,9 @@
 
 <style>
 	.top-navbar {
+		display: flex;
+		flex-flow: row nowrap;
+		align-items: center;
 		border: 1px red solid;
 		/* position: fixed; */
 
@@ -27,7 +30,6 @@
 		color: black;
 		display: flex;
 		align-items: center;
-		padding: 0 10px;
 		margin: 0;
 		width: 100%;
 
@@ -37,7 +39,10 @@
 		}
 
 	.logo {
+		flex-grow: 1;
 		font-size: 24px;
 		font-weight: bold;
+		display: flex;
+		justify-content: center;
 	}
 </style>

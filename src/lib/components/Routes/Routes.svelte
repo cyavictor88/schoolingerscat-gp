@@ -1,18 +1,39 @@
 <script lang="ts">
-	import { routes } from './routes';
+	import { rootRoute } from './routes';
+	import { onMount } from 'svelte';
 	import Route from './Route.svelte';
+	
 	let open = false;
 	function toggleOpen() {
 		open = !open;
+		// console.log(setOpenPath(routes,window.location.pathname));
+	}
+
+	let mouseIsOverDropdown = false;
+	function setMouseIsOverDropdown(isOver:boolean) {
+		mouseIsOverDropdown = isOver;
 	}
 
 	let downTriangle = '\u{25BE}';
 	let upTriangle = '\u{25B4}';
 	let cross = '\u{274E}';
+	function closeIfMouseNotOver(){
+		if(!mouseIsOverDropdown) {
+			open = false;
+		}
+	}
+	onMount(()=>{
+		window.addEventListener('click', closeIfMouseNotOver);
+		return () => {
+			window.removeEventListener('click',closeIfMouseNotOver)
+		}
+	});
+
+
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<div class='dropdown'  tabindex="0" role="button" aria-pressed="false">
+<div class='dropdown'  tabindex="0" role="button" aria-pressed="false" on:mouseenter={()=>{setMouseIsOverDropdown(true)}} on:mouseleave={()=>{setMouseIsOverDropdown(false)}}>
 	<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 	<p on:click={toggleOpen}>index{!open? downTriangle : upTriangle }</p>
 
@@ -20,7 +41,7 @@
   <div class='dropdown-content'>
     <!-- svelte-ignore a11y-no-static-element-interactions -->
     <div id='close' on:click={toggleOpen}><p>{cross}</p></div>
-		<Route {...routes} indent={12} toggleMenu={toggleOpen} />
+		<Route route={rootRoute} indent={0} toggleMenu={toggleOpen} />
   </div>
 	{/if}
 </div>
