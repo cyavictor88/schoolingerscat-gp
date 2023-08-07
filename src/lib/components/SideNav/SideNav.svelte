@@ -1,7 +1,8 @@
 <script lang="ts">
   import { onMount } from 'svelte';
+	import { topBarHeight } from '$lib/store';
+
   export let sideBarWidth = 200;
-  export let topBarHeight = 60;
 
   interface Link {
     label: string;
@@ -63,7 +64,7 @@
   }
 </style>
 
-<div class="sidebar" style="top:{topBarHeight}px;width:{sideBarWidth}px;height:calc(100vh - {topBarHeight}px);max-height:calc(100vh - {topBarHeight}px);">
+<div class="sidebar" style="top:{$topBarHeight}px;width:{sideBarWidth}px;height:calc(100vh - {topBarHeight}px);max-height:calc(100vh - {topBarHeight}px);">
   {#each links as link, index}
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-static-element-interactions -->

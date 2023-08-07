@@ -2,19 +2,13 @@
 <script lang="ts">
   import { base } from '$app/paths';
 	import Routes from '../Routes/Routes.svelte';
-  export let topBarHeight = 60;
+	import { topBarHeight } from '$lib/store';
+  
 </script>
 
-<div class="top-navbar" style="--height: {topBarHeight}px;">
+<div class="top-navbar" style="--height: {$topBarHeight}px;">
 	<Routes />
 	<div class="logo"><a href='{base}/'>Schoolinger's Cat</a></div>
-	
-  <!-- <nav style="padding:4px;">
-    <a href='{base}/hello'>hello</a>
-    <a href='{base}/freeDraw'>threejs</a>
-    <a href='{base}/pixi'>pixi</a>
-	</nav> -->
-	<!-- Add any additional content you want in the top navbar -->
 </div>
 
 <style>

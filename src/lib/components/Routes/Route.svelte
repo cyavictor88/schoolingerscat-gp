@@ -1,12 +1,8 @@
 <script lang='ts'>
 	import type { Route } from "./routes";
   import { base } from '$app/paths';
-  // export let label: string | null = null;
-  // export let path: string | null = null;  
-  // export let subRoutes: Route[] = [];
   export let route: Route | null = null;
   export let indent = 0;
-  // export let open = false;
   export let toggleMenu: any = ()=>{};
   function toggleOpen() {
     if(route){
@@ -17,7 +13,6 @@
 
   let downTriangle = '\u{25BE}';
 	let upTriangle = '\u{25B4}';
-
 
 </script>
 

@@ -29,6 +29,13 @@ export const rootRoute : Route = {
 
 
 export function setOpenPath(route: Route, currentPath: string){
+  function setOpenForAncestors(route: Route){
+    route.open = true;
+    if(route.parent) {
+      setOpenForAncestors(route.parent)
+    }
+  }
+  
   route.open = false;
   if(route.subRoutes) {
     for (let i = 0; i < route.subRoutes.length; i++) {
@@ -43,10 +50,4 @@ export function setOpenPath(route: Route, currentPath: string){
   }
 }
 
-function setOpenForAncestors(route: Route){
-  route.open = true;
-  if(route.parent) {
-    setOpenForAncestors(route.parent)
-  }
-}
 

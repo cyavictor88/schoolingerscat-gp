@@ -25,7 +25,6 @@
 	function setOpenPathAndToogleOpen(){
 		setOpenPath(rootRoute,window.location.pathname);
 		rootRoute.open = true;
-		console.log(rootRoute);
 		toggleOpen();
 	}
 	onMount(()=>{
@@ -46,11 +45,11 @@
 	<p on:click={setOpenPathAndToogleOpen}>directory{!open? downTriangle : upTriangle }</p>
 
 	{#if open}
-  <div class='dropdown-content'>
-    <!-- svelte-ignore a11y-no-static-element-interactions -->
-    <div id='close' on:click={toggleOpen}><p>{cross}</p></div>
-		<Route route={rootRoute} indent={0} toggleMenu={toggleOpen} />
-  </div>
+		<div class='dropdown-content'>
+			<!-- svelte-ignore a11y-no-static-element-interactions -->
+			<div id='close' on:click={toggleOpen}><p>{cross}</p></div>
+			<Route route={rootRoute} indent={0} toggleMenu={toggleOpen} />
+		</div>
 	{/if}
 </div>
 
