@@ -1,13 +1,17 @@
 <script>
-  import Routes from '$lib/components/Routes/Routes.svelte';
-	import SideNav from '$lib/components/SideNav/SideNav.svelte';
+	import { writable } from 'svelte/store';
+  import { setContext } from 'svelte';
+
+
 	import { topBarHeight } from '$lib/store';
-	import { rootRoute } from './routes';
 	import {
 		beforeUpdate,
 		afterUpdate,
 		onMount
 	} from 'svelte';
+
+	import SideBar from '$lib/components/SideBar/SideBar.svelte';
+	import { rootRoute } from './route';
   let sideBarWidth = 200;
 	onMount(()=>{
 
@@ -18,7 +22,6 @@
 	});
 
 	function changeSizeBarWidth(){
-		console.log(window.outerWidth)
 		if (window.outerWidth < 800) {
 			sideBarWidth = 50;
 		}
@@ -28,11 +31,16 @@
 	beforeUpdate(() => {
 		changeSizeBarWidth()
 	});
+
+	const innerPageRoute = writable(rootRoute);
+  setContext('innerPageRoute', innerPageRoute);
+	$: {console.log($innerPageRoute)}
 </script>
 
-
+<SideBar route={rootRoute}/>
+<p></p>
+<SideBar route={$innerPageRoute}/>
 <!-- <SideNav {sideBarWidth} /> -->
-<Routes {rootRoute} />
 <div id="content" style="top:{$topBarHeight}px; 
                           left:{sideBarWidth}px; 
                           width:calc(100vw - {sideBarWidth}px;

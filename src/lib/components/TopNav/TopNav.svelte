@@ -1,13 +1,12 @@
 <!-- TopNavbar.svelte -->
 <script lang="ts">
   import { base } from '$app/paths';
-	import Routes from '../Routes/Routes.svelte';
 	import { topBarHeight } from '$lib/store';
-  
+	import Directory from './Directory.svelte';
 </script>
 
 <div class="top-navbar" style="--height: {$topBarHeight}px;">
-	<Routes />
+	<Directory />
 	<div class="logo"><a href='{base}/'>Schoolinger's Cat</a></div>
 </div>
 
@@ -18,7 +17,6 @@
 		align-items: center;
 		border: 1px red solid;
 		/* position: fixed; */
-
 		height: var(--height);
 		background-color: #b4f6a4;
 		color: black;
@@ -26,12 +24,10 @@
 		align-items: center;
 		margin: 0;
 		width: 100%;
-
 	}
 	.logo a {
 			text-decoration: none;
 		}
-
 	.logo {
 		flex-grow: 1;
 		font-size: 24px;

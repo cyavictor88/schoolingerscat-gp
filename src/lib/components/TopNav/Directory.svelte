@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { rootRoute as siteRootRoute, setOpenPath } from './routes';
+	import { rootRoute as siteRootRoute, setOpenPath } from '../Route/route';
 	import { onMount } from 'svelte';
-	import Route from './Route.svelte';
+	import Route from '../Route/Route.svelte';
 	export let rootRoute = siteRootRoute;
 	let open = false;
 	function toggleOpen() {

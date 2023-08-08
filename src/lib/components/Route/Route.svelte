@@ -1,6 +1,9 @@
 <script lang='ts'>
-	import type { IRoute } from "./routes";
+	import type { IRoute } from "./route";
   import { base } from '$app/paths';
+	import { beforeUpdate, afterUpdate } from "svelte";
+  import { navigating } from '$app/stores';
+  import { browser } from '$app/environment'
   export let route: IRoute | null = null;
   export let indent = 0;
   export let toggleMenu: any = ()=>{};
@@ -13,6 +16,12 @@
 
   let downTriangle = '\u{25BE}';
 	let upTriangle = '\u{25B4}';
+  let currentPath = '';
+  if(browser){
+    currentPath = window.location.pathname
+  }
+  $: if($navigating)currentPath = window.location.pathname;
+
 
 </script>
 
@@ -23,7 +32,7 @@
     <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
     <h4 style="padding-left: {indent}px" on:click={toggleOpen} >
       {#if route.path}
-        <a href={base+route.path} style:--bg-1={route.path === window.location.pathname ? 'lime' : ''} on:click={toggleMenu}>{route.label}</a>
+        <a href={base+route.path} style:--bg-1={route.path === currentPath ? 'lime' : ''} on:click={toggleMenu}>{route.label}</a>
       {:else}
         <!-- svelte-ignore a11y-invalid-attribute -->
         <a href="javascript:;">{route.label}{route.open? upTriangle : downTriangle} </a>

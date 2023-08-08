@@ -1,4 +1,4 @@
-import type { IRoute } from "$lib/components/Routes/routes";
+import type { IRoute } from "$lib/components/Route/route";
 
 export const rootRoute : IRoute = {
   label: 'Fourier Series',

@@ -1,17 +1,8 @@
 <script>
-  let cnt = 0;
-  function increment() {
-		cnt += 1;
-	}
 </script> 
 
 
-<h1>Welcome to Schoolinger's Cat</h1>
-<button on:click={increment}>add 1</button>
-<h1>{cnt}</h1>
+<p>Hi, this site is at its infancy, I plan to use this site to share my notes on various EE/math/physics subjects.</p>
 
 <style>
-  h1 {
-    color: green;
-  }
 </style>
