@@ -9,12 +9,7 @@
 	} from 'svelte';
   let sideBarWidth = 0;
 
-
-
-
-
 </script>
-
 
 <TopNav />
 <!-- <SideNav {topBarHeight} {sideBarWidth} /> -->
@@ -31,8 +26,8 @@
 	#content {
 		position: fixed;
 		height: 100%;
-		background-color: #96cdf5;
 		border: 1px black solid;
+		background-color: lightgrey;
 		padding: 2px;
 		overflow-y: scroll;
 		z-index: 0;

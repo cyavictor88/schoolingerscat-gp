@@ -1,13 +1,13 @@
 
-export interface Route {
+export interface IRoute {
   label: string;
   path?: string;
-  subRoutes?: Route[];
+  subRoutes?: IRoute[];
   open?: boolean;
-  parent?: Route;
+  parent?: IRoute;
 }
 // https://svelte.dev/repl/347b37e18b5d4a65bbacfd097536db02?version=4.1.2
-export const rootRoute : Route = {
+export const rootRoute : IRoute = {
   label:'home',
   path:'/',
   subRoutes: [
@@ -28,8 +28,8 @@ export const rootRoute : Route = {
 
 
 
-export function setOpenPath(route: Route, currentPath: string){
-  function setOpenForAncestors(route: Route){
+export function setOpenPath(route: IRoute, currentPath: string){
+  function setOpenForAncestors(route: IRoute){
     route.open = true;
     if(route.parent) {
       setOpenForAncestors(route.parent)

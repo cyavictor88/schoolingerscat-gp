@@ -1,6 +1,8 @@
 <script>
-  import SideNav from '$lib/components/SideNav/SideNav.svelte';
+  import Routes from '$lib/components/Routes/Routes.svelte';
+	import SideNav from '$lib/components/SideNav/SideNav.svelte';
 	import { topBarHeight } from '$lib/store';
+	import { rootRoute } from './routes';
 	import {
 		beforeUpdate,
 		afterUpdate,
@@ -29,7 +31,8 @@
 </script>
 
 
-<SideNav {sideBarWidth} />
+<!-- <SideNav {sideBarWidth} /> -->
+<Routes {rootRoute} />
 <div id="content" style="top:{$topBarHeight}px; 
                           left:{sideBarWidth}px; 
                           width:calc(100vw - {sideBarWidth}px;
@@ -45,7 +48,7 @@
 		height: 100%;
 		background-color: #96cdf5;
 		border: 1px black solid;
-		padding: 0px;
+		padding: 4px;
 		overflow-y: scroll;
 	}
 </style>

@@ -1,7 +1,7 @@
 <script lang='ts'>
-	import type { Route } from "./routes";
+	import type { IRoute } from "./routes";
   import { base } from '$app/paths';
-  export let route: Route | null = null;
+  export let route: IRoute | null = null;
   export let indent = 0;
   export let toggleMenu: any = ()=>{};
   function toggleOpen() {
