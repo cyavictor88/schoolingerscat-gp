@@ -7,22 +7,28 @@
   import { getContext } from 'svelte';
 	import type { Writable } from 'svelte/store';
   import Title from "$lib/components/PageComp/Title.svelte";
+  import Katex from "$lib/components/Katex/Katex.svelte";
+
   const innerPageRoute = getContext<Writable<IRoute>>('innerPageRoute');
   onMount(()=>{
     innerPageRoute.set(pageRoute);
   })
-  import Katex from "$lib/components/Katex/Katex.svelte";
+
+	import InnerProduct2D from './InnerProduct2D.svelte';
 
 </script>
 
 
-<Title hLevel={1}>
+<Title hLevel={1} id={'innerProduct'}>
   Inner Product
 </Title>
 
-<Title hLevel={2}>
+<Title hLevel={2} id={'innerProduct2D'}>
   Inner Product in <Katex math={'\\mathbb{R}^2'} />:
 </Title>
+<InnerProduct2D />
+
+
 
 <Part1 />
 <Part2 />

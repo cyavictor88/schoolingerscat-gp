@@ -11,7 +11,6 @@
 </script>
 
 <h1>basis</h1>
-
 <p id='t1'>Ok, so what is the purpose of inner product? The way I see it, the inner product of two vectors indicated how closely aligned those two vectors are, assuming the magnitudes of those two vectors are fixed. Two things to clarify here:
 
   1. How closely aligned two vectors are can be reisented by the angle or the cosine of the angle between the two vectors, as shown in Figure 1.
