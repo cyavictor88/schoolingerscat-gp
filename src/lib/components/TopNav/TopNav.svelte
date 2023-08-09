@@ -18,7 +18,7 @@
 		border: 1px red solid;
 		/* position: fixed; */
 		height: var(--height);
-		background-color: #b4f6a4;
+		background-color: lightgreen;
 		color: black;
 		display: flex;
 		align-items: center;
@@ -34,5 +34,7 @@
 		font-weight: bold;
 		display: flex;
 		justify-content: center;
+		
+		
 	}
 </style>

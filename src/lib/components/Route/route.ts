@@ -28,7 +28,7 @@ export const rootRoute : IRoute = {
 
 
 
-export function setOpenPath(route: IRoute, currentPath: string){
+export function setOpenedPath(route: IRoute, currentPath: string){
   function setOpenForAncestors(route: IRoute){
     route.open = true;
     if(route.parent) {
@@ -45,7 +45,7 @@ export function setOpenPath(route: IRoute, currentPath: string){
         route.open = true;
         if(route.parent) setOpenForAncestors(route.parent);
       }
-      setOpenPath(child, currentPath);
+      setOpenedPath(child, currentPath);
     }
   }
 }

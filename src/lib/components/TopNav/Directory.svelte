@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { rootRoute as siteRootRoute, setOpenPath } from '../Route/route';
+	import { rootRoute as siteRootRoute, setOpenedPath } from '../Route/route';
 	import { onMount } from 'svelte';
 	import Route from '../Route/Route.svelte';
 	export let rootRoute = siteRootRoute;
@@ -22,8 +22,8 @@
 		}
 	}
 
-	function setOpenPathAndToogleOpen(){
-		setOpenPath(rootRoute,window.location.pathname);
+	function setOpenedPathAndToogleOpen(){
+		setOpenedPath(rootRoute,window.location.pathname);
 		rootRoute.open = true;
 		toggleOpen();
 	}
@@ -42,7 +42,7 @@
 <div class='dropdown'  tabindex="0" role="button" aria-pressed="false" on:mouseenter={()=>{setMouseIsOverDropdown(true)}} on:mouseleave={()=>{setMouseIsOverDropdown(false)}}>
 	<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 		
-	<p on:click={setOpenPathAndToogleOpen}>directory{!open? downTriangle : upTriangle }</p>
+	<p on:click={setOpenedPathAndToogleOpen}>directory{!open? downTriangle : upTriangle }</p>
 
 	{#if open}
 		<div class='dropdown-content'>
@@ -58,14 +58,12 @@
 		margin: 0px;
 	}
 	.dropdown {
-		background-color: aqua;
-		border-radius: 2px;
+		background-color: lightblue;
+		border-radius: 3px;
 		cursor: pointer;
 		padding: 0px;
-		border: 1px aqua solid;
+		border: 1px lightblue solid;
 		margin-left: 5px;
-		box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
-
 	}
   .dropdown-content {
     display: block;
@@ -76,7 +74,7 @@
     z-index: 2;
 }
 	div:hover {
-		border: 1px black solid;
+		box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 	}
 
   #close:hover {

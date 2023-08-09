@@ -4,9 +4,11 @@
 	import { beforeUpdate, afterUpdate } from "svelte";
   import { navigating } from '$app/stores';
   import { browser } from '$app/environment'
+	import { afterNavigate } from "$app/navigation";
   export let route: IRoute | null = null;
   export let indent = 0;
   export let toggleMenu: any = ()=>{};
+  export let bgColor :string = 'lightblue'; 
   function toggleOpen() {
     if(route){
       if(route.open) route.open = false;
@@ -20,7 +22,10 @@
   if(browser){
     currentPath = window.location.pathname
   }
-  $: if($navigating)currentPath = window.location.pathname;
+  afterNavigate(()=>{
+    console.log('navigating to ',window.location.pathname)
+    currentPath = window.location.pathname;
+  })
 
 
 </script>
@@ -30,9 +35,9 @@
   {#if route.label}
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-    <h4 style="padding-left: {indent}px" on:click={toggleOpen} >
+    <h4 style="padding-left: {indent}px" style:--bgColor={bgColor} on:click={toggleOpen} >
       {#if route.path}
-        <a href={base+route.path} style:--bg-1={route.path === currentPath ? 'lime' : ''} on:click={toggleMenu}>{route.label}</a>
+        <a href={base+route.path} style:--bg-1={route.path === currentPath ? 'lightgreen' : ''} on:click={toggleMenu}>{route.label}</a>
       {:else}
         <!-- svelte-ignore a11y-invalid-attribute -->
         <a href="javascript:;">{route.label}{route.open? upTriangle : downTriangle} </a>
@@ -42,7 +47,7 @@
     
   {#if route.open && route.subRoutes }
       {#each route.subRoutes as child}
-        <svelte:self route={child} indent={indent + 12} toggleMenu={toggleMenu}/>
+        <svelte:self route={child} indent={indent + 12} toggleMenu={toggleMenu} bgColor={bgColor}/>
       {/each}
   {/if}
 
@@ -51,7 +56,7 @@
 
 <style>
   h4 {
-    background-color: aqua;
+    background-color: var(--bgColor);
     margin: 0;
   }
 

@@ -22,7 +22,7 @@
 </div>
 
 <style>
-	:global(body) { /* this will apply to <body> */ margin: 0; padding: 0; }
+	:global(body) { /* this will apply to <body> */ margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif;}
 	#content {
 		position: fixed;
 		height: 100%;
