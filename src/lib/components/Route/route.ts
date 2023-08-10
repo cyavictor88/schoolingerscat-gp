@@ -1,3 +1,4 @@
+import type { IKatexMix } from "../Katex/katexMix";
 
 export interface IRoute {
   label: string;
@@ -5,7 +6,7 @@ export interface IRoute {
   subRoutes?: IRoute[];
   open?: boolean;
   parent?: IRoute;
-  isLatex?: boolean;
+  katexMix?: IKatexMix[];
 }
 // https://svelte.dev/repl/347b37e18b5d4a65bbacfd097536db02?version=4.1.2
 export const rootRoute : IRoute = {

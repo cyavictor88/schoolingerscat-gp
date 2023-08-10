@@ -5,6 +5,8 @@
   import { navigating } from '$app/stores';
   import { browser } from '$app/environment'
 	import { afterNavigate } from "$app/navigation";
+	import { mixin } from "lodash";
+	import KatexMix from "../Katex/KatexMix.svelte";
   export let route: IRoute | null = null;
   export let indent = 0;
   export let toggleMenu: any = ()=>{};
@@ -28,6 +30,8 @@
   })
 
 
+
+
 </script>
 
 {#if route}
@@ -37,7 +41,13 @@
     <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
     <h4 style="padding-left: {indent}px" style:--bgColor={bgColor} on:click={toggleOpen} >
       {#if route.path}
-        <a href={base+route.path} style:--bg-1={route.path === currentPath ? 'lightgreen' : ''} on:click={toggleMenu}>{route.label}</a>
+        <a href={base+route.path} style:--bg-1={route.path === currentPath ? 'lightgreen' : ''} on:click={toggleMenu}>
+          {#if route.katexMix}
+            <KatexMix mixedString={route.katexMix}/>
+          {:else}
+            {route.label}
+          {/if}
+        </a>
       {:else}
         <!-- svelte-ignore a11y-invalid-attribute -->
         <a href="javascript:;">{route.label}{route.open? upTriangle : downTriangle} </a>
@@ -61,7 +71,7 @@
   }
 
   h4:hover {
-    background-color:rgb(0, 224, 224);
+    background-color:lightgoldenrodyellow;
   }
 
   a {

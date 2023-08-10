@@ -66,7 +66,7 @@
 
 {#if showSide}
 	<div
-		style="position: fixed; width:{wideSideBarWidth}px;background-color:lightgrey; z-index:2;box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;"
+		style="position: fixed; background-color:lightgrey; z-index:2;box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;"
 	>
 		<div style="display:flex; flex-flow:row nowrap; justify-content: space-between;">
 			<button
@@ -91,9 +91,9 @@
 	</div>
 {/if}
 
-<div style="display:flex; flex-flow: row nowrap;">
+<div style="display:flex; flex-flow: row nowrap; justify-content: space-between;">
 	{#if displayModeFullSide}
-		<div style="width:{sideBarWidth}px">
+		<div>
 			<button
 				on:click={() => {
 					sideBarWidth = narrowSideBarWidth;
@@ -129,8 +129,6 @@
 	<div
 		id="content"
 		style="top:{$topBarHeight}px; 
-                          left:{sideBarWidth}px; 
-                          width:calc(100vw - {sideBarWidth}px;
                           max-height: calc(100vh - {$topBarHeight}px);
                           "
 	>
@@ -140,7 +138,7 @@
 
 <style>
 	#content {
-		position: fixed;
+		/* position: fixed; */
 		height: 100%;
 		background-color: LightSteelBlue;
 		border: 1px black solid;
@@ -171,6 +169,7 @@
 		touch-action: manipulation;
 		vertical-align: baseline;
 		white-space: nowrap;
+		height:20px;
 	}
 
 	button:hover,

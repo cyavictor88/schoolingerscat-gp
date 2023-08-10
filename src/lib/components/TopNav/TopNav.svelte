@@ -15,10 +15,10 @@
 		display: flex;
 		flex-flow: row nowrap;
 		align-items: center;
-		border: 1px red solid;
+		border: 1px SaddleBrown solid;
 		/* position: fixed; */
 		height: var(--height);
-		background-color: lightgreen;
+		background-color: SaddleBrown;
 		color: black;
 		display: flex;
 		align-items: center;
@@ -27,6 +27,7 @@
 	}
 	.logo a {
 			text-decoration: none;
+			color: PeachPuff;
 		}
 	.logo {
 		flex-grow: 1;

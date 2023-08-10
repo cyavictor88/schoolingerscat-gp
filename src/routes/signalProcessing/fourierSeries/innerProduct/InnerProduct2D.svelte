@@ -1,6 +1,7 @@
 
 <script lang='ts'>
   import Katex from "$lib/components/Katex/Katex.svelte";
+	import KatexMix from "$lib/components/Katex/KatexMix.svelte";
 </script>
 
 <p>The formula for inner product of any two <Katex math={'\\mathbb{R}^2'}/> vectors <Katex math={'\\vec{a}'}/> and <Katex math={'\\vec{b}'}/> is the following:</p>                  
