@@ -23,11 +23,12 @@
   Inner Product
 </Title>
 
+<div> 
 <Title hLevel={2} id={'innerProduct2D'}>
   Inner Product in <Katex math={'\\mathbb{R}^2'} />:
 </Title>
 <InnerProduct2D />
-
+</div>
 
 
 <Part1 />
