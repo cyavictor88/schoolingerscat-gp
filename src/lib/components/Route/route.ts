@@ -18,6 +18,7 @@ export const rootRoute : IRoute = {
     {label: 'Hello', subRoutes: [
       {label: 'World', path: '/hello/world'},
       {label: 'Scroll', path: '/hello/scroll'},
+      {label: 'Scroller', path: '/hello/scroller'},
     ]},
     {label: 'Signal Processing', subRoutes: [
       {label: 'Fourier Series', subRoutes:[
