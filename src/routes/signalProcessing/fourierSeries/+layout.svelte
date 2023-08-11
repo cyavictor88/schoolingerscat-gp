@@ -91,7 +91,7 @@
 	</div>
 {/if}
 
-<div style="display:flex; flex-flow: row nowrap; justify-content: space-between;">
+<div style="display:flex; flex-flow: row nowrap; ">
 	{#if displayModeFullSide}
 		<div>
 			<button
@@ -144,6 +144,7 @@
 		border: 1px black solid;
 		padding: 4px;
 		overflow-y: scroll;
+		flex-grow: 1;
 	}
 
 	button {

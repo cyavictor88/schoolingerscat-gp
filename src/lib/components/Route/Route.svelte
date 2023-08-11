@@ -33,7 +33,6 @@
 
 
 </script>
-
 {#if route}
 
   {#if route.label}
@@ -41,7 +40,7 @@
     <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
     <h4 style="padding-left: {indent}px" style:--bgColor={bgColor} on:click={toggleOpen} >
       {#if route.path}
-        <a href={base+route.path} style:--bg-1={route.path === currentPath ? 'lightgreen' : ''} on:click={toggleMenu}>
+        <a href={base+route.path} style:--bg-1={route.path === currentPath ? 'LavenderBlush' : ''} on:click={toggleMenu}>
           {#if route.katexMix}
             <KatexMix mixedString={route.katexMix}/>
           {:else}
@@ -63,11 +62,12 @@
 
 
 {/if}
-
 <style>
+
   h4 {
     background-color: var(--bgColor);
     margin: 0;
+    padding-right: 4px;
   }
 
   h4:hover {
@@ -76,6 +76,7 @@
 
   a {
     background: var(--bg-1);
+    white-space: nowrap;
   }
 
 
