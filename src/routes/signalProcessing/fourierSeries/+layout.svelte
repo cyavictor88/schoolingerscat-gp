@@ -130,6 +130,7 @@
 		id="content"
 		style="top:{$topBarHeight}px; 
                           max-height: calc(100vh - {$topBarHeight}px);
+													height: calc(100vh - {$topBarHeight}px);
                           "
 	>
 		<slot />
@@ -139,10 +140,9 @@
 <style>
 	#content {
 		/* position: fixed; */
-		height: 100%;
 		background-color: LightSteelBlue;
 		border: 1px black solid;
-		padding: 4px;
+		padding: 0px 4px;
 		overflow-y: scroll;
 		flex-grow: 1;
 	}
