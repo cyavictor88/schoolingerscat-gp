@@ -7,6 +7,7 @@
 	import { afterNavigate } from "$app/navigation";
 	import { mixin } from "lodash";
 	import KatexMix from "../Katex/KatexMix.svelte";
+  import url from './url'
   export let route: IRoute | null = null;
   export let indent = 0;
   export let toggleMenu: any = ()=>{};
@@ -29,7 +30,11 @@
     currentPath = window.location.pathname;
   })
 
-
+  let currentHash = '';
+  $: if($url && typeof $url !== 'string' ) {
+    currentHash = ($url as URL).hash;
+  }
+  
 
 
 </script>
@@ -40,7 +45,7 @@
     <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
     <h4 style="padding-left: {indent}px" style:--bgColor={bgColor} on:click={toggleOpen} >
       {#if route.path}
-        <a href={base+route.path} style:--bg-1={route.path === currentPath ? 'LavenderBlush' : ''} on:click={toggleMenu}>
+        <a href={base+route.path} style:--bg-1={route.path === currentPath || route.path===currentHash? 'LavenderBlush' : ''} on:click={toggleMenu}>
           {#if route.katexMix}
             <KatexMix mixedString={route.katexMix}/>
           {:else}
