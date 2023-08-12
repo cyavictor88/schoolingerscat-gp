@@ -51,7 +51,8 @@
 						intersectingStatus[nodeIndex].rectBound =  entry.boundingClientRect;
 						intersectingStatus[nodeIndex].rectInter =  entry.intersectionRect;
 
-						let intersectingEntries = intersectingStatus.filter(x=>x.isInteresecting && x.rectBound && x.rectInter );
+						let intersectingEntries = intersectingStatus.filter(x=>x.isInteresecting && x.rectBound && x.rectInter
+						&& x.rectBound.top/window.innerHeight < 0.1 );
 						let orderedIntersectingEntries = intersectingEntries.sort((a,b)=> 
 						b.rectInter!.height/b.rectBound!.height -a.rectInter!.height/a.rectBound!.height );
 						if(highlightNode === null || highlightNode!== orderedIntersectingEntries[0].node){
@@ -76,7 +77,7 @@
 						const rectbT = x.rectBound?.top.toFixed(2);
 						const rectiT = x.rectInter?.top.toFixed(2);
 						const ishighlight = highlightNode === x.node? '✅':'❌';
-						return `${ishighlight} ${id} ${isInteresecting} ${rectbT} ${rectiT} ${(x.rectInter?.height/x.rectBound?.height).toFixed(2)}`
+						return `${ishighlight} ${id} ${isInteresecting} ${rectbT} ${rectiT} ${(x.rectInter?.height/x.rectBound?.height).toFixed(2)} ${x.rectBound.top.toFixed(2)} ${window.innerHeight}`
 					})
 					entry.target.innerHTML = entry.target.id+" "+entry.intersectionRatio.toFixed(2)+" "+rectBound.top.toFixed(2)+" "+rectInter.top.toFixed(2)
 
