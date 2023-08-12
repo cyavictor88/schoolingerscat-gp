@@ -5,6 +5,15 @@
 	let observer: IntersectionObserver;
   let sectionsStatus: Map<HTMLElement,boolean> = new Map();
   let statusMap: Map<string,boolean> = new Map();
+	interface IIntersectingStatus {
+		node: Element;
+		isInteresecting: boolean;
+		rectInter?: DOMRectReadOnly;
+		rectBound?: DOMRectReadOnly;
+	}
+	let intersectingStatus : IIntersectingStatus[] = [];
+
+	let highlightNode : Element | null = null;
 
 
 	onMount(() => {
@@ -21,13 +30,28 @@
             
           }
 
-          // sectionsStatus.set(entry.target as HTMLElement, entry.isIntersecting);
+          sectionsStatus.set(entry.target as HTMLElement, entry.isIntersecting);
 
-          // sectionsStatus.forEach((val,key)=>{
-          //   statusMap.set(key.id, val)
-          // })
-          console.log(statusMap)
-					entry.target.innerHTML = entry.intersectionRatio.toFixed(2);
+          sectionsStatus.forEach((val,key)=>{
+            statusMap.set(key.id, val)
+          })
+					const ih = entry.intersectionRect.top;
+					const bh = entry.boundingClientRect.top;
+					const nodeIndex = intersectingStatus.findIndex(x=>x.node.id===entry.target.id);
+					if(nodeIndex > -1) {
+						intersectingStatus[nodeIndex].isInteresecting = entry.isIntersecting;
+						intersectingStatus[nodeIndex].rectBound =  entry.boundingClientRect;
+						intersectingStatus[nodeIndex].rectInter =  entry.intersectionRect;
+						intersectingStatus = [...intersectingStatus];
+						const firstTrueEntry = intersectingStatus.find(x=>x.isInteresecting &&
+						x.rectBound && x.rectInter && x.rectInter) ?? intersectingStatus[0];
+						if(highlightNode === null || highlightNode!== firstTrueEntry.node){
+							highlightNode = firstTrueEntry.node;
+							console.log(highlightNode.id);
+						}
+					}
+
+					entry.target.innerHTML = entry.target.id+" "+entry.intersectionRatio.toFixed(2)+" "+entry.isIntersecting+" "+bh+" "+ih+" "+entry.boundingClientRect.height+" "+entry.intersectionRect.height;
 				});
 			};
 
@@ -36,6 +60,7 @@
 			sectionNodeList.forEach(function (node, index) {
         sectionsStatus.set(node,false);
         statusMap.set(node.id, false);
+				intersectingStatus.push({node:node,isInteresecting:false})
 				observer.observe(node);
 			});
 		}
