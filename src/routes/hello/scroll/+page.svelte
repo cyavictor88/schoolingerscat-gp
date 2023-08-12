@@ -2,22 +2,25 @@
   import Scrollspy from "./Scrollspy.svelte";
 </script>
 
+  <Scrollspy>
+    <section class='great' id='s1' />
+    <section class='large' id='s2' />
+    <section class='small' id='s3' />
+    <section class='tiny' id='s4' />
+    <section class='small' id='s5' />
+    <section class='big' id='s6' />
+    <section class='half' id='s7' />
+    <section class='small' id='s8' />
+    <section class='tiny' id='s9' />
+  
+  </Scrollspy>
 
-<Scrollspy>
-  <section class='great' id='s1' />
-  <section class='large' id='s2' />
-  <section class='small' id='s3' />
-  <section class='tiny' id='s4' />
-  <section class='small' id='s5' />
-  <section class='big' id='s6' />
-  <section class='half' id='s7' />
-  <section class='small' id='s8' />
-  <section class='tiny' id='s9' />
 
-</Scrollspy>
+
 
 
 <style>
+
   section {
     background-color: green;
     margin: 10px;   

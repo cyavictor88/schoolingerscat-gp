@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { xgcd } from 'mathjs';
 	import { onMount } from 'svelte';
 	let container: HTMLDivElement;
 	let sectionNodeList;
@@ -14,14 +15,16 @@
 	let intersectingStatus : IIntersectingStatus[] = [];
 
 	let highlightNode : Element | null = null;
+	let sectionsDebug : string[] = [];
 
 
 	onMount(() => {
 		if (typeof IntersectionObserver !== 'undefined' && container) {
       console.log(container)
       let options = {
+				root: null,
 				rootMargin: '0px',
-				threshold: [0.2, 0.4, 0.6, 0.8, 1.0]
+				threshold: [0,1]
 			};
 			let callback = (entries: IntersectionObserverEntry[], observer: any) => {
 				entries.forEach((entry) => {
@@ -35,23 +38,42 @@
           sectionsStatus.forEach((val,key)=>{
             statusMap.set(key.id, val)
           })
-					const ih = entry.intersectionRect.top;
-					const bh = entry.boundingClientRect.top;
+					const rectInter = entry.intersectionRect;
+					const rectBound = entry.boundingClientRect;
 					const nodeIndex = intersectingStatus.findIndex(x=>x.node.id===entry.target.id);
 					if(nodeIndex > -1) {
 						intersectingStatus[nodeIndex].isInteresecting = entry.isIntersecting;
 						intersectingStatus[nodeIndex].rectBound =  entry.boundingClientRect;
 						intersectingStatus[nodeIndex].rectInter =  entry.intersectionRect;
-						intersectingStatus = [...intersectingStatus];
-						const firstTrueEntry = intersectingStatus.find(x=>x.isInteresecting &&
-						x.rectBound && x.rectInter && x.rectInter) ?? intersectingStatus[0];
-						if(highlightNode === null || highlightNode!== firstTrueEntry.node){
-							highlightNode = firstTrueEntry.node;
+						intersectingStatus = intersectingStatus.map((x,idx)=>{
+							if(idx===nodeIndex) return x;
+							return {...x, rectBound: x.node.getBoundingClientRect()}
+						})
+
+						let intersectingEntries = intersectingStatus.filter(x=>x.isInteresecting && x.rectBound && x.rectInter );
+						let orderedIntersectingEntries = intersectingEntries.sort((a,b)=> 
+						b.rectInter!.height/b.rectBound!.height -a.rectInter!.height/a.rectBound!.height );
+						if(highlightNode === null || highlightNode!== orderedIntersectingEntries[0].node){
+							highlightNode = orderedIntersectingEntries[0].node;
 							console.log(highlightNode.id);
 						}
-					}
 
-					entry.target.innerHTML = entry.target.id+" "+entry.intersectionRatio.toFixed(2)+" "+entry.isIntersecting+" "+bh+" "+ih+" "+entry.boundingClientRect.height+" "+entry.intersectionRect.height;
+						// let firstTrueEntry = intersectingStatus.find(x=>x.isInteresecting &&
+						// x.rectBound && x.rectInter && x.rectInter.h.top > 0) ?? intersectingStatus[0];
+						// if(highlightNode === null || highlightNode!== firstTrueEntry.node){
+						// 	highlightNode = firstTrueEntry.node;
+						// 	console.log(highlightNode.id);
+						// }
+					}
+					sectionsDebug = intersectingStatus.map(x=>{
+						const id = x.node.id;
+						const isInteresecting = x.isInteresecting ? '✓':'𐄂';
+						const rectbT = x.rectBound?.top.toFixed(2);
+						const rectiT = x.rectInter?.top.toFixed(2);
+						const ishighlight = highlightNode === x.node? '✅':'❌';
+						return `${ishighlight} ${id} ${isInteresecting} ${rectbT} ${rectiT} ${(x.rectInter?.height/x.rectBound?.height).toFixed(2)}`
+					})
+					entry.target.innerHTML = entry.target.id+" "+entry.intersectionRatio.toFixed(2)+" "+rectBound.top.toFixed(2)+" "+rectInter.top.toFixed(2)
 				});
 			};
 
@@ -67,12 +89,25 @@
 	});
 </script>
 
-<div bind:this={container}>
+<div id='stuff' bind:this={container}>
 	<slot />
 </div>
 
+<div id='debug'>
+	{#each sectionsDebug as sec}
+	<p>{sec}</p>
+	{/each}
+</div>
+
 <style>
-  div {
+  #stuff {
     background-color: red;
   }
+
+	#debug {
+		position:fixed;
+		top:100px;
+		right:300px;
+		background-color: yellow;
+	}
 </style>
