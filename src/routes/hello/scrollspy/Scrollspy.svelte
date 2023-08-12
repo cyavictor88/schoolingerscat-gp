@@ -35,7 +35,6 @@
 						intersectingStatus[nodeIndex].rectBound =  entry.boundingClientRect;
 						intersectingStatus[nodeIndex].rectInter =  entry.intersectionRect;
 					}
-					entry.target.innerHTML = entry.target.id+" "+entry.intersectionRatio.toFixed(2)+" "+rectBound.top.toFixed(2)+" "+rectInter.top.toFixed(2)
 				});
 				intersectingStatus = intersectingStatus.map((x)=>{
 					return {...x, rectBound: x.node.getBoundingClientRect()}

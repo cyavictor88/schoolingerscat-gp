@@ -3,18 +3,18 @@
 	let container: HTMLDivElement;
 	let sectionNodeList;
 	let observer: IntersectionObserver;
-	interface IIntersectingStatus {
+	interface IScrollspy {
 		node: Element;
 		isInteresecting: boolean;
 		rectInter?: DOMRectReadOnly;
 		rectBound?: DOMRectReadOnly;
 	}
-	let intersectingStatus : IIntersectingStatus[] = [];
+	let intersectingStatus : IScrollspy[] = [];
 
 	let highlightNode : Element | null = null;
 	let sectionsDebug : string[] = [];
 	const highlightableTopToVHRatio = 0.11;
-	const highlightColor = 'lightgrey';
+	const highlightColor = 'yellow';
 	const unhighlightColor = 'grey';
 
 
@@ -35,7 +35,6 @@
 						intersectingStatus[nodeIndex].rectBound =  entry.boundingClientRect;
 						intersectingStatus[nodeIndex].rectInter =  entry.intersectionRect;
 					}
-					entry.target.innerHTML = entry.target.id+" "+entry.intersectionRatio.toFixed(2)+" "+rectBound.top.toFixed(2)+" "+rectInter.top.toFixed(2)
 				});
 				intersectingStatus = intersectingStatus.map((x)=>{
 					return {...x, rectBound: x.node.getBoundingClientRect()}
@@ -43,22 +42,13 @@
 
 				let intersectingEntries = intersectingStatus.filter(x=>x.isInteresecting && x.rectBound && x.rectInter && x.rectBound.top/window.innerHeight < highlightableTopToVHRatio );
 				let orderedIntersectingEntries = intersectingEntries.sort((a,b)=> b.rectInter!.height/b.rectBound!.height - a.rectInter!.height/a.rectBound!.height );
-				if(highlightNode === null || highlightNode!== orderedIntersectingEntries[0].node){
+				if(highlightNode === null || highlightNode !== orderedIntersectingEntries[0].node){
 					highlightNode = orderedIntersectingEntries[0].node;
-					// console.log(highlightNode.id);
+          window.location.hash = highlightNode.id;
 				}
-				intersectingStatus.forEach(x=>{
-					const bgColor =  highlightNode===x.node ? highlightColor : '';
-					(x.node as HTMLElement).style.backgroundColor = bgColor;
-				})
-					
-				// sectionsDebug = intersectingStatus.map(x=>{
-				// 	const id = x.node.id;
-				// 	const isInteresecting = x.isInteresecting ? '✓':'𐄂';
-				// 	const rectbT = x.rectBound?.top.toFixed(2);
-				// 	const rectiT = x.rectInter?.top.toFixed(2);
-				// 	const ishighlight = highlightNode === x.node? '✅':'❌';
-				// 	return `${ishighlight} ${id} ${isInteresecting} max of: ${(x.rectInter?.height/x.rectBound?.height).toFixed(2)} && ${highlightableTopToVHRatio} > ${(x.rectBound.top/window.innerHeight).toFixed(2)}`
+				// intersectingStatus.forEach(x=>{
+				// 	const bgColor =  highlightNode===x.node ? highlightColor : unhighlightColor;
+				// 	(x.node as HTMLElement).style.backgroundColor = bgColor;
 				// })
 			};
 
@@ -71,6 +61,14 @@
 
 		}
 	});
+
+  // $: if(window.location.hash!=''){
+	// 	intersectingStatus.forEach(x=>{
+	// 		console.log(window.location.hash)
+	// 				const bgColor = '#'+x.node.id===window.location.hash ? highlightColor : unhighlightColor;
+	// 				(x.node as HTMLElement).style.backgroundColor = bgColor;
+	// 			})
+	// }
 </script>
 
 <div id='stuff' bind:this={container}>
@@ -84,9 +82,7 @@
 </div>
 
 <style>
-  #stuff {
-    background-color: red;
-  }
+
 
 	#debug {
 		position:fixed;

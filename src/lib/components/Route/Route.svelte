@@ -7,7 +7,8 @@
 	import { afterNavigate } from "$app/navigation";
 	import { mixin } from "lodash";
 	import KatexMix from "../Katex/KatexMix.svelte";
-  import url from './url'
+  import url from './url';
+  import { scrollspyIndex } from "./scrollspy";
   export let route: IRoute | null = null;
   export let indent = 0;
   export let toggleMenu: any = ()=>{};
