@@ -48,7 +48,7 @@
 		<div class='dropdown-content' style='background-color: gold'>
 			<!-- svelte-ignore a11y-no-static-element-interactions -->
 			<div id='close' on:click={toggleOpen}><p>{cross}</p></div>
-			<Route route={rootRoute} indent={0} toggleMenu={toggleOpen} bgColor={'Gold'}/>
+			<Route route={rootRoute} indent={0} toggleMenu={toggleOpen} bgColor={'gold'}/>
 		</div>
 	{/if}
 </div>
@@ -58,17 +58,17 @@
 		margin: 0px;
 	}
 	.dropdown {
-		background-color: Gold;
+		background-color: gold;
 		border-radius: 3px;
 		cursor: pointer;
 		padding: 0px;
-		border: 1px Gold solid;
+		border: 1px gold solid;
 		margin-left: 5px;
 	}
   .dropdown-content {
     display: block;
     position: absolute;
-    background-color: #f9f9f9;
+    background-color: gold;
     min-width: 160px;
 		box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
     z-index: 2;

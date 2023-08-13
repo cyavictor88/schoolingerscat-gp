@@ -25,6 +25,8 @@
 		align-items: center;
 		margin: 0;
 		width: 100%;
+		font-family: "Gill Sans", sans-serif;
+
 	}
 	.logo a {
 			text-decoration: none;

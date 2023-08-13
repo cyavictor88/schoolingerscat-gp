@@ -13,9 +13,11 @@
 
 <h1>Fourier Series - Introduction</h1>
 <p>
-	Fourier Series is a method to decompose a given function into a combination of <Katex math={'sin'} /> and <Katex math={'cos'}/> functions.
+	Fourier Series is a method to decompose a given function <Katex math={'f(x)'} /> into a combination of <Katex math={'sin'} /> and <Katex math={'cos'}/> functions.
 </p>
-<p>Here is an example:</p>
+<p>Example:</p>
+<Katex math={'f(x) = 4x^3 + 3x^2 -4x +1'} />
+<p>We can decompose <Katex math={'f(x)'} /> into </p>
 <p>Say we have a function</p>
 <p>
 	To understand Fourier Series, we will first go over inner product. With inner product, we can

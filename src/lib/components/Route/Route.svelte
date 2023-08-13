@@ -98,7 +98,8 @@
 		white-space: nowrap;
 		text-decoration: none;
 		border-radius: 4px;
-		
+		color: #3F2E3E;
+		font-family: Georgia, serif;
 	}
 
   span {
