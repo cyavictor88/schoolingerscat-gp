@@ -20,6 +20,7 @@
 			intersectingStatus.forEach((x) => {
 				const bgColor = '#' + x.id === window.location.hash ? 'yellow' : '';
 				(x as HTMLElement).style.backgroundColor = bgColor;
+				setTimeout(()=>{(x as HTMLElement).style.backgroundColor =''}, 1000)
 			});
     };
 
@@ -164,3 +165,12 @@
 		</section>
 	</Scrollspy>
 </div>
+
+<style>
+	section {
+		-moz-transition: all .2s ease;
+    -o-transition: all .2s ease;
+    -webkit-transition: all .2s ease;
+    transition: all .2s ease;
+	}
+	</style>

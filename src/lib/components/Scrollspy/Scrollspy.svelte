@@ -62,13 +62,6 @@
 		}
 	});
 
-  // $: if(window.location.hash!=''){
-	// 	intersectingStatus.forEach(x=>{
-	// 		console.log(window.location.hash)
-	// 				const bgColor = '#'+x.node.id===window.location.hash ? highlightColor : unhighlightColor;
-	// 				(x.node as HTMLElement).style.backgroundColor = bgColor;
-	// 			})
-	// }
 </script>
 
 <div id='stuff' bind:this={container}>
@@ -90,4 +83,6 @@
 		right:300px;
 		background-color: yellow;
 	}
+
+
 </style>
