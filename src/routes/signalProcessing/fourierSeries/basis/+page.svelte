@@ -8,42 +8,31 @@
 	let wrapper: HTMLDivElement;
   let clicked: boolean = false;
 
-    let scrollY = 0;
+  let scrollY = 0;
 	const innerPageRoute = getContext<Writable<IRoute>>('innerPageRoute');
 	onMount(() => {
 		innerPageRoute.set(pageRoute);
     const intersectingStatus = wrapper.querySelectorAll('section');
 
-    const lc = ()=>{
-      // console.log('lc change',window.location)
-      if(!clicked)return;
-			intersectingStatus.forEach((x) => {
-				const bgColor = '#' + x.id === window.location.hash ? 'yellow' : '';
-				(x as HTMLElement).style.backgroundColor = bgColor;
-				setTimeout(()=>{(x as HTMLElement).style.backgroundColor =''}, 1000)
-			});
-    };
 
     const scrollingAction = (eve:Event)=>{
-      // console.log('scrooling')
       clicked = false;
       intersectingStatus.forEach((x) => {
-				// console.log(window.location.hash);
 				(x as HTMLElement).style.backgroundColor = '';
 			});
     }
-    const clickAction = ()=>{
-      console.log('clickedd')
-      clicked = true;
-    }
-		window.addEventListener('popstate', lc);
-		document.body.addEventListener('wheel', scrollingAction);
-    document.body.addEventListener('click', clickAction); 
-    return ()=>{
-      window.removeEventListener('popstate', lc);
-		  document.body.removeEventListener('wheel', scrollingAction);
-      document.body.removeEventListener('click', clickAction); 
 
+    // const clickAction = () => {
+    //   console.log('clickedd')
+    //   clicked = true;
+    // }
+
+		// window.addEventListener('popstate', lc);
+		// document.body.addEventListener('wheel', scrollingAction);
+    // document.body.addEventListener('click', clickAction); 
+    return ()=>{
+		  // document.body.removeEventListener('wheel', scrollingAction);
+      // document.body.removeEventListener('click', clickAction); 
     }
 	});
 
@@ -53,7 +42,7 @@
 </script>
 <svelte:window bind:scrollY={scrollY} />
 <div bind:this={wrapper} on:scroll={(event) => {
-  console.log(event.currentTarget.scrollTop) // 👈
+  console.log(event.currentTarget.scrollTop)
 }} >
 	<h1>basis</h1>
 	<Scrollspy>

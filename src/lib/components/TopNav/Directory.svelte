@@ -42,12 +42,12 @@
 <div class='dropdown'  tabindex="0" role="button" aria-pressed="false" on:mouseenter={()=>{setMouseIsOverDropdown(true)}} on:mouseleave={()=>{setMouseIsOverDropdown(false)}}>
 	<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 		
-	<p on:click={setOpenedPathAndToogleOpen}>directory{!open? downTriangle : upTriangle }</p>
+	<p on:click={setOpenedPathAndToogleOpen}>Directory{!open? downTriangle : upTriangle }</p>
 
 	{#if open}
 		<div class='dropdown-content'>
 			<!-- svelte-ignore a11y-no-static-element-interactions -->
-			<div id='close' on:click={toggleOpen}><p>{cross}</p></div>
+			<!-- <div id='close' on:click={toggleOpen}><p>{cross}</p></div> -->
 			<Route route={rootRoute} indent={0} toggleMenu={toggleOpen} bgColor={'Gold'}/>
 		</div>
 	{/if}

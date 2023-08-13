@@ -10,7 +10,7 @@ export interface IRoute {
 }
 // https://svelte.dev/repl/347b37e18b5d4a65bbacfd097536db02?version=4.1.2
 export const rootRoute : IRoute = {
-  label:'home',
+  label:'Home',
   path:'/',
   subRoutes: [
     {label: 'FreeDraw', path: '/freeDraw'},

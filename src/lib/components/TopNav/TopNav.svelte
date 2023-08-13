@@ -11,6 +11,7 @@
 </div>
 
 <style>
+
 	.top-navbar {
 		display: flex;
 		flex-flow: row nowrap;

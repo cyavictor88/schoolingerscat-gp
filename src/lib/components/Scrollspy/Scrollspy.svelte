@@ -17,7 +17,6 @@
 	const highlightColor = 'yellow';
 	const unhighlightColor = 'grey';
 
-
 	onMount(() => {
 		if (typeof IntersectionObserver !== 'undefined' && container) {
       console.log(container)
@@ -42,14 +41,21 @@
 
 				let intersectingEntries = intersectingStatus.filter(x=>x.isInteresecting && x.rectBound && x.rectInter && x.rectBound.top/window.innerHeight < highlightableTopToVHRatio );
 				let orderedIntersectingEntries = intersectingEntries.sort((a,b)=> b.rectInter!.height/b.rectBound!.height - a.rectInter!.height/a.rectBound!.height );
-				if(highlightNode === null || highlightNode !== orderedIntersectingEntries[0].node){
-					highlightNode = orderedIntersectingEntries[0].node;
-          window.location.hash = highlightNode.id;
+				if(highlightNode === null || (highlightNode !== orderedIntersectingEntries[0].node)){
+					if(orderedIntersectingEntries.length)
+					{
+						highlightNode = orderedIntersectingEntries[0].node;
+          	window.location.hash = highlightNode.id;
+					}
+
 				}
+
 				// intersectingStatus.forEach(x=>{
 				// 	const bgColor =  highlightNode===x.node ? highlightColor : unhighlightColor;
 				// 	(x.node as HTMLElement).style.backgroundColor = bgColor;
 				// })
+				// setTimeout(()=>{(x as HTMLElement).style.backgroundColor =''}, 1000)
+
 			};
 
 			observer = new IntersectionObserver(callback, options);
@@ -59,6 +65,18 @@
 				observer.observe(node);
 			});
 
+		}
+    const locationChangeAction = ()=>{
+			intersectingStatus.forEach((x) => {
+				const bgColor = '#' + x.node.id === window.location.hash ? 'rgba(255,165,255   ,0.2)' : '';
+				(x.node as HTMLElement).style.background = bgColor;
+				setTimeout(()=>{(x.node as HTMLElement).style.background =''}, 1000)
+			});
+    };
+		window.addEventListener('popstate', locationChangeAction);
+		return ()=>{
+			observer.disconnect();
+      window.removeEventListener('popstate', locationChangeAction);
 		}
 	});
 
