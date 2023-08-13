@@ -45,9 +45,9 @@
 	<p on:click={setOpenedPathAndToogleOpen}>Directory{!open? downTriangle : upTriangle }</p>
 
 	{#if open}
-		<div class='dropdown-content'>
+		<div class='dropdown-content' style='background-color: gold'>
 			<!-- svelte-ignore a11y-no-static-element-interactions -->
-			<!-- <div id='close' on:click={toggleOpen}><p>{cross}</p></div> -->
+			<div id='close' on:click={toggleOpen}><p>{cross}</p></div>
 			<Route route={rootRoute} indent={0} toggleMenu={toggleOpen} bgColor={'Gold'}/>
 		</div>
 	{/if}

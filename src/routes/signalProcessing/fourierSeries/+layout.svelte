@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { writable } from 'svelte/store';
 	import { setContext } from 'svelte';
-
+	import { fade, fly } from 'svelte/transition';
 	import { topBarHeight } from '$lib/store';
 	import { beforeUpdate, afterUpdate, onMount } from 'svelte';
 
@@ -56,17 +56,17 @@
 	function setMouseIsOverDropdown(isOver: boolean) {
 		mouseIsOverDropdown = isOver;
 	}
-	onMount(()=>{
+	onMount(() => {
 		window.addEventListener('click', closeIfMouseNotOver);
 		return () => {
-			window.removeEventListener('click',closeIfMouseNotOver)
-		}
+			window.removeEventListener('click', closeIfMouseNotOver);
+		};
 	});
 </script>
 
 {#if showSide}
-	<div
-		style="position: fixed; background-color:lightgrey; z-index:2;box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;"
+	<div in:fly={{ y: 200, duration: 500 }} out:fade
+		style="position: fixed; background-color: #6c584c; z-index:2;box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;"
 	>
 		<div style="display:flex; flex-flow:row nowrap; justify-content: space-between;">
 			<button
@@ -86,14 +86,14 @@
 			</p>
 		</div>
 		<SideBar route={rootRoute} />
-		<p></p>
-		<SideBar route={$innerPageRoute} routeBgColor={'cyan'} />
+		<p />
+		<SideBar route={$innerPageRoute} routeBgColor={'#ddb892'} />
 	</div>
 {/if}
 
 <div style="display:flex; flex-flow: row nowrap; ">
 	{#if displayModeFullSide}
-		<div>
+		<div in:fly={{ y: 200, duration: 1000 }} >
 			<button
 				on:click={() => {
 					sideBarWidth = narrowSideBarWidth;
@@ -101,7 +101,7 @@
 			>
 			<SideBar route={rootRoute} />
 			<p />
-			<SideBar route={$innerPageRoute} routeBgColor={'cyan'} />
+			<SideBar route={$innerPageRoute} routeBgColor={'#ddb892'} />
 		</div>
 	{:else if window.outerWidth < 800}
 		<button
@@ -140,7 +140,7 @@
 <style>
 	#content {
 		/* position: fixed; */
-		background-color: LightSteelBlue;
+		background-color: #e7d8c9;
 		border: 1px black solid;
 		padding: 0px 4px;
 		overflow-y: scroll;
@@ -148,45 +148,29 @@
 	}
 
 	button {
-		background-color: #e1ecf4;
-		border-radius: 3px;
-		border: 1px solid #7aa7c7;
-		box-shadow: rgba(255, 255, 255, 0.7) 0 1px 0 0 inset;
+		background-color: #222;
+		border-radius: 4px;
+		border-style: none;
 		box-sizing: border-box;
-		color: #39739d;
+		color: #fff;
 		cursor: pointer;
 		display: inline-block;
-		font-family: -apple-system, system-ui, 'Segoe UI', 'Liberation Sans', sans-serif;
-		font-size: 13px;
-		font-weight: 400;
-		line-height: 1.15385;
-		margin: 0;
-		margin-top:8px;
+		font-family: 'Farfetch Basis', 'Helvetica Neue', Arial, sans-serif;
+		font-size: 12px;
+		margin: 2px;
+		height: 25px;
+		width: 20px;
+		padding:4px;
 		outline: none;
-		position: relative;
 		text-align: center;
-		text-decoration: none;
+		text-transform: none;
 		user-select: none;
 		-webkit-user-select: none;
 		touch-action: manipulation;
-		vertical-align: baseline;
-		white-space: nowrap;
-		height:20px;
 	}
 
 	button:hover,
 	button:focus {
-		background-color: #b3d3ea;
-		color: #2c5777;
-	}
-
-	button:focus {
-		box-shadow: 0 0 0 4px rgba(0, 149, 255, 0.15);
-	}
-
-	button:active {
-		background-color: #a0c7e4;
-		box-shadow: none;
-		color: #2c5777;
+		opacity: 0.75;
 	}
 </style>

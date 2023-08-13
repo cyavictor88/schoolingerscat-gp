@@ -27,7 +27,7 @@
 		position: fixed;
 		height: 100%;
 		border: 1px black solid;
-		background-color: lightgrey;
+		background-color: rgb(222, 207, 207);
 		padding: 2px;
 		overflow-y: scroll;
 		z-index: 0;

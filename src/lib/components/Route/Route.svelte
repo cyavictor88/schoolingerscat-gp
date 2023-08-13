@@ -48,7 +48,7 @@
 						on:click={toggleMenu}
 					>
 						<span style:--bg-1={route.path === currentPath || route.path === currentHash
-							? 'LavenderBlush'
+							? '#e6ccb2'
 							: ''}>
 							{#if route.katexMix}
 								<KatexMix mixedString={route.katexMix} />
@@ -86,9 +86,11 @@
 	}
 
 	li:hover {
-		background-color: lightgoldenrodyellow;
-		text-decoration: underline;
-		border-radius: 4px;
+		background-color: #ede0d4;
+		border-left: 4px maroon solid;
+		/* border-bottom: 4px maroon solid; */
+		/* text-decoration: underline; */
+		/* border-radius: 4px; */
 	}
 
 	a {
@@ -96,6 +98,7 @@
 		white-space: nowrap;
 		text-decoration: none;
 		border-radius: 4px;
+		
 	}
 
   span {

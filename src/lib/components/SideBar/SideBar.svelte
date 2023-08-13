@@ -3,7 +3,7 @@
   import Route from '$lib/components/Route/Route.svelte'
 	import { onMount } from "svelte";
   export let route : IRoute | null = null;
-  export let routeBgColor : string = 'lightblue';
+  export let routeBgColor : string = '#b08968';
   $: if(route) route.open = true; 
 
 </script>
