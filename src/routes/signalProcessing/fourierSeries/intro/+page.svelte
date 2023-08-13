@@ -5,9 +5,31 @@
 	import { getContext } from 'svelte';
 	import type { Writable } from 'svelte/store';
 	import Katex from '$lib/components/Katex/Katex.svelte';
+  import Chart from 'chart.js/auto'
+	import { data } from './chart/data';
 	const innerPageRoute = getContext<Writable<IRoute>>('innerPageRoute');
+  let exmapleFunctionCanvas : HTMLCanvasElement;
 	onMount(() => {
 		innerPageRoute.set(pageRoute);
+    new Chart(exmapleFunctionCanvas, {
+    type: 'scatter',
+    data: {
+      datasets: [{
+        label: '(x,f(x))',
+        data: data(),
+        borderWidth: 1,
+        pointStyle: false,
+        showLine: true,
+        borderColor: 'red'
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+
+
+    }
+  });
 	});
 </script>
 
@@ -16,7 +38,10 @@
 	Fourier Series is a method to decompose a given function <Katex math={'f(x)'} /> into a combination of <Katex math={'sin'} /> and <Katex math={'cos'}/> functions.
 </p>
 <p>Example:</p>
-<Katex math={'f(x) = 4x^3 + 3x^2 -4x +1'} />
+<Katex math={'f(x) = 9x^3 + 8x^2 -7x +6'} />
+<div style='width:500px; height:200px;'>
+<canvas bind:this={exmapleFunctionCanvas} />
+</div>
 <p>We can decompose <Katex math={'f(x)'} /> into </p>
 <p>Say we have a function</p>
 <p>
