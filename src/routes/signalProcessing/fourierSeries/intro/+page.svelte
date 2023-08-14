@@ -15,12 +15,13 @@
     type: 'scatter',
     data: {
       datasets: [{
-        label: '(x,f(x))',
+        label: 'f(x) = x^3 - 12x + 16',
         data: data(),
         borderWidth: 1,
         pointStyle: false,
         showLine: true,
-        borderColor: 'red'
+        borderColor: 'red',
+        backgroundColor: 'red'
       }]
     },
     options: {
@@ -38,7 +39,7 @@
 	Fourier Series is a method to decompose a given function <Katex math={'f(x)'} /> into a combination of <Katex math={'sin'} /> and <Katex math={'cos'}/> functions.
 </p>
 <p>Example:</p>
-<Katex math={'f(x) = 9x^3 + 8x^2 -7x +6'} />
+<Katex math={'f(x) = x^3 -12 x +16'} />
 <div style='width:500px; height:200px;'>
 <canvas bind:this={exmapleFunctionCanvas} />
 </div>
