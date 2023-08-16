@@ -1,8 +1,6 @@
 import * as lodash from 'lodash';
 import { MathMlStringMesh, TypeMesh } from './mathml2mesh';
 import { EleDim as ED } from './EleDim';
-import { text } from '@sveltejs/kit';
-import { lgamma } from 'mathjs';
 import { callLambdaFunction, type CharMesh } from './lambdaGetJson';
 
 export enum MEleType {

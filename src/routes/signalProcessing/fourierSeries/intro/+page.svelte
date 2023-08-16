@@ -6,11 +6,19 @@
 	import type { Writable } from 'svelte/store';
 	import Katex from '$lib/components/Katex/Katex.svelte';
 	import { makeChart } from './chart/chart';
+	import { Simpson } from './chart/Simpson';
 	const innerPageRoute = getContext<Writable<IRoute>>('innerPageRoute');
 	let exmapleFunctionCanvas: HTMLCanvasElement;
+	let res = 0;
 	onMount(() => {
 		innerPageRoute.set(pageRoute);
     const chart = makeChart(exmapleFunctionCanvas);
+		const funcCos = (t:number,k:number) => ((t+5)**3-12*(t+5)+16) * Math.cos(k*(t+5)*2*Math.PI/10);
+		const funcSin = (t:number,k:number) => ((t+5)**3-12*(t+5)+16) * Math.sin(k*(t+5)*2*Math.PI/10);
+		const simpCos = new Simpson(funcCos);
+		const simpSin = new Simpson(funcSin);
+		const ks = Array.from({length:10},(_,i)=>i+1)
+		// res = simp.integrate(-5,5,1);
 	});
 </script>
 
@@ -25,7 +33,7 @@
 	<canvas bind:this={exmapleFunctionCanvas} />
 </div>
 <p>We can decompose <Katex math={'y(t)'} /> into</p>
-<p>Say we have a function</p>
+<p>Say we have a function{res}</p>
 <p>
 	To understand Fourier Series, we will first go over inner product. With inner product, we can
 	define orthogonality. Using orthogonality, we will then can define basis and vector decomposition.
