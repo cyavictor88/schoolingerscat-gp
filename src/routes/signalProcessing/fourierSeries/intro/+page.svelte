@@ -16,15 +16,15 @@
 
 <h1>Fourier Series - Introduction</h1>
 <p>
-	Fourier Series is a method to decompose a given function <Katex math={'f(x)'} /> into a combination
-	of <Katex math={'sin'} /> and <Katex math={'cos'} /> functions.
+	Fourier Series is a method to decompose a given periodic function <Katex math={'y(t)'} /> into a combination
+	of <Katex math={'sin'} /> and <Katex math={'cos'} /> functions. (periodic? we will elaborate on that later)
 </p>
 <p>Example:</p>
-<Katex math={'f(x) = x^3 -12 x +16'} />
+<Katex math={'y(t) = t^3 -12 t +16 \\; \\text{for} \\; -5\\le t \\le 5'}  />
 <div style="max-width: 500px; height:200px;">
 	<canvas bind:this={exmapleFunctionCanvas} />
 </div>
-<p>We can decompose <Katex math={'f(x)'} /> into</p>
+<p>We can decompose <Katex math={'y(t)'} /> into</p>
 <p>Say we have a function</p>
 <p>
 	To understand Fourier Series, we will first go over inner product. With inner product, we can

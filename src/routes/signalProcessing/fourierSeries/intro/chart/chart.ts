@@ -23,7 +23,7 @@ export function makeChart(ctx:HTMLCanvasElement) {
     data: {
       datasets: [
         {
-          label: 'f(x) = x^3 - 12x + 16',
+          label: 'y(t) = t^3 - 12t + 16',
           data: chartData,
           borderWidth: 1,
           pointStyle: false,
