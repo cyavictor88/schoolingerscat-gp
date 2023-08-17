@@ -1,4 +1,5 @@
 import Chart from "chart.js/auto";
+import { Simpson } from "./Simpson";
 
 function linspace(startValue:number , stopValue:number, cardinality:number) {
   const arr = [];
@@ -16,8 +17,38 @@ export function data():{x:number,y:number}[] {
   return arr
 }
 
+function fsData(){
+  const T = 12;
+  const funcCos = (t:number,k:number) => ((t+0)**3-12*(t+0)+16) * Math.cos(k*(t+0)*2*Math.PI/T)*2/T;
+  const funcSin = (t:number,k:number) => ((t+0)**3-12*(t+0)+16) * Math.sin(k*(t+0)*2*Math.PI/T)*2/T;
+  const simpCos = new Simpson(funcCos);
+  const simpSin = new Simpson(funcSin);
+  const ks = Array.from({length:10},(_,i)=>i);
+  const ak:number[] = [];
+  const bk:number[] = [];
+  ks.forEach(k=>{
+    ak.push(simpCos.integrate(-6,6,k,10000));
+    bk.push(simpSin.integrate(-6,6,k,10000));
+  });
+  ak[0] = ak[0]/2;
+  const xs = linspace(-5,5,100);
+  const ys = xs.map((x,i)=>{
+    let cos = 0;
+    let sin = 0;
+    ks.forEach(k=>{
+      cos += ak[k]*Math.cos(2*Math.PI*k*x/T);
+      sin += bk[k]*Math.sin(2*Math.PI*k*x/T);
+    })
+    return cos+sin;
+  });
+  const arr = [];
+  for (let i = 0; i < xs.length; i++) arr.push({x:xs[i],y:ys[i]});
+  return arr
+}
+
 export function makeChart(ctx:HTMLCanvasElement) {
   const chartData = data();
+  const chartData2 = fsData();
   return new Chart(ctx, {
     type: 'scatter',
     data: {
@@ -30,6 +61,15 @@ export function makeChart(ctx:HTMLCanvasElement) {
           showLine: true,
           borderColor: 'red',
           backgroundColor: 'red'
+        },
+        {
+          label: 'fourier series approx',
+          data: chartData2,
+          borderWidth: 2,
+          pointStyle: false,
+          showLine: true,
+          borderColor: 'blue',
+          backgroundColor: 'blue'
         }
       ]
     },

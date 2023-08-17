@@ -13,11 +13,9 @@
 	onMount(() => {
 		innerPageRoute.set(pageRoute);
     const chart = makeChart(exmapleFunctionCanvas);
-		const funcCos = (t:number,k:number) => ((t+5)**3-12*(t+5)+16) * Math.cos(k*(t+5)*2*Math.PI/10);
-		const funcSin = (t:number,k:number) => ((t+5)**3-12*(t+5)+16) * Math.sin(k*(t+5)*2*Math.PI/10);
-		const simpCos = new Simpson(funcCos);
-		const simpSin = new Simpson(funcSin);
-		const ks = Array.from({length:10},(_,i)=>i+1)
+		
+
+
 		// res = simp.integrate(-5,5,1);
 	});
 </script>
