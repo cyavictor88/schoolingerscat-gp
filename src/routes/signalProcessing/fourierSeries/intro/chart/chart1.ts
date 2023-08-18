@@ -10,18 +10,17 @@ function linspace(startValue:number , stopValue:number, cardinality:number) {
 }
 
 export function data():{x:number,y:number}[] {
-  const xs = linspace(-20,20,10000);
-  const ys = xs.map(t=> 5*Math.sin(t) -12*Math.cos(2*t)*Math.sin(t) +16)// = (x-2)**2 * (x+4)*1 ;
+  const xs = linspace(-4*Math.PI,4*Math.PI,10000);
+  const ys = xs.map(t=> 12*Math.cos(2*t)*Math.sin(t) +16)// = (x-2)**2 * (x+4)*1 ;
   const arr = [];
   for (let i = 0; i < xs.length; i++) arr.push({x:xs[i],y:ys[i]});
   return arr
 }
 
-
 function fsData(){
-  const T = 4;
-  const funcCos = (t:number,k:number) => (5*Math.sin(t**3) -12*Math.cos(2*t)*Math.sin(t) +16) * Math.cos(k*(t+0)*2*Math.PI/T)*2/T;
-  const funcSin = (t:number,k:number) => (5*Math.sin(t**3) -12*Math.cos(2*t)*Math.sin(t) +16) * Math.sin(k*(t+0)*2*Math.PI/T)*2/T;
+  const T = 2*Math.PI;
+  const funcCos = (t:number,k:number) => (12*Math.cos(2*t)*Math.sin(t) +16) * Math.cos(k*(t+0)*2*Math.PI/T)*2/T;
+  const funcSin = (t:number,k:number) => (12*Math.cos(2*t)*Math.sin(t) +16) * Math.sin(k*(t+0)*2*Math.PI/T)*2/T;
   const simpCos = new Simpson(funcCos);
   const simpSin = new Simpson(funcSin);
   const ks = Array.from({length:45},(_,i)=>i);
@@ -32,7 +31,7 @@ function fsData(){
     bk.push(simpSin.integrate(-T/2,T/2,k,1000));
   });
   ak[0] = ak[0]/2;
-  const xs = linspace(-5,5,100);
+  const xs = linspace(-4*Math.PI,4*Math.PI,100);
   const ys = xs.map((x,i)=>{
     let cos = 0;
     let sin = 0;
@@ -55,23 +54,23 @@ export function makeChart(ctx:HTMLCanvasElement) {
     data: {
       datasets: [
         {
-          label: 'y(t) = sin(t^3) - 12cos(2t) +16',
+          label: 'y(t) =  12cos(2t)*sin(t) + 16',
           data: chartData,
           borderWidth: 1,
           pointStyle: false,
           showLine: true,
-          borderColor: 'red',
-          backgroundColor: 'red'
+          borderColor: 'green',
+          backgroundColor: 'green'
         },
-        // {
-        //   label: 'fourier series approx',
-        //   data: chartData2,
-        //   borderWidth: 2,
-        //   pointStyle: false,
-        //   showLine: true,
-        //   borderColor: 'blue',
-        //   backgroundColor: 'blue'
-        // }
+        {
+          label: 'fourier series approx',
+          data: chartData2,
+          borderWidth: 2,
+          pointStyle: false,
+          showLine: true,
+          borderColor: 'blue',
+          backgroundColor: 'blue'
+        }
       ]
     },
     options: {
