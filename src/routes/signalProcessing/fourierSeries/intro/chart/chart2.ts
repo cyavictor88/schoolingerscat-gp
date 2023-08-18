@@ -8,7 +8,6 @@ function linspace(startValue:number , stopValue:number, cardinality:number) {
   return arr;
 }
 
-
 export function data():{x:number,y:number}[] {
   const xs = linspace(-5,5,100);
   const ys = xs.map(x=> x**3 -12*x +16)// = (x-2)**2 * (x+4)*1 ;
@@ -17,18 +16,19 @@ export function data():{x:number,y:number}[] {
   return arr
 }
 
+
 function fsData(){
   const T = 12;
   const funcCos = (t:number,k:number) => ((t+0)**3-12*(t+0)+16) * Math.cos(k*(t+0)*2*Math.PI/T)*2/T;
   const funcSin = (t:number,k:number) => ((t+0)**3-12*(t+0)+16) * Math.sin(k*(t+0)*2*Math.PI/T)*2/T;
   const simpCos = new Simpson(funcCos);
   const simpSin = new Simpson(funcSin);
-  const ks = Array.from({length:10},(_,i)=>i);
+  const ks = Array.from({length:45},(_,i)=>i);
   const ak:number[] = [];
   const bk:number[] = [];
   ks.forEach(k=>{
-    ak.push(simpCos.integrate(-6,6,k,10000));
-    bk.push(simpSin.integrate(-6,6,k,10000));
+    ak.push(simpCos.integrate(-T/2,T/2,k,1000));
+    bk.push(simpSin.integrate(-T/2,T/2,k,1000));
   });
   ak[0] = ak[0]/2;
   const xs = linspace(-5,5,100);

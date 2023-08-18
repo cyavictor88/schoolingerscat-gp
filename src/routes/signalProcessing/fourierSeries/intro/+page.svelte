@@ -5,17 +5,22 @@
 	import { getContext } from 'svelte';
 	import type { Writable } from 'svelte/store';
 	import Katex from '$lib/components/Katex/Katex.svelte';
-	import { makeChart } from './chart/chart';
+	import { makeChart as chart1 } from './chart/chart1';
+	import { makeChart as chart2 } from './chart/chart2';
 	import { Simpson } from './chart/Simpson';
+	import { Chart } from "chart.js";
+	import { browser } from '$app/environment'
 	const innerPageRoute = getContext<Writable<IRoute>>('innerPageRoute');
-	let exmapleFunctionCanvas: HTMLCanvasElement;
+	let exmapleFunctionCanvas1: HTMLCanvasElement;
+	let exmapleFunctionCanvas2: HTMLCanvasElement;
 	let res = 0;
 	onMount(() => {
 		innerPageRoute.set(pageRoute);
-    const chart = makeChart(exmapleFunctionCanvas);
-		
 
+		// Chart.register(zoomPlugin);
 
+    chart1(exmapleFunctionCanvas1);
+    chart2(exmapleFunctionCanvas2);
 		// res = simp.integrate(-5,5,1);
 	});
 </script>
@@ -26,9 +31,15 @@
 	of <Katex math={'sin'} /> and <Katex math={'cos'} /> functions. (periodic? we will elaborate on that later)
 </p>
 <p>Example:</p>
+<Katex math={'y(t) = sin(t)^3 -12cos(2t) + 16 \\; \\text{for} \\; -5\\le t \\le 5'}  />
+<div style="max-width: 500px; height:200px;">
+	<canvas bind:this={exmapleFunctionCanvas1} />
+</div>
+
+<p>Example:</p>
 <Katex math={'y(t) = t^3 -12 t +16 \\; \\text{for} \\; -5\\le t \\le 5'}  />
 <div style="max-width: 500px; height:200px;">
-	<canvas bind:this={exmapleFunctionCanvas} />
+	<canvas bind:this={exmapleFunctionCanvas2} />
 </div>
 <p>We can decompose <Katex math={'y(t)'} /> into</p>
 <p>Say we have a function{res}</p>
