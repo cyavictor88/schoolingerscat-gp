@@ -43,7 +43,7 @@ function fsData(){
   });
   const arr = [];
   for (let i = 0; i < xs.length; i++) arr.push({x:xs[i],y:ys[i]});
-  return arr
+  return arr;
 }
 
 export function makeChart(ctx:HTMLCanvasElement) {

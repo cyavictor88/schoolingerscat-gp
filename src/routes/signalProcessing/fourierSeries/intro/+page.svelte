@@ -7,7 +7,7 @@
 	import Katex from '$lib/components/Katex/Katex.svelte';
 	import { makeChart as chart1 } from './chart/chart1';
 	import { makeChart as chart2 } from './chart/chart2';
-	import D3 from './D3.svelte';
+	import D3Interactive from './D3Interactive.svelte';
 	const innerPageRoute = getContext<Writable<IRoute>>('innerPageRoute');
 	let exmapleFunctionCanvas1: HTMLCanvasElement;
 	let exmapleFunctionCanvas2: HTMLCanvasElement;
@@ -44,7 +44,7 @@
 	And then finally, We will learn how to decompose a function into a fourier series.
 </p>
 <p>d3 example:</p>
-<D3 />
+<D3Interactive />
 
 <ul>
 	<li><a href="/signalProcessing/fourierSeries/innerProduct">Inner Product</a></li>
