@@ -8,6 +8,7 @@ export function linspace(startValue:number , stopValue:number, cardinality:numbe
 type IntegralFunc = {
   (x: number, k:number): number;
 };
+type MathFunction = (x: number) => number;
 
 export class Simpson {
   func: IntegralFunc;
@@ -50,5 +51,24 @@ export class Simpson {
   
     res = res * (h / 3);
     return res;
+  }
+  // from chat gpt
+  integrateSimpsons(
+    func: MathFunction,
+    lowerBound: number,
+    upperBound: number,
+    numSegments: number = 1000
+  ): number {
+    const segmentSize = (upperBound - lowerBound) / numSegments;
+    let integral = 0;
+  
+    for (let i = 0; i < numSegments; i++) {
+      const x0 = lowerBound + i * segmentSize;
+      const x1 = lowerBound + (i + 1) * segmentSize;
+      const xMid = (x0 + x1) * 0.5;
+      integral += (func(x0) + 4 * func(xMid) + func(x1)) * (segmentSize / 6);
+    }
+  
+    return integral;
   }
 }

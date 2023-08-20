@@ -63,7 +63,7 @@ export function makeChart(ctx:HTMLCanvasElement) {
           backgroundColor: 'red'
         },
         {
-          label: 'fourier series approx',
+          label: 'fourier series approximation',
           data: chartData2,
           borderWidth: 2,
           pointStyle: false,

@@ -54,7 +54,7 @@ export function makeChart(ctx:HTMLCanvasElement) {
     data: {
       datasets: [
         {
-          label: 'y(t) =  12cos(2t)*sin(t) + 16',
+          label: 'y(t) =  12cos(2t)sin(t) + 16',
           data: chartData,
           borderWidth: 1,
           pointStyle: false,
@@ -63,7 +63,7 @@ export function makeChart(ctx:HTMLCanvasElement) {
           backgroundColor: 'green'
         },
         {
-          label: 'fourier series approx',
+          label: 'fourier series approximation',
           data: chartData2,
           borderWidth: 2,
           pointStyle: false,

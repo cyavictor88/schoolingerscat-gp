@@ -1,14 +1,7 @@
 <script>
-	import SideNav from '$lib/components/SideNav/SideNav.svelte';
 	import TopNav from '$lib/components/TopNav/TopNav.svelte';
 	import { topBarHeight } from '$lib/store';
-	import {
-		beforeUpdate,
-		afterUpdate,
-		onMount
-	} from 'svelte';
   let sideBarWidth = 0;
-
 </script>
 
 <TopNav />
@@ -32,12 +25,9 @@
 	#content {
 		position: fixed;
 		height: 100%;
-		border: 1px black solid;
 		background-color: rgb(222, 207, 207);
 		padding: 2px;
 		overflow-y: scroll;
 		z-index: 0;
 	}
-
-
 </style>

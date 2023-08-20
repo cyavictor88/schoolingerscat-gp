@@ -1,6 +1,6 @@
 import type { IRoute } from "$lib/components/Route/route";
 
-export const rootRoute : IRoute = {
+export const sectionRoute : IRoute = {
   label: 'Fourier Series',
   subRoutes: [
     { label: 'Introduction', path: '/signalProcessing/fourierSeries/intro'},

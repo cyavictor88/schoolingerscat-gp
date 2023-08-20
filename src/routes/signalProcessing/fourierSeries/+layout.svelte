@@ -6,7 +6,7 @@
 	import { beforeUpdate, afterUpdate, onMount } from 'svelte';
 
 	import SideBar from '$lib/components/SideBar/SideBar.svelte';
-	import { rootRoute } from './route';
+	import { sectionRoute } from './route';
 	let downTriangle = '▼';
 	let upTriangle = '▲';
 	let leftTriangle = '◀';
@@ -29,17 +29,17 @@
 		if (window.outerWidth < 800) sideBarWidth = narrowSideBarWidth;
 		else sideBarWidth = wideSideBarWidth;
 	}
-	const innerPageRoute = writable(rootRoute);
+	const innerPageRoute = writable(null);
 	setContext('innerPageRoute', innerPageRoute);
 
-	let showSide = false;
+	let mobileShowSide = false;
 	let displayModeFullSide = true;
 
 	$: {
-		if (sideBarWidth > narrowSideBarWidth && showSide) {
+		if (sideBarWidth > narrowSideBarWidth && mobileShowSide) {
 			displayModeFullSide = false;
 		}
-		if (sideBarWidth > narrowSideBarWidth && !showSide) {
+		if (sideBarWidth > narrowSideBarWidth && !mobileShowSide) {
 			displayModeFullSide = true;
 		}
 		if (sideBarWidth < wideSideBarWidth) {
@@ -50,7 +50,7 @@
 	let mouseIsOverDropdown = false;
 	function closeIfMouseNotOver() {
 		if (!mouseIsOverDropdown) {
-			showSide = false;
+			mobileShowSide = false;
 		}
 	}
 	function setMouseIsOverDropdown(isOver: boolean) {
@@ -64,29 +64,29 @@
 	});
 </script>
 
-{#if showSide}
+{#if mobileShowSide}
 	<div in:fly={{ y: 200, duration: 500 }} out:fade
 		style="position: fixed; background-color: #6c584c; z-index:2;box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;"
 	>
 		<div style="display:flex; flex-flow:row nowrap; justify-content: space-between;">
 			<button
 				on:click={() => {
-					showSide = !showSide;
-				}}>{showSide ? upTriangle : downTriangle}</button
+					mobileShowSide = !mobileShowSide;
+				}}>{mobileShowSide ? upTriangle : downTriangle}</button
 			>
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 			<p
 				style="margin:0; cursor:pointer;"
 				on:click={() => {
-					showSide = false;
+					mobileShowSide = false;
 				}}
 			>
 				{cross}
 			</p>
 		</div>
-		<SideBar route={rootRoute} />
-		<p />
+		<SideBar route={sectionRoute} />
+		<p>Current Page:</p>
 		<SideBar route={$innerPageRoute} routeBgColor={'#ddb892'} />
 	</div>
 {/if}
@@ -99,14 +99,14 @@
 					sideBarWidth = narrowSideBarWidth;
 				}}>{leftTriangle}</button
 			>
-			<SideBar route={rootRoute} />
-			<p />
+			<SideBar route={sectionRoute} />
+			<p>Current Page:</p>
 			<SideBar route={$innerPageRoute} routeBgColor={'#ddb892'} />
 		</div>
 	{:else if window.outerWidth < 800}
 		<button
 			on:click={() => {
-				showSide = !showSide;
+				mobileShowSide = !mobileShowSide;
 			}}
 			on:mouseenter={() => {
 				setMouseIsOverDropdown(true);
@@ -115,7 +115,7 @@
 				setMouseIsOverDropdown(false);
 			}}
 		>
-			{showSide ? upTriangle : downTriangle}</button
+			{mobileShowSide ? upTriangle : downTriangle}</button
 		>
 	{:else}
 		<button
@@ -138,6 +138,10 @@
 </div>
 
 <style>
+	p {
+		margin: 2px;
+		margin-top: 10px;
+	}
 	#content {
 		/* position: fixed; */
 		background-color: #e7d8c9;
