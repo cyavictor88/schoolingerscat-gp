@@ -49,5 +49,3 @@
 	<p>With basis, we can then understand how to decompose a vector/function and finally we can go over:</p>
 	<li><a href="/signalProcessing/fourierSeries/basis">Fourier Series Proof</a></li>
 </ol>
-
-<hr />
