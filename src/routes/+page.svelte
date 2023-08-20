@@ -9,7 +9,7 @@
 
 <p>
   <img style="height: 150px;" src="/images/title.jpg" alt='' />
-	Hi, this site is at its infancy, I plan to use this site to share my notes on various
+	Hi, I use this site to share my notes on various
 	EE/math/physics subjects.
 </p>
 <div>

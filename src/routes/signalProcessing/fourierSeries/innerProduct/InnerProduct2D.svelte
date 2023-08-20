@@ -1,8 +1,17 @@
 
 <script lang='ts'>
   import Katex from "$lib/components/Katex/Katex.svelte";
-	import KatexMix from "$lib/components/Katex/KatexMix.svelte";
+  import innerProduct2D from "$lib/assets/fourierSeries/innerProduct/innerProduct2D.svg";
 </script>
+
+<p>Given two <Katex math={'\\mathbb{R}^2'} /> vectors, <Katex math={'\\vec{a}=(a_x,a_y)'} /> and <Katex math={'\\vec{b}=(b_x,b_y)'} />, as shown in Figure 1, you can see that
+<Katex math={'\\theta'} />, the angle between <Katex math={'\\vec{a}'} /> and <Katex math={'\\vec{b}'} /> indicates how closely aligned these two vectors are.</p>
+
+<div style='display: flex; flex-flow: column nowrap; align-items:center;'>
+<p>Figure 1</p>
+<object title='vectors in R^2' width="25%" type="image/svg+xml" data={innerProduct2D}>Boo your browser does not support SVGs</object>
+</div>
+
 
 <p>The formula for inner product of any two <Katex math={'\\mathbb{R}^2'}/> vectors <Katex math={'\\vec{a}'}/> and <Katex math={'\\vec{b}'}/> is the following:</p>                  
 <strong>
