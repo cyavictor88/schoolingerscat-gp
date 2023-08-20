@@ -129,8 +129,8 @@
 	<div
 		id="content"
 		style="top:{$topBarHeight}px; 
-                          max-height: calc(100vh - {$topBarHeight}px);
-													height: calc(100vh - {$topBarHeight}px);
+                          max-height: 100%;
+													height: 100%;
                           "
 	>
 		<slot />

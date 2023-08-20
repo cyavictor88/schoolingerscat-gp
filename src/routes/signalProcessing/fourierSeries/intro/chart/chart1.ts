@@ -63,13 +63,13 @@ export function makeChart(ctx:HTMLCanvasElement) {
           backgroundColor: 'green'
         },
         {
-          label: 'fourier series approximation',
+          label: 'fourier series decomposition',
           data: chartData2,
           borderWidth: 2,
           pointStyle: false,
           showLine: true,
-          borderColor: 'blue',
-          backgroundColor: 'blue'
+          borderColor: 'cyan',
+          backgroundColor: 'cyan'
         }
       ]
     },
