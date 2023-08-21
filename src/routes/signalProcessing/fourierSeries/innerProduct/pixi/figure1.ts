@@ -28,11 +28,11 @@ export async function pissy( width?:number, height?:number):Promise<PIXI.Applica
   app.stage.addChild(text);
 
 
-  // Create the PixiJS mesh using the geometry and material
-  const mesh2d = await mathGeo('\\vec{a}');
-  mesh2d.x = 100;
-  mesh2d.scale.set(1,1);
-  app.stage.addChild(mesh2d);
+  // // Create the PixiJS mesh using the geometry and material
+  // const mesh2d = await mathGeo('\\vec{a}');
+  // mesh2d.x = 100;
+  // mesh2d.scale.set(1,1);
+  // app.stage.addChild(mesh2d);
 
 
   return app;
