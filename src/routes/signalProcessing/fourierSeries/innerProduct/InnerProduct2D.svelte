@@ -15,7 +15,7 @@
 
 <div style="display: flex; flex-flow: column nowrap; align-items:center;">
 	<p>Figure 1</p>
-	<object title="vectors in R^2" width="30%" type="image/svg+xml" data={innerProduct2D}
+	<object title="vectors in R^2" width="300" type="image/svg+xml" data={innerProduct2D}
 		>Boo your browser does not support SVGs</object
 	>
 </div>
@@ -51,7 +51,7 @@
 	following:
 </p>
 
-<div style="display: flex;">
+<div style="display: flex; gap:20px;">
 	<div style='margin: auto; margin-left:0;margin-right:0;'>
 		<Katex
 			displayMode={true}
@@ -69,7 +69,7 @@
 
 	<div style="display: flex; flex-flow: column nowrap; align-items:center;">
 		<p>Figure 2</p>
-		<object title="law of cosine" width="80%" type="image/svg+xml" data={innerProduct2DCosine}
+		<object title="law of cosine" width="400" type="image/svg+xml" data={innerProduct2DCosine}
 			>Boo your browser does not support SVGs</object
 		>
 	</div>
