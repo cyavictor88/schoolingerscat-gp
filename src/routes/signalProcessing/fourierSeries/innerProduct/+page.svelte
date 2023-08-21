@@ -22,7 +22,8 @@
 <Title hLevel={1} id={'innerProduct'}>
   Inner Product
 </Title>
-<p>What is inner product? The inner product of 2 vectors indicates how closely aligned the 2 vectors are to each other. In this page, We will start with explaining inner product of vectors in <Katex math={'\\mathbb{R}^2'}/>
+<p>What is inner product? The inner product of 2 vectors indicates how closely aligned the 2 vectors are to each other. </p>
+<p> In this page, We will start with explaining inner product of vectors in <Katex math={'\\mathbb{R}^2'}/>
 , and end with explaining inner product of functions.</p>
 
 <div> 

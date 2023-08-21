@@ -16,6 +16,8 @@
 	const wideSideBarWidth = 180;
 	const narrowSideBarWidth = 30;
 	let sideBarWidth = wideSideBarWidth;
+	let sideBarDivWidth : number;
+
 
 	onMount(() => {
 		changeSizeBarWidth();
@@ -62,6 +64,7 @@
 			window.removeEventListener('click', closeIfMouseNotOver);
 		};
 	});
+
 </script>
 
 {#if mobileShowSide}
@@ -92,6 +95,7 @@
 {/if}
 
 <div style="display:flex; flex-flow: row nowrap; ">
+	<div bind:clientWidth={sideBarDivWidth} style='position:fixed;'>
 	{#if displayModeFullSide}
 		<div in:fly={{ y: 200, duration: 1000 }} >
 			<button
@@ -124,11 +128,12 @@
 			}}>{rightTriangle}</button
 		>
 	{/if}
+</div>
 
 	<!-- <SideNav {sideBarWidth} /> -->
 	<div
 		id="content"
-		style="top:{$topBarHeight}px; 
+		style="padding-left:{10+sideBarDivWidth}px; top:{$topBarHeight}px; 
                           max-height: 100%;
 													height: 100%;
                           "
@@ -151,7 +156,7 @@
 	#content {
 		/* position: fixed; */
 		background-color: #e7d8c9;
-		border: 1px black solid;
+		border-bottom: 6px SaddleBrown solid;
 		padding: 0px 4px;
 		overflow-y: scroll;
 		flex-grow: 1;
