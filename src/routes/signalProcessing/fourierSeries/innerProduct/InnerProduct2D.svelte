@@ -3,12 +3,12 @@
 	import innerProduct2D from '$lib/assets/fourierSeries/innerProduct/innerProduct2D.svg';
 	import innerProduct2DCosine from '$lib/assets/fourierSeries/innerProduct/innerProduct2DCosine.svg';
 	import { onMount } from 'svelte';
-	import { pissy } from './pixi/figure1';
+	import { figure1 } from './pixi/figure1';
 	import Loader from '$lib/components/Katex/Loader/Loader.svelte';
   let fig1 : HTMLDivElement;
   async function loadF1(){
-		const pixiapp = await pissy();
-		fig1.appendChild(pixiapp.view);
+		const pixiApp = await figure1();
+		fig1.appendChild(pixiApp.view);
   }
 
 

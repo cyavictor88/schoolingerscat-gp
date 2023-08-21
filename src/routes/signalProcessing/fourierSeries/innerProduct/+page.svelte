@@ -20,7 +20,6 @@
   })
 
 	import InnerProduct2D from './InnerProduct2D.svelte';
-	import { pissy } from "./pixi/figure1";
 
 </script>
 

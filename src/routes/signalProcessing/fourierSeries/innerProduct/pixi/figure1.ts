@@ -3,17 +3,17 @@ import { mathmesh2D } from '$lib/mathmesh/mathmesh';
 import * as PIXI from 'pixi.js';
 
 
-export async function pissy( width?:number, height?:number):Promise<PIXI.Application<HTMLCanvasElement>>{
+export async function figure1( width?:number, height?:number):Promise<PIXI.Application<HTMLCanvasElement>>{
   let app = new PIXI.Application<HTMLCanvasElement>({
-    width: width || 400,
-    height: height || 400,
+    width: width || 300,
+    height: height || 300,
     background: '#123456',
     // backgroundAlpha: 0,
   });
 
   let xAxis = new PIXI.Graphics();
   // xAxis.position.set(10,200);
-  xAxis.lineStyle(2,0xaaee).moveTo(10,200).lineTo(100,200);
+  xAxis.lineStyle(2,0xaaee).moveTo(10,100).lineTo(100,100);
   app.stage.addChild(xAxis);
 
 
@@ -24,7 +24,7 @@ export async function pissy( width?:number, height?:number):Promise<PIXI.Applica
       align: 'center',
   });
 
-  text.position.set(110,188);
+  text.position.set(110,88);
   app.stage.addChild(text);
 
 
