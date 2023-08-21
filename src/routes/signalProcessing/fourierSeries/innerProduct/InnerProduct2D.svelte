@@ -4,19 +4,13 @@
 	import innerProduct2DCosine from '$lib/assets/fourierSeries/innerProduct/innerProduct2DCosine.svg';
 	import { onMount } from 'svelte';
 	import { pissy } from './pixi/figure1';
+	import Loader from '$lib/components/Katex/Loader/Loader.svelte';
   let fig1 : HTMLDivElement;
-
   async function loadF1(){
 		const pixiapp = await pissy();
-		return pixiapp.view;
+		fig1.appendChild(pixiapp.view);
   }
-  onMount(()=>{
 
-    
-    // 
-    // pixi.appendChild(pixiapp.view);
-
-  })
 
 </script>
 
@@ -34,12 +28,10 @@
 	<object title="vectors in R^2" width="300" type="image/svg+xml" data={innerProduct2D}
 		>Boo your browser does not support SVGs</object
 	>
-  {#await loadF1() then data}
-    <div>
-      {@html data}
-    </div>
+  {#await loadF1()}
+		<Loader />
   {/await}
-	<!-- <div bind:this={fig1} /> -->
+	<div bind:this={fig1} />
   
 
 </div>
@@ -98,3 +90,4 @@
 		>
 	</div>
 </div>
+

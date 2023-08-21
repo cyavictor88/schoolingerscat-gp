@@ -8,7 +8,7 @@ export async function pissy( width?:number, height?:number):Promise<PIXI.Applica
     width: width || 400,
     height: height || 400,
     background: '#123456',
-    backgroundAlpha: 0,
+    // backgroundAlpha: 0,
   });
 
   let xAxis = new PIXI.Graphics();
