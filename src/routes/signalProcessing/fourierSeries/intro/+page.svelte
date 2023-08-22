@@ -7,7 +7,6 @@
 	import Katex from '$lib/components/Katex/Katex.svelte';
 	import { makeChart as chart1 } from './chart/chart1';
 	import { makeChart as chart2 } from './chart/chart2';
-	import D3Interactive from './D3Interactive.svelte';
 	const innerPageRoute = getContext<Writable<IRoute>>('innerPageRoute');
 	let exmapleFunctionCanvas1: HTMLCanvasElement;
 	let exmapleFunctionCanvas2: HTMLCanvasElement;
@@ -49,3 +48,4 @@
 	<p>With basis, we can then understand how to decompose a vector/function and finally we can go over:</p>
 	<li><a href="/signalProcessing/fourierSeries/basis">Fourier Series Proof</a></li>
 </ol>
+
