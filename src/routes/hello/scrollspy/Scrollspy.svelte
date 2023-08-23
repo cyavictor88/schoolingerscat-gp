@@ -14,7 +14,7 @@
 	let highlightNode : Element | null = null;
 	let sectionsDebug : string[] = [];
 	const highlightableTopToVHRatio = 0.11;
-	const highlightColor = 'lightgrey';
+	const highlightColor = 'gold';
 	const unhighlightColor = 'grey';
 
 

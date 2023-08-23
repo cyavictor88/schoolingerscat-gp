@@ -64,6 +64,7 @@ export class World implements Subscriber{
   tickingWorld: TickingWorld;
   dispatcher: Dispatcher= new Dispatcher();
   eventBroker: EventEmitter;
+  freeDrawLines: FreeDrawLines;
 
   constructor(refCurrent:HTMLDivElement, eventBroker: EventEmitter){
     this.eventBroker = eventBroker;
@@ -91,7 +92,7 @@ export class World implements Subscriber{
 
     refCurrent.appendChild(this.renderer.domElement);
 
-    const freeDrawLines = new FreeDrawLines(this.scene,this.camera,canvasSize,refCurrent,this.eventBroker);
+    this.freeDrawLines = new FreeDrawLines(this.scene,this.camera,canvasSize,refCurrent,this.eventBroker);
 
     this.dispatcher.subscribe("event1", this);
     this.dispatcher.subscribe("event2", this);

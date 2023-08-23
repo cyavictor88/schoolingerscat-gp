@@ -13,13 +13,22 @@ export const rootRoute : IRoute = {
   label:'Home',
   path:'/',
   subRoutes: [
-    {label: 'FreeDraw', path: '/freeDraw'},
-    {label: 'Pixi', path: '/pixi'},
-    {label: 'Hello', subRoutes: [
-      {label: 'World', path: '/hello/world'},
-      {label: 'Scroll', path: '/hello/scroll'},
-      {label: 'Scrollspy', path: '/hello/scrollspy'},
+    {label: 'Playground', subRoutes: [
+      {label: '3JS', path: '/freeDraw'},
+      {label: 'Pixi', path: '/pixi'},
+      {label: 'D3', path: '/d3'},
+      {label: 'Scrollspy', subRoutes: [
+        {label: 'Scrollspy1', path: '/hello/scroll'},
+        {label: 'Scrollspy2', path: '/hello/scrollspy'},
+      ]}
     ]},
+
+
+    // {label: 'Hello', subRoutes: [
+    //   {label: 'World', path: '/hello/world'},
+    //   {label: 'Scroll', path: '/hello/scroll'},
+    //   {label: 'Scrollspy', path: '/hello/scrollspy'},
+    // ]},
     {label: 'Signal Processing', subRoutes: [
       {label: 'Fourier Series', subRoutes:[
         {label: 'Introduction', path: '/signalProcessing/fourierSeries/intro'},

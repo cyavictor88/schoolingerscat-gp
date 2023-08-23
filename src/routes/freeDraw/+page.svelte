@@ -29,6 +29,7 @@
 			await world.addMathMesh();
 		})()
 		return () => {
+			world.freeDrawLines.cleanupWindowEventListener();
 			if (div.firstChild) div.removeChild(div.firstChild);
 		};
 	});

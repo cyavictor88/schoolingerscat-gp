@@ -2,6 +2,14 @@
 	import { onMount } from 'svelte';
 	import * as PIXI from 'pixi.js';
 	import { mathmesh2D } from '$lib/mathmesh/mathmesh';
+	import { figure1 } from './figure1';
+	import Loader from '$lib/components/Katex/Loader/Loader.svelte';
+
+	let fig1: HTMLDivElement;
+  async function loadF1(){
+		const pixiApp = await figure1();
+		fig1.appendChild(pixiApp.view);
+  }
 
 	let div: HTMLDivElement;
 	onMount(() => {
@@ -53,3 +61,7 @@
 <h1>pixi with mathmesh</h1>
 
 <div bind:this={div} />
+{#await loadF1()}
+<Loader />
+{/await}
+<div bind:this={fig1} />

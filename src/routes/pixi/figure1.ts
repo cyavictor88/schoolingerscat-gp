@@ -17,7 +17,7 @@ export async function figure1( width?:number, height?:number):Promise<PIXI.Appli
   app.stage.addChild(xAxis);
 
 
-    const text = new PIXI.Text('X', {
+    const text = new PIXI.Text('QQ', {
       fontFamily: 'Arial',
       fontSize: 24,
       fill: 0xff1010,

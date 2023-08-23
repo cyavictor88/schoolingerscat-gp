@@ -3,7 +3,7 @@
 </script>
 
   <Scrollspy>
-    <section class='great' id='s1' />
+    <section class='tiny' id='s1' />
     <section class='large' id='s2' />
     <section class='small' id='s3' />
     <section class='tiny' id='s4' />

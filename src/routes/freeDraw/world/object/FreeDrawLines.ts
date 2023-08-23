@@ -89,6 +89,11 @@ export class FreeDrawLines{
         this.eventBroker.on("butt", ()=>{console.log(this.freeDrawLines.length)} )
 
     }
+    cleanupWindowEventListener(){
+        window.removeEventListener('mousedown',this.onMouseDown.bind(this),false)
+        window.removeEventListener('mouseup', this.onMouseUp.bind(this),false);
+    }
+
     getdisposeSecondToLast(){
         const disposeIndex = this.freeDrawLines.length-2;
         return disposeIndex;

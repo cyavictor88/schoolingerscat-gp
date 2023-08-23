@@ -9,7 +9,7 @@
 </script>
 
   <Scrollspy>
-    <section class='great'>
+    <section class='small'>
       <div>hellow</div>
       </section>
     <section class='large'  />
