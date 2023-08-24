@@ -1,6 +1,44 @@
 import * as d3 from 'd3';
 import katex from "katex";
 
+export function svg3() {
+  // Declare the chart dimensions and margins.
+  const width = 640;
+  const height = 400;
+  const marginTop = 20;
+  const marginRight = 20;
+  const marginBottom = 30;
+  const marginLeft = 40;
+
+  // Declare the x (horizontal position) scale.
+  const x = d3.scaleLinear()
+    .domain([0,6])
+    .range([marginLeft, width - marginRight]);
+
+  // Declare the y (vertical position) scale.
+  const y = d3.scaleLinear()
+    .domain([0, 10])
+    .range([height - marginBottom, marginTop]);
+
+  // Create the SVG container.
+  const svg = d3.create("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+  // Add the x-axis.
+  svg.append("g")
+    .attr("transform", `translate(0,${height - marginBottom})`)
+    .call(d3.axisBottom(x).tickValues([]));
+
+  // Add the y-axis.
+  svg.append("g")
+    .attr("transform", `translate(${marginLeft},0)`)
+    .call(d3.axisLeft(y).tickValues([]));
+
+
+
+  return svg.node();
+}
 
 export function svg1() {
   // Declare the chart dimensions and margins.
@@ -81,7 +119,7 @@ export function svg2() {
       .attr("x", vertical ? -45 : -10)
       .attr("y", vertical ? -16 : 16)
       .append("xhtml:div")
-      .html((d: any, i: any) => mathmlFractionFromDec(d));
+      .html((d: number, i: number) => mathmlFractionFromDec(d));
   }
 
   // https://stackoverflow.com/questions/14002113/how-to-simplify-a-decimal-into-the-smallest-possible-fraction

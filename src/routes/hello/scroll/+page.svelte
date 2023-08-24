@@ -10,7 +10,7 @@
     <section class='small' id='s5' />
     <section class='big' id='s6' />
     <section class='half' id='s7' />
-    <section class='small' id='s8' />
+    <section class='great' id='s8' />
     <section class='tiny' id='s9' />
   
   </Scrollspy>

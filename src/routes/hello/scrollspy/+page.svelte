@@ -19,7 +19,7 @@
     <section class='small'  />
     <section class='big'  />
     <section class='half'  />
-    <section class='small'  />
+    <section class='great'  />
     <section class='tiny'  />
   </Scrollspy>
 
