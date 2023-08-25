@@ -4,6 +4,7 @@
 	import innerProduct2DCosine from '$lib/assets/fourierSeries/innerProduct/innerProduct2DCosine.svg';
 	import { onMount } from 'svelte';
 	import * as d3Fig from './d3';
+	import { getCircleNum } from '$lib/unicode';
 	let fig1: HTMLDivElement;
 	let fig2: HTMLDivElement;
 	let fig3: HTMLDivElement;
@@ -40,33 +41,35 @@
 		math={'\\vec{a}'}
 	/> and <Katex math={'\\vec{b}'} /> is related to <Katex math={'\\theta'} />.
 </p>
-<strong>
-	Inner Product in <Katex math={'\\mathbb{R}^2'} />:
-</strong>
-
-<Katex
-	displayMode={true}
-	math={'\\mathrm{for} \\; \\vec{a}= \\left[\\begin{array}{c} a_x \\\\ a_y \\end{array} \\right] \\; \\mathrm{and} \\; \\vec{b}= \\left[\\begin{array}{c} b_x \\\\ b_y \\end{array}\\right],'}
-/>
-<Katex
-	displayMode={true}
-	math={'<\\vec{a},\\vec{b}>:= \\vec{a}^T \\vec{b} =' +
-		' \\left[\\begin{array}{cc}a_x & a_y \\end{array}\\right]' +
-		'\\left[\\begin{array}{c}b_x \\\\ b_y \\end{array}\\right]=a_x\\,b_x+a_y\\,b_y'}
-/>
+<div style="border: 1px black solid">
+	<strong>
+		Inner Product in <Katex math={'\\mathbb{R}^2'} />:
+	</strong>
+	<Katex
+		displayMode={true}
+		math={'\\mathrm{for} \\; \\vec{a}= \\left[\\begin{array}{c} a_x \\\\ a_y \\end{array} \\right] \\; \\mathrm{and} \\; \\vec{b}= \\left[\\begin{array}{c} b_x \\\\ b_y \\end{array}\\right],'}
+	/>
+	<Katex
+		displayMode={true}
+		math={'<\\vec{a},\\vec{b}>:= \\vec{a}^T \\vec{b} =' +
+			' \\left[\\begin{array}{cc}a_x & a_y \\end{array}\\right]' +
+			'\\left[\\begin{array}{c}b_x \\\\ b_y \\end{array}\\right]=a_x\\,b_x+a_y\\,b_y'}
+	/>
+</div>
 
 <p>
 	Now, I will show how <Katex math={'a_xb_x+a_yb_y'} /> is related to <Katex math={'\\theta'} /> using
 	<Katex math={'d'} />.
 </p>
 <hr style="border-top: 1px grey dotted" />
-<p>1. Using law of Cosine:</p>
+<b>Step 1. Using law of Cosine:</b>
 <p>
-	As shown in Figure 2, by employing law of cosine on the triangle in the figure, we can get the
+	As shown in Figure 2, by using <a href="https://en.wikipedia.org/wiki/Law_of_cosines">Low of Cosines</a> on the triangle in the figure, we can get the
 	following:
 </p>
 
 <div style="display: flex; gap:20px;">
+	<!-- <div style="display: flex; flex-flow: column nowrap; gap:5px;"> -->
 	
 	<div style='margin: auto; margin-left:0;margin-right:0;'>
 		<Katex
@@ -77,10 +80,13 @@
 			displayMode={true}
 			math={'\\mathrm{where} \\ \\color{red}{\\| \\vec{a}  \\|^2 = a_x^2+a_y^2} \\color{black}{\\quad \\mathrm{and \\quad }}  \\color{blue}{\\| \\vec{b}  \\|^2 = b_x^2+b_y^2}'}
 		/>
-		<Katex
-			displayMode={true}
-			math={'\\Rightarrow \\color{brown}{d^2} \\color{black}{=} \\color{red}{a_x^2+a_y^2} \\color{black}{+} \\color{blue}{b_x^2+b_y^2} \\color{black}{ - 2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) } '}
-		/>
+		<fieldset>
+			<legend>{getCircleNum(1)}</legend>
+			<Katex
+				displayMode={true}
+				math={'\\Rightarrow \\color{brown}{d^2} \\color{black}{=} \\color{red}{a_x^2+a_y^2} \\color{black}{+} \\color{blue}{b_x^2+b_y^2} \\color{black}{ - 2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) }'}
+			/>
+		</fieldset>
 	</div>
 
 	<div style="display: flex; flex-flow: column nowrap; align-items:center;">
@@ -92,6 +98,42 @@
 	</div>
 
 </div>
+<hr style="border-top: 1px grey dotted" />
 
-<div bind:this={fig3} />
+<b>Step 2. Making a new Triangle:</b>
 
+
+<p>We can use the x,y coordinates of <Katex math={'\\vec{a}'} /> and <Katex math={'\\vec{b}'} /> to construct the brown right triangle as shown in Figure 3, and use get 
+ the following euqation for getting <Katex math={'d'} />:
+</p>
+
+<div style="display: flex; gap:20px;">
+
+	<div style='margin: auto; margin-left:0;margin-right:0;'>
+		<Katex
+			displayMode={true}
+			math={'\\color{brown}{d^2} \\color{black}{=} \\color{red}{\\| \\vec{a}  \\|^2} \\color{black}{+} \\color{blue}{\\| \\vec{b}  \\|^2} \\color{black}{ - 2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) } '}
+		/>
+		<Katex
+			displayMode={true}
+			math={'\\mathrm{where} \\ \\color{red}{\\| \\vec{a}  \\|^2 = a_x^2+a_y^2} \\color{black}{\\quad \\mathrm{and \\quad }}  \\color{blue}{\\| \\vec{b}  \\|^2 = b_x^2+b_y^2}'}
+		/>
+		<fieldset>
+			<legend>{getCircleNum(2)}</legend>
+			<Katex
+				displayMode={true}
+				math={'\\Rightarrow \\color{brown}{d^2} \\color{black}{=} \\color{red}{a_x^2+a_y^2} \\color{black}{+} \\color{blue}{b_x^2+b_y^2} \\color{black}{ - 2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) }'}
+			/>
+		</fieldset>
+	</div>
+
+	<div style="display: flex; flex-flow: column nowrap; align-items:center;">
+		<p>Figure 3</p>
+		<!-- <object title="law of cosine" width="400" type="image/svg+xml" data={innerProduct2DCosine}
+			>Boo your browser does not support SVGs</object
+		> -->
+		<div bind:this={fig3} />
+	</div>
+
+
+</div>
