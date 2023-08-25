@@ -2,7 +2,7 @@ import * as d3 from 'd3';
 import katex from "katex";
 
 
-function latex(math:string){
+function latex(math: string) {
 
   const mathmlHtml = katex.renderToString(math, {
     throwOnError: false,
@@ -25,9 +25,16 @@ export function svgF1() {
   const marginBottom = 30;
   const marginLeft = 40;
 
+  const veca = { x: 2, y: 4 };
+  const vecb = { x: 4, y: 2 };
+  const vecO = { x: 0, y: 0 };
+  const r = 1;
+  const aTheta = Math.atan(veca.y / veca.x);
+  const bTheta = Math.atan(vecb.y / vecb.x);
+  const controlPointTheta = bTheta + 0.5 * (aTheta - bTheta);
 
-  const xDomain = [0,5.5];
-  const yDomain = [0,5.5];
+  const xDomain = [0, 5.5];
+  const yDomain = [0, 5.5];
   // Declare the x (horizontal position) scale.
   const xScale = d3.scaleLinear()
     .domain(xDomain)
@@ -55,55 +62,50 @@ export function svgF1() {
   //   .call(d3.axisLeft(y).tickValues([]));
 
   function drawPath(context: d3.Path) {
-    // context.moveTo(10, 10); // move current point to ⟨10,10⟩
-    // context.lineTo(100, 10); // draw straight line to ⟨100,10⟩
-    // context.arcTo(150, 150, 300, 10, 40); // draw an arc, the turtle ends up at ⟨194.4,108.5⟩
-    // context.lineTo(300, 10); // draw straight line to ⟨300,10⟩
-    // etc.
-    context.moveTo(xScale(1), yScale(1)); // move current point to ⟨10,10⟩
-    context.arcTo(xScale(1), yScale(2), xScale(3), yScale(3), xScale(1)); // draw an arc, the turtle ends up at ⟨194.4,108.5⟩
-    // context.lineTo(300, 10); // draw straight line to ⟨300,10⟩
+
+    context.moveTo(xScale(r * Math.cos(aTheta)), yScale(r * Math.sin(aTheta))); // move current point to ⟨10,10⟩
+    context.quadraticCurveTo(xScale(1.2 * r * Math.cos(controlPointTheta)), yScale(1.2 * r * Math.sin(controlPointTheta)), xScale(r * Math.cos(bTheta)), yScale(r * Math.sin(bTheta))); // draw an arc, the turtle ends up at ⟨194.4,108.5⟩
     return context; // not mandatory, but will make it easier to chain operations
   }
 
-  const drawLine = d3.line<{x:number,y:number}>()
-  .x(d => xScale(d.x))
-  .y(d => yScale(d.y))
+  const drawLine = d3.line<{ x: number, y: number }>()
+    .x(d => xScale(d.x))
+    .y(d => yScale(d.y))
 
   svg.append('path')
     .style("stroke", "black")
     .style("fill", "none")
     .attr("d", drawPath(d3.path()).toString())
 
-    svg.append('path')
+  svg.append('path')
     .style("stroke", "black")
     .style("fill", "none")
-    .attr("d", drawLine([{x:0,y:0},{x:5,y:0}]))
+    .attr("d", drawLine([{ x: 0, y: 0 }, { x: 5, y: 0 }]))
 
-    svg.append('path')
+  svg.append('path')
     .style("stroke", "black")
     .style("fill", "none")
-    .attr("d", drawLine([{x:0,y:0},{x:0,y:5}]))
+    .attr("d", drawLine([{ x: 0, y: 0 }, { x: 0, y: 5 }]))
 
 
-    const fontSize = 20;
-    const textXaxis = svg.append("text")
+  const fontSize = 20;
+  const textXaxis = svg.append("text")
     .attr("x", xScale(5))
     .attr("y", yScale(-0))
     .style("font-size", fontSize + "px")
     .attr("dy", yScale.invert(fontSize * 0.5))
-    .style('fill','black')
+    .style('fill', 'black')
     .attr("text-anchor", "start")
     .text("X");
 
-    const textYaxis = svg.append("text")
+  const textYaxis = svg.append("text")
     .attr("x", xScale(0))
     .attr("y", yScale(5.1))
     .style("font-size", fontSize + "px")
-    .style('fill','black')
+    .style('fill', 'black')
     .attr("text-anchor", "middle")
     .text("Y");
-    // textElement.attr("transform", `translate(0, ${textHeight / 2}px)`);
+  // textElement.attr("transform", `translate(0, ${textHeight / 2}px)`);
 
 
   svg.selectAll('text').style('fill', 'black')
@@ -112,13 +114,13 @@ export function svgF1() {
   const arrowSize = 10;
   const markerBoxWidth = arrowSize;
   const markerBoxHeight = arrowSize;
-  const refX = markerBoxWidth/1;
-  const refY = markerBoxHeight/2;
+  const refX = markerBoxWidth / 1;
+  const refY = markerBoxHeight / 2;
   // const arrowPoints :[number,number][]= [[0, 0], [0, arrowSize], [arrowSize, arrowSize/2]];
-  const arrowPoints :[number,number][]= [[0, 0], [arrowSize, arrowSize/2], [0, arrowSize],[arrowSize/2,arrowSize/2]];
+  const arrowPoints: [number, number][] = [[0, 0], [arrowSize, arrowSize / 2], [0, arrowSize], [arrowSize / 2, arrowSize / 2]];
 
 
-  const arrowLine = d3.line<[number,number]>().x(d=>(d[0])).y(d=>(d[1]));
+  const arrowLine = d3.line<[number, number]>().x(d => (d[0])).y(d => (d[1]));
 
   const arrow = svg
     .append('defs')
@@ -132,80 +134,90 @@ export function svgF1() {
     .attr('orient', 'auto-start-reverse')
     .append('path')
     .attr('d', arrowLine(arrowPoints))
-    // .attr('d', d3.line()(arrowPoints))
-    // .attr('fill', 'black')
-    // .attr('stroke', 'red');
+  // .attr('d', d3.line()(arrowPoints))
+  // .attr('fill', 'black')
+  // .attr('stroke', 'red');
 
 
-    const arrowRed = svg.select('#arrow').clone(true)
-    arrowRed.attr('fill','red')
-    arrowRed.attr('id','arrowRed')
+  const arrowRed = svg.select('#arrow').clone(true)
+  arrowRed.attr('fill', 'red')
+  arrowRed.attr('id', 'arrowRed')
 
-    const veca = {x:2,y:4};
-    const vecb = {x:4,y:2};
-    const vecO = {x:0,y:0};
 
-    svg
+
+  svg
     .append('path')
-    .attr('d', drawLine([vecO,veca]))
+    .attr('d', drawLine([vecO, veca]))
     .attr('stroke', 'red')
     .attr('marker-end', 'url(#arrowRed)')
     .attr('fill', 'none');
 
-    const arrowBlue = svg.select('#arrow').clone(true)
-    arrowBlue.attr('fill','Blue')
-    arrowBlue.attr('id','arrowBlue')
+  const arrowBlue = svg.select('#arrow').clone(true)
+  arrowBlue.attr('fill', 'Blue')
+  arrowBlue.attr('id', 'arrowBlue')
 
-    svg
+  svg
     .append('path')
-    .attr('d', drawLine([vecO,vecb]))
+    .attr('d', drawLine([vecO, vecb]))
     .attr('stroke', 'blue')
     .attr('marker-end', 'url(#arrowBlue)')
     .attr('fill', 'blue');
 
-    svg
+  svg
     .append('path')
-    .attr('d', drawLine([vecb,veca]))
+    .attr('d', drawLine([vecb, veca]))
     .attr('stroke', 'brown')
     .style("stroke-dasharray", ("3, 3"))
     .attr('fill', 'brown');
 
-    svg
-      .append("svg:foreignObject")
-      .attr("width", 1)
-      .attr("height", 1)
-      .attr("overflow", 'visible')
-      .style("font-size",'15px')
-      .style("border","1px black solid")
-      .attr("x", xScale(veca.x/2+vecb.x/2+0.1))
-      .attr("y", yScale(veca.y/2+vecb.y/2+0.3))
-      .append("xhtml:div")
-      .html(latex('\\color{brown}d'))
-    
-    svg
-      .append("svg:foreignObject")
-      .attr("width", 1)
-      .attr("height", 1)
-      .attr("overflow", 'visible')
-      .style("font-size",'15px')
-      .style("border","1px black solid")
-      .attr("x", xScale(veca.x-0.3))
-      .attr("y", yScale(veca.y+0.5))
-      .append("xhtml:div")
-      .html(latex('\\color{red}\\overrightarrow{a}=(a_x,a_y)'))
+  svg
+    .append("svg:foreignObject")
+    .attr("width", 1)
+    .attr("height", 1)
+    .attr("overflow", 'visible')
+    .style("font-size", '15px')
+    .style("border", "1px black solid")
+    .attr("x", xScale(veca.x / 2 + vecb.x / 2 + 0.1))
+    .attr("y", yScale(veca.y / 2 + vecb.y / 2 + 0.3))
+    .append("xhtml:div")
+    .html(latex('\\color{brown}d'))
+
+  svg
+    .append("svg:foreignObject")
+    .attr("width", 1)
+    .attr("height", 1)
+    .attr("overflow", 'visible')
+    .style("font-size", '15px')
+    .style("border", "1px black solid")
+    .attr("x", xScale(veca.x - 0.3))
+    .attr("y", yScale(veca.y + 0.5))
+    .append("xhtml:div")
+    .html(latex('\\color{red}\\overrightarrow{a}=(a_x,a_y)'))
 
 
-    svg
-      .append("svg:foreignObject")
-      .attr("width", 1)
-      .attr("height", 1)
-      .attr("overflow", 'visible')
-      .style("font-size",'15px')
-      .style("border","1px black solid")
-      .attr("x", xScale(vecb.x+0.1))
-      .attr("y", yScale(vecb.y+0.5))
-      .append("xhtml:div")
-      .html(latex('\\color{blue}\\overrightarrow{b}=(b_x,b_y)'))
+  svg
+    .append("svg:foreignObject")
+    .attr("width", 1)
+    .attr("height", 1)
+    .attr("overflow", 'visible')
+    .style("font-size", '15px')
+    .style("border", "1px black solid")
+    .attr("x", xScale(vecb.x + 0.1))
+    .attr("y", yScale(vecb.y + 0.5))
+    .append("xhtml:div")
+    .html(latex('\\color{blue}\\overrightarrow{b}=(b_x,b_y)'))
+
+  svg
+    .append("svg:foreignObject")
+    .attr("width", 1)
+    .attr("height", 1)
+    .attr("overflow", 'visible')
+    .style("font-size", '15px')
+    .style("border", "1px black solid")
+    .attr("x",  xScale(1.2 * r * Math.cos(controlPointTheta)))
+    .attr("y", yScale(1.2 * r * Math.sin(controlPointTheta*2)))
+    .append("xhtml:div")
+    .html(latex('\\theta'))
 
   return svg.node();
 }
@@ -222,7 +234,7 @@ export function svg3() {
 
   // Declare the x (horizontal position) scale.
   const x = d3.scaleLinear()
-    .domain([0,6])
+    .domain([0, 6])
     .range([marginLeft, width - marginRight]);
 
   // Declare the y (vertical position) scale.

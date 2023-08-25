@@ -19,7 +19,7 @@
 
   })
 
-	import InnerProduct2D from './InnerProduct2D.svelte';
+	import InnerProduct2D from './innerProduct2D/InnerProduct2D.svelte';
 
 </script>
 

@@ -2,7 +2,14 @@
 	import Katex from '$lib/components/Katex/Katex.svelte';
 	import innerProduct2D from '$lib/assets/fourierSeries/innerProduct/innerProduct2D.svg';
 	import innerProduct2DCosine from '$lib/assets/fourierSeries/innerProduct/innerProduct2DCosine.svg';
-
+	import { onMount } from 'svelte';
+	import { getFig1, getFig2 } from './d3';
+	let fig1: HTMLDivElement;
+	let fig2: HTMLDivElement;
+	onMount(()=>{
+		fig1.append(getFig1()!);
+		fig2.append(getFig2()!);
+	})
 
 </script>
 
@@ -17,9 +24,10 @@
 
 <div style="display: flex; flex-flow: column nowrap; align-items:center;">
 	<p>Figure 1</p>
-	<object title="vectors in R^2" width="300" type="image/svg+xml" data={innerProduct2D}
+	<!-- <object title="vectors in R^2" width="300" type="image/svg+xml" data={innerProduct2D}
 		>Boo your browser does not support SVGs</object
-	>
+	> -->
+	<div bind:this={fig1} />
 
 </div>
 
@@ -72,9 +80,10 @@
 
 	<div style="display: flex; flex-flow: column nowrap; align-items:center;">
 		<p>Figure 2</p>
-		<object title="law of cosine" width="400" type="image/svg+xml" data={innerProduct2DCosine}
+		<!-- <object title="law of cosine" width="400" type="image/svg+xml" data={innerProduct2DCosine}
 			>Boo your browser does not support SVGs</object
-		>
+		> -->
+		<div bind:this={fig2} />
 	</div>
 </div>
 
