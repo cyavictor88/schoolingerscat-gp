@@ -14,10 +14,10 @@ const xDomain = [0, 5.5];
 const yDomain = [0, 5.5];
 
 // Declare the chart dimensions and margins.
-const width = 300;
+const width = 400;
 const height = 300;
 const marginTop = 20;
-const marginRight = 20;
+const marginRight = 100;
 const marginBottom = 30;
 const marginLeft = 40;
 
@@ -49,7 +49,6 @@ export function baseFig() {
   const svg = d3.create("svg")
     .attr("width", width)
     .attr("height", height)
-    .attr("overflow", 'visible');
 
   function drawPath(context: d3.Path) {
 
