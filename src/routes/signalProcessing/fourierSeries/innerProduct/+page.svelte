@@ -20,6 +20,7 @@
   })
 
 	import InnerProduct2D from './innerProduct2D/InnerProduct2D.svelte';
+	import { SITE_COLOR } from "$lib/theme/colors";
 
 </script>
 
@@ -32,7 +33,7 @@
 , and end with explaining inner product of functions.</p>
 
 <div> 
-<Title hLevel={2} id={'innerProduct2D'} backgroudColor={'#00000011'}>
+<Title hLevel={2} id={'innerProduct2D'} backgroudColor={SITE_COLOR.TitleBG}>
   Inner Product in <Katex math={'\\mathbb{R}^2'} />:
 </Title>
 <InnerProduct2D />

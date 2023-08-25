@@ -11,6 +11,12 @@ export enum SITE_COLOR {
   CompRouteHoverBG = '#ede0d4',
   CompRouteHoverBar = '#800000',
   CompRouteLinkColor = '#3F2E3E',
+  LayoutFSContentBG = '#e7d8c9',
+  LayoutFSBorderBottom = '#8B4513',
+  LayoutFSMobileRouteBG = '#6c584c',
+  LayoutFSPageRouteBG = '#ddb892',
+  TitleBG = '#00000011',
+
 
 
 

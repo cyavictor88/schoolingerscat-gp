@@ -4,6 +4,7 @@
 	import { fade, fly } from 'svelte/transition';
 	import { topBarHeight } from '$lib/store';
 	import { beforeUpdate, afterUpdate, onMount } from 'svelte';
+	import { SITE_COLOR } from '$lib/theme/colors';
 
 	import SideBar from '$lib/components/SideBar/SideBar.svelte';
 	import { sectionRoute } from './route';
@@ -69,7 +70,7 @@
 
 {#if mobileShowSide}
 	<div in:fly={{ y: 200, duration: 500 }} out:fade
-		style="position: fixed; background-color: #6c584c; z-index:2;box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;"
+		style="position: fixed; background-color: {SITE_COLOR.LayoutFSMobileRouteBG}; z-index:2;box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;"
 	>
 		<div style="display:flex; flex-flow:row nowrap; justify-content: space-between;">
 			<button
@@ -90,7 +91,7 @@
 		</div>
 		<SideBar route={sectionRoute} />
 		<p>Current Page:</p>
-		<SideBar route={$innerPageRoute} routeBgColor={'#ddb892'} />
+		<SideBar route={$innerPageRoute} routeBgColor={SITE_COLOR.LayoutFSPageRouteBG} />
 	</div>
 {/if}
 
@@ -105,7 +106,7 @@
 			>
 			<SideBar route={sectionRoute} />
 			<p>Current Page:</p>
-			<SideBar route={$innerPageRoute} routeBgColor={'#ddb892'} />
+			<SideBar route={$innerPageRoute} routeBgColor={SITE_COLOR.LayoutFSPageRouteBG} />
 		</div>
 	{:else if window.outerWidth < 800}
 		<button
@@ -135,6 +136,9 @@
 		style="padding-left:{10+sideBarDivWidth}px; top:{$topBarHeight}px; 
                           max-height: 100%;
 													height: 100%;
+													background-color: {SITE_COLOR.LayoutFSContentBG};
+													border-bottom: 6px {SITE_COLOR.LayoutFSBorderBottom} solid;
+
                           "
 	>
 		<slot />
@@ -154,15 +158,14 @@
 	}
 	#content {
 		/* position: fixed; */
-		background-color: #e7d8c9;
-		border-bottom: 6px SaddleBrown solid;
+		
 		padding: 0px 4px;
 		overflow-y: scroll;
 		flex-grow: 1;
 	}
 
 	button {
-		background-color: #222;
+		background-color: #000;
 		border-radius: 4px;
 		border-style: none;
 		box-sizing: border-box;
@@ -185,6 +188,6 @@
 
 	button:hover,
 	button:focus {
-		opacity: 0.75;
+		opacity: 0.65;
 	}
 </style>

@@ -219,22 +219,22 @@ export function getFig2(){
   .attr("width", 1)
   .attr("height", 1)
   .attr("overflow", 'visible')
-  .style("font-size", '11px')
+  .style("font-size", '12px')
   .attr("x", xScale(veca.x/2*1.1))
   .attr("y", yScale(veca.y/2*1.1))
   .append("xhtml:div")
-  .html(latex('\\color{red}||a||=({a_x}^2 + {a_y}^2)^{0.5}'));
+  .html(latex('\\color{red}\\|a\\|=({a_x}^2 + {a_y}^2)^{0.5}'));
 
   svg
   .append("svg:foreignObject")
   .attr("width", 1)
   .attr("height", 1)
   .attr("overflow", 'visible')
-  .style("font-size", '11px')
+  .style("font-size", '12px')
   .attr("x", xScale(vecb.x/2*0.9))
   .attr("y", yScale(vecb.y/2*0.9))
   .append("xhtml:div")
-  .html(latex('\\color{blue}||b||=({b_x}^2 + {b_y}^2)^{0.5}'));
+  .html(latex('\\color{blue}\\|b\\|=({b_x}^2 + {b_y}^2)^{0.5}'));
 
   return svg.node();
 
