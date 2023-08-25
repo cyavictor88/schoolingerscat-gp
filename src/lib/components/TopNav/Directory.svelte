@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { rootRoute as siteRootRoute, getSiteRootRoute,setOpenedPath, type IRoute } from '../Route/route';
+	import { rootRoute as siteRootRoute, getSiteRootRoute, setOpenedPath, type IRoute } from '../Route/route';
 	import { onMount } from 'svelte';
 	import Route from '../Route/Route.svelte';
 	import { browser } from '$app/environment';
-	export let rootRoute : IRoute = {label:'none'};
+	let rootRoute : IRoute = {label:'none'};
 	if(browser){
 		rootRoute = getSiteRootRoute(window.location.hostname==='localhost');
 	}
@@ -27,7 +27,7 @@
 	}
 
 	function setOpenedPathAndToogleOpen(){
-		setOpenedPath(rootRoute,window.location.pathname);
+		setOpenedPath(rootRoute, window.location.pathname);
 		rootRoute.open = true;
 		toggleOpen();
 	}

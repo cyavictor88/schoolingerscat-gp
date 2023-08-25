@@ -3,7 +3,7 @@
 	import { rootRoute, type IRoute, getSiteRootRoute } from '$lib/components/Route/route';
 	import { onMount } from 'svelte';
 
-	let route: IRoute = {label:'none'};
+	let route: IRoute;
 	import { browser } from '$app/environment';
 	if(browser){
 		route = getSiteRootRoute(window.location.hostname==='localhost');
