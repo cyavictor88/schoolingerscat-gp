@@ -1,3 +1,4 @@
+import { COLOR, getColor } from '$lib/theme/colors';
 import * as d3 from 'd3';
 import katex from "katex";
 
@@ -164,7 +165,6 @@ export function baseFig() {
     .attr("height", 1)
     .attr("overflow", 'visible')
     .style("font-size", '15px')
-    .style("border", "1px black solid")
     .attr("x", xScale(veca.x / 2 + vecb.x / 2 + 0.1))
     .attr("y", yScale(veca.y / 2 + vecb.y / 2 + 0.3))
     .append("xhtml:div")
@@ -176,7 +176,6 @@ export function baseFig() {
     .attr("height", 1)
     .attr("overflow", 'visible')
     .style("font-size", '15px')
-    .style("border", "1px black solid")
     .attr("x", xScale(veca.x - 0.3))
     .attr("y", yScale(veca.y + 0.5))
     .append("xhtml:div")
@@ -189,7 +188,6 @@ export function baseFig() {
     .attr("height", 1)
     .attr("overflow", 'visible')
     .style("font-size", '15px')
-    .style("border", "1px black solid")
     .attr("x", xScale(vecb.x + 0.1))
     .attr("y", yScale(vecb.y + 0.5))
     .append("xhtml:div")
@@ -201,7 +199,6 @@ export function baseFig() {
     .attr("height", 1)
     .attr("overflow", 'visible')
     .style("font-size", '15px')
-    .style("border", "1px black solid")
     .attr("x", xScale(1.2 * r * Math.cos(controlPointTheta)))
     .attr("y", yScale(1.2 * r * Math.sin(controlPointTheta * 2)))
     .append("xhtml:div")
@@ -223,7 +220,6 @@ export function getFig2(){
   .attr("height", 1)
   .attr("overflow", 'visible')
   .style("font-size", '11px')
-  .style("border", "1px black solid")
   .attr("x", xScale(veca.x/2*1.1))
   .attr("y", yScale(veca.y/2*1.1))
   .append("xhtml:div")
@@ -235,7 +231,6 @@ export function getFig2(){
   .attr("height", 1)
   .attr("overflow", 'visible')
   .style("font-size", '11px')
-  .style("border", "1px black solid")
   .attr("x", xScale(vecb.x/2*0.9))
   .attr("y", yScale(vecb.y/2*0.9))
   .append("xhtml:div")
@@ -243,4 +238,20 @@ export function getFig2(){
 
   return svg.node();
 
+}
+
+export function getFig3(){
+  const svg = baseFig();
+  const area = d3.area<{x:number,y0:number,y1:number}>()
+    .x(d => xScale(d.x))
+    .y0(d => yScale(d.y0))
+    .y1(d => yScale(d.y1));
+  const areaPath = [{x:veca.x, y0:veca.y, y1:vecb.y}, {x:vecb.x, y0:vecb.y, y1:vecb.y}];
+
+  // Append a path for the area (under the axes).
+  svg.append("path")
+    .attr("fill", getColor(COLOR.BROWN,0x66))
+    .attr("d", area(areaPath));
+
+  return svg.node();
 }

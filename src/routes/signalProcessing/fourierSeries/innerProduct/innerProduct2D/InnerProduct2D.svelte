@@ -3,15 +3,20 @@
 	import innerProduct2D from '$lib/assets/fourierSeries/innerProduct/innerProduct2D.svg';
 	import innerProduct2DCosine from '$lib/assets/fourierSeries/innerProduct/innerProduct2DCosine.svg';
 	import { onMount } from 'svelte';
-	import { getFig1, getFig2 } from './d3';
+	import * as d3Fig from './d3';
 	let fig1: HTMLDivElement;
 	let fig2: HTMLDivElement;
+	let fig3: HTMLDivElement;
 	onMount(()=>{
-		fig1.append(getFig1()!);
-		fig2.append(getFig2()!);
+		fig1.append(d3Fig.getFig1()!);
+		fig2.append(d3Fig.getFig2()!);
+		fig3.append(d3Fig.getFig3()!);
 	})
 
 </script>
+
+<div bind:this={fig3} />
+
 
 <p>
 	Given two <Katex math={'\\mathbb{R}^2'} /> vectors, <Katex math={'\\vec{a}=(a_x,a_y)'} /> and <Katex
