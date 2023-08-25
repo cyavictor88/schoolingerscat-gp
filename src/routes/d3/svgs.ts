@@ -121,12 +121,12 @@ export function svgF1() {
     .attr('stroke', 'black');
 
 
-    svg
-    .append('path')
-    .attr('d', drawLine([{x:0,y:0},{x:3,y:3}]))
-    .attr('stroke', 'black')
-    .attr('marker-end', 'url(#arrow)')
-    .attr('fill', 'none');
+    // svg
+    // .append('path')
+    // .attr('d', drawLine([{x:0,y:0},{x:3,y:3}]))
+    // .attr('stroke', 'black')
+    // .attr('marker-end', 'url(#arrow)')
+    // .attr('fill', 'none');
 
 
   return svg.node();
