@@ -8,12 +8,13 @@ export interface IRoute {
   parent?: IRoute;
   katexMix?: IKatexMix[];
 }
-// https://svelte.dev/repl/347b37e18b5d4a65bbacfd097536db02?version=4.1.2
-export const rootRoute : IRoute = {
-  label:'Home',
-  path:'/',
-  subRoutes: [
-    {label: 'Playground', subRoutes: [
+
+export function getSiteRootRoute(dev:boolean) : IRoute {
+  if(!dev){
+    return rootRoute
+  }
+  else {
+    const playground =  {label: 'Playground', subRoutes: [
       {label: '3JS', path: '/freeDraw'},
       {label: 'Pixi', path: '/pixi'},
       {label: 'D3', path: '/d3'},
@@ -21,14 +22,18 @@ export const rootRoute : IRoute = {
         {label: 'Scrollspy1', path: '/hello/scroll'},
         {label: 'Scrollspy2', path: '/hello/scrollspy'},
       ]}
-    ]},
+    ]}
+    const devRootRoute = {...rootRoute};
+    devRootRoute.subRoutes = [...devRootRoute.subRoutes!, playground];
+    return devRootRoute;
+  }
+}
 
-
-    // {label: 'Hello', subRoutes: [
-    //   {label: 'World', path: '/hello/world'},
-    //   {label: 'Scroll', path: '/hello/scroll'},
-    //   {label: 'Scrollspy', path: '/hello/scrollspy'},
-    // ]},
+// https://svelte.dev/repl/347b37e18b5d4a65bbacfd097536db02?version=4.1.2
+export const rootRoute : IRoute = {
+  label:'Home',
+  path:'/',
+  subRoutes: [
     {label: 'Signal Processing', subRoutes: [
       {label: 'Fourier Series', subRoutes:[
         {label: 'Introduction', path: '/signalProcessing/fourierSeries/intro'},
@@ -37,9 +42,7 @@ export const rootRoute : IRoute = {
       ]}
     ]}
   ] 
-}
-
-
+};
 
 export function setOpenedPath(route: IRoute, currentPath: string){
   function setOpenForAncestors(route: IRoute){

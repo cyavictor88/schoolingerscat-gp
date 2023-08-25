@@ -1,8 +1,13 @@
 <script lang="ts">
 	import Route from '$lib/components/Route/Route.svelte';
-	import { rootRoute, type IRoute } from '$lib/components/Route/route';
+	import { rootRoute, type IRoute, getSiteRootRoute } from '$lib/components/Route/route';
 	import { onMount } from 'svelte';
-	let route: IRoute = rootRoute;
+
+	let route: IRoute = {label:'none'};
+	import { browser } from '$app/environment';
+	if(browser){
+		route = getSiteRootRoute(window.location.hostname==='localhost');
+	}
 	let routeBgColor: string = 'lightgrey';
 	$: if (route) route.open = true;
 </script>
