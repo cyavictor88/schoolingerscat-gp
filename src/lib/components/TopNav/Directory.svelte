@@ -3,6 +3,7 @@
 	import { onMount } from 'svelte';
 	import Route from '../Route/Route.svelte';
 	import { browser } from '$app/environment';
+	import { SITE_COLOR } from '$lib/theme/colors';
 	let rootRoute : IRoute = {label:'none'};
 	if(browser){
 		rootRoute = getSiteRootRoute(window.location.hostname==='localhost');
@@ -43,13 +44,14 @@
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<div class='dropdown'  tabindex="0" role="button" aria-pressed="false" on:mouseenter={()=>{setMouseIsOverDropdown(true)}} on:mouseleave={()=>{setMouseIsOverDropdown(false)}}>
+<div class='dropdown'  tabindex="0" role="button" aria-pressed="false" style="--color: {SITE_COLOR.CompTopNavDirectory}"
+ on:mouseenter={()=>{setMouseIsOverDropdown(true)}} on:mouseleave={()=>{setMouseIsOverDropdown(false)}}>
 	<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 		
 	<p on:click={setOpenedPathAndToogleOpen}>Directory{!open? downTriangle : upTriangle }</p>
 
 	{#if open}
-		<div class='dropdown-content' style='background-color: gold'>
+		<div class='dropdown-content' style="--color: {SITE_COLOR.CompTopNavDirectory}">
 			<!-- svelte-ignore a11y-no-static-element-interactions -->
 			<div id='close' on:click={toggleOpen}><p>{cross}</p></div>
 			<Route route={rootRoute} indent={0} toggleMenu={toggleOpen} bgColor={'gold'}/>
@@ -62,17 +64,17 @@
 		margin: 0px;
 	}
 	.dropdown {
-		background-color: gold;
+		background-color: var(--color);
 		border-radius: 3px;
 		cursor: pointer;
 		padding: 0px;
-		border: 1px gold solid;
+		border: 1px var(--color) solid;
 		margin-left: 5px;
 	}
   .dropdown-content {
     display: block;
     position: absolute;
-    background-color: gold;
+    background-color: var(--color);
     min-width: 160px;
 		box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
     z-index: 2;

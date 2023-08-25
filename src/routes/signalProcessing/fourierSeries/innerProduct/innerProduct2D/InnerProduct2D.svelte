@@ -15,7 +15,6 @@
 
 </script>
 
-<div bind:this={fig3} />
 
 
 <p>
@@ -68,6 +67,7 @@
 </p>
 
 <div style="display: flex; gap:20px;">
+	
 	<div style='margin: auto; margin-left:0;margin-right:0;'>
 		<Katex
 			displayMode={true}
@@ -90,5 +90,8 @@
 		> -->
 		<div bind:this={fig2} />
 	</div>
+
 </div>
+
+<div bind:this={fig3} />
 

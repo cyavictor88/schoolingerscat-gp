@@ -1,15 +1,16 @@
 <script>
 	import TopNav from '$lib/components/TopNav/TopNav.svelte';
 	import { topBarHeight } from '$lib/store';
+	import { SITE_COLOR } from '$lib/theme/colors';
   let sideBarWidth = 0;
 </script>
 
 <TopNav />
-<!-- <SideNav {topBarHeight} {sideBarWidth} /> -->
 <div id="content" style="top:{$topBarHeight}px; 
                           left:{sideBarWidth}px; 
                           width:calc(100vw - {sideBarWidth}px;
                           max-height: calc(100vh - {$topBarHeight}px);
+													--bg: {SITE_COLOR.SiteLayoutContentBG}
                           ">
   <slot />
 </div>
@@ -25,7 +26,7 @@
 	#content {
 		position: fixed;
 		height: 100%;
-		background-color: rgb(222, 207, 207);
+		background-color: var(--bg);
 		padding: 2px;
 		overflow-y: scroll;
 		z-index: 0;

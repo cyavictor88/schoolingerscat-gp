@@ -5,10 +5,11 @@
 
 	let route: IRoute;
 	import { browser } from '$app/environment';
+	import { SITE_COLOR } from '$lib/theme/colors';
 	if(browser){
-		route = getSiteRootRoute(window.location.hostname==='localhost');
+		route = getSiteRootRoute(window.location.hostname === 'localhost');
 	}
-	let routeBgColor: string = 'lightgrey';
+	let routeBgColor: string = SITE_COLOR.IndexPageRouteBG;
 	$: if (route) route.open = true;
 </script>
 

@@ -2,12 +2,13 @@
 <script lang="ts">
   import { base } from '$app/paths';
 	import { topBarHeight } from '$lib/store';
+	import { SITE_COLOR } from '$lib/theme/colors';
 	import Directory from './Directory.svelte';
 </script>
 
-<div class="top-navbar" style="--height: {$topBarHeight}px;">
+<div class="top-navbar" style="--height: {$topBarHeight}px; --nav-bg-color:{SITE_COLOR.CompTopNavBG};">
 	<Directory />
-	<div class="logo"><a href='{base}/'>Schoolinger's Cat</a></div>
+	<div class="logo"><a href='{base}/' style="--logo-color:{SITE_COLOR.CompTopNavLogo}">Schoolinger's Cat</a></div>
 </div>
 
 <style>
@@ -16,11 +17,10 @@
 		display: flex;
 		flex-flow: row nowrap;
 		align-items: center;
-		border: 1px SaddleBrown solid;
+		border: 1px var(--nav-bg-color) solid;
 		/* position: fixed; */
 		height: var(--height);
-		background-color: SaddleBrown;
-		color: black;
+		background-color: var(--nav-bg-color);
 		display: flex;
 		align-items: center;
 		margin: 0;
@@ -30,7 +30,7 @@
 	}
 	.logo a {
 			text-decoration: none;
-			color: PeachPuff;
+			color: var(--logo-color);
 		}
 	.logo {
 		flex-grow: 1;

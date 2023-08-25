@@ -2,8 +2,9 @@
 	import type { IRoute } from "../Route/route";
   import Route from '$lib/components/Route/Route.svelte'
 	import { onMount } from "svelte";
+	import { SITE_COLOR } from "$lib/theme/colors";
   export let route : IRoute | null = null;
-  export let routeBgColor : string = '#b08968';
+  export let routeBgColor : string = SITE_COLOR.CompSideBarRouteBG;
   $: if(route) route.open = true; 
 
 </script>

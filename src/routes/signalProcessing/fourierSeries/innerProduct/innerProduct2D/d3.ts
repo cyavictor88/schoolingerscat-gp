@@ -250,7 +250,7 @@ export function getFig3(){
 
   // Append a path for the area (under the axes).
   svg.append("path")
-    .attr("fill", getColor(COLOR.BROWN,0x66))
+    .attr("fill", getColor(COLOR.BROWN,0.3))
     .attr("d", area(areaPath));
 
   return svg.node();

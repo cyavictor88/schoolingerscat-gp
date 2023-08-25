@@ -8,10 +8,11 @@
 	import { mixin } from 'lodash';
 	import KatexMix from '../Katex/KatexMix.svelte';
 	import url from './url';
+	import { SITE_COLOR } from '$lib/theme/colors';
 	export let route: IRoute | null = null;
 	export let indent = 0;
 	export let toggleMenu: any = () => {console.log('doing nothing')};
-	export let bgColor: string = 'lightblue';
+	export let bgColor: string = SITE_COLOR.CompRouteDefaultBG;
 	function toggleOpenSubRoute() {
 		if (route) {
 			if (route.open) route.open = false;
@@ -41,14 +42,15 @@
 		{#if route.label}
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-			<li style="padding-left: {indent}px" style:--bgColor={bgColor} on:click={toggleOpenSubRoute}>
+			<li style="padding-left: {indent}px; --bgColor:{bgColor}; --hoverColor:{SITE_COLOR.CompRouteHoverBG}; --hoverBarColor:{SITE_COLOR.CompRouteHoverBar};" on:click={toggleOpenSubRoute}>
 				{#if route.path}
 					<a
 						href={base + route.path}
+						style="--aColor: {SITE_COLOR.CompRouteLinkColor};"
 						on:click={toggleMenu}
 					>
-						<span style:--bg-1={route.path === currentPath || route.path === currentHash
-							? '#e6ccb2'
+						<span style:--bgFocus={route.path === currentPath || route.path === currentHash
+							? SITE_COLOR.CompRouteFocusBG
 							: ''}>
 							{#if route.katexMix}
 								<KatexMix mixedString={route.katexMix} />
@@ -59,7 +61,7 @@
 					</a>
 				{:else}
 					<!-- svelte-ignore a11y-invalid-attribute -->
-					<a href="javascript:;"> <span> {route.label}{route.open ? upTriangle : downTriangle}</span> </a>
+					<a href="javascript:;" style="--aColor: {SITE_COLOR.CompRouteLinkColor};"> <span> {route.label}{route.open ? upTriangle : downTriangle}</span> </a>
 				{/if}
 			</li>
 		{/if}
@@ -86,8 +88,8 @@
 	}
 
 	li:hover {
-		background-color: #ede0d4;
-		border-left: 4px maroon solid;
+		background-color: var(--hoverColor);
+		border-left: 4px var(--hoverBarColor) solid;
 		/* border-bottom: 4px maroon solid; */
 		/* text-decoration: underline; */
 		/* border-radius: 4px; */
@@ -98,13 +100,13 @@
 		white-space: nowrap;
 		text-decoration: none;
 		border-radius: 4px;
-		color: #3F2E3E;
+		color: var(--aColor);
 		font-family: Georgia, serif;
 	}
 
   span {
 		border-radius: 2px;
-    background: var(--bg-1);
+    background: var(--bgFocus);
 		padding: 2px 4px;
   }
 </style>

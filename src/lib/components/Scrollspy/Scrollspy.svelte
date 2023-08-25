@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { SITE_COLOR, getColor } from '$lib/theme/colors';
 	import { onMount } from 'svelte';
 	let container: HTMLDivElement;
 	let sectionNodeList;
@@ -68,7 +69,7 @@
 		}
     const locationChangeAction = ()=>{
 			intersectingStatus.forEach((x) => {
-				const bgColor = '#' + x.node.id === window.location.hash ? 'rgba(255,165,255   ,0.2)' : '';
+				const bgColor = '#' + x.node.id === window.location.hash ? getColor( SITE_COLOR.CompScrollspyFocusBG, 0.2) : '';
 				(x.node as HTMLElement).style.background = bgColor;
 				setTimeout(()=>{(x.node as HTMLElement).style.background =''}, 1000)
 			});

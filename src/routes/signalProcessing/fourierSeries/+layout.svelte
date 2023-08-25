@@ -130,7 +130,6 @@
 	{/if}
 </div>
 
-	<!-- <SideNav {sideBarWidth} /> -->
 	<div
 		id="content"
 		style="padding-left:{10+sideBarDivWidth}px; top:{$topBarHeight}px; 
