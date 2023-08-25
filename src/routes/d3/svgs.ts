@@ -96,16 +96,16 @@ export function svgF1() {
   svg.selectAll('text').style('fill', 'black')
 
 
-  const markerBoxWidth = 20;
-  const markerBoxHeight = 20;
-  const refX = markerBoxWidth/2;
+  const markerBoxWidth = 10;
+  const markerBoxHeight = 10;
+  const refX = markerBoxWidth/1;
   const refY = markerBoxHeight/2;
-  const arrowPoints :[number,number][]= [[0, 0], [0, 20], [20, 10]];
+  const arrowPoints :[number,number][]= [[0, 0], [0, 10], [10, 5]];
 
 
-  const arrowLine = d3.line<[number,number]>().x(d=>(d[0])).y(d=>(d[0]));
+  const arrowLine = d3.line<[number,number]>().x(d=>(d[0])).y(d=>(d[1]));
 
-  svg
+  const arrow = svg
     .append('defs')
     .append('marker')
     .attr('id', 'arrow')
@@ -117,17 +117,39 @@ export function svgF1() {
     .attr('orient', 'auto-start-reverse')
     .append('path')
     .attr('d', arrowLine(arrowPoints))
-    .attr('fill', 'black')
-    .attr('stroke', 'black');
+    // .attr('d', d3.line()(arrowPoints))
+    // .attr('fill', 'black')
+    // .attr('stroke', 'red');
 
 
-    // svg
-    // .append('path')
-    // .attr('d', drawLine([{x:0,y:0},{x:3,y:3}]))
-    // .attr('stroke', 'black')
-    // .attr('marker-end', 'url(#arrow)')
-    // .attr('fill', 'none');
+    const arrowRed = svg.select('#arrow').clone(true)
+    arrowRed.attr('fill','red')
+    arrowRed.attr('id','arrowRed')
 
+    svg
+    .append('path')
+    .attr('d', drawLine([{x:0,y:0},{x:2,y:4}]))
+    .attr('stroke', 'red')
+    .attr('marker-end', 'url(#arrowRed)')
+    .attr('fill', 'none');
+
+
+    const arrowBlue = svg.select('#arrow').clone(true)
+    arrowBlue.attr('fill','Blue')
+    arrowBlue.attr('id','arrowBlue')
+
+    svg
+    .append('path')
+    .attr('d', drawLine([{x:0,y:0},{x:4,y:2}]))
+    .attr('stroke', 'blue')
+    .attr('marker-end', 'url(#arrowBlue)')
+    .attr('fill', 'blue');
+
+    svg
+    .append('path')
+    .attr('d', drawLine([{x:2,y:4},{x:4,y:2}]))
+    .attr('stroke', 'gold')
+    .attr('fill', 'gold');
 
   return svg.node();
 }
