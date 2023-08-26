@@ -4,18 +4,22 @@
 	import innerProduct2DCosine from '$lib/assets/fourierSeries/innerProduct/innerProduct2DCosine.svg';
 	import { onMount } from 'svelte';
 	import * as d3Fig from './d3';
+	import * as d3G from './d32d';
 	import { getCircleNum } from '$lib/unicode';
 	let fig1: HTMLDivElement;
 	let fig2: HTMLDivElement;
 	let fig3: HTMLDivElement;
+	// let g1: HTMLDivElement;
 	onMount(()=>{
 		fig1.append(d3Fig.getFig1()!);
 		fig2.append(d3Fig.getFig2()!);
 		fig3.append(d3Fig.getFig3()!);
+		// g1.append(d3G.baseFig()!);
 	})
 
 </script>
 
+<!-- <div bind:this={g1} /> -->
 
 
 <p>

@@ -3,16 +3,27 @@ import * as d3 from 'd3';
 import katex from "katex";
 
 
+function getTicks(start: number, end: number) {
+  const res = [];
+  while (start <= end) {
+    res.push(start);
+    start += 1;
+  }
+  return res;
+}
+
+
 const veca = { x: 2, y: 4 };
 const vecb = { x: 5, y: 2 };
 const vecO = { x: 0, y: 0 };
 const r = 1;
 const aTheta = Math.atan(veca.y / veca.x);
 const bTheta = Math.atan(vecb.y / vecb.x);
-const controlPointTheta = bTheta + 0.5 * (aTheta - bTheta);
+const controlPointTheta =  (aTheta + bTheta)/2 //bTheta + 0.5 * (aTheta - bTheta);
 
-const xDomain = [0, 6];
-const yDomain = [0, 6];
+
+const xDomain = [-6, 6];
+const yDomain = [-6, 6];
 
 // Declare the chart dimensions and margins.
 const width = 400;
@@ -21,6 +32,11 @@ const marginTop = 20;
 const marginRight = 100;
 const marginBottom = 30;
 const marginLeft = 40;
+
+const xTicks = getTicks(xDomain[0], xDomain[1]);
+const yTicks = getTicks(yDomain[0], yDomain[1]);
+
+
 
 
 // Declare the x (horizontal position) scale.
@@ -44,8 +60,8 @@ function latex(math: string) {
 }
 
 const drawLine = d3.line<{ x: number, y: number }>()
-.x(d => xScale(d.x))
-.y(d => yScale(d.y))
+  .x(d => xScale(d.x))
+  .y(d => yScale(d.y))
 
 export function baseFig() {
 
@@ -53,6 +69,7 @@ export function baseFig() {
   const svg = d3.create("svg")
     .attr("width", width)
     .attr("height", height)
+    .style("border","1px black solid")
 
   function drawCurve(context: d3.Path) {
 
@@ -60,6 +77,26 @@ export function baseFig() {
     context.quadraticCurveTo(xScale(1.2 * r * Math.cos(controlPointTheta)), yScale(1.2 * r * Math.sin(controlPointTheta)), xScale(r * Math.cos(bTheta)), yScale(r * Math.sin(bTheta))); // draw an arc, the turtle ends up at ⟨194.4,108.5⟩
     return context; // not mandatory, but will make it easier to chain operations
   }
+
+
+  for (let i = 1; i < xTicks.length-1; i++) {
+    const p0 = { x: xTicks[i], y: yTicks[0] }
+    const p1 = { x: xTicks[i], y: yTicks[yTicks.length - 1] }
+    svg.append('path')
+    .style("stroke", "grey")
+    .style("fill", "none")
+    .attr("d", drawLine([p0, p1]))
+  }
+
+  for (let j = 1; j < yTicks.length-1; j++) {
+    const p0 = { x: xTicks[0], y: yTicks[j] }
+    const p1 = { x: xTicks[xTicks.length-1], y: yTicks[j] }
+    svg.append('path')
+    .style("stroke", "grey")
+    .style("fill", "none")
+    .attr("d", drawLine([p0, p1]))
+  }
+
 
 
   svg.append('path')
@@ -70,17 +107,17 @@ export function baseFig() {
   svg.append('path')
     .style("stroke", "black")
     .style("fill", "none")
-    .attr("d", drawLine([{ x: 0, y: 0 }, { x: 5, y: 0 }]))
+    .attr("d", drawLine([{ x: -6, y: 0 }, { x: 6, y: 0 }]))
 
   svg.append('path')
     .style("stroke", "black")
     .style("fill", "none")
-    .attr("d", drawLine([{ x: 0, y: 0 }, { x: 0, y: 5 }]))
+    .attr("d", drawLine([{ x: 0, y: -6 }, { x: 0, y: 6 }]))
 
 
   const fontSize = 20;
   const textXaxis = svg.append("text")
-    .attr("x", xScale(5))
+    .attr("x", xScale(6))
     .attr("y", yScale(-0))
     .style("font-size", fontSize + "px")
     .attr("dy", yScale.invert(fontSize * 0.5))
@@ -90,7 +127,7 @@ export function baseFig() {
 
   const textYaxis = svg.append("text")
     .attr("x", xScale(0))
-    .attr("y", yScale(5.1))
+    .attr("y", yScale(6.1))
     .style("font-size", fontSize + "px")
     .style('fill', 'black')
     .attr("text-anchor", "middle")
@@ -134,12 +171,37 @@ export function baseFig() {
 
 
 
-  svg
+  function drag(){
+    
+    function dragstarted(this: any) {
+      d3.select(this).attr("stroke", "black");
+    }
+  
+    
+    return d3.drag()
+        .on("start", dragstarted)
+        .on("drag", function(){
+          d3.select(this).attr('stroke','yellow')
+          alert('draging')
+
+        })
+        .on("end",function(){
+          d3.select(this).attr('stroke','black')
+          alert('end')
+
+        })
+      }
+    
+
+
+
+  const redv = svg
     .append('path')
     .attr('d', drawLine([vecO, veca]))
     .attr('stroke', 'red')
     .attr('marker-end', 'url(#arrowRed)')
-    .attr('fill', 'none');
+    .attr('fill', 'red')
+    redv.call(drag);
 
   const arrowBlue = svg.select('#arrow').clone(true)
   arrowBlue.attr('fill', 'Blue')
@@ -159,27 +221,10 @@ export function baseFig() {
     .style("stroke-dasharray", ("3, 3"))
     .attr('fill', 'brown');
 
-  svg
-    .append("svg:foreignObject")
-    .attr("width", 1)
-    .attr("height", 1)
-    .attr("overflow", 'visible')
-    .style("font-size", '15px')
-    .attr("x", xScale(veca.x / 2 + vecb.x / 2 + 0.))
-    .attr("y", yScale(veca.y / 2 + vecb.y / 2 + 0.4))
-    .append("xhtml:div")
-    .html(latex(`\\color{${FIG_COLOR.BROWN}}d`))
 
-  svg
-    .append("svg:foreignObject")
-    .attr("width", 1)
-    .attr("height", 1)
-    .attr("overflow", 'visible')
-    .style("font-size", '15px')
-    .attr("x", xScale(veca.x - 0.3))
-    .attr("y", yScale(veca.y + 0.5))
-    .append("xhtml:div")
-    .html(latex('\\color{red}\\overrightarrow{a}=(a_x,a_y)'))
+
+
+
 
 
   svg
@@ -187,121 +232,12 @@ export function baseFig() {
     .attr("width", 1)
     .attr("height", 1)
     .attr("overflow", 'visible')
-    .style("font-size", '15px')
-    .attr("x", xScale(vecb.x + 0.1))
-    .attr("y", yScale(vecb.y + 0.5))
-    .append("xhtml:div")
-    .html(latex('\\color{blue}\\overrightarrow{b}=(b_x,b_y)'))
-
-  svg
-    .append("svg:foreignObject")
-    .attr("width", 1)
-    .attr("height", 1)
-    .attr("overflow", 'visible')
-    .style("font-size", '15px')
-    .attr("x", xScale(1.2 * r * Math.cos(controlPointTheta)))
-    .attr("y", yScale(1.2 * r * Math.sin(controlPointTheta * 2)))
+    .style("font-size", '12px')
+    .attr("x", xScale(1.3 * r * Math.cos(1.*controlPointTheta)))
+    .attr("y", yScale(1.3 * r * Math.sin(1.*controlPointTheta)))
     .append("xhtml:div")
     .html(latex('\\theta'))
-
-  return svg;
-}
-
-
-export function getFig1(){
-  return baseFig().node();
-}
-
-export function getFig2(){
-  const svg = baseFig();
-  svg
-  .append("svg:foreignObject")
-  .attr("width", 1)
-  .attr("height", 1)
-  .attr("overflow", 'visible')
-  .style("font-size", '12px')
-  .attr("x", xScale(veca.x/2*1.1))
-  .attr("y", yScale(veca.y/2*1.1))
-  .append("xhtml:div")
-  .html(latex('\\color{red}\\|a\\|=({a_x}^2 + {a_y}^2)^{0.5}'));
-
-  svg
-  .append("svg:foreignObject")
-  .attr("width", 1)
-  .attr("height", 1)
-  .attr("overflow", 'visible')
-  .style("font-size", '12px')
-  .attr("x", xScale(vecb.x/2*0.9))
-  .attr("y", yScale(vecb.y/2*0.9))
-  .append("xhtml:div")
-  .html(latex('\\color{blue}\\|b\\|=({b_x}^2 + {b_y}^2)^{0.5}'));
-
-  return svg.node();
-
-}
-
-export function getFig3(){
-  const svg = baseFig();
-  const area = d3.area<{x:number,y0:number,y1:number}>()
-    .x(d => xScale(d.x))
-    .y0(d => yScale(d.y0))
-    .y1(d => yScale(d.y1));
-  const areaPath = [{x:veca.x, y0:veca.y, y1:vecb.y}, {x:vecb.x, y0:vecb.y, y1:vecb.y}];
-
-  // Append a path for the area (under the axes).
-  svg.append("path")
-    .attr("fill", getColor(FIG_COLOR.BROWN,0.3))
-    .attr("d", area(areaPath));
-
-  svg.append('path')
-    .style("stroke", "grey")
-    .style("fill", "none")
-    .attr("d", drawLine(([veca, { x: veca.x , y: veca.y - vecb.y }])))
-
-  svg.append('path')
-    .style("stroke", "grey")
-    .style("fill", "none")
-    .attr("d", drawLine(([vecb, { x: veca.x , y: veca.y - vecb.y }])))
-
-
-  svg
-    .append("svg:foreignObject")
-    .attr("width", 1)
-    .attr("height", 1)
-    .attr("overflow", 'visible')
-    .style("font-size", '14px')
-    .attr("x", xScale(veca.x*0.8))
-    .attr("y", yScale(0.5*(veca.y+veca.y - vecb.y)))
-    .append("xhtml:div")
-    .html(latex(`\\color{${FIG_COLOR.BROWN}}d_y`));
-
-  const dtext = svg
-    .append("svg:foreignObject")
-    .attr("width", 1)
-    .attr("height", 1)
-    .attr("overflow", 'visible')
-    .style("font-size", '14px')
-    .style("visibility", "hidden")
-    .attr("x", xScale(4))
-    .attr("y", yScale(4))
-    .append("xhtml:div")
-    .html(latex(`\\color{${FIG_COLOR.BROWN}}D`));
-
-  svg
-    .append("svg:foreignObject")
-    .attr("width", 1)
-    .attr("height", 1)
-    .attr("overflow", 'visible')
-    .style("font-size", '14px')
-    .attr("x", xScale(0.45*(veca.x+vecb.x)))
-    .attr("y", yScale(vecb.y))
-    .append("xhtml:div")
-    .html(latex(`\\color{${FIG_COLOR.BROWN}}d_x`))
-    .on('mouseover',function(){return dtext.style("visibility", "visible");})
-    .on('mouseleave',function(){return dtext.style("visibility", "hidden");})
-
-
-
+    .style("transform","translateY(-50%)")
 
   return svg.node();
 }

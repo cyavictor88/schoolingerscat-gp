@@ -24,13 +24,13 @@ export enum SITE_COLOR {
 }
 
 
-export enum COLOR {
+export enum FIG_COLOR {
   RED = '#FF0000',
   BLUE = '#0000FF',
   BROWN = '#964B00',
 }
 
-export function getColor( color: SITE_COLOR | COLOR, alpha?:number):string {
+export function getColor( color: SITE_COLOR | FIG_COLOR, alpha?:number):string {
   if(alpha){
     const hex = color+Math.floor(255*alpha).toString(16);
     return hex.length > 1 ? hex : '0' + hex;
