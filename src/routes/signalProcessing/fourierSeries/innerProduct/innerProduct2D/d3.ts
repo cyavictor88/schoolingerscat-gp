@@ -168,7 +168,7 @@ export function baseFig() {
     .attr("x", xScale(veca.x / 2 + vecb.x / 2 + 0.))
     .attr("y", yScale(veca.y / 2 + vecb.y / 2 + 0.4))
     .append("xhtml:div")
-    .html(latex('\\color{brown}d'))
+    .html(latex(`\\color{${COLOR.BROWN}}d`))
 
   svg
     .append("svg:foreignObject")
@@ -254,12 +254,12 @@ export function getFig3(){
     .attr("d", area(areaPath));
 
   svg.append('path')
-    .style("stroke", "brown")
+    .style("stroke", "grey")
     .style("fill", "none")
     .attr("d", drawLine(([veca, { x: veca.x , y: veca.y - vecb.y }])))
 
   svg.append('path')
-    .style("stroke", "brown")
+    .style("stroke", "grey")
     .style("fill", "none")
     .attr("d", drawLine(([vecb, { x: veca.x , y: veca.y - vecb.y }])))
 
@@ -269,18 +269,18 @@ export function getFig3(){
     .attr("width", 1)
     .attr("height", 1)
     .attr("overflow", 'visible')
-    .style("font-size", '12px')
+    .style("font-size", '14px')
     .attr("x", xScale(veca.x*0.8))
     .attr("y", yScale(0.5*(veca.y+veca.y - vecb.y)))
     .append("xhtml:div")
-    .html(latex(`\\color{${COLOR.BROWN}}d_1`));
+    .html(latex(`\\color{${COLOR.BROWN}}d_y`));
 
   const dtext = svg
     .append("svg:foreignObject")
     .attr("width", 1)
     .attr("height", 1)
     .attr("overflow", 'visible')
-    .style("font-size", '12px')
+    .style("font-size", '14px')
     .style("visibility", "hidden")
     .attr("x", xScale(4))
     .attr("y", yScale(4))
@@ -292,11 +292,11 @@ export function getFig3(){
     .attr("width", 1)
     .attr("height", 1)
     .attr("overflow", 'visible')
-    .style("font-size", '12px')
+    .style("font-size", '14px')
     .attr("x", xScale(0.45*(veca.x+vecb.x)))
     .attr("y", yScale(vecb.y))
     .append("xhtml:div")
-    .html(latex(`\\color{${COLOR.BROWN}}d_2`))
+    .html(latex(`\\color{${COLOR.BROWN}}d_x`))
     .on('mouseover',function(){return dtext.style("visibility", "visible");})
     .on('mouseleave',function(){return dtext.style("visibility", "hidden");})
 
