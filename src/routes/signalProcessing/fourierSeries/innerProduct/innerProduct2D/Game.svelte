@@ -2,58 +2,39 @@
   import * as d3 from 'd3';
 	import { onMount } from 'svelte';
   import Katex from '$lib/components/Katex/Katex.svelte';
+	import { GameObj } from './GameObj';
+	import Arrow from './Arrow.svelte';
+  let game = new GameObj();
+  let axisFontSize = 20;
 
-  export let data = [{x:-1.5,y:2},{x:-.5,y:4},{x:0.5,y:-2},{x:1.5,y:9}];
-  export let oriData = [{x:-1.5,y:2},{x:-.5,y:4},{x:0.5,y:-2},{x:1.5,y:9}];
-  export let width = 640;
-  export let height = 400;
-  export let marginTop = 20;
-  export let marginRight = 20;
-  export let marginBottom = 30;
-  export let marginLeft = 40;
-
-  let gx: SVGGElement;
-  let gy: SVGGElement;
-  let d3Svg: Element;
-
-
-  onMount(()=>{
-  });
-  const zoomBehavior = d3.zoom()
-      .scaleExtent([0, 10])
-      .on('zoom', zoomed);
-  function zoomed(event: d3.D3ZoomEvent<Element,any>) {
-    // console.log(event.transform.rescaleX(xScale))
-    const new_xScale = event.transform.rescaleX(xScale);
-    // const new_xScale = d3.zoomTransform(d3Svg).rescaleX(xScale);
-    // const orixScale = xScale;
-    // xScale = d3.zoomTransform(d3Svg).rescaleX(xScale);
-    xAxis.scale(new_xScale);
-    d3.select(gx).call(xAxis);
-    d3.selectAll('.line').datum<{ x: number; y: number }[]>(data.filter(d=>d.x >= new_xScale.domain()[0] && d.x<=new_xScale.domain()[1] )).attr('d', line.x(d => new_xScale(d.x)));
+    // Declare the x (horizontal position) scale.
+  $: xScale = d3.scaleLinear().domain(game.xDomain).range([game.marginLeft, game.width - game.marginRight]);
+  $: yScale = d3.scaleLinear().domain(game.yDomain).range([game.height - game.marginBottom, game.marginTop]);
+  $: drawLine = d3.line<{ x: number, y: number }>().x(d => xScale(d.x)).y(d => yScale(d.y))
+  $: drawCurve = (context: d3.Path)=> {
+    context.moveTo(xScale(game.radius * Math.cos(game.theta_a)), yScale(game.radius * Math.sin(game.theta_a))); // move current point to ⟨10,10⟩
+    context.quadraticCurveTo(xScale(1.2 * game.radius * Math.cos(game.theta_ab)), yScale(1.2 * game.radius * Math.sin(game.theta_ab)), xScale(game.radius * Math.cos(game.theta_b)), yScale(game.radius* Math.sin(game.theta_b))); // draw an arc, the turtle ends up at ⟨194.4,108.5⟩
+    return context; // not mandatory, but will make it easier to chain operations
   }
-  $: xScale = d3.scaleLinear([Math.min(...data.map(d=>d.x)), Math.max(...data.map(d=>d.x))], [marginLeft, width - marginRight]).clamp(true);
-  $: yScale = d3.scaleLinear([Math.min(...data.map(d=>d.y)), Math.max(...data.map(d=>d.y))], [height - marginBottom, marginTop]).clamp(true);
-  $: line = d3.line<{x:number,y:number}>((d, i) => xScale(d.x), (d)=>yScale(d.y));
-  // $: yAxis = d3.axisLeft(yScale);
-  $: xAxis = d3.axisBottom(xScale);
-  $: d3.select(gy).call(d3.axisLeft(yScale));
-  $: d3.select(gx).call(d3.axisBottom(xScale));
-  $: d3.select(d3Svg).call(zoomBehavior);
 </script>
-<svg bind:this={d3Svg} width={width} height={height} >
-  <g bind:this={gx} transform="translate(0,{height - marginBottom})" />
-  <g bind:this={gy} transform="translate({marginLeft},0)" />
+<svg width={game.width} height={game.height} style="border: 1px black solid">
+  <Arrow color={'red'} />
+  <Arrow color={'blue'} />
+  {#each Array(game.xTicks.length-2) as _, index (index)}
+    <path stroke='grey' d={drawLine([{ x: game.xTicks[index+1], y: game.yTicks[0] },{ x: game.xTicks[index+1], y: game.yTicks[game.yTicks.length - 1] }])}  />
+  {/each}
+  {#each Array(game.yTicks.length-2) as _, index (index)}
+    <path stroke='grey' d={drawLine([{ x: game.xTicks[0], y: game.yTicks[index+1]},{  x: game.xTicks[game.xTicks.length-1], y: game.yTicks[index+1] }])}  />
+  {/each}
+  <path stroke ='black' d={drawLine([{x:game.xDomain[0],y:0},{x:game.xDomain[1],y:0}])} />
+  <path stroke ='black' d={drawLine([{y:game.yDomain[0],x:0},{y:game.yDomain[1],x:0}])} />
+  <text text-anchor='start' x={xScale(game.xDomain[1])} y={yScale(0)} dy={yScale.invert(axisFontSize/2)} style='font-size:{axisFontSize}px;'>X</text>
+  <text text-anchor='middle' x={xScale(0)} y={yScale(game.yDomain[1]+0.1)} style='font-size:{axisFontSize}px;'>Y</text>
 
-  <path class ='line' fill="none" stroke="currentColor" stroke-width="3.5" d={line(data)} color='red' />
-  <path class ='line' fill="none" stroke="currentColor" stroke-width="1.5" d={line(oriData)} color='blue' />
+  <path stroke='red' d={drawLine([game.vec0,game.veca])} marker-end='url(#arrowred)'/>
+  <path stroke='blue' d={drawLine([game.vec0,game.vecb])} marker-end='url(#arrowblue)'/>
 
-  <g fill="white" stroke="currentColor" stroke-width="1.5">
-    {#each data as d, i}
-      <circle name={i.toString()} cx={xScale(d.x)} cy={yScale(d.y)} r="2.5"  color='red'/>
-    {/each}
-    <foreignObject x="200" y="200" width="160" height="160">
-      <Katex math={'\\vec{f}'} />
-    </foreignObject>
-  </g>
+
+
+
 </svg>

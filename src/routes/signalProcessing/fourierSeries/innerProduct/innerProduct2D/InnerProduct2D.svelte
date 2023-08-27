@@ -6,6 +6,7 @@
 	import * as d3Fig from './d3';
 	import * as d3G from './d32d';
 	import { getCircleNum } from '$lib/unicode';
+	import Game from './Game.svelte';
 	let fig1: HTMLDivElement;
 	let fig2: HTMLDivElement;
 	let fig3: HTMLDivElement;
@@ -18,7 +19,6 @@
 	})
 
 </script>
-
 
 
 <p>
@@ -171,3 +171,4 @@
 		<p>There you have it, the above shows how the cosine of the angle between two vectors can be expressed using their inner product and lengths.</p>
 
 		<div bind:this={g1} />
+		<Game />
