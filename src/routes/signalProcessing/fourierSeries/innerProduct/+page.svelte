@@ -1,6 +1,4 @@
 <script lang='ts'>
-  import Part1 from "./Part1.svelte";
-  import Part2 from "./Part2.svelte";
 	import type { IRoute } from '$lib/components/Route/route';
   import { onMount } from 'svelte';
   import { pageRoute } from './pageRoute';
@@ -40,5 +38,3 @@
 </div>
 
 
-<Part1 />
-<Part2 />

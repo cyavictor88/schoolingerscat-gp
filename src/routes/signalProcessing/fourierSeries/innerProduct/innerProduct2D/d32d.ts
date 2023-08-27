@@ -1,6 +1,7 @@
 import { FIG_COLOR, getColor } from '$lib/theme/colors';
 import * as d3 from 'd3';
 import katex from "katex";
+import { GameObj } from './GameObj';
 
 
 
@@ -15,13 +16,16 @@ function getTicks(start: number, end: number) {
 }
 
 
-const veca = { x: 2, y: 4 };
-const vecb = { x: 5, y: 2 };
+const game = new GameObj({ x: 2, y: 4 },{ x: 5, y: 2 });
+
+
+const veca = game.veca;
+const vecb = game.vecb;
 const vec0 = { x: 0, y: 0 };
 const r = 1;
-const aTheta = Math.atan(veca.y / veca.x);
-const bTheta = Math.atan(vecb.y / vecb.x);
-const controlPointTheta =  (aTheta + bTheta)/2 //bTheta + 0.5 * (aTheta - bTheta);
+const aTheta = game.theta_a;
+const bTheta =  game.theta_b;
+const controlPointTheta =   game.theta_ab; //bTheta + 0.5 * (aTheta - bTheta);
 
 
 const xDomain = [-6, 6];
@@ -214,11 +218,12 @@ const dragLine = d3.drag<SVGPathElement, LineData>()
     .attr('marker-end', 'url(#arrowRed)')
     .attr('fill', 'red')
     .attr('id','veca')
-    // .call(dragLine as any);
 
   const arrowBlue = svg.select('#arrow').clone(true)
   arrowBlue.attr('fill', 'Blue')
   arrowBlue.attr('id', 'arrowBlue')
+
+
 
   svg
     .append('path')
@@ -226,16 +231,6 @@ const dragLine = d3.drag<SVGPathElement, LineData>()
     .attr('stroke', 'blue')
     .attr('marker-end', 'url(#arrowBlue)')
     .attr('fill', 'blue');
-
-  svg
-    .append('path')
-    .attr('d', drawLine([vecb, veca]))
-    .attr('stroke', 'brown')
-    .style("stroke-dasharray", ("3, 3"))
-    .attr('fill', 'brown');
-
-
-
 
 
 
@@ -276,6 +271,7 @@ const dragLine = d3.drag<SVGPathElement, LineData>()
         d3.select(this)
             .attr("cx", (event.x))
             .attr("cy", (event.y));
+            game.veca =  {x:xScale.invert(event.x),y:yScale.invert(event.y)};
         d3.select('#veca').attr('d',drawLine([vec0, {x:xScale.invert(event.x),y:yScale.invert(event.y)}]))
     }
     
@@ -295,11 +291,14 @@ const dragC = d3.drag<SVGCircleElement, CircleData>()
 
     const circle = svg.append("circle")
     .attr("class", "draggable-circle")
+    .style("cursor","pointer")
     .attr("cx", initialCircleData.cx)
     .attr("cy", initialCircleData.cy)
     .attr("r", initialCircleData.radius*3)
     .call(dragC as any);
 
+
+    ////////////////////////////////join data
 
 
   return svg.node();
