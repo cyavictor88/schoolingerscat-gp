@@ -3,37 +3,6 @@ import * as d3 from 'd3';
 import katex from "katex";
 
 
-interface CircleData {
-  cx: number;
-  cy: number;
-  radius: number;
-}
-
-
-function drajstarted(this: SVGCircleElement, event:d3.D3DragEvent<SVGCircleElement, CircleData, any>, d: CircleData) {
-  // alert('hiii')
-    d3.select(this).raise().classed("active", true);
-}
-
-function draggedC(this:SVGCircleElement,event:d3.D3DragEvent<SVGCircleElement, CircleData, any>, d: CircleData) {
-  console.log(this)
-  console.log(d3.select(this))
-    d3.select(this)
-        .attr("cx", (event.x))
-        .attr("cy", (event.y));
-}
-
-function dragendedC(this:SVGCircleElement,event: d3.D3DragEvent<SVGCircleElement, CircleData, any>) {
-    d3.select(this).classed("active", false);
-}
-
-// Create drag behavior
-const dragC = d3.drag<SVGCircleElement, CircleData>()
-    .on("start", drajstarted)
-    .on("drag", draggedC)
-    .on("end", dragendedC);
-
-
 
 
 function getTicks(start: number, end: number) {
@@ -48,7 +17,7 @@ function getTicks(start: number, end: number) {
 
 const veca = { x: 2, y: 4 };
 const vecb = { x: 5, y: 2 };
-const vecO = { x: 0, y: 0 };
+const vec0 = { x: 0, y: 0 };
 const r = 1;
 const aTheta = Math.atan(veca.y / veca.x);
 const bTheta = Math.atan(vecb.y / vecb.x);
@@ -204,77 +173,48 @@ export function baseFig() {
 
 
 
-  function drag(){
-    
-    function dragstarted(this: any) {
-      alert('starttt')
-      d3.select(this).attr("stroke", "black");
-    }
-  
-    
-    return d3.drag()
-        .on("start", dragstarted)
-        .on("drag", function(){
-          d3.select(this).attr('stroke','yellow')
-          alert('draging')
 
-        })
-        .on("end",function(){
-          d3.select(this).attr('stroke','black')
-          alert('end')
 
-        })
-      }
-    
-
-  function clicked(event: Event) {
-    alert('clickdd')
-
-        if (event.defaultPrevented) {
-          alert('click')
-          return}; // dragged
-  }
+interface LineData {
+  x: number,
+  y:number
+}
 
 
 
-  const initialCircleData : CircleData= {
-    cx: xScale(-3),
-    cy: yScale(-3),
-    radius: 4
-};
+
+function dragLineStart(this: SVGPathElement, event:d3.D3DragEvent<SVGPathElement, LineData, any>, d: LineData) {
+  d3.select(this).raise().classed("active", true);
+}
+
+function dragLineDraging(this:SVGPathElement,event:d3.D3DragEvent<SVGPathElement, LineData, any>, d: LineData) {
+console.log(this)
+console.log(d3.select(this))
+  d3.select(this)
+  .attr('d', drawLine([vec0, {x:xScale.invert(event.x), y:yScale.invert(event.y)}]))
+      
+}
+
+function dragLineEnd(this:SVGPathElement,event: d3.D3DragEvent<SVGPathElement, LineData, any>) {
+  d3.select(this).classed("active", false);
+}
 
 
-const draj = d3.drag<SVGCircleElement, CircleData>()
-.on("start", function(event) {
-    d3.select(this).raise().classed("active", true);
-})
-.on("drag", function(event, d) {
-    d3.select(this)
-        .attr("cx", d.cx = xScale(event.x))
-        .attr("cy", d.cy = yScale(event.y));
-})
-.on("end", function() {
-    d3.select(this).classed("active", false);
-});
+// Create drag behavior
+const dragLine = d3.drag<SVGPathElement, LineData>()
+    .on("start", dragLineStart)
+    .on("drag", dragLineDraging)
+    .on("end", dragLineEnd);
 
 
-
-const circle = svg.append("circle")
-.attr("class", "draggable-circle")
-.attr("cx", initialCircleData.cx)
-.attr("cy", initialCircleData.cy)
-.attr("r", initialCircleData.radius*2)
-// .call(draj);
-circle.call(dragC);
-
-  const redv = svg
+  svg
     .append('path')
-    .attr('d', drawLine([vecO, veca]))
+    .attr('d', drawLine([vec0, veca]))
     .attr('stroke', 'red')
     .attr('marker-end', 'url(#arrowRed)')
     .attr('fill', 'red')
-    .on('click',clicked)
-    .call(drag);
+    .attr('id','veca')
+    // .call(dragLine as any);
 
   const arrowBlue = svg.select('#arrow').clone(true)
   arrowBlue.attr('fill', 'Blue')
@@ -282,7 +222,7 @@ circle.call(dragC);
 
   svg
     .append('path')
-    .attr('d', drawLine([vecO, vecb]))
+    .attr('d', drawLine([vec0, vecb]))
     .attr('stroke', 'blue')
     .attr('marker-end', 'url(#arrowBlue)')
     .attr('fill', 'blue');
@@ -311,6 +251,56 @@ circle.call(dragC);
     .append("xhtml:div")
     .html(latex('\\theta'))
     .style("transform","translateY(-50%)")
+
+
+
+
+    interface CircleData {
+      cx: number;
+      cy: number;
+      radius: number;
+    }
+
+
+    const initialCircleData : CircleData = {
+      cx: xScale(veca.x),
+      cy: yScale(veca.y),
+      radius: 2,
+    }
+
+    function drajstarted(this: SVGCircleElement, event:d3.D3DragEvent<SVGCircleElement, CircleData, any>, d: CircleData) {
+        d3.select(this).raise().classed("active", true);
+    }
+    
+    function draggedC(this:SVGCircleElement,event:d3.D3DragEvent<SVGCircleElement, CircleData, any>, d: CircleData) {
+        d3.select(this)
+            .attr("cx", (event.x))
+            .attr("cy", (event.y));
+        d3.select('#veca').attr('d',drawLine([vec0, {x:xScale.invert(event.x),y:yScale.invert(event.y)}]))
+    }
+    
+    function dragendedC(this:SVGCircleElement,event: d3.D3DragEvent<SVGCircleElement, CircleData, any>) {
+        d3.select(this).classed("active", false);
+    }
+    
+
+
+// Create drag behavior
+const dragC = d3.drag<SVGCircleElement, CircleData>()
+    .on("start", drajstarted)
+    .on("drag", draggedC)
+    .on("end", dragendedC);
+
+
+
+    const circle = svg.append("circle")
+    .attr("class", "draggable-circle")
+    .attr("cx", initialCircleData.cx)
+    .attr("cy", initialCircleData.cy)
+    .attr("r", initialCircleData.radius*3)
+    .call(dragC as any);
+
+
 
   return svg.node();
 }
