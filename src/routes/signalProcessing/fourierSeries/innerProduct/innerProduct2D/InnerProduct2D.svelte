@@ -9,17 +9,16 @@
 	let fig1: HTMLDivElement;
 	let fig2: HTMLDivElement;
 	let fig3: HTMLDivElement;
-	// let g1: HTMLDivElement;
+	let g1: HTMLDivElement;
 	onMount(()=>{
 		fig1.append(d3Fig.getFig1()!);
 		fig2.append(d3Fig.getFig2()!);
 		fig3.append(d3Fig.getFig3()!);
-		// g1.append(d3G.baseFig()!);
+		g1.append(d3G.baseFig()!);
 	})
 
 </script>
 
-<!-- <div bind:this={g1} /> -->
 
 
 <p>
@@ -171,3 +170,4 @@
 
 		<p>There you have it, the above shows how the cosine of the angle between two vectors can be expressed using their inner product and lengths.</p>
 
+		<div bind:this={g1} />

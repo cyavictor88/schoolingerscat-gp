@@ -3,6 +3,39 @@ import * as d3 from 'd3';
 import katex from "katex";
 
 
+interface CircleData {
+  cx: number;
+  cy: number;
+  radius: number;
+}
+
+
+function drajstarted(this: SVGCircleElement, event:d3.D3DragEvent<SVGCircleElement, CircleData, any>, d: CircleData) {
+  // alert('hiii')
+    d3.select(this).raise().classed("active", true);
+}
+
+function draggedC(this:SVGCircleElement,event:d3.D3DragEvent<SVGCircleElement, CircleData, any>, d: CircleData) {
+  console.log(this)
+  console.log(d3.select(this))
+    d3.select(this)
+        .attr("cx", (event.x))
+        .attr("cy", (event.y));
+}
+
+function dragendedC(this:SVGCircleElement,event: d3.D3DragEvent<SVGCircleElement, CircleData, any>) {
+    d3.select(this).classed("active", false);
+}
+
+// Create drag behavior
+const dragC = d3.drag<SVGCircleElement, CircleData>()
+    .on("start", drajstarted)
+    .on("drag", draggedC)
+    .on("end", dragendedC);
+
+
+
+
 function getTicks(start: number, end: number) {
   const res = [];
   while (start <= end) {
@@ -174,6 +207,7 @@ export function baseFig() {
   function drag(){
     
     function dragstarted(this: any) {
+      alert('starttt')
       d3.select(this).attr("stroke", "black");
     }
   
@@ -193,7 +227,45 @@ export function baseFig() {
       }
     
 
+  function clicked(event: Event) {
+    alert('clickdd')
 
+        if (event.defaultPrevented) {
+          alert('click')
+          return}; // dragged
+  }
+
+
+
+  const initialCircleData : CircleData= {
+    cx: xScale(-3),
+    cy: yScale(-3),
+    radius: 4
+};
+
+
+const draj = d3.drag<SVGCircleElement, CircleData>()
+.on("start", function(event) {
+    d3.select(this).raise().classed("active", true);
+})
+.on("drag", function(event, d) {
+    d3.select(this)
+        .attr("cx", d.cx = xScale(event.x))
+        .attr("cy", d.cy = yScale(event.y));
+})
+.on("end", function() {
+    d3.select(this).classed("active", false);
+});
+
+
+
+const circle = svg.append("circle")
+.attr("class", "draggable-circle")
+.attr("cx", initialCircleData.cx)
+.attr("cy", initialCircleData.cy)
+.attr("r", initialCircleData.radius*2)
+// .call(draj);
+circle.call(dragC);
 
   const redv = svg
     .append('path')
@@ -201,7 +273,8 @@ export function baseFig() {
     .attr('stroke', 'red')
     .attr('marker-end', 'url(#arrowRed)')
     .attr('fill', 'red')
-    redv.call(drag);
+    .on('click',clicked)
+    .call(drag);
 
   const arrowBlue = svg.select('#arrow').clone(true)
   arrowBlue.attr('fill', 'Blue')
