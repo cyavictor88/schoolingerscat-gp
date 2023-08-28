@@ -56,7 +56,7 @@
     {#each data as d, i}
       <circle name={i.toString()} cx={xScale(d.x)} cy={yScale(d.y)} r="2.5"  color='red'/>
     {/each}
-    <foreignObject x="200" y="200" width="160" height="160">
+    <foreignObject x={xScale(2)} y="200" width="160" height="160">
       <Katex math={'\\vec{f}'} />
     </foreignObject>
   </g>
