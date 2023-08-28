@@ -60,28 +60,25 @@ export class GameObj{
   }
 
 
-  atan2degress(vec:Vec2D, atan: number){
-    if(vec.x===0) return 0;
-    if(vec.y===0 && vec.x<0) return Math.PI;
-    if(vec.y===0 && vec.x>0) return 0;
-    if(vec.x<0 && vec.y<0 && atan>0) {
-      return Math.atan(vec.y/vec.x) + Math.PI;
-    } 
-    if(vec.x>0 && vec.y > 0 ) {
-      return Math.atan(vec.y/vec.x)
-    }
-    if(vec.x>0 && vec.y < 0 ) {
-      return Math.atan(vec.y/vec.x)
-    }
+  calcTheta(vec1:Vec2D, vec2:Vec2D){
+    const innerProduct = vec1.x*vec2.x + vec1.y*vec2.y;
+    const cosTheta = innerProduct / (  Math.sqrt(vec1.x**2+vec1.y**2) * Math.sqrt( vec2.x**2+vec2.y**2) );
+    const theta = Math.acos(cosTheta);
+    return theta
+  }
+
+  calc_thetas(){
+    this.theta_a = this.veca.y > 0? this.calcTheta(this.veca, {x:1,y:0}): 2*Math.PI - this.calcTheta(this.veca, {x:1,y:0});
+    this.theta_b = this.vecb.y > 0? this.calcTheta(this.vecb, {x:1,y:0}): 2*Math.PI - this.calcTheta(this.vecb, {x:1,y:0});
+    this.theta_ab =  (this.theta_a + this.theta_b)/2;
+    if(Math.abs(this.theta_a-this.theta_b)>Math.PI) this.theta_ab = Math.PI+this.theta_ab;
+
   }
 
   deltaVec(vecaOrvecb:string, vec:Vec2D){
     if(vecaOrvecb==='a')this.veca = vec;
     // if(vecaOrvecb==='b')this.vecb = vec;
-    this.theta_a = Math.atan(this.veca.y / this.veca.x) < 0? Math.atan(this.veca.y / this.veca.x)+Math.PI:  Math.atan(this.veca.y / this.veca.x);
-    this.theta_b = Math.atan(this.vecb.y / this.vecb.x) < 0 ? Math.atan(this.vecb.y / this.vecb.x) +Math.PI:  Math.atan(this.vecb.y / this.vecb.x) ;
-    this.theta_ab =  (this.theta_a + this.theta_b)/2;
-
+    this.calc_thetas();
   }
 
 

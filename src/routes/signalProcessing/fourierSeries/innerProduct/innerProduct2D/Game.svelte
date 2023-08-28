@@ -8,6 +8,7 @@
 	let game = new GameObj();
 	let axisFontSize = 20;
 	let circleRef: SVGCircleElement;
+	let circleRef2: SVGCircleElement;
 
 	// Declare the x (horizontal position) scale.
 	$: xScale = game.xScale; //d3.scaleLinear().domain(game.xDomain).range([game.marginLeft, game.width - game.marginRight]);
@@ -50,14 +51,28 @@
 			d3.select(this).classed('active', false);
 		}
 
-		// Create drag behavior
-		const dragC = d3
+		function draggedC2(this: SVGCircleElement, event: d3.D3DragEvent<SVGCircleElement, any, any>) {
+			d3.select(this).attr('cx', event.x).attr('cy', event.y);
+			game.vecb = { x: game.xScale.invert(event.x), y: game.yScale.invert(event.y) };
+      game.deltaVec('b',{ x: game.xScale.invert(event.x), y: game.yScale.invert(event.y) });
+			// d3.select('#veca').attr('d',drawLine([vec0, {x:xScale.invert(event.x),y:yScale.invert(event.y)}]))
+		}
+
+				// Create drag behavior
+				const dragC = d3
 			.drag<SVGCircleElement, any>()
 			.on('start', drajstarted)
 			.on('drag', draggedC)
 			.on('end', dragendedC);
 
+			const dragC2 = d3
+			.drag<SVGCircleElement, any>()
+			.on('start', drajstarted)
+			.on('drag', draggedC2)
+			.on('end', dragendedC);
+
 		d3.select(circleRef).call(dragC as any);
+		d3.select(circleRef2).call(dragC2 as any);
 	});
 	let circleMouseOver = function (ref: any) {
 		d3.select(ref).transition().duration(499).attr('r', 10);
@@ -138,13 +153,25 @@
 	<circle
 		class="movingDot"
 		bind:this={circleRef}
-		cx={xScale( 2)}
+		cx={xScale(2)}
 		cy={yScale(4)}
 		r="5"
 		style="cursor:pointer;"
 		on:mouseover={() => circleMouseOver(circleRef)}
 		on:mouseleave={() => circleMouseLeave(circleRef)}
 	/>
+	<!-- svelte-ignore a11y-no-static-element-interactions -->
+	<!-- svelte-ignore a11y-mouse-events-have-key-events -->
+	<circle
+	class="movingDot2"
+	bind:this={circleRef2}
+	cx={xScale(5)}
+	cy={yScale(2)}
+	r="5"
+	style="cursor:pointer;"
+	on:mouseover={() => circleMouseOver(circleRef2)}
+	on:mouseleave={() => circleMouseLeave(circleRef2)}
+/>
 
 	<!-- svg.append('path')
     .style("stroke", "black")
