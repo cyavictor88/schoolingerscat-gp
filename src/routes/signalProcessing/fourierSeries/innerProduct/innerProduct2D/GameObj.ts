@@ -29,12 +29,12 @@ export class GameObj{
   public xDomain = [-6, 6];
   public yDomain = [-6, 6];
   // Declare the chart dimensions and margins.
-  public width = 400;
+  public width = 450;
   public height = 300;
   public marginTop = 20;
-  public marginRight = 100;
+  public marginRight = 20;
   public marginBottom = 30;
-  public marginLeft = 40;
+  public marginLeft = 150;
 
   public xTicks = getTicks(this.xDomain[0], this.xDomain[1]);
   public yTicks = getTicks(this.yDomain[0], this.yDomain[1]);
@@ -76,6 +76,18 @@ export class GameObj{
 
   deltaVec(vecaOrvecb:string, vec:Vec2D){
     this.calc_thetas();
+  }
+
+  calcInnerProduct(){
+    return this.veca.x*this.vecb.x + this.veca.y*this.vecb.y
+  }
+
+  vecStr(vec:Vec2D){
+    return `(${vec.x.toFixed(2)},${vec.y.toFixed(2)})`
+  }
+
+  vecMag(vec:Vec2D){
+    return Math.sqrt(vec.x**2+vec.y**2)
   }
 
 

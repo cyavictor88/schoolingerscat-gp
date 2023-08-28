@@ -59,7 +59,8 @@
 />
 
 <p>
-	Now, I will show how <Katex math={'a_xb_x+a_yb_y'} /> is related to <Katex math={'\\theta'} /> using
+	Now, I will show how the Inner Product of <Katex math={'\\vec{a}'}
+	/> and <Katex math={'\\vec{b}'} /> = <Katex math={'a_xb_x+a_yb_y'} /> is related to <Katex math={'\\theta'} /> using
 	<Katex math={'d'} />.
 </p>
 <hr style="border-top: 1px grey dotted" />
@@ -153,7 +154,7 @@
 
 <Katex
 	displayMode={true}
-	math={'( \\color{red}{a_x} \\color{black}- \\color{blue} b_x \\color{black})^2+( \\color{red}{a_y} \\color{black}- \\color{blue} b_y \\color{black})^2 \\color{black}{=} \\color{red}{a_x^2+a_y^2} \\color{black}{+} \\color{blue}{b_x^2+b_y^2} \\color{black}{ - 2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) }'}
+	math={'\\color{brown}{d^2} \\color{black} =    ( \\color{red}{a_x} \\color{black}- \\color{blue} b_x \\color{black})^2+( \\color{red}{a_y} \\color{black}- \\color{blue} b_y \\color{black})^2 \\color{black}{=} \\color{red}{a_x^2+a_y^2} \\color{black}{+} \\color{blue}{b_x^2+b_y^2} \\color{black}{ - 2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) }'}
 	/>
 
 
@@ -172,3 +173,15 @@
 
 		<!-- <div bind:this={g1} /> -->
 		<Game />
+
+
+		<div>using the interactive demo above, you can verify that:
+			 <ol>
+				<li>When two vectors are getting more aligned in their poting direction, their inner product increases</li>
+				<li>When two vectors are pointing away from each other, their inner product decreases</li>
+				<li>And most importantly, when two vectors are perpendicular to each other, their inner product is 0</li>
+
+
+			 </ol>
+			
+			</div>

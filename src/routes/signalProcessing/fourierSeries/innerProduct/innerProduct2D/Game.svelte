@@ -5,11 +5,13 @@
 	import { GameObj } from './GameObj';
 	import Arrow from './Arrow.svelte';
 	import { setUpCircle } from './circle';
+	import { SITE_COLOR } from '$lib/theme/colors';
 	let game = new GameObj();
 	let axisFontSize = 20;
-	let circleRef: SVGCircleElement;
-	let circleRef2: SVGCircleElement;
-
+	let circleRef_veca: SVGCircleElement;
+	let circleRef_vecb: SVGCircleElement;
+	let snap2Grid: boolean = false;
+	let fixedRadius: boolean = false;
 	// Declare the x (horizontal position) scale.
 	$: xScale = game.xScale; //d3.scaleLinear().domain(game.xDomain).range([game.marginLeft, game.width - game.marginRight]);
 	$: yScale = game.yScale; //d3.scaleLinear().domain(game.yDomain).range([game.height - game.marginBottom, game.marginTop]);
@@ -30,9 +32,9 @@
 		); // draw an arc, the turtle ends up at ⟨194.4,108.5⟩
 		return context; // not mandatory, but will make it easier to chain operations
 	};
-	// $: d3.select(circleRef).call(   (element:any)=>{dragC(element,game)});
+	// $: d3.select(circleRef_veca).call(   (element:any)=>{dragC(element,game)});
 	onMount(() => {
-		// game = setUpCircle(d3.select(circleRef) as any, game);
+		// game = setUpCircle(d3.select(circleRef_veca) as any, game);
 		function dragStart(this: SVGCircleElement, event: d3.D3DragEvent<SVGCircleElement, any, any>) {
 			d3.select(this).raise().classed('active', true);
 		}
@@ -41,12 +43,21 @@
 
 			let svgx = event.x;
 			let svgy = event.y;
-			const snapGrid = d3.select(this).attr('data-snap2grid');
-			if(snapGrid){
-				const gridx = Math.round(game.xScale.invert(event.x));
-			 	svgx = game.xScale(gridx);
-				const gridy = Math.round(game.yScale.invert(event.y));
+			if(svgx===0 && svgy===0){
+					svgx=0.0001
+					svgy=0.0001
+				}
+			// const snapGrid = d3.select(this).attr('data-snap2grid');
+			if(snap2Grid){
+				let gridx = Math.round(game.xScale.invert(event.x));
+				let gridy = Math.round(game.yScale.invert(event.y));
+				if(gridx===0 && gridy===0){
+					gridx=0.5
+					gridy=0.5
+				}
+				svgx = game.xScale(gridx);
 			 	svgy = game.yScale(gridy);
+
 			}
 			d3.select(this).attr('cx', svgx).attr('cy', svgy);
 			if (d3.select(this).attr('d') === 'veca') game.veca = { x: game.xScale.invert(svgx), y: game.yScale.invert(svgy) };
@@ -63,18 +74,111 @@
 			.on('drag', dragging)
 			.on('end', dragEnd);
 
-		d3.select(circleRef).call(dragBehavior as any);
-		d3.select(circleRef2).call(dragBehavior as any);
+		d3.select(circleRef_veca).call(dragBehavior as any);
+		d3.select(circleRef_vecb).call(dragBehavior as any);
 	});
 	let circleMouseOver = function (ref: any) {
-		d3.select(ref).transition().duration(499).attr('r', 10);
+		d3.select(ref).transition().duration(499).attr('r', 15);
 	};
 	let circleMouseLeave = function (ref: any) {
-		d3.select(ref).transition().duration(499).attr('r', 5);
+		d3.select(ref).transition().duration(499).attr('r', 10);
+	};
+	$: realTheta = (game.calcAngleBetween(game.veca,game.vecb)*180/Math.PI).toFixed(3);
+
+	$: if(fixedRadius){
+			// let gridx = Math.round(game.xScale.invert(parseFloat(d3.select(circleRef_veca).attr('cx'))));
+			// let svgx = game.xScale(gridx);
+			// let gridy = Math.round(game.yScale.invert(parseFloat(d3.select(circleRef_veca).attr('cy'))));
+			// let svgy = game.yScale(gridy);
+			// d3.select(circleRef_veca).attr('cx', svgx).attr('cy', svgy);
+			// game.veca = { x: game.xScale.invert(svgx), y: game.yScale.invert(svgy) };
+
+			// gridx = Math.round(game.xScale.invert(parseFloat(d3.select(circleRef_vecb).attr('cx'))));
+			// svgx = game.xScale(gridx);
+			// gridy = Math.round(game.yScale.invert(parseFloat(d3.select(circleRef_vecb).attr('cy'))));
+			// svgy = game.yScale(gridy);
+			// d3.select(circleRef_vecb).attr('cx', svgx).attr('cy', svgy);
+			// game.vecb = { x: game.xScale.invert(svgx), y: game.yScale.invert(svgy) };
+			// game.calc_thetas();
+ 	}
+	$: if(snap2Grid) {
+
+		let gridx = Math.round(game.xScale.invert(parseFloat(d3.select(circleRef_veca).attr('cx'))));
+		let svgx = game.xScale(gridx);
+		let gridy = Math.round(game.yScale.invert(parseFloat(d3.select(circleRef_veca).attr('cy'))));
+		let svgy = game.yScale(gridy);
+		d3.select(circleRef_veca).attr('cx', svgx).attr('cy', svgy);
+		game.veca = { x: game.xScale.invert(svgx), y: game.yScale.invert(svgy) };
+
+		gridx = Math.round(game.xScale.invert(parseFloat(d3.select(circleRef_vecb).attr('cx'))));
+		svgx = game.xScale(gridx);
+		gridy = Math.round(game.yScale.invert(parseFloat(d3.select(circleRef_vecb).attr('cy'))));
+		svgy = game.yScale(gridy);
+		d3.select(circleRef_vecb).attr('cx', svgx).attr('cy', svgy);
+		game.vecb = { x: game.xScale.invert(svgx), y: game.yScale.invert(svgy) };
+		game.calc_thetas();
+
+
+
 	};
 </script>
+<div style='background: {SITE_COLOR.CompRouteDefaultBG}'>
+<h4>Interactive Demo:  (drag the vectors' arrow head around)</h4>
+<svg width={game.width} height={game.height}  overflow="visible">
 
-<svg width={game.width} height={game.height} style="border: 1px black solid">
+	<foreignObject
+		x=10
+		y=0
+		width="200"
+		height="1"
+		overflow="visible"
+		style="font-size: 14px;"
+	>
+	<div>
+		<label><input type="checkbox" bind:checked={snap2Grid} disabled={fixedRadius}>Snap to Grid</label>
+		<br />
+		<label><input type="checkbox" bind:checked={fixedRadius} disabled={true}>Fixed Radius</label>
+		<p><Katex math={`\\color{red} \\|\\vec{a}\\|=${game.vecMag(game.veca).toFixed(2)}`}/></p>
+		<p><Katex math={`\\color{blue} \\|\\vec{b}\\|=${game.vecMag(game.vecb).toFixed(2)}`}/></p>
+		<p><Katex math={`<\\vec{a},\\vec{b}>=${game.calcInnerProduct().toFixed(2)}`}/></p>
+		<p><Katex math={`\\frac{< \\vec{a},\\vec{b}>}{  \\| \\vec{a}  \\| \\|\\vec{b}\\|} = \\color{green}${(game.calcInnerProduct()/(game.vecMag(game.veca))/(game.vecMag(game.vecb))).toFixed(3)}`}/></p>
+		<p><Katex math={`cos(\\theta)=\\color{green}${Math.cos(game.calcAngleBetween(game.veca,game.vecb)).toFixed(3)}`}/></p>
+		<p><Katex math={'\\theta'}/>= {(game.calcAngleBetween(game.veca,game.vecb)*180/Math.PI).toFixed(3)}</p>
+	</div>
+
+	</foreignObject>
+
+
+	<foreignObject
+		x={game.veca.x >= 0? xScale(game.veca.x) : xScale(game.veca.x-5)}
+		y={yScale(game.veca.y+2)}
+		width="100"
+		height="1"
+		overflow="visible"
+		style="font-size: 12px;"
+	>
+	<div>
+		<p><Katex math={`\\color{red}${game.vecStr(game.veca)}`}/></p>
+	</div>
+
+	</foreignObject>
+
+	<foreignObject
+		x={game.vecb.x >= 0? xScale(game.vecb.x) : xScale(game.vecb.x-5)}
+		y={yScale(game.vecb.y+2)}
+		width="100"
+		height="1"
+		overflow="visible"
+		style="font-size: 12px;"
+	>
+	<div>
+		<p><Katex math={`\\color{blue}${game.vecStr(game.vecb)}`}/></p>
+	</div>
+
+	</foreignObject>
+
+
+
 	<Arrow color={'red'} />
 	<Arrow color={'blue'} />
 	{#each Array(game.xTicks.length - 2) as _, index (index)}
@@ -129,12 +233,12 @@
 	<foreignObject
 		x={xScale(1.3 * game.radius * Math.cos(1 * game.theta_ab)).toString()}
 		y={yScale(1.3 * game.radius * Math.sin(1 * game.theta_ab)).toString()}
-		width="1"
+		width="100"
 		height="1"
 		overflow="visible"
 		style="font-size: 12px;"
 	>
-		<div style="transform: translateY(-50%);"><Katex math={'\\theta'} /></div>
+		<div style="transform: translateY(-50%);"><Katex math={`\\theta=${realTheta}`} /></div>
 	</foreignObject>
 
 	<path stroke="black" fill="none" d={drawCurve(d3.path()).toString()} />
@@ -142,39 +246,38 @@
 	<!-- svelte-ignore a11y-no-static-element-interactions -->
 	<circle
 		class="movingDot"
-		bind:this={circleRef}
+		bind:this={circleRef_veca}
 		cx={xScale(2)}
 		cy={yScale(4)}
-		r="5"
+		r="10"
 		d="veca"
 		style="cursor:pointer;"
 		fill='red'
 		fill-opacity='0.2'
-		data-snap2grid={true}
+		data-snap2grid={snap2Grid}
 
-		on:mouseover={() => circleMouseOver(circleRef)}
-		on:mouseleave={() => circleMouseLeave(circleRef)}
+		on:mouseover={() => circleMouseOver(circleRef_veca)}
+		on:mouseleave={() => circleMouseLeave(circleRef_veca)}
 	/>
 	<!-- svelte-ignore a11y-no-static-element-interactions -->
 	<!-- svelte-ignore a11y-mouse-events-have-key-events -->
 	<circle
 		class="movingDot2"
-		bind:this={circleRef2}
+		bind:this={circleRef_vecb}
 		cx={xScale(5)}
 		cy={yScale(2)}
-		r="5"
+		r="10"
 		d="vecb"
 		style="cursor:pointer;"
 		fill='blue'
 		fill-opacity='0.2'
-		data-snap2grid={true}
-		on:mouseover={() => circleMouseOver(circleRef2)}
-		on:mouseleave={() => circleMouseLeave(circleRef2)}
+		data-snap2grid={snap2Grid}
+		on:mouseover={() => circleMouseOver(circleRef_vecb)}
+		on:mouseleave={() => circleMouseLeave(circleRef_vecb)}
 	/>
 
-
 </svg>
-<p>{Math.cos(game.theta_ab*2).toFixed(2)}</p>
-<p>{180*(game.theta_ab*2)/Math.PI}</p>
+</div>
+
 <style>
 </style>
