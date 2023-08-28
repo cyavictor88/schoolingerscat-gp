@@ -33,46 +33,38 @@
 	// $: d3.select(circleRef).call(   (element:any)=>{dragC(element,game)});
 	onMount(() => {
 		// game = setUpCircle(d3.select(circleRef) as any, game);
-		function drajstarted(
-			this: SVGCircleElement,
-			event: d3.D3DragEvent<SVGCircleElement, any, any>
-		) {
+		function dragStart(this: SVGCircleElement, event: d3.D3DragEvent<SVGCircleElement, any, any>) {
 			d3.select(this).raise().classed('active', true);
 		}
 
-		function draggedC(this: SVGCircleElement, event: d3.D3DragEvent<SVGCircleElement, any, any>) {
-			d3.select(this).attr('cx', event.x).attr('cy', event.y);
-			game.veca = { x: game.xScale.invert(event.x), y: game.yScale.invert(event.y) };
-      game.deltaVec('a',{ x: game.xScale.invert(event.x), y: game.yScale.invert(event.y) });
-			// d3.select('#veca').attr('d',drawLine([vec0, {x:xScale.invert(event.x),y:yScale.invert(event.y)}]))
+		function dragging(this: SVGCircleElement, event: d3.D3DragEvent<SVGCircleElement, any, any>) {
+
+			let svgx = event.x;
+			let svgy = event.y;
+			const snapGrid = d3.select(this).attr('data-snap2grid');
+			if(snapGrid){
+				const gridx = Math.round(game.xScale.invert(event.x));
+			 	svgx = game.xScale(gridx);
+				const gridy = Math.round(game.yScale.invert(event.y));
+			 	svgy = game.yScale(gridy);
+			}
+			d3.select(this).attr('cx', svgx).attr('cy', svgy);
+			if (d3.select(this).attr('d') === 'veca') game.veca = { x: game.xScale.invert(svgx), y: game.yScale.invert(svgy) };
+			else game.vecb = { x: game.xScale.invert(svgx), y: game.yScale.invert(svgy) };
+			game.calc_thetas();
 		}
 
-		function dragendedC(this: SVGCircleElement, event: d3.D3DragEvent<SVGCircleElement, any, any>) {
+		function dragEnd(this: SVGCircleElement, event: d3.D3DragEvent<SVGCircleElement, any, any>) {
 			d3.select(this).classed('active', false);
 		}
-
-		function draggedC2(this: SVGCircleElement, event: d3.D3DragEvent<SVGCircleElement, any, any>) {
-			d3.select(this).attr('cx', event.x).attr('cy', event.y);
-			game.vecb = { x: game.xScale.invert(event.x), y: game.yScale.invert(event.y) };
-      game.deltaVec('b',{ x: game.xScale.invert(event.x), y: game.yScale.invert(event.y) });
-			// d3.select('#veca').attr('d',drawLine([vec0, {x:xScale.invert(event.x),y:yScale.invert(event.y)}]))
-		}
-
-				// Create drag behavior
-				const dragC = d3
+		const dragBehavior = d3
 			.drag<SVGCircleElement, any>()
-			.on('start', drajstarted)
-			.on('drag', draggedC)
-			.on('end', dragendedC);
+			.on('start', dragStart)
+			.on('drag', dragging)
+			.on('end', dragEnd);
 
-			const dragC2 = d3
-			.drag<SVGCircleElement, any>()
-			.on('start', drajstarted)
-			.on('drag', draggedC2)
-			.on('end', dragendedC);
-
-		d3.select(circleRef).call(dragC as any);
-		d3.select(circleRef2).call(dragC2 as any);
+		d3.select(circleRef).call(dragBehavior as any);
+		d3.select(circleRef2).call(dragBehavior as any);
 	});
 	let circleMouseOver = function (ref: any) {
 		d3.select(ref).transition().duration(499).attr('r', 10);
@@ -80,8 +72,6 @@
 	let circleMouseLeave = function (ref: any) {
 		d3.select(ref).transition().duration(499).attr('r', 5);
 	};
-
-
 </script>
 
 <svg width={game.width} height={game.height} style="border: 1px black solid">
@@ -148,36 +138,43 @@
 	</foreignObject>
 
 	<path stroke="black" fill="none" d={drawCurve(d3.path()).toString()} />
-	<!-- svelte-ignore a11y-no-static-element-interactions -->
 	<!-- svelte-ignore a11y-mouse-events-have-key-events -->
+	<!-- svelte-ignore a11y-no-static-element-interactions -->
 	<circle
 		class="movingDot"
 		bind:this={circleRef}
 		cx={xScale(2)}
 		cy={yScale(4)}
 		r="5"
+		d="veca"
 		style="cursor:pointer;"
+		fill='red'
+		fill-opacity='0.2'
+		data-snap2grid={true}
+
 		on:mouseover={() => circleMouseOver(circleRef)}
 		on:mouseleave={() => circleMouseLeave(circleRef)}
 	/>
 	<!-- svelte-ignore a11y-no-static-element-interactions -->
 	<!-- svelte-ignore a11y-mouse-events-have-key-events -->
 	<circle
-	class="movingDot2"
-	bind:this={circleRef2}
-	cx={xScale(5)}
-	cy={yScale(2)}
-	r="5"
-	style="cursor:pointer;"
-	on:mouseover={() => circleMouseOver(circleRef2)}
-	on:mouseleave={() => circleMouseLeave(circleRef2)}
-/>
+		class="movingDot2"
+		bind:this={circleRef2}
+		cx={xScale(5)}
+		cy={yScale(2)}
+		r="5"
+		d="vecb"
+		style="cursor:pointer;"
+		fill='blue'
+		fill-opacity='0.2'
+		data-snap2grid={true}
+		on:mouseover={() => circleMouseOver(circleRef2)}
+		on:mouseleave={() => circleMouseLeave(circleRef2)}
+	/>
 
-	<!-- svg.append('path')
-    .style("stroke", "black")
-    .style("fill", "none")
-    .attr("d", drawCurve(d3.path()).toString()) -->
+
 </svg>
-
+<p>{Math.cos(game.theta_ab*2).toFixed(2)}</p>
+<p>{180*(game.theta_ab*2)/Math.PI}</p>
 <style>
 </style>
