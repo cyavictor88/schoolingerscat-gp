@@ -60,6 +60,31 @@ export class GameObj{
   }
 
 
+  atan2degress(vec:Vec2D, atan: number){
+    if(vec.x===0) return 0;
+    if(vec.y===0 && vec.x<0) return Math.PI;
+    if(vec.y===0 && vec.x>0) return 0;
+    if(vec.x<0 && vec.y<0 && atan>0) {
+      return Math.atan(vec.y/vec.x) + Math.PI;
+    } 
+    if(vec.x>0 && vec.y > 0 ) {
+      return Math.atan(vec.y/vec.x)
+    }
+    if(vec.x>0 && vec.y < 0 ) {
+      return Math.atan(vec.y/vec.x)
+    }
+  }
+
+  deltaVec(vecaOrvecb:string, vec:Vec2D){
+    if(vecaOrvecb==='a')this.veca = vec;
+    // if(vecaOrvecb==='b')this.vecb = vec;
+    this.theta_a = Math.atan(this.veca.y / this.veca.x) < 0? Math.atan(this.veca.y / this.veca.x)+Math.PI:  Math.atan(this.veca.y / this.veca.x);
+    this.theta_b = Math.atan(this.vecb.y / this.vecb.x) < 0 ? Math.atan(this.vecb.y / this.vecb.x) +Math.PI:  Math.atan(this.vecb.y / this.vecb.x) ;
+    this.theta_ab =  (this.theta_a + this.theta_b)/2;
+
+  }
+
+
   baseFig() {
 
     // Create the SVG container.

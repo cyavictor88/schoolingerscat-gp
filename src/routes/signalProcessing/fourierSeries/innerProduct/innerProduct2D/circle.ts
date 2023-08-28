@@ -1,4 +1,5 @@
 import * as d3 from 'd3';
+import type { GameObj } from './GameObj';
 
 interface CircleData {
   cx: number;
@@ -16,40 +17,45 @@ const initialCircleData : CircleData = {
 
 
 
-function drajstarted(this: SVGCircleElement, event:d3.D3DragEvent<SVGCircleElement, CircleData, any>, d: CircleData) {
-    d3.select(this).raise().classed("active", true);
-}
-
-function draggedC(this:SVGCircleElement,event:d3.D3DragEvent<SVGCircleElement, CircleData, any>, d: CircleData) {
-    d3.select(this)
-        .attr("cx", (event.x))
-        .attr("cy", (event.y));
-        // game.veca =  {x:xScale.invert(event.x),y:yScale.invert(event.y)};
-    // d3.select('#veca').attr('d',drawLine([vec0, {x:xScale.invert(event.x),y:yScale.invert(event.y)}]))
-}
-
-function dragendedC(this:SVGCircleElement,event: d3.D3DragEvent<SVGCircleElement, CircleData, any>) {
-    d3.select(this).classed("active", false);
-}
-
-
-
-// Create drag behavior
-export const dragC = d3.drag<SVGCircleElement, CircleData>()
-.on("start", drajstarted)
-.on("drag", draggedC)
-.on("end", dragendedC);
 
 
 
 
 
 
-function setUpCircle(){
+export function setUpCircle(circle: d3.Selection<SVGCircleElement, unknown, HTMLElement, any>, game: GameObj){
   // const svg = d3.select(ref);
   // const circle = svg.append("circle")
   //   .attr("class", "draggable-circle")
   //   .style("cursor","pointer")
   //   .call(dragC as any);
-  return dragC
+
+  function drajstarted(this: SVGCircleElement, event:d3.D3DragEvent<SVGCircleElement, any, any>, d: CircleData) {
+    d3.select(this).raise().classed("active", true);
+    console.log(game.veca)
+  }
+
+  function draggedC(this:SVGCircleElement,event:d3.D3DragEvent<SVGCircleElement, any, any>, d: CircleData) {
+      d3.select(this)
+          .attr("cx", (event.x))
+          .attr("cy", (event.y));
+          game.veca =  {x:game.xScale.invert(event.x),y:game.yScale.invert(event.y)};
+          game = game;
+      // d3.select('#veca').attr('d',drawLine([vec0, {x:xScale.invert(event.x),y:yScale.invert(event.y)}]))
+  }
+
+  function dragendedC(this:SVGCircleElement,event: d3.D3DragEvent<SVGCircleElement, any, CircleData>) {
+      d3.select(this).classed("active", false);
+  }
+
+
+
+  // Create drag behavior
+  const dragC = d3.drag<SVGCircleElement, CircleData>()
+  .on("start", drajstarted)
+  .on("drag", draggedC)
+  .on("end", dragendedC);
+
+  circle.call(dragC as any)
+
 }
