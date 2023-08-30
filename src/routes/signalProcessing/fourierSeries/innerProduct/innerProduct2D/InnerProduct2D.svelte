@@ -60,7 +60,7 @@
 
 <p>
 	Now, I will show how the Inner Product of <Katex math={'\\vec{a}'}
-	/> and <Katex math={'\\vec{b}'} /> = <Katex math={'a_xb_x+a_yb_y'} /> is related to <Katex math={'\\theta'} /> using
+	/> and <Katex math={'\\vec{b}'} />, which is <Katex math={'a_xb_x+a_yb_y'} />, is related to <Katex math={'\\theta'} /> using
 	<Katex math={'d'} />.
 </p>
 <hr style="border-top: 1px grey dotted" />
@@ -185,3 +185,5 @@
 			 </ol>
 			
 			</div>
+
+			<hr/>

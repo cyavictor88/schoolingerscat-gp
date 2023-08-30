@@ -19,6 +19,7 @@
   })
 
 	import InnerProduct2D from './innerProduct2D/InnerProduct2D.svelte';
+	import InnerProduct3D from './innerProduct3D/InnerProduct3D.svelte';
 	import { SITE_COLOR } from "$lib/theme/colors";
 
 </script>
@@ -38,7 +39,12 @@
 </Title>
 <InnerProduct2D />
 </section>
-
+<section id="innerProduct3D">
+  <Title hLevel={2} id={'innerProduct3D'} backgroudColor={SITE_COLOR.TitleBG}>
+    Inner Product in <Katex math={'\\mathbb{R}^3'} />:
+  </Title>
+  <InnerProduct3D />
+  </section>
 
 </Scrollspy>
 
