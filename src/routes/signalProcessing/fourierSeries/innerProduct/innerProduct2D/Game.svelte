@@ -21,14 +21,14 @@
 		.y((d) => yScale(d.y));
 	$: drawCurve = (context: d3.Path) => {
 		context.moveTo(
-			xScale(game.radius * Math.cos(game.theta_a)),
-			yScale(game.radius * Math.sin(game.theta_a))
+			xScale(game.curveThetaRadius * Math.cos(game.theta_a)),
+			yScale(game.curveThetaRadius * Math.sin(game.theta_a))
 		); // move current point to ⟨10,10⟩
 		context.quadraticCurveTo(
-			xScale(1.2 * game.radius * Math.cos(game.theta_ab)),
-			yScale(1.2 * game.radius * Math.sin(game.theta_ab)),
-			xScale(game.radius * Math.cos(game.theta_b)),
-			yScale(game.radius * Math.sin(game.theta_b))
+			xScale(1.2 * game.curveThetaRadius * Math.cos(game.theta_ab)),
+			yScale(1.2 * game.curveThetaRadius * Math.sin(game.theta_ab)),
+			xScale(game.curveThetaRadius * Math.cos(game.theta_b)),
+			yScale(game.curveThetaRadius * Math.sin(game.theta_b))
 		); // draw an arc, the turtle ends up at ⟨194.4,108.5⟩
 		return context; // not mandatory, but will make it easier to chain operations
 	};
@@ -86,21 +86,14 @@
 	$: realTheta = (game.calcAngleBetween(game.veca,game.vecb)*180/Math.PI).toFixed(3);
 
 	$: if(fixedRadius){
-			// let gridx = Math.round(game.xScale.invert(parseFloat(d3.select(circleRef_veca).attr('cx'))));
-			// let svgx = game.xScale(gridx);
-			// let gridy = Math.round(game.yScale.invert(parseFloat(d3.select(circleRef_veca).attr('cy'))));
-			// let svgy = game.yScale(gridy);
-			// d3.select(circleRef_veca).attr('cx', svgx).attr('cy', svgy);
-			// game.veca = { x: game.xScale.invert(svgx), y: game.yScale.invert(svgy) };
-
-			// gridx = Math.round(game.xScale.invert(parseFloat(d3.select(circleRef_vecb).attr('cx'))));
-			// svgx = game.xScale(gridx);
-			// gridy = Math.round(game.yScale.invert(parseFloat(d3.select(circleRef_vecb).attr('cy'))));
-			// svgy = game.yScale(gridy);
-			// d3.select(circleRef_vecb).attr('cx', svgx).attr('cy', svgy);
-			// game.vecb = { x: game.xScale.invert(svgx), y: game.yScale.invert(svgy) };
-			// game.calc_thetas();
- 	}
+		game.xDomain=[-2,2];
+		game.yDomain=[-2,2];
+		game.fixedRadius(fixedRadius);
+ 	} else {
+		game.xDomain=[-6,6];
+		game.yDomain=[-6,6];
+		game.fixedRadius(fixedRadius);
+	}
 	$: if(snap2Grid) {
 
 		let gridx = Math.round(game.xScale.invert(parseFloat(d3.select(circleRef_veca).attr('cx'))));
@@ -122,7 +115,7 @@
 
 	};
 </script>
-<div style='background: {SITE_COLOR.CompRouteDefaultBG}'>
+<div style='background: {SITE_COLOR.CompRouteDefaultBG}; border: 1px black solid'>
 <h4>Interactive Demo:  (drag the vectors' arrow head around)</h4>
 <svg width={game.width} height={game.height}  overflow="visible">
 
@@ -135,9 +128,9 @@
 		style="font-size: 14px;"
 	>
 	<div>
-		<label><input type="checkbox" bind:checked={snap2Grid} disabled={fixedRadius}>Snap to Grid</label>
+		<label><input type="checkbox" bind:checked={snap2Grid} disabled={false}>Snap to Grid</label>
 		<br />
-		<label><input type="checkbox" bind:checked={fixedRadius} disabled={true}>Fixed Radius</label>
+		<label><input type="checkbox" bind:checked={fixedRadius} disabled={false}>Fixed Radius</label>
 		<p><Katex math={`\\color{red} \\|\\vec{a}\\|=${game.vecMag(game.veca).toFixed(2)}`}/></p>
 		<p><Katex math={`\\color{blue} \\|\\vec{b}\\|=${game.vecMag(game.vecb).toFixed(2)}`}/></p>
 		<p><Katex math={`<\\vec{a},\\vec{b}>=${game.calcInnerProduct().toFixed(2)}`}/></p>
@@ -150,8 +143,8 @@
 
 
 	<foreignObject
-		x={game.veca.x >= 0? xScale(game.veca.x) : xScale(game.veca.x-5)}
-		y={yScale(game.veca.y+2)}
+		x={game.veca.x >= 0? xScale(game.veca.x) : xScale(game.veca.x)}
+		y={yScale(game.veca.y)}
 		width="100"
 		height="1"
 		overflow="visible"
@@ -164,8 +157,8 @@
 	</foreignObject>
 
 	<foreignObject
-		x={game.vecb.x >= 0? xScale(game.vecb.x) : xScale(game.vecb.x-5)}
-		y={yScale(game.vecb.y+2)}
+		x={game.vecb.x >= 0? xScale(game.vecb.x) : xScale(game.vecb.x)}
+		y={yScale(game.vecb.y)}
 		width="100"
 		height="1"
 		overflow="visible"
@@ -231,8 +224,8 @@
 	<path stroke="blue" d={drawLine([game.vec0, game.vecb])} marker-end="url(#arrowblue)" />
 
 	<foreignObject
-		x={xScale(1.3 * game.radius * Math.cos(1 * game.theta_ab)).toString()}
-		y={yScale(1.3 * game.radius * Math.sin(1 * game.theta_ab)).toString()}
+		x={xScale(1.3 * game.curveThetaRadius * Math.cos(1 * game.theta_ab)).toString()}
+		y={yScale(1.3 * game.curveThetaRadius * Math.sin(1 * game.theta_ab)).toString()}
 		width="100"
 		height="1"
 		overflow="visible"
@@ -247,15 +240,14 @@
 	<circle
 		class="movingDot"
 		bind:this={circleRef_veca}
-		cx={xScale(2)}
-		cy={yScale(4)}
+		cx={xScale(game.veca.x)}
+		cy={yScale(game.veca.y)}
 		r="10"
 		d="veca"
 		style="cursor:pointer;"
 		fill='red'
 		fill-opacity='0.2'
 		data-snap2grid={snap2Grid}
-
 		on:mouseover={() => circleMouseOver(circleRef_veca)}
 		on:mouseleave={() => circleMouseLeave(circleRef_veca)}
 	/>
@@ -264,8 +256,8 @@
 	<circle
 		class="movingDot2"
 		bind:this={circleRef_vecb}
-		cx={xScale(5)}
-		cy={yScale(2)}
+		cx={xScale(game.vecb.x)}
+		cy={yScale(game.vecb.y)}
 		r="10"
 		d="vecb"
 		style="cursor:pointer;"
