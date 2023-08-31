@@ -115,7 +115,7 @@
 
 	};
 </script>
-<div style='background: {SITE_COLOR.CompRouteDefaultBG}; width:100%;'>
+<div style='background: {SITE_COLOR.CompRouteDefaultBG}; width:{game.width+game.marginLeft}px;'>
 <h4>Interactive Demo:  (drag the vectors' arrow head around)</h4>
 <svg width={game.width} height={game.height}  overflow="visible">
 
@@ -128,15 +128,15 @@
 		style="font-size: 14px;"
 	>
 	<div>
-		<label><input type="checkbox" bind:checked={snap2Grid} disabled={false}>Snap to Grid</label>
-		<br />
-		<label><input type="checkbox" bind:checked={fixedRadius} disabled={false}>Fixed Radius</label>
 		<p><Katex math={`\\color{red} \\|\\vec{a}\\|=${game.vecMag(game.veca).toFixed(2)}`}/></p>
 		<p><Katex math={`\\color{blue} \\|\\vec{b}\\|=${game.vecMag(game.vecb).toFixed(2)}`}/></p>
 		<p><Katex math={`<\\vec{a},\\vec{b}>=${game.calcInnerProduct().toFixed(2)}`}/></p>
 		<p><Katex math={`\\frac{< \\vec{a},\\vec{b}>}{  \\| \\vec{a}  \\| \\|\\vec{b}\\|} = \\color{green}${(game.calcInnerProduct()/(game.vecMag(game.veca))/(game.vecMag(game.vecb))).toFixed(3)}`}/></p>
 		<p><Katex math={`cos(\\theta)=\\color{green}${Math.cos(game.calcAngleBetween(game.veca,game.vecb)).toFixed(3)}`}/></p>
 		<p><Katex math={'\\theta'}/>= {(game.calcAngleBetween(game.veca,game.vecb)*180/Math.PI).toFixed(3)}</p>
+		<label><input type="checkbox" bind:checked={snap2Grid} disabled={false}>Snap to Grid</label>
+		<br />
+		<label><input type="checkbox" bind:checked={fixedRadius} disabled={false}>Fixed Radius = 1</label>
 	</div>
 
 	</foreignObject>

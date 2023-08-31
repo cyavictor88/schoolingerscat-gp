@@ -4,6 +4,8 @@ import type EventEmitter from 'eventemitter3';
 import { mathmesh } from '$lib/mathmesh/mathmesh';
 // import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { Vector } from './object/Vector';
+import { Line } from './object/Line';
 // import { mathmesh } from 'mathmesh';
 
 
@@ -58,31 +60,10 @@ export class Universe {
     sphere.position.set(-2,4,4);
     this.scene.add(sphere);
     
-    // Create line geometry
-    const points = [];
-    points.push(new THREE.Vector3(0, 0, 0));
-    points.push(new THREE.Vector3(2, 4, 4));
-    const lineGeometry = new THREE.BufferGeometry().setFromPoints(points);
-
-    // Create line material
-    const lineMaterial = new THREE.LineBasicMaterial({ color: 0xff0000 });
-
-    // Create the line
-    const line = new THREE.Line(lineGeometry, lineMaterial);
-    this.scene.add(line);
-
-    // Create arrowhead geometry
-    const arrowheadGeometry = new THREE.ConeGeometry(0.1, 0.3, 10);
-    const arrowheadMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
-    const arrowhead = new THREE.Mesh(arrowheadGeometry, arrowheadMaterial);
-    arrowhead.position.copy(points[1]);
-    const direction = new THREE.Vector3();
-    direction.subVectors(points[1], points[0]).normalize();
-    arrowhead.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), direction); //using (0,1,0) because cone initally is pointing (0,1,0)
-
-    this.scene.add(arrowhead);
+    this.scene.add(new Vector(this.scene,2,4,4,0xff0000).vector);
 
 
+    this.scene.add(new Line(this.scene,[1,2,3],[4,-5,-6],0x000000,true).line)
 
   }
 
