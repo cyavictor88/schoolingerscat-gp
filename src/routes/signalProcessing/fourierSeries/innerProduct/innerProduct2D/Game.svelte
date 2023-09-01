@@ -4,7 +4,7 @@
 	import Katex from '$lib/components/Katex/Katex.svelte';
 	import { GameObj } from './GameObj';
 	import Arrow from './Arrow.svelte';
-	import { setUpCircle } from './circle';
+	import { setUpCircle } from './d3DraggableCircle';
 	import { SITE_COLOR } from '$lib/theme/colors';
 	let game = new GameObj();
 	let axisFontSize = 20;

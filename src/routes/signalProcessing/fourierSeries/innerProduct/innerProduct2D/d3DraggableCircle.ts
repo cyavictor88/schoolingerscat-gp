@@ -8,27 +8,7 @@ interface CircleData {
 }
 
 
-const initialCircleData : CircleData = {
-  cx: 1,
-  cy: 1,
-  radius: 2,
-}
-
-
-
-
-
-
-
-
-
-
 export function setUpCircle(circle: d3.Selection<SVGCircleElement, unknown, HTMLElement, any>, game: GameObj){
-  // const svg = d3.select(ref);
-  // const circle = svg.append("circle")
-  //   .attr("class", "draggable-circle")
-  //   .style("cursor","pointer")
-  //   .call(dragC as any);
 
   function drajstarted(this: SVGCircleElement, event:d3.D3DragEvent<SVGCircleElement, any, any>, d: CircleData) {
     d3.select(this).raise().classed("active", true);

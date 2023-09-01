@@ -6,6 +6,7 @@ import { mathmesh } from '$lib/mathmesh/mathmesh';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { Vector } from './object/Vector';
 import { Line } from './object/Line';
+import { Axes } from './object/Axes';
 // import { mathmesh } from 'mathmesh';
 
 
@@ -60,10 +61,11 @@ export class Universe {
     sphere.position.set(-2,4,4);
     this.scene.add(sphere);
     
-    this.scene.add(new Vector(this.scene,2,4,4,0xff0000).vector);
+    this.scene.add(new Vector(2,4,4,0xff0000).vector);
 
 
-    this.scene.add(new Line(this.scene,[1,2,3],[4,-5,-6],0x000000,true).line)
+    this.scene.add(new Line([1,2,3],[4,-5,-6],0x000000,true).line)
+    const axes = new Axes(this.scene,2,2,2);
 
   }
 

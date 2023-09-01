@@ -31,7 +31,7 @@
 <Katex
 	displayMode={true}
 	math={`<\\vec{a},\\vec{b}>:= 
-\\left[\\begin{array}{cc} a_x & a_y & a_z \\end{array}\\right]
+\\left[\\begin{array}{ccc} a_x & a_y & a_z \\end{array}\\right]
 \\left[\\begin{array}{c} b_x \\\\ b_y \\\\ b_z \\end{array}\\right]
 = a_x\\,b_x+a_y\\,b_y+a_zb_z
 `}

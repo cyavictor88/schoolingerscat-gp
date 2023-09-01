@@ -3,23 +3,20 @@
 	import innerProduct2D from '$lib/assets/fourierSeries/innerProduct/innerProduct2D.svg';
 	import innerProduct2DCosine from '$lib/assets/fourierSeries/innerProduct/innerProduct2DCosine.svg';
 	import { onMount } from 'svelte';
-	import * as d3Fig from './d3';
-	import * as d3G from './d32d';
+	import * as d3Fig from './d3Figs';
 	import { getCircleNum } from '$lib/unicode';
 	import Game from './Game.svelte';
 	let fig1: HTMLDivElement;
 	let fig2: HTMLDivElement;
 	let fig3: HTMLDivElement;
 	// let g1: HTMLDivElement;
-	onMount(()=>{
+	onMount(() => {
 		fig1.append(d3Fig.getFig1()!);
 		fig2.append(d3Fig.getFig2()!);
 		fig3.append(d3Fig.getFig3()!);
 		// g1.append(d3G.baseFig()!);
-	})
-
+	});
 </script>
-
 
 <p>
 	Given two <Katex math={'\\mathbb{R}^2'} /> vectors, <Katex math={'\\vec{a}=(a_x,a_y)'} /> and <Katex
@@ -36,7 +33,6 @@
 		>Boo your browser does not support SVGs</object
 	> -->
 	<div bind:this={fig1} />
-
 </div>
 
 <p>
@@ -59,21 +55,24 @@
 />
 
 <p>
-	Now, I will show how the Inner Product of <Katex math={'\\vec{a}'}
-	/> and <Katex math={'\\vec{b}'} />, which is <Katex math={'a_xb_x+a_yb_y'} />, is related to <Katex math={'\\theta'} /> using
+	Now, I will show how the Inner Product of <Katex math={'\\vec{a}'} /> and <Katex
+		math={'\\vec{b}'}
+	/>, which is <Katex math={'a_xb_x+a_yb_y'} />, is related to <Katex math={'\\theta'} /> using
 	<Katex math={'d'} />.
 </p>
 <hr style="border-top: 1px grey dotted" />
 <b>Step 1. Using law of Cosine:</b>
 <p>
-	As shown in Figure 2, by using <a href="https://en.wikipedia.org/wiki/Law_of_cosines">Low of Cosines</a> on the triangle in the figure, we can get the
-	following equation for <Katex math={'d'}/>:
+	As shown in Figure 2, by using <a href="https://en.wikipedia.org/wiki/Law_of_cosines"
+		>Low of Cosines</a
+	>
+	on the triangle in the figure, we can get the following equation for <Katex math={'d'} />:
 </p>
 
 <div style="display: flex; gap:20px;">
 	<!-- <div style="display: flex; flex-flow: column nowrap; gap:5px;"> -->
-	
-	<div style='margin: auto; margin-left:0;margin-right:0;'>
+
+	<div style="margin: auto; margin-left:0;margin-right:0;">
 		<Katex
 			displayMode={true}
 			math={'\\color{brown}{d^2} \\color{black}{=} \\color{red}{\\| \\vec{a}  \\|^2} \\color{black}{+} \\color{blue}{\\| \\vec{b}  \\|^2} \\color{black}{ - 2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) } '}
@@ -98,40 +97,36 @@
 		> -->
 		<div bind:this={fig2} />
 	</div>
-
 </div>
 <hr style="border-top: 1px grey dotted" />
 
 <b>Step 2. Making a new Triangle:</b>
 
-
-<p>We can use the x,y coordinates of <Katex math={'\\vec{a}'} /> and <Katex math={'\\vec{b}'} /> to construct the brown right triangle as shown in Figure 3, and use the brown trianlge 
-  to get <Katex math={'d'} />:
+<p>
+	We can use the x,y coordinates of <Katex math={'\\vec{a}'} /> and <Katex math={'\\vec{b}'} /> to construct
+	the brown right triangle as shown in Figure 3, and use the brown trianlge to get <Katex
+		math={'d'}
+	/>:
 </p>
 
 <div style="display: flex; gap:20px;">
-
-	<div style='margin: auto; margin-left:0;margin-right:0;'>
+	<div style="margin: auto; margin-left:0;margin-right:0;">
 		<Katex
-		displayMode={true}
-		math={'\\color{brown}{d_x} \\color{black} = | \\color{red}a_x \\color{brown} \\color{black} - \\color{blue}b_x \\color{black} | '}
-	/>
+			displayMode={true}
+			math={'\\color{brown}{d_x} \\color{black} = | \\color{red}a_x \\color{brown} \\color{black} - \\color{blue}b_x \\color{black} | '}
+		/>
 		<Katex
 			displayMode={true}
 			math={'\\color{brown}{d_y} \\color{black} = | \\color{red}a_y \\color{brown} \\color{black} - \\color{blue}b_y \\color{black} | '}
 		/>
-		<Katex
-		displayMode={true}
-		math={'\\color{brown}{d^2} = {d_x}^2 + {d_y}^2'}
-	/>
+		<Katex displayMode={true} math={'\\color{brown}{d^2} = {d_x}^2 + {d_y}^2'} />
 		<fieldset>
 			<legend>{getCircleNum(2)}</legend>
 			<Katex
-			displayMode={true}
-			math={'\\Rightarrow \\color{brown}{d^2} \\color{black} = ( \\color{red}{a_x} \\color{black}- \\color{blue} b_x \\color{black})^2+( \\color{red}{a_y} \\color{black}- \\color{blue} b_y \\color{black})^2'}
-		/>
+				displayMode={true}
+				math={'\\Rightarrow \\color{brown}{d^2} \\color{black} = ( \\color{red}{a_x} \\color{black}- \\color{blue} b_x \\color{black})^2+( \\color{red}{a_y} \\color{black}- \\color{blue} b_y \\color{black})^2'}
+			/>
 		</fieldset>
-
 	</div>
 
 	<div style="display: flex; flex-flow: column nowrap; align-items:center;">
@@ -141,49 +136,61 @@
 		> -->
 		<div bind:this={fig3} />
 	</div>
-
 </div>
 
 <hr style="border-top: 1px grey dotted" />
 
-<p>Now we equate <Katex math={'\\color{brown}{d^2}'} /> = {getCircleNum(2)} = {getCircleNum(1)} and get:</p>
-
-
-
-
+<p>
+	Now we equate <Katex math={'\\color{brown}{d^2}'} /> = {getCircleNum(2)} = {getCircleNum(1)} and get:
+</p>
 
 <Katex
 	displayMode={true}
 	math={'\\color{brown}{d^2} \\color{black} =    ( \\color{red}{a_x} \\color{black}- \\color{blue} b_x \\color{black})^2+( \\color{red}{a_y} \\color{black}- \\color{blue} b_y \\color{black})^2 \\color{black}{=} \\color{red}{a_x^2+a_y^2} \\color{black}{+} \\color{blue}{b_x^2+b_y^2} \\color{black}{ - 2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) }'}
-	/>
+/>
 
+<Katex
+	displayMode={true}
+	math={'\\Rightarrow  (a_x^2+b_x^2-2a_xb_x) +(a_y^2+b_y^2-2a_yb_y)= \\color{red}{a_x^2+a_y^2} \\color{black}{+} \\color{blue}{b_x^2+b_y^2} \\color{black}{ - 2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) }'}
+/>
+<Katex
+	displayMode={true}
+	math={'\\Rightarrow (\\cancel{a_x^2}+\\cancel{b_x^2}-2a_xb_x )+(\\cancel{a_y^2}+\\cancel{b_y^2}-2a_yb_y)= \\color{red}{\\cancel{a_x^2}+\\cancel{a_y^2}} \\color{black}{+} \\color{blue}{\\cancel{b_x^2}+\\cancel{b_y^2}} \\color{black}{ - 2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) }'}
+/>
+<Katex
+	displayMode={true}
+	math={'\\Rightarrow -2a_xb_x-2a_yb_y = -2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta)'}
+/>
+<Katex
+	displayMode={true}
+	math={'\\Rightarrow a_xb_x+a_yb_y = < \\vec{a},\\vec{b}> = \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta)'}
+/>
+<Katex
+	displayMode={true}
+	math={'\\Rightarrow cos(\\theta)   = \\frac{< \\vec{a},\\vec{b}>}{  \\| \\vec{a}  \\| \\|\\vec{b}\\| }'}
+/>
 
+<p>
+	There you have it, the above shows how the cosine of the angle between two vectors can be
+	expressed using their inner product and lengths.
+</p>
 
-	<Katex displayMode={true} math ={'\\Rightarrow  (a_x^2+b_x^2-2a_xb_x) +(a_y^2+b_y^2-2a_yb_y)= \\color{red}{a_x^2+a_y^2} \\color{black}{+} \\color{blue}{b_x^2+b_y^2} \\color{black}{ - 2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) }'} />
-	<Katex displayMode={true} math ={'\\Rightarrow (\\cancel{a_x^2}+\\cancel{b_x^2}-2a_xb_x )+(\\cancel{a_y^2}+\\cancel{b_y^2}-2a_yb_y)= \\color{red}{\\cancel{a_x^2}+\\cancel{a_y^2}} \\color{black}{+} \\color{blue}{\\cancel{b_x^2}+\\cancel{b_y^2}} \\color{black}{ - 2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) }'} />
-	<Katex displayMode={true} math ={'\\Rightarrow -2a_xb_x-2a_yb_y = -2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta)'} />
-	<Katex displayMode={true} math ={'\\Rightarrow a_xb_x+a_yb_y = < \\vec{a},\\vec{b}> = \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta)' } />
-	<Katex displayMode={true} math ={'\\Rightarrow cos(\\theta)   = \\frac{< \\vec{a},\\vec{b}>}{  \\| \\vec{a}  \\| \\|\\vec{b}\\| }'} />
+<!-- <div bind:this={g1} /> -->
+<Game />
 
+<div>
+	using the interactive demo above, you can verify that:
+	<ol>
+		<li>
+			When two vectors are getting more aligned in their poting direction, their inner product
+			increases
+		</li>
+		<li>When two vectors are pointing away from each other, their inner product decreases</li>
+		<li>
+			And most importantly, when two vectors are perpendicular to each other, their inner product is
+			0
+		</li>
+	</ol>
+</div>
 
-
-
-
-		<p>There you have it, the above shows how the cosine of the angle between two vectors can be expressed using their inner product and lengths.</p>
-
-		<!-- <div bind:this={g1} /> -->
-		<Game />
-
-
-		<div>using the interactive demo above, you can verify that:
-			 <ol>
-				<li>When two vectors are getting more aligned in their poting direction, their inner product increases</li>
-				<li>When two vectors are pointing away from each other, their inner product decreases</li>
-				<li>And most importantly, when two vectors are perpendicular to each other, their inner product is 0</li>
-
-
-			 </ol>
-			
-			</div>
-
-			<hr/>
+<hr />

@@ -6,7 +6,7 @@ export class Vector {
   public line: THREE.Line<THREE.BufferGeometry<THREE.NormalBufferAttributes>, THREE.LineBasicMaterial>;
   public vector: THREE.Group;
 
-  constructor(scene: THREE.Scene, x:number,y:number,z:number, color:string|number){
+  constructor( x:number,y:number,z:number, color:string|number){
     const points = [];
     points.push(new THREE.Vector3(0, 0, 0));
     points.push(new THREE.Vector3(x, y, z));
