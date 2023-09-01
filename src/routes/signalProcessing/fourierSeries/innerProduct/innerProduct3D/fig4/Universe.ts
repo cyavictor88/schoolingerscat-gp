@@ -28,9 +28,12 @@ export class Universe {
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color('lightblue');
     this.camera = this.initCamera();
-    const mainLight = new THREE.PointLight('green', 2, 50);
-    mainLight.position.set(0, 5, 0);
-    this.scene.add(mainLight);
+    // const mainLight = new THREE.PointLight('green', 2, 50);
+    // mainLight.position.set(0, 5, 0);
+    // this.scene.add(mainLight);
+
+    const light = new THREE.AmbientLight( 0x404040 ); // soft white light
+    this.scene.add( light );
 
     const helper = new THREE.AxesHelper(10);
     helper.position.set(0, 0, 0);
@@ -48,7 +51,7 @@ export class Universe {
     refCurrent.appendChild(this.renderer.domElement);
     this.eventBroker.on("hello", (data) => { console.log(data) });
     this.controls = new OrbitControls(this.camera, this.renderer.domElement );
-    this.camera.position.set( 2, 6, 10 );
+    this.camera.position.set( 15, 15, 15 );
     this.controls.update();
 
 
@@ -61,11 +64,11 @@ export class Universe {
     sphere.position.set(-2,4,4);
     this.scene.add(sphere);
     
-    this.scene.add(new Vector(2,4,4,0xff0000).vector);
+    this.scene.add(new Vector(12,4,4,0xff0000).vector);
 
 
     this.scene.add(new Line([1,2,3],[4,-5,-6],0x000000,true).line)
-    const axes = new Axes(this.scene,2,2,2);
+    const axes = new Axes(this.scene,10,10,10);
 
   }
 
@@ -82,9 +85,8 @@ export class Universe {
 
   initCamera() {
     const aspect = canvasSize.w / canvasSize.h;
-    const frustumSize = 10;
-    const camera = new THREE.OrthographicCamera(frustumSize * aspect / -2, frustumSize * aspect / 2, frustumSize / 2, frustumSize / -2, 0.1, 20);
-    camera.position.z = 5;
+    const frustumSize = 20;
+    const camera = new THREE.OrthographicCamera(frustumSize * aspect / -2, frustumSize * aspect / 2, frustumSize / 2, frustumSize / -2, 0.1, 40);
     camera.lookAt(new THREE.Vector3(0,0,0))
     return camera;
   }
