@@ -119,6 +119,9 @@
 <h4>Interactive Demo:  (drag the vectors' arrow head around)</h4>
 <svg width={game.width} height={game.height}  overflow="visible">
 
+
+	<polygon points={game.trianglePathString} fill='brown' fill-opacity='0.2' />
+
 	<foreignObject
 		x=10
 		y=0

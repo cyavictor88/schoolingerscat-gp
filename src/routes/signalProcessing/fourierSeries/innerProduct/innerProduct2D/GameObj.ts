@@ -50,6 +50,8 @@ export class GameObj{
 
   public xScale = d3.scaleLinear().domain(this.xDomain).range([this.marginLeft, this.width - this.marginRight]);
   public yScale = d3.scaleLinear().domain(this.yDomain).range([this.height - this.marginBottom, this.marginTop]);
+  public triangleDPoint:Vec2D = this.calcTriangleDPoint();
+  public trianglePathString: string = this.calcTrianglePathString();
 
 
   constructor(veca?:Vec2D, vecb?:Vec2D){
@@ -58,6 +60,23 @@ export class GameObj{
     this.theta_a = Math.atan(this.veca.y / this.veca.x);
     this.theta_b = Math.atan(this.vecb.y / this.vecb.x);
     this.theta_ab =  (this.theta_a + this.theta_b)/2;
+  }
+
+
+  calcTriangleDPoint(){
+    let inter1 = {x:this.veca.x, y: this.vecb.y}
+    let inter2 = {x:this.vecb.x, y: this.veca.y}
+    let triangleDPoint = inter2;
+    if(this.vecMag(inter1) < this.vecMag(inter2)){
+      triangleDPoint = inter1;
+    }
+    return triangleDPoint
+  }
+
+  calcTrianglePathString(){
+    this.triangleDPoint = this.calcTriangleDPoint();
+    const vertices = [   [this.xScale(this.veca.x), this.yScale(this.veca.y)], [this.xScale(this.vecb.x), this.yScale(this.vecb.y)], [this.xScale(this.triangleDPoint.x), this.yScale(this.triangleDPoint.y)] ];
+    return vertices.map(point => point.join(",")).join(" ");
   }
 
   fixedRadius(fixed:boolean){
@@ -80,6 +99,7 @@ export class GameObj{
       }
       this.toggleFixedRadius=fixed;
     }
+    this.trianglePathString = this.calcTrianglePathString();
 
   }
 
@@ -96,11 +116,10 @@ export class GameObj{
     this.theta_b = this.vecb.y > 0? this.calcAngleBetween(this.vecb, {x:1,y:0}) : 2*Math.PI - this.calcAngleBetween(this.vecb, {x:1,y:0});
     this.theta_ab = (this.theta_a + this.theta_b)/2;
     if(Math.abs(this.theta_a-this.theta_b)>Math.PI) this.theta_ab = Math.PI+this.theta_ab;
+    this.trianglePathString = this.calcTrianglePathString();
   }
 
-  deltaVec(vecaOrvecb:string, vec:Vec2D){
-    this.calc_thetas();
-  }
+
 
   calcInnerProduct(){
     return this.veca.x*this.vecb.x + this.veca.y*this.vecb.y
