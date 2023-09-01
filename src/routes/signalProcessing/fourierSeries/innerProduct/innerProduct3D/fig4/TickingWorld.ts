@@ -15,6 +15,7 @@ export class TickingWorld {
     this.updatables = [];
   }
 
+
   start() {
     this.renderer.setAnimationLoop(() => {
       // tell every animated object to tick forward one frame

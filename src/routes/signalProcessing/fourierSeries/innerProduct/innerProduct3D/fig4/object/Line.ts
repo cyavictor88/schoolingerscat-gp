@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 export class Line {
   public line: THREE.Line<THREE.BufferGeometry<THREE.NormalBufferAttributes>, THREE.LineBasicMaterial | THREE.LineDashedMaterial>;
-
+  
   constructor(p1:[number,number,number], p2:[number,number,number], color:number|string, dash?: boolean){
     const points = [];
     points.push(new THREE.Vector3(...p1));

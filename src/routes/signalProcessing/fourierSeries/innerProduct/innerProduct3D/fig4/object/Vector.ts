@@ -1,3 +1,4 @@
+import { tickStep } from 'd3';
 import * as THREE from 'three';
 
 
@@ -5,6 +6,8 @@ export class Vector {
   public arrow : THREE.Mesh<THREE.ConeGeometry, THREE.MeshBasicMaterial>;
   public line: THREE.Line<THREE.BufferGeometry<THREE.NormalBufferAttributes>, THREE.LineBasicMaterial>;
   public vector: THREE.Group;
+  public matLine : THREE.LineBasicMaterial;
+  public matDashLine : THREE.LineDashedMaterial;
 
   constructor( x:number,y:number,z:number, color:string|number){
     const points = [];
@@ -13,14 +16,21 @@ export class Vector {
     const lineGeometry = new THREE.BufferGeometry().setFromPoints(points);
 
     // Create line material
-    const lineMaterial = new THREE.LineBasicMaterial({ color: color });
+    this.matLine = new THREE.LineBasicMaterial({ color: color });
+    this.matDashLine  = new THREE.LineDashedMaterial( {
+      color: color,
+      linewidth: 1,
+      scale: 1,
+      dashSize: 0.5,
+      gapSize: 0.2,
+  });
 
     // Create the line
-    const line = new THREE.Line(lineGeometry, lineMaterial);
+    const line = new THREE.Line(lineGeometry, this.matLine);
     this.line=line;
 
     // Create arrowhead geometry
-    const arrowheadGeometry = new THREE.ConeGeometry(0.1, 0.3, 10);
+    const arrowheadGeometry = new THREE.ConeGeometry(0.2, 0.5, 10);
     const arrowheadMaterial = new THREE.MeshBasicMaterial({ color: color });
     const arrowhead = new THREE.Mesh(arrowheadGeometry, arrowheadMaterial);
     arrowhead.position.copy(points[1]);
@@ -31,4 +41,16 @@ export class Vector {
     this.vector = new THREE.Group();
     this.vector.add(this.arrow,this.line);
   } 
+
+  setDash(){
+    this.line.material = this.matDashLine;
+    this.line.computeLineDistances();
+  }
+
+
+  setHelper(){
+    
+  }
+
+
 }

@@ -10,7 +10,19 @@ import { Axes } from './object/Axes';
 // import { mathmesh } from 'mathmesh';
 
 
-const canvasSize = { w: 400, h: 300 };
+export enum Dir {
+  X,
+  Y,
+  Z
+}
+
+export const unitVec = {
+  x: new THREE.Vector3(1,0,0),
+  y: new THREE.Vector3(0,1,0),
+  z: new THREE.Vector3(0,0,1),
+}
+
+const canvasSize = { w: 500, h: 400 };
 
 export class Universe {
   // export class World extends EventEmitter {
@@ -35,12 +47,12 @@ export class Universe {
     const light = new THREE.AmbientLight( 0x404040 ); // soft white light
     this.scene.add( light );
 
-    const helper = new THREE.AxesHelper(10);
-    helper.position.set(0, 0, 0);
-    const ghelper = new THREE.GridHelper(10, 10);
-    ghelper.rotation.x = Math.PI / 2;
-    ghelper.position.set(0, 0, 0);
-    this.scene.add(helper);
+    // const helper = new THREE.AxesHelper(10);
+    // helper.position.set(0, 0, 0);
+    // const ghelper = new THREE.GridHelper(10, 10);
+    // ghelper.rotation.x = Math.PI / 2;
+    // ghelper.position.set(0, 0, 0);
+    // this.scene.add(helper);
     this.renderer = new THREE.WebGLRenderer({
       antialias: true,
       preserveDrawingBuffer: true, //https://discourse.threejs.org/t/how-to-save-rendering-scene-to-img/41858/3
@@ -51,23 +63,13 @@ export class Universe {
     refCurrent.appendChild(this.renderer.domElement);
     this.eventBroker.on("hello", (data) => { console.log(data) });
     this.controls = new OrbitControls(this.camera, this.renderer.domElement );
-    this.camera.position.set( 15, 15, 15 );
+    this.camera.position.set( 15, 13, 20 );
     this.controls.update();
 
 
-
-    const geometry = new THREE.SphereGeometry(0.1, 32, 32);
-    const material = new THREE.MeshBasicMaterial({
-      color: 0xff0000
-    });
-    const sphere = new THREE.Mesh(geometry, material);
-    sphere.position.set(-2,4,4);
-    this.scene.add(sphere);
-    
-    this.scene.add(new Vector(12,4,4,0xff0000).vector);
-
-
-    this.scene.add(new Line([1,2,3],[4,-5,-6],0x000000,true).line)
+    const veca = new Vector(12,4,8,0xff0000)
+    this.scene.add(veca.vector);
+    this.scene.add(new Vector(4,8,-5,0x0000ff).vector);
     const axes = new Axes(this.scene,10,10,10);
 
   }
@@ -78,6 +80,7 @@ export class Universe {
     geometry.setAttribute('position', new THREE.BufferAttribute(mm.vertices, 3));
     const material = new THREE.MeshBasicMaterial({ color: 0xff00ff, side:THREE.DoubleSide });
     const mesh = new THREE.Mesh(geometry, material);
+
     this.scene.add(mesh);
   }
 
