@@ -11,9 +11,9 @@ export class Axes {
   public yAxisLine: Line;
   public zAxisLine: Line;
 
-  public xTicks: THREE.Mesh[] = [];
-  public yTicks: THREE.Mesh[] = [];
-  public zTicks: THREE.Mesh[] = [];
+  public xTickMeshArr: THREE.Mesh[] = [];
+  public yTickMeshArr: THREE.Mesh[] = [];
+  public zTickMeshArr: THREE.Mesh[] = [];
 
   public xTextMesh!: THREE.Mesh;
   public yTextMesh!: THREE.Mesh;
@@ -25,9 +25,9 @@ export class Axes {
     this.yAxisLine = new Line([0, -y - 0.1, 0], [0, y + 0.1, 0], 'black');
     this.zAxisLine = new Line([0, 0, -z - 0.1], [0, 0, z + 0.1], 'black');
 
-    scene.add(this.xAxisLine.line);
-    scene.add(this.yAxisLine.line);
-    scene.add(this.zAxisLine.line);
+    scene.add(this.xAxisLine.lineMesh);
+    scene.add(this.yAxisLine.lineMesh);
+    scene.add(this.zAxisLine.lineMesh);
 
     const loader = new FontLoader();
     loader.load('/fonts/helvetiker_regular.typeface.json', (font) => {
@@ -43,9 +43,9 @@ export class Axes {
 
     });
 
-    this.xTicks = this.makeTicks(scene, Dir.X, x);
-    this.yTicks = this.makeTicks(scene, Dir.Y, y);
-    this.zTicks = this.makeTicks(scene, Dir.Z, z);
+    this.xTickMeshArr = this.makeTicks(scene, Dir.X, x);
+    this.yTickMeshArr = this.makeTicks(scene, Dir.Y, y);
+    this.zTickMeshArr = this.makeTicks(scene, Dir.Z, z);
 
 
 
@@ -59,10 +59,15 @@ export class Axes {
   makeTicks(scene: THREE.Scene, dir: Dir, len: number) {
     const geometry = new THREE.RingGeometry(0.01, .1, 10);
     const material = new THREE.MeshBasicMaterial({ color: 0x000000, side: THREE.DoubleSide });
+    const material5 = new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.DoubleSide });
     const numTicks = Array.from({ length: 2 * len + 1 }, (_, idx) => { return idx - len });
     const ticks: THREE.Mesh[] = [];
     numTicks.forEach(coor => {
-      const mesh = new THREE.Mesh(geometry, material);
+      let mesh;
+      if(coor%5!==0)
+        mesh = new THREE.Mesh(geometry, material);
+      else
+        mesh = new THREE.Mesh(geometry, material5);
       switch (dir) {
         case Dir.X:
           mesh.position.set(coor, 0, 0);

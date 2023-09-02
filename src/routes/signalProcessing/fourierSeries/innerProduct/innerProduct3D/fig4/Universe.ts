@@ -67,10 +67,17 @@ export class Universe {
     this.controls.update();
 
 
-    const veca = new Vector(12,4,8,0xff0000)
+    const veca = new Vector(9,4,8,0xff0000);
+    const vecb = new Vector(4,8,-5,0x0000ff);
     this.scene.add(veca.vector);
-    this.scene.add(new Vector(4,8,-5,0x0000ff).vector);
+    this.scene.add(vecb.vector);
     const axes = new Axes(this.scene,10,10,10);
+
+    const d = new Line(veca.coords.toArray(),vecb.coords.toArray(),'brown',true,'d');
+    console.log(d.textMesh)
+    this.scene.add(d.lineMesh,d.textMesh!)
+
+
 
   }
 
