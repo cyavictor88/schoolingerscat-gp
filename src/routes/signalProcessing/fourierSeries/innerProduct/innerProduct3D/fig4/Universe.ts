@@ -10,7 +10,7 @@ import { Axes } from './object/Axes';
 import { Font, FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 import { MathText } from './object/MathText';
 import { Theta } from './object/Theta';
-import { Polygon2D } from './object/polygon2D';
+import { Polygon2D } from './object/Polygon2D';
 
 // import { mathmesh } from 'mathmesh';
 
