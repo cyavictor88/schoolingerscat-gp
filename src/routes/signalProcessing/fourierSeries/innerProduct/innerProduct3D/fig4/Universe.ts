@@ -8,6 +8,9 @@ import { Vector } from './object/Vector';
 import { Line } from './object/Line';
 import { Axes } from './object/Axes';
 import { Font, FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
+import { MathText } from './object/MathText';
+import { Theta } from './object/Theta';
+import { Polygon2D } from './object/polygon2D';
 
 // import { mathmesh } from 'mathmesh';
 
@@ -36,13 +39,19 @@ export class Universe {
   controls: OrbitControls;
   font!: Font;
 
+  veca : Vector;
+  vecb : Vector;
+
+  fig4triangle: Polygon2D | null = null;
+
   constructor(refCurrent: HTMLDivElement, eventBroker: EventEmitter) {
 
     this.eventBroker = eventBroker;
-    // super();
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color('lightblue');
     this.camera = this.initCamera();
+    this.camera.position.set( 5.44, 18., 22 );
+
     // const mainLight = new THREE.PointLight('green', 2, 50);
     // mainLight.position.set(0, 5, 0);
     // this.scene.add(mainLight);
@@ -55,7 +64,7 @@ export class Universe {
     // const ghelper = new THREE.GridHelper(10, 10);
     // ghelper.rotation.x = Math.PI / 2;
     // ghelper.position.set(0, 0, 0);
-    // this.scene.add(helper);
+    // this.scene.add(ghelper);
     this.renderer = new THREE.WebGLRenderer({
       antialias: true,
       preserveDrawingBuffer: true, //https://discourse.threejs.org/t/how-to-save-rendering-scene-to-img/41858/3
@@ -66,14 +75,19 @@ export class Universe {
     refCurrent.appendChild(this.renderer.domElement);
     this.eventBroker.on("hello", (data) => { console.log(data) });
     this.controls = new OrbitControls(this.camera, this.renderer.domElement );
-    this.camera.position.set( 15, 13, 20 );
+
     this.controls.update();
 
+    // universe setup done
+    this.controls.addEventListener('change', () => {
+      const cameraPosition = this.camera.position.clone();
+      console.log('Camera Position:', cameraPosition);
+    });
 
-    const veca = new Vector(9,4,8,0xff0000);
-    const vecb = new Vector(4,8,-5,0x0000ff);
-    this.scene.add(veca.vector);
-    this.scene.add(vecb.vector);
+    this.veca = new Vector(9,4,8,0xff0000);
+    this.vecb = new Vector(4,8,-5,0x0000ff);
+    this.scene.add(this.veca.vector);
+    this.scene.add(this.vecb.vector);
     const axes = new Axes(this.scene,10,10,10);
 
 
@@ -81,11 +95,44 @@ export class Universe {
     const loader = new FontLoader();
     loader.load('/fonts/helvetiker_regular.typeface.json', (font) => {
       this.font = font;
-      const d = new Line(veca.coords.toArray(),vecb.coords.toArray(),'brown',true);
+      const d = new Line(this.veca.coord.toArray(),this.vecb.coord.toArray(),'brown',true);
       d.setText(this.font,'d');
       this.scene.add(d.lineMesh,d.textMesh!)
-    })
+    });
 
+
+
+
+    this.eventBroker.on('setMathMeshes',()=>{this.setMathMeshes()})
+
+    this.eventBroker.on('showFig4Triangle',()=>{this.showFig4Triangle()});
+
+  }
+
+  showFig4Triangle(){
+    if(!this.fig4triangle){
+      this.fig4triangle = new Polygon2D([this.veca.coord,this.vecb.coord,new THREE.Vector3()],'brown')
+      this.scene.add(this.fig4triangle.mesh);
+    } else {
+      this.fig4triangle.mesh.visible = !this.fig4triangle.mesh.visible;
+    }
+
+  }
+
+  async setMathMeshes(){
+    const mathText = await MathText.Init('\\vec{a} \\\\ (a_x,a_y,a_z)','red');
+    mathText.mesh.position.set(this.veca.coord.x, this.veca.coord.y, this.veca.coord.z);
+    this.scene.add(mathText.mesh);
+
+    const mathText2 = await MathText.Init('\\vec{b} \\\\ (b_x,b_y,b_z)','blue');
+    mathText2.mesh.position.set(this.vecb.coord.x, this.vecb.coord.y, this.vecb.coord.z)
+    this.scene.add(mathText2.mesh);
+
+
+
+    const theta = await Theta.Init(this.veca.coord,this.vecb.coord);
+    this.scene.add(theta.curveMesh);
+    this.scene.add(theta.textMesh.mesh);
   }
 
   async addMathMesh() {

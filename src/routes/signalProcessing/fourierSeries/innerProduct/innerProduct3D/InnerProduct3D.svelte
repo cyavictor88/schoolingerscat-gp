@@ -9,15 +9,19 @@
 
 	let eventBroker = new EventEmitter();
 	onMount(() => {
-		(async function () {
 			universe = new Universe(divFig4, eventBroker);
 			universe.start();
-			eventBroker.emit('hello', { data: 'meow' });
-			await universe.addMathMesh();
-		})();
-		return () => {
-			if (divFig4.firstChild) divFig4.removeChild(divFig4.firstChild);
-		};
+			eventBroker.emit('setMathMeshes');
+	// 	(async function () {
+	// 		universe = new Universe(divFig4, eventBroker);
+	// 		universe.start();
+	// 		eventBroker.emit('setMathMeshes')
+	// 		eventBroker.emit('hello', { data: 'meow' });
+	// 		// await universe.addMathMesh();
+	// 	})();
+	// 	return () => {
+	// 		if (divFig4.firstChild) divFig4.removeChild(divFig4.firstChild);
+	// 	};
 	});
 </script>
 
@@ -42,4 +46,36 @@
 		math={'\\vec{b}'}
 	/>, with <Katex math={'d'} /> indicates the distance between two vectors.
 </p>
-<div bind:this={divFig4} />
+
+<div style="display: flex; flex-flow: column nowrap; align-items:start; justify-content: start;">
+	<p>Figure 4</p>
+	<div style='cursor: pointer;'bind:this={divFig4} />
+</div>
+
+<p>
+	Now we will show <Katex math={'cos(\\theta)=\\frac{<a,b>}{\\|a\\|\\|b\\|}'} /> still holds in 3D by solving for <Katex math={'d'} />
+</p>
+<hr style="border-top: 1px grey dotted" />
+<b>Step 1. Using law of Cosine:</b>
+
+<p>
+	Using <a href="https://en.wikipedia.org/wiki/Law_of_cosines"
+		>Low of Cosines</a
+	>
+	<!-- svelte-ignore a11y-click-events-have-key-events -->
+	<!-- svelte-ignore a11y-no-static-element-interactions -->
+	on the <span on:click={()=>{eventBroker.emit('showFig4Triangle')}}>triangle</span> in Figure 4, we can get the following equation for <Katex math={'d'} />:
+</p>
+
+
+
+<style>
+	span {
+		color: blue;
+		text-decoration: underline;
+	}
+
+	span:hover {
+		cursor: pointer
+	}
+</style>

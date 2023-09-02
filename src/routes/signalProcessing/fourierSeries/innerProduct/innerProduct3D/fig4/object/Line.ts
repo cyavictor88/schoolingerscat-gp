@@ -6,7 +6,7 @@ export class Line {
   public lineMesh: THREE.Line<THREE.BufferGeometry<THREE.NormalBufferAttributes>, THREE.LineBasicMaterial | THREE.LineDashedMaterial>;
   public font!: Font;
   public textMesh: THREE.Mesh | null = null;
-  public points: THREE.Vector3[] =[]
+  public points: THREE.Vector3[] =[];
   
   constructor(p1:[number,number,number], p2:[number,number,number], color:number|string, dash?: boolean){
     this.points.push(new THREE.Vector3(...p1));

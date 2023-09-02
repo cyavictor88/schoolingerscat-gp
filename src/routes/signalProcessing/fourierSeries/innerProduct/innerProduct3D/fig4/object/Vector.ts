@@ -12,13 +12,13 @@ export class Vector {
   public matDashLine : THREE.LineDashedMaterial;
 
 
-  public coords: THREE.Vector3;
+  public coord: THREE.Vector3;
   public line2XZ: Line;
   public line2Z: Line;
   public line2X: Line;
 
   constructor( x:number,y:number,z:number, color:string|number){
-    this.coords = new THREE.Vector3(x,y,z);
+    this.coord = new THREE.Vector3(x,y,z);
     const points = [];
     points.push(new THREE.Vector3(0, 0, 0));
     points.push(new THREE.Vector3(x, y, z));
