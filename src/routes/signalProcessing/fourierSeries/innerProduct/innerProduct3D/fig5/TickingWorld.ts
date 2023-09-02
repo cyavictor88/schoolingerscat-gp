@@ -39,7 +39,7 @@ export class TickingWorld {
     // );
 
     for (const object of this.updatables) {
-      (object as any).tick(delta);
+      object.tick(delta);
     }
   }
 }

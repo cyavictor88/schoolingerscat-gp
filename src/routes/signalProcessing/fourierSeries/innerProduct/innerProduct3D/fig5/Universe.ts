@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { TickingWorld } from './TickingWorld';
-import EventEmitter from 'eventemitter3';
+import type EventEmitter from 'eventemitter3';
 import { mathmesh } from '$lib/mathmesh/mathmesh';
 // import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
@@ -11,7 +11,6 @@ import { Font, FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 import { MathText } from './object/MathText';
 import { Theta } from './object/Theta';
 import { Polygon2D } from './object/Polygon2D';
-import { functionsIn } from 'lodash';
 
 // import { mathmesh } from 'mathmesh';
 
@@ -30,24 +29,23 @@ export const unitVec = {
 
 const canvasSize = { w: 500, h: 400 };
 
-export class Universe {
+export class Universe extends THREE.EventDispatcher{
   // export class World extends EventEmitter {
   camera: THREE.Camera;
   scene: THREE.Scene;
   renderer: THREE.WebGLRenderer;
   tickingWorld: TickingWorld;
-  eventBroker: EventEmitter;
   controls: OrbitControls;
   font!: Font;
 
   veca : Vector;
   vecb : Vector;
-  axes : Axes;
 
   fig4triangle: Polygon2D | null = null;
 
   constructor(refCurrent: HTMLDivElement) {
-    this.eventBroker = new EventEmitter();
+
+    super();
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color('lightblue');
     this.camera = this.initCamera();
@@ -74,23 +72,24 @@ export class Universe {
     this.renderer.render(this.scene, this.camera);
     this.renderer.setSize(canvasSize.w, canvasSize.h);
     refCurrent.appendChild(this.renderer.domElement);
-    this.eventBroker.on("hello", (data) => { console.log(data) });
+    this.addEventListener("hello",(data) => { console.log(data) });
     this.controls = new OrbitControls(this.camera, this.renderer.domElement );
 
     this.controls.update();
 
     // universe setup done
-
+    
     // this.controls.addEventListener('change', () => {
     //   const cameraPosition = this.camera.position.clone();
     //   console.log('Camera Position:', cameraPosition);
     // });
 
-    this.veca = new Vector(9,4,8,0xff0000);
-    this.vecb = new Vector(4,8,-5,0x0000ff);
+    this.veca = new Vector(-9,-4,-8,0xff0000);
+    this.vecb = new Vector(-4,-8,5,0x0000ff);
     this.scene.add(this.veca.vector);
     this.scene.add(this.vecb.vector);
-    this.axes = new Axes(this.scene,10,10,10);
+    const axes = new Axes(this.scene,10,10,10);
+
 
 
     const loader = new FontLoader();
@@ -98,35 +97,20 @@ export class Universe {
       this.font = font;
       const d = new Line(this.veca.coord.toArray(),this.vecb.coord.toArray(),'brown',true);
       d.setText(this.font,'d');
-      this.scene.add(d.lineMesh,d.textMesh!);
-
-      // playing with updateable in tickingworld
-      (d.textMesh as any).scaler = 1.1;
-      (d.textMesh as any).cnt = 0;
-      (d.textMesh as any).tick = function(delta:number){
-        (d.textMesh as any).cnt += 1;
-        (d.textMesh as any).cnt %= 1;
-        if((d.textMesh as any).cnt>0) return
-        const scale = d.textMesh!.scale.clone();
-        if(scale.length()>2.5) (d.textMesh as any).scaler*=0.9;
-        if(scale.length()<1.5) (d.textMesh as any).scaler*=1.1;
-        d.textMesh!.scale.set(...scale.multiplyScalar((d.textMesh as any).scaler).toArray());
-      }
-      this.tickingWorld.updatables.push(d.textMesh);
+      this.scene.add(d.lineMesh,d.textMesh!)
     });
 
 
 
 
-    this.eventBroker.on('setMathMeshes',()=>{this.setMathMeshes()})
-
-    this.eventBroker.on('showFig4Triangle',()=>{this.showFig4Triangle()});
+    this.addEventListener('setMathMeshes',()=>{this.setMathMeshes()})
+    this.addEventListener('showFig4Triangle',()=>{this.showFig4Triangle()});
 
   }
 
   showFig4Triangle(){
     if(!this.fig4triangle){
-      this.fig4triangle = new Polygon2D([this.veca.coord,this.vecb.coord,new THREE.Vector3()],'lightgrey')
+      this.fig4triangle = new Polygon2D([this.veca.coord,this.vecb.coord,new THREE.Vector3()],'brown')
       this.scene.add(this.fig4triangle.mesh);
     } else {
       this.fig4triangle.mesh.visible = !this.fig4triangle.mesh.visible;
@@ -148,8 +132,6 @@ export class Universe {
     const theta = await Theta.Init(this.veca.coord,this.vecb.coord);
     this.scene.add(theta.curveMesh);
     this.scene.add(theta.textMesh.mesh);
-
-
   }
 
   async addMathMesh() {

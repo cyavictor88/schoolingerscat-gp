@@ -1,17 +1,30 @@
 <script lang="ts">
 	import Katex from '$lib/components/Katex/Katex.svelte';
 	import { onMount } from 'svelte';
-	import { Universe } from './fig4/Universe';
+	import { Universe as Fig4 } from './fig4/Universe';
+	import { Universe as Fig5 } from './fig5/Universe';
 	import EventEmitter from 'eventemitter3';
+	import { getCircleNum } from '$lib/unicode';
 
 	let divFig4: HTMLDivElement;
-	let universe: Universe;
+	let divFig5: HTMLDivElement;
+	let universeFig4: Fig4;
+	let universeFig5: Fig5;
 
-	let eventBroker = new EventEmitter();
 	onMount(() => {
-			universe = new Universe(divFig4, eventBroker);
-			universe.start();
-			eventBroker.emit('setMathMeshes');
+			universeFig4 = new Fig4(divFig4);
+			universeFig4.start();
+			universeFig4.eventBroker.emit('setMathMeshes');
+
+			universeFig5 = new Fig5(divFig5);
+			universeFig5.start();
+			universeFig5.dispatchEvent({type:'setMathMeshes',target:universeFig5})
+
+
+			return ()=>{
+				// if (divFig4.firstChild) divFig4.removeChild(divFig4.firstChild);
+				if (divFig5.firstChild) divFig5.removeChild(divFig5.firstChild);
+			}
 	// 	(async function () {
 	// 		universe = new Universe(divFig4, eventBroker);
 	// 		universe.start();
@@ -48,8 +61,15 @@
 </p>
 
 <div style="display: flex; flex-flow: column nowrap; align-items:start; justify-content: start;">
-	<p>Figure 4</p>
-	<div style='cursor: pointer;'bind:this={divFig4} />
+	<p id='fig4'>Figure 4</p>
+	<div style='cursor: pointer; position: relative; width:500px; height: 400px;'bind:this={divFig4}>
+		<button style='position:absolute; height:30px; width:30px; right:0px; bottom:30px;' on:click={()=>{universeFig4.camera.position.setZ( universeFig4.camera.position.z-1)}}>{'↗'}</button>
+		<button style='position:absolute; height:30px; width:30px; right:60px; bottom:30px;' on:click={()=>{universeFig4.camera.position.setZ( universeFig4.camera.position.z+1)}}>{'↙'}</button>
+		<button style='position:absolute; height:30px; width:30px; right:0px; bottom:0px;' on:click={()=>{universeFig4.camera.position.setX( universeFig4.camera.position.x+1)}}>{'→'}</button>
+		<button style='position:absolute; height:30px; width:30px; right:60px; bottom:0px;' on:click={()=>{universeFig4.camera.position.setX( universeFig4.camera.position.x-1)}}>{'←'}</button>
+		<button style='position:absolute; height:30px; width:30px; right:30px; bottom:0px;' on:click={()=>{universeFig4.camera.position.setY( universeFig4.camera.position.y-1)}}>{'↓'}</button>
+		<button style='position:absolute; height:30px; width:30px; right:30px; bottom:30px;' on:click={()=>{universeFig4.camera.position.setY( universeFig4.camera.position.y+1)}}>{'↑'}</button>
+	</div>
 </div>
 
 <p>
@@ -62,20 +82,40 @@
 	Using <a href="https://en.wikipedia.org/wiki/Law_of_cosines"
 		>Low of Cosines</a
 	>
-	<!-- svelte-ignore a11y-click-events-have-key-events -->
-	<!-- svelte-ignore a11y-no-static-element-interactions -->
-	on the <span on:click={()=>{eventBroker.emit('showFig4Triangle')}}>triangle</span> in Figure 4, we can get the following equation for <Katex math={'d'} />:
+	on the <a href="#fig4" on:click={()=>{universeFig4.eventBroker.emit('showFig4Triangle')}}>triangle</a> in Figure 4, we can get the following equation for <Katex math={'d'} />:
+</p>
+
+<div style="margin: auto; margin-left:0;margin-right:0;">
+	<Katex
+		displayMode={true}
+		math={'\\color{brown}{d^2} \\color{black}{=} \\color{red}{\\| \\vec{a}  \\|^2} \\color{black}{+} \\color{blue}{\\| \\vec{b}  \\|^2} \\color{black}{ - 2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) } '}
+	/>
+	<Katex
+		displayMode={true}
+		math={'\\mathrm{where} \\ \\color{red}{\\| \\vec{a}  \\|^2 = a_x^2+a_y^2+a_z^2} \\color{black}{\\quad \\mathrm{and \\quad }}  \\color{blue}{\\| \\vec{b}  \\|^2 = b_x^2+b_y^2+b_z^2}'}
+	/>
+	<fieldset>
+		<legend>{getCircleNum(3)}</legend>
+		<Katex
+			displayMode={true}
+			math={'\\Rightarrow \\color{brown}{d^2} \\color{black}{=} \\color{red}{a_x^2+a_y^2+a_z^2} \\color{black}{+} \\color{blue}{b_x^2+b_y^2+b_z^2}\\color{black}{ - 2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) }'}
+		/>
+	</fieldset>
+</div>
+
+
+<hr style="border-top: 1px grey dotted" />
+<b>Step 2. Making a new Triangle:</b>
+
+<p>
+	We can use the x,y,z coordinates of <Katex math={'\\vec{a}'} /> and <Katex math={'\\vec{b}'} /> to construct
+	the brown right triangle as shown in Figure 5, and use the brown trianlge to get <Katex
+		math={'d'}
+	/>:
 </p>
 
 
-
-<style>
-	span {
-		color: blue;
-		text-decoration: underline;
-	}
-
-	span:hover {
-		cursor: pointer
-	}
-</style>
+<div style="display: flex; flex-flow: column nowrap; align-items:start; justify-content: start;">
+	<p id='fig5'>Figure 5</p>
+	<div style='cursor: pointer;'bind:this={divFig5} />
+</div>
