@@ -7,6 +7,8 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { Vector } from './object/Vector';
 import { Line } from './object/Line';
 import { Axes } from './object/Axes';
+import { Font, FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
+
 // import { mathmesh } from 'mathmesh';
 
 
@@ -32,6 +34,7 @@ export class Universe {
   tickingWorld: TickingWorld;
   eventBroker: EventEmitter;
   controls: OrbitControls;
+  font!: Font;
 
   constructor(refCurrent: HTMLDivElement, eventBroker: EventEmitter) {
 
@@ -44,7 +47,7 @@ export class Universe {
     // mainLight.position.set(0, 5, 0);
     // this.scene.add(mainLight);
 
-    const light = new THREE.AmbientLight( 0x404040 ); // soft white light
+    const light = new THREE.AmbientLight( 0xffffff ); // soft white light
     this.scene.add( light );
 
     // const helper = new THREE.AxesHelper(10);
@@ -73,11 +76,15 @@ export class Universe {
     this.scene.add(vecb.vector);
     const axes = new Axes(this.scene,10,10,10);
 
-    const d = new Line(veca.coords.toArray(),vecb.coords.toArray(),'brown',true,'d');
-    console.log(d.textMesh)
-    this.scene.add(d.lineMesh,d.textMesh!)
 
 
+    const loader = new FontLoader();
+    loader.load('/fonts/helvetiker_regular.typeface.json', (font) => {
+      this.font = font;
+      const d = new Line(veca.coords.toArray(),vecb.coords.toArray(),'brown',true);
+      d.setText(this.font,'d');
+      this.scene.add(d.lineMesh,d.textMesh!)
+    })
 
   }
 

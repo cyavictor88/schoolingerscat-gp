@@ -99,7 +99,7 @@ export class Axes {
     const centerOffsetX = - 0.5 * (textGeo.boundingBox!.max.x - textGeo.boundingBox!.min.x);
     const centerOffsetY = - 0.5 * (textGeo.boundingBox!.max.y - textGeo.boundingBox!.min.y);
     let materials = [
-      new THREE.MeshPhongMaterial({ color: 0xff00ff, flatShading: true }), // front
+      new THREE.MeshPhongMaterial({ color: 0x000000, flatShading: true }), // front
       new THREE.MeshPhongMaterial({ color: 0x00ffff }) // side
     ];
     const textMesh = new THREE.Mesh(textGeo, materials);

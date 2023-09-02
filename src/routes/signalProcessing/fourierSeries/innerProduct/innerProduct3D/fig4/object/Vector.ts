@@ -1,6 +1,7 @@
 import { tickStep } from 'd3';
 import * as THREE from 'three';
 import { Line } from './Line';
+import { arrow } from '@popperjs/core';
 
 
 export class Vector {
@@ -38,12 +39,18 @@ export class Vector {
     this.lineMesh=line;
 
     // Create arrowhead geometry
+    const coneLen = 0.5
     const arrowheadGeometry = new THREE.ConeGeometry(0.2, 0.5, 10);
     const arrowheadMaterial = new THREE.MeshBasicMaterial({ color: color });
     const arrowhead = new THREE.Mesh(arrowheadGeometry, arrowheadMaterial);
-    arrowhead.position.copy(points[1]);
+    const arrowPosLen = points[1].length() - coneLen/2;
     const direction = new THREE.Vector3();
     direction.subVectors(points[1], points[0]).normalize();
+
+    const arrowPos = new THREE.Vector3();
+    arrowPos.subVectors(points[1], points[0]).normalize();
+
+    arrowhead.position.copy(arrowPos.multiplyScalar(arrowPosLen));
     arrowhead.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), direction); //using (0,1,0) because cone initally is pointing (0,1,0)
     this.arrowMesh = arrowhead;
     this.vector = new THREE.Group();
