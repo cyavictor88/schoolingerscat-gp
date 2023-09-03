@@ -63,12 +63,12 @@
 <div style="display: flex; flex-flow: column nowrap; align-items:start; justify-content: start;">
 	<p id='fig4'>Figure 4</p>
 	<div style='cursor: pointer; position: relative; width:500px; height: 400px;'bind:this={divFig4}>
-		<button style='position:absolute; height:30px; width:30px; right:0px; bottom:30px;' on:click={()=>{universeFig4.camera.position.setZ( universeFig4.camera.position.z-1)}}>{'↗'}</button>
-		<button style='position:absolute; height:30px; width:30px; right:60px; bottom:30px;' on:click={()=>{universeFig4.camera.position.setZ( universeFig4.camera.position.z+1)}}>{'↙'}</button>
-		<button style='position:absolute; height:30px; width:30px; right:0px; bottom:0px;' on:click={()=>{universeFig4.camera.position.setX( universeFig4.camera.position.x+1)}}>{'→'}</button>
-		<button style='position:absolute; height:30px; width:30px; right:60px; bottom:0px;' on:click={()=>{universeFig4.camera.position.setX( universeFig4.camera.position.x-1)}}>{'←'}</button>
-		<button style='position:absolute; height:30px; width:30px; right:30px; bottom:0px;' on:click={()=>{universeFig4.camera.position.setY( universeFig4.camera.position.y-1)}}>{'↓'}</button>
-		<button style='position:absolute; height:30px; width:30px; right:30px; bottom:30px;' on:click={()=>{universeFig4.camera.position.setY( universeFig4.camera.position.y+1)}}>{'↑'}</button>
+		<button style='position:absolute; height:30px; width:30px; left:0px; top:0px;' on:click={()=>{universeFig4.camera.position.setZ( universeFig4.camera.position.z-1)}}>{'↗'}</button>
+		<button style='position:absolute; height:30px; width:30px; left:60px; top:0px;' on:click={()=>{universeFig4.camera.position.setZ( universeFig4.camera.position.z+1)}}>{'↙'}</button>
+		<button style='position:absolute; height:30px; width:30px; left:60px; top:30px;' on:click={()=>{universeFig4.camera.position.setX( universeFig4.camera.position.x+1)}}>{'→'}</button>
+		<button style='position:absolute; height:30px; width:30px; left:0px; top:30px;' on:click={()=>{universeFig4.camera.position.setX( universeFig4.camera.position.x-1)}}>{'←'}</button>
+		<button style='position:absolute; height:30px; width:30px; left:30px; top:30px;' on:click={()=>{universeFig4.camera.position.setY( universeFig4.camera.position.y-1)}}>{'↓'}</button>
+		<button style='position:absolute; height:30px; width:30px; left:30px; top:0px;' on:click={()=>{universeFig4.camera.position.setY( universeFig4.camera.position.y+1)}}>{'↑'}</button>
 	</div>
 </div>
 
