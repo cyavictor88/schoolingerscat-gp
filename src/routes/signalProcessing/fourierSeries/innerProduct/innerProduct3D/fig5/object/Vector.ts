@@ -53,9 +53,9 @@ export class Vector {
     this.arrowMesh = arrowhead;
     this.vector = new THREE.Group();
     this.vector.add(this.arrowMesh,this.lineMesh);
-    this.line2XZ = new Line([x,0,z],[x,y,z],'grey',true);
-    this.line2X = new Line([x,0,z],[x,0,0],'grey',true);
-    this.line2Z = new Line([x,0,z],[0,0,z],'grey',true);
+    this.line2XZ = new Line([x,0,z],[x,y,z],color,true);
+    this.line2X = new Line([x,0,z],[x,0,0],color,true);
+    this.line2Z = new Line([x,0,z],[0,0,z],color,true);
     this.vector.add(this.line2X.lineMesh);
     this.vector.add(this.line2XZ.lineMesh);
     this.vector.add(this.line2Z.lineMesh);

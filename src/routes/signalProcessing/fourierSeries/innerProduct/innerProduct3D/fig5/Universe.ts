@@ -109,36 +109,39 @@ export class Universe extends THREE.EventDispatcher{
 
   showFig5Triangle(){
     if(!this.fig5triangle){
-      let thirdPoint = new THREE.Vector3().subVectors(this.vecb.coord,this.veca.coord);
-      const vecc = new THREE.Vector3(this.vecb.coord.x,this.veca.coord.y,this.vecb.coord.z);
-      const vec_ac = new THREE.Vector3().subVectors(vecc,this.veca.coord)
-      const vec_bc = new THREE.Vector3().subVectors(vecc,this.vecb.coord)
-      const vec_n = vec_bc.clone().cross(vec_ac).normalize();
+      // below trying to use rotation and translation, but not quite correct, i sus quteraion is not quite correct
+      // let thirdPoint = new THREE.Vector3().subVectors(this.vecb.coord,this.veca.coord);
+      // const vecc = new THREE.Vector3(this.vecb.coord.x,this.veca.coord.y,this.vecb.coord.z);
+      // const vec_ac = new THREE.Vector3().subVectors(vecc,this.veca.coord)
+      // const vec_bc = new THREE.Vector3().subVectors(vecc,this.vecb.coord)
+      // const vec_n = vec_bc.clone().cross(vec_ac).normalize();
+      // const x = this.vecb.coord.z - this.veca.coord.z
+      // const y = this.vecb.coord.y - this.veca.coord.y
+      // const angle = Math.atan2(y,x);
+      // thirdPoint.normalize().multiplyScalar( new THREE.Vector3().subVectors(this.vecb.coord,this.veca.coord).length()*Math.cos(angle) )
+      // const quat = new THREE.Quaternion().setFromAxisAngle(vec_n,angle);
+      // thirdPoint.applyQuaternion(quat);
+      // const translation_mat = new THREE.Matrix4()
+      // translation_mat.makeTranslation(this.veca.coord);
+      // thirdPoint.applyMatrix4(translation_mat);
 
-      const x = this.vecb.coord.z - this.veca.coord.z
-      const y = this.vecb.coord.y - this.veca.coord.y
-      const angle = Math.atan2(y,x);
-      thirdPoint.normalize().multiplyScalar( new THREE.Vector3().subVectors(this.vecb.coord,this.veca.coord).length()*Math.cos(angle) )
+      // simple method
+      let thirdPoint = new THREE.Vector3();
+      if(this.vecb.coord.y<this.veca.coord.y)
+      thirdPoint= new THREE.Vector3(this.veca.coord.x,this.vecb.coord.y,this.veca.coord.z)
+      else
+      thirdPoint= new THREE.Vector3(this.vecb.coord.x,this.veca.coord.y,this.vecb.coord.z)
+      const line1 = new Line([...this.veca.coord.toArray()],[...this.veca.coord.clone().addScaledVector(new THREE.Vector3(0,0,this.vecb.coord.z-this.veca.coord.z),1).toArray()],'brown',true) 
+      const line2 = new Line([...thirdPoint.toArray()],[...thirdPoint.clone().addScaledVector(new THREE.Vector3(this.vecb.coord.x-this.veca.coord.x,0,0),-1).toArray()],'brown',true) 
+      this.scene.add(line1.lineMesh,line2.lineMesh)
 
 
-      const quat = new THREE.Quaternion().setFromAxisAngle(vec_n,angle);
-      thirdPoint.applyQuaternion(quat);
-
-
-      const translation_mat = new THREE.Matrix4()
-      translation_mat.makeTranslation(this.veca.coord);
-      thirdPoint.applyMatrix4(translation_mat);
-
-      const newLine = new Line([...new THREE.Vector3().toArray()],[...thirdPoint.toArray()],'black');
-      this.scene.add(newLine.lineMesh);
-
-
-      // const thirdPoint = new THREE.Vector3(this.vecb.coord.x-this.veca.coord.x, this.vecb.coord.y-this.veca.coord.y,this.vecb.coord.z-this.veca.coord.z);
       this.fig5triangle = new Polygon2D([this.veca.coord,this.vecb.coord,thirdPoint],'brown')
       this.scene.add(this.fig5triangle.mesh);
-    } else {
-      this.fig5triangle.mesh.visible = !this.fig5triangle.mesh.visible;
-    }
+      } 
+
+
+
 
   }
 
@@ -157,6 +160,45 @@ export class Universe extends THREE.EventDispatcher{
     this.scene.add(theta.curveMesh);
     this.scene.add(theta.textMesh.mesh);
 
+
+    let thirdPoint = new THREE.Vector3();
+    if(this.vecb.coord.y<this.veca.coord.y)
+    thirdPoint= new THREE.Vector3(this.veca.coord.x,this.vecb.coord.y,this.veca.coord.z)
+    else
+    thirdPoint= new THREE.Vector3(this.vecb.coord.x,this.veca.coord.y,this.vecb.coord.z)
+    const line1 = new Line([...this.veca.coord.toArray()],[...this.veca.coord.clone().addScaledVector(new THREE.Vector3(0,0,this.vecb.coord.z-this.veca.coord.z),1).toArray()],'brown',true) 
+    const line2 = new Line([...thirdPoint.toArray()],[...thirdPoint.clone().addScaledVector(new THREE.Vector3(this.vecb.coord.x-this.veca.coord.x,0,0),-1).toArray()],'brown',true) 
+
+
+    const mathText3 = await MathText.Init('| \\vec{a_z} - \\vec{b_z} |','brown');
+    let pos = new THREE.Vector3();
+    line1.points.forEach(p=>{
+      const parr = p.toArray();
+      pos.x += parr[0]
+      pos.y += parr[1]
+      pos.z += parr[2]
+    })
+    mathText3.mesh.position.set(...pos.multiplyScalar(0.5).toArray());
+
+    const mathText4 = await MathText.Init('| \\vec{a_x} - \\vec{b_x} |','brown');
+    let pos2 = new THREE.Vector3();
+    line2.points.forEach(p=>{
+      const parr = p.toArray();
+      pos2.x += parr[0]
+      pos2.y += parr[1]
+      pos2.z += parr[2]
+    })
+    mathText4.mesh.position.set(...pos2.multiplyScalar(0.5).toArray());
+    mathText4.mesh.rotation.setFromVector3(new THREE.Vector3(0,Math.PI/2,0));
+
+
+    const mathText5 = await MathText.Init('| \\vec{a_y} - \\vec{b_y} |','brown');
+    let pos3 = new THREE.Vector3(thirdPoint.x+this.vecb.coord.x+0.2, thirdPoint.y+this.vecb.coord.y,thirdPoint.z+this.vecb.coord.z);
+    mathText5.mesh.position.set(...pos3.multiplyScalar(0.5).toArray());
+
+    this.scene.add(mathText3.mesh);
+    this.scene.add(mathText4.mesh);
+    this.scene.add(mathText5.mesh);
 
   }
 
