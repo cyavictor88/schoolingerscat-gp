@@ -86,7 +86,7 @@ export class Universe {
     //   console.log('Camera Position:', cameraPosition);
     // });
 
-    this.veca = new Vector(9,4,8,0xff0000);
+    this.veca = new Vector(9,-4,8,0xff0000);
     this.vecb = new Vector(4,8,-5,0x0000ff);
     this.scene.add(this.veca.vector);
     this.scene.add(this.vecb.vector);
@@ -105,11 +105,11 @@ export class Universe {
       (d.textMesh as any).cnt = 0;
       (d.textMesh as any).tick = function(delta:number){
         (d.textMesh as any).cnt += 1;
-        (d.textMesh as any).cnt %= 1;
+        (d.textMesh as any).cnt %= 5;
         if((d.textMesh as any).cnt>0) return
         const scale = d.textMesh!.scale.clone();
-        if(scale.length()>2.5) (d.textMesh as any).scaler*=0.9;
-        if(scale.length()<1.5) (d.textMesh as any).scaler*=1.1;
+        if(scale.length()>2.5) (d.textMesh as any).scaler-=0.1;
+        if(scale.length()<1.5) (d.textMesh as any).scaler+=0.1;
         d.textMesh!.scale.set(...scale.multiplyScalar((d.textMesh as any).scaler).toArray());
       }
       this.tickingWorld.updatables.push(d.textMesh);

@@ -84,8 +84,8 @@ export class Universe extends THREE.EventDispatcher{
     //   console.log('Camera Position:', cameraPosition);
     // });
 
-    this.veca = new Vector(-9,-4,-8,0xff0000);
-    this.vecb = new Vector(-4,-8,5,0x0000ff);
+    this.veca = new Vector(9,4,8,0xff0000);
+    this.vecb = new Vector(4,8,-5,0x0000ff);
     this.scene.add(this.veca.vector);
     this.scene.add(this.vecb.vector);
     const axes = new Axes(this.scene,10,10,10);
