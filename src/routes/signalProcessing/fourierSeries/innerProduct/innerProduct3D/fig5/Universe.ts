@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { TickingWorld } from './TickingWorld';
-import type EventEmitter from 'eventemitter3';
+import EventEmitter from 'eventemitter3';
 import { mathmesh } from '$lib/mathmesh/mathmesh';
 // import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
@@ -11,6 +11,7 @@ import { Font, FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 import { MathText } from './object/MathText';
 import { Theta } from './object/Theta';
 import { Polygon2D } from './object/Polygon2D';
+import { functionsIn } from 'lodash';
 
 // import { mathmesh } from 'mathmesh';
 
@@ -40,11 +41,11 @@ export class Universe extends THREE.EventDispatcher{
 
   veca : Vector;
   vecb : Vector;
+  axes : Axes;
 
-  fig4triangle: Polygon2D | null = null;
+  fig5triangle: Polygon2D | null = null;
 
   constructor(refCurrent: HTMLDivElement) {
-
     super();
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color('lightblue');
@@ -72,24 +73,22 @@ export class Universe extends THREE.EventDispatcher{
     this.renderer.render(this.scene, this.camera);
     this.renderer.setSize(canvasSize.w, canvasSize.h);
     refCurrent.appendChild(this.renderer.domElement);
-    this.addEventListener("hello",(data) => { console.log(data) });
     this.controls = new OrbitControls(this.camera, this.renderer.domElement );
 
     this.controls.update();
 
     // universe setup done
-    
+
     // this.controls.addEventListener('change', () => {
     //   const cameraPosition = this.camera.position.clone();
     //   console.log('Camera Position:', cameraPosition);
     // });
 
-    this.veca = new Vector(9,4,8,0xff0000);
+    this.veca = new Vector(9,-4,8,0xff0000);
     this.vecb = new Vector(4,8,-5,0x0000ff);
     this.scene.add(this.veca.vector);
     this.scene.add(this.vecb.vector);
-    const axes = new Axes(this.scene,10,10,10);
-
+    this.axes = new Axes(this.scene,10,10,10);
 
 
     const loader = new FontLoader();
@@ -97,23 +96,48 @@ export class Universe extends THREE.EventDispatcher{
       this.font = font;
       const d = new Line(this.veca.coord.toArray(),this.vecb.coord.toArray(),'brown',true);
       d.setText(this.font,'d');
-      this.scene.add(d.lineMesh,d.textMesh!)
+      this.scene.add(d.lineMesh,d.textMesh!);
     });
 
-
+    this.showFig5Triangle()
 
 
     this.addEventListener('setMathMeshes',()=>{this.setMathMeshes()})
-    this.addEventListener('showFig4Triangle',()=>{this.showFig4Triangle()});
+
 
   }
 
-  showFig4Triangle(){
-    if(!this.fig4triangle){
-      this.fig4triangle = new Polygon2D([this.veca.coord,this.vecb.coord,new THREE.Vector3()],'brown')
-      this.scene.add(this.fig4triangle.mesh);
+  showFig5Triangle(){
+    if(!this.fig5triangle){
+      let thirdPoint = new THREE.Vector3().subVectors(this.vecb.coord,this.veca.coord);
+      const vecc = new THREE.Vector3(this.vecb.coord.x,this.veca.coord.y,this.vecb.coord.z);
+      const vec_ac = new THREE.Vector3().subVectors(vecc,this.veca.coord)
+      const vec_bc = new THREE.Vector3().subVectors(vecc,this.vecb.coord)
+      const vec_n = vec_bc.clone().cross(vec_ac).normalize();
+
+      const x = this.vecb.coord.z - this.veca.coord.z
+      const y = this.vecb.coord.y - this.veca.coord.y
+      const angle = Math.atan2(y,x);
+      thirdPoint.normalize().multiplyScalar( new THREE.Vector3().subVectors(this.vecb.coord,this.veca.coord).length()*Math.cos(angle) )
+
+
+      const quat = new THREE.Quaternion().setFromAxisAngle(vec_n,angle);
+      thirdPoint.applyQuaternion(quat);
+
+
+      const translation_mat = new THREE.Matrix4()
+      translation_mat.makeTranslation(this.veca.coord);
+      thirdPoint.applyMatrix4(translation_mat);
+
+      const newLine = new Line([...new THREE.Vector3().toArray()],[...thirdPoint.toArray()],'black');
+      this.scene.add(newLine.lineMesh);
+
+
+      // const thirdPoint = new THREE.Vector3(this.vecb.coord.x-this.veca.coord.x, this.vecb.coord.y-this.veca.coord.y,this.vecb.coord.z-this.veca.coord.z);
+      this.fig5triangle = new Polygon2D([this.veca.coord,this.vecb.coord,thirdPoint],'brown')
+      this.scene.add(this.fig5triangle.mesh);
     } else {
-      this.fig4triangle.mesh.visible = !this.fig4triangle.mesh.visible;
+      this.fig5triangle.mesh.visible = !this.fig5triangle.mesh.visible;
     }
 
   }
@@ -132,6 +156,8 @@ export class Universe extends THREE.EventDispatcher{
     const theta = await Theta.Init(this.veca.coord,this.vecb.coord);
     this.scene.add(theta.curveMesh);
     this.scene.add(theta.textMesh.mesh);
+
+
   }
 
   async addMathMesh() {

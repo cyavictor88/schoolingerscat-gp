@@ -1,7 +1,5 @@
-import { tickStep } from 'd3';
 import * as THREE from 'three';
 import { Line } from './Line';
-import { arrow } from '@popperjs/core';
 
 
 export class Vector {
