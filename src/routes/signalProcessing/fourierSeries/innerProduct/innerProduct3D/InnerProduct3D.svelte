@@ -4,7 +4,6 @@
 	import { Universe as Fig4 } from './fig4/Universe';
 	import { Universe as Fig5 } from './fig5/Universe';
 	import { Universe as Fig6 } from './fig6/Universe';
-	import EventEmitter from 'eventemitter3';
 	import { getCircleNum } from '$lib/unicode';
 	import Col2 from '$lib/components/PageComp/Col2.svelte';
 
@@ -15,7 +14,8 @@
 	let universeFig5: Fig5;
 	let universeFig6: Fig6;
 
-	let ax : number = 0;
+	let veca_arr : [number,number,number] = [9,-4,8];
+	let vecb_arr : [number,number,number] = [4,8,-5];
 	onMount(() => {
 			universeFig4 = new Fig4(divFig4);
 			universeFig4.start();
@@ -35,17 +35,20 @@
 				if (divFig5.firstChild) divFig5.removeChild(divFig5.firstChild);
 				if (divFig6.firstChild) divFig6.removeChild(divFig6.firstChild);
 			}
-	// 	(async function () {
-	// 		universe = new Universe(divFig4, eventBroker);
-	// 		universe.start();
-	// 		eventBroker.emit('setMathMeshes')
-	// 		eventBroker.emit('hello', { data: 'meow' });
-	// 		// await universe.addMathMesh();
-	// 	})();
-	// 	return () => {
-	// 		if (divFig4.firstChild) divFig4.removeChild(divFig4.firstChild);
-	// 	};
 	});
+
+
+	function validVecInput(event: any){
+			if (Math.abs(vecb_arr[0])<=10){
+				console.log(vecb_arr[0])
+			}
+	}
+
+	$: if(universeFig6) {
+		console.log('veca delta',...veca_arr)
+		// universeFig6.setVeca(...veca_arr)
+		// universeFig6.setVecb(...vecb_arr)
+	}
 </script>
 
 <p>
@@ -160,26 +163,26 @@
 <p>Voilà!, we show that <Katex math={'cos(\\theta)=\\frac{<a,b>}{\\|a\\|\\|b\\|}'} /> holds for 3D vectors</p>
 	<form>
 		<Katex math={'\\color{red}\\vec{a_x}:'} />
-		<input type="number" id="ax" name="fname" value='0' />
+		<input style='width: 40px;' type="number" id="ax" name="fname" bind:value={veca_arr[0]} />
 		<Katex math={'\\color{red}\\vec{a_y}:'} />
-		<input type="number" id="ay" name="fname"  value='0' />
+		<input style='width: 40px;' type="number" id="ay" name="fname" bind:value={veca_arr[1]} />
 		<Katex math={'\\color{red}\\vec{a_z}:'} />
-		<input type="number" id="az" name="fname"  value='0' />
+		<input style='width: 40px;' type="number" id="az" name="fname" bind:value={veca_arr[2]}/>
 	</form>
-
 	<form>
 		<Katex math={'\\color{blue}\\vec{b_x}:'} />
-		<input type="number" id="bx" name="fname"  bind:value={ax} on:change={()=>{console.log()}} />
+		<input style='width: 40px;' type="number" id="bx" name="fname"  bind:value={vecb_arr[0]} on:input={validVecInput} />
 		<Katex math={'\\color{blue}\\vec{b_y}:'} />
-		<input type="number" id="by" name="fname"  value='0' />
+		<input style='width: 40px;' type="number" id="by" name="fname"  bind:value={vecb_arr[1]} />
 		<Katex math={'\\color{blue}\\vec{b_z}:'} />
-		<input type="number" id="bz" name="fname"  value='0' />
+		<input style='width: 40px;' type="number" id="bz" name="fname"  bind:value={vecb_arr[2]} />
 	</form>
 
 	<div style='cursor: pointer;'bind:this={divFig6} />
+
+
 <style>
 	fieldset {
 			border: 1px dashed #555555;
 	}
-	
-	</style>
+</style>

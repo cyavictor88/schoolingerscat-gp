@@ -44,7 +44,7 @@ export class Universe extends THREE.EventDispatcher{
   vecb : Vector;
   axes : Axes;
 
-  fig5triangle: Polygon2D | null = null;
+  fig6triangle: Polygon2D | null = null;
 
   constructor(refCurrent: HTMLDivElement) {
     super();
@@ -53,19 +53,9 @@ export class Universe extends THREE.EventDispatcher{
     this.camera = this.initCamera();
     this.camera.position.set( 18.5607, 10.5107793, 19.5605527 );
 
-    // const mainLight = new THREE.PointLight('green', 2, 50);
-    // mainLight.position.set(0, 5, 0);
-    // this.scene.add(mainLight);
 
     const light = new THREE.AmbientLight( 0xffffff ); // soft white light
     this.scene.add( light );
-
-    // const helper = new THREE.AxesHelper(10);
-    // helper.position.set(0, 0, 0);
-    // const ghelper = new THREE.GridHelper(10, 10);
-    // ghelper.rotation.x = Math.PI / 2;
-    // ghelper.position.set(0, 0, 0);
-    // this.scene.add(ghelper);
     this.renderer = new THREE.WebGLRenderer({
       antialias: true,
       preserveDrawingBuffer: true, //https://discourse.threejs.org/t/how-to-save-rendering-scene-to-img/41858/3
@@ -79,11 +69,6 @@ export class Universe extends THREE.EventDispatcher{
     this.controls.update();
 
     // universe setup done
-
-    // this.controls.addEventListener('change', () => {
-    //   const cameraPosition = this.camera.position.clone();
-    //   console.log('Camera Position:', cameraPosition);
-    // });
 
     this.veca = new Vector(9,-4,8,0xff0000);
     this.vecb = new Vector(4,8,-5,0x0000ff);
@@ -101,7 +86,7 @@ export class Universe extends THREE.EventDispatcher{
       this.scene.add(d.lineMesh,d.textMesh!);
     });
 
-    this.showFig5Triangle()
+    this.showFig6Triangle()
 
 
     this.addEventListener('setMathMeshes',()=>{this.setMathMeshes()})
@@ -109,24 +94,8 @@ export class Universe extends THREE.EventDispatcher{
 
   }
 
-  showFig5Triangle(){
-    if(!this.fig5triangle){
-      // below trying to use rotation and translation, but not quite correct, i sus quteraion is not quite correct
-      // let thirdPoint = new THREE.Vector3().subVectors(this.vecb.coord,this.veca.coord);
-      // const vecc = new THREE.Vector3(this.vecb.coord.x,this.veca.coord.y,this.vecb.coord.z);
-      // const vec_ac = new THREE.Vector3().subVectors(vecc,this.veca.coord)
-      // const vec_bc = new THREE.Vector3().subVectors(vecc,this.vecb.coord)
-      // const vec_n = vec_bc.clone().cross(vec_ac).normalize();
-      // const x = this.vecb.coord.z - this.veca.coord.z
-      // const y = this.vecb.coord.y - this.veca.coord.y
-      // const angle = Math.atan2(y,x);
-      // thirdPoint.normalize().multiplyScalar( new THREE.Vector3().subVectors(this.vecb.coord,this.veca.coord).length()*Math.cos(angle) )
-      // const quat = new THREE.Quaternion().setFromAxisAngle(vec_n,angle);
-      // thirdPoint.applyQuaternion(quat);
-      // const translation_mat = new THREE.Matrix4()
-      // translation_mat.makeTranslation(this.veca.coord);
-      // thirdPoint.applyMatrix4(translation_mat);
-
+  showFig6Triangle(){
+    if(!this.fig6triangle){
       // simple method
       let thirdPoint = new THREE.Vector3();
       if(this.vecb.coord.y<this.veca.coord.y)
@@ -138,13 +107,9 @@ export class Universe extends THREE.EventDispatcher{
       this.scene.add(line1.lineMesh,line2.lineMesh)
 
 
-      this.fig5triangle = new Polygon2D([this.veca.coord,this.vecb.coord,thirdPoint],'brown')
-      this.scene.add(this.fig5triangle.mesh);
+      this.fig6triangle = new Polygon2D([this.veca.coord,this.vecb.coord,thirdPoint],'brown')
+      this.scene.add(this.fig6triangle.mesh);
       } 
-
-
-
-
   }
 
   async setMathMeshes(){
