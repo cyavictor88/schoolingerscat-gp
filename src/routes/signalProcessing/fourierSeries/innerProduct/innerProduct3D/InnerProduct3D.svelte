@@ -45,6 +45,8 @@
 	}
 
 	$: if(universeFig6) {
+		universeFig6.veca.coord.set(...veca_arr);
+		universeFig6.vecb.coord.set(...vecb_arr);
 		console.log('veca delta',...veca_arr)
 		// universeFig6.setVeca(...veca_arr)
 		// universeFig6.setVecb(...vecb_arr)

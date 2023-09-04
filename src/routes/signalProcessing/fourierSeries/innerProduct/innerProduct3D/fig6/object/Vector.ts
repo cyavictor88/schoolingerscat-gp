@@ -20,7 +20,7 @@ export class Vector {
     const points = [];
     points.push(new THREE.Vector3(0, 0, 0));
     points.push(new THREE.Vector3(x, y, z));
-    const lineGeometry = new THREE.BufferGeometry().setFromPoints(points);
+    const lineGeometry = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0, 0, 0),this.coord]  );
 
     // Create line material
     this.matLine = new THREE.LineBasicMaterial({ color: color });
