@@ -28,7 +28,6 @@ export const unitVec = {
   z: new THREE.Vector3(0,0,1),
 }
 
-const canvasSize = { w: 500, h: 400 };
 
 export class Universe {
   // export class World extends EventEmitter {
@@ -39,6 +38,7 @@ export class Universe {
   eventBroker: EventEmitter;
   controls: OrbitControls;
   font!: Font;
+  canvasSize = { w: 500, h: 400 };
 
   veca : Vector;
   vecb : Vector;
@@ -72,7 +72,7 @@ export class Universe {
     });
     this.tickingWorld = new TickingWorld(this.camera, this.scene, this.renderer);
     this.renderer.render(this.scene, this.camera);
-    this.renderer.setSize(canvasSize.w, canvasSize.h);
+    this.renderer.setSize(this.canvasSize.w, this.canvasSize.h);
     refCurrent.appendChild(this.renderer.domElement);
     this.eventBroker.on("hello", (data) => { console.log(data) });
     this.controls = new OrbitControls(this.camera, this.renderer.domElement );
@@ -165,7 +165,7 @@ export class Universe {
 
 
   initCamera() {
-    const aspect = canvasSize.w / canvasSize.h;
+    const aspect = this.canvasSize.w / this.canvasSize.h;
     const frustumSize = 20;
     const camera = new THREE.OrthographicCamera(frustumSize * aspect / -2, frustumSize * aspect / 2, frustumSize / 2, frustumSize / -2, 0.1, 40);
     camera.lookAt(new THREE.Vector3(0,0,0))

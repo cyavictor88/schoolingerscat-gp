@@ -6,6 +6,7 @@
 	import * as d3Fig from './d3Figs';
 	import { getCircleNum } from '$lib/unicode';
 	import Game from './Game.svelte';
+	import Col2 from '$lib/components/PageComp/Col2.svelte';
 	let fig1: HTMLDivElement;
 	let fig2: HTMLDivElement;
 	let fig3: HTMLDivElement;
@@ -69,13 +70,15 @@
 	on the triangle in the figure, we can get the following equation for <Katex math={'d'} />:
 </p>
 
-<div style="display: flex; gap:20px;">
-	<!-- <div style="display: flex; flex-flow: column nowrap; gap:5px;"> -->
-
-	<div style="margin: auto; margin-left:0;margin-right:0;">
+<Col2>
+	<div slot='col1'>
+		<p>Figure 2</p>
+		<div bind:this={fig2} />
+	</div>
+	<div slot='col2'>
 		<Katex
-			displayMode={true}
-			math={'\\color{brown}{d^2} \\color{black}{=} \\color{red}{\\| \\vec{a}  \\|^2} \\color{black}{+} \\color{blue}{\\| \\vec{b}  \\|^2} \\color{black}{ - 2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) } '}
+		displayMode={true}
+		math={'\\color{brown}{d^2} \\color{black}{=} \\color{red}{\\| \\vec{a}  \\|^2} \\color{black}{+} \\color{blue}{\\| \\vec{b}  \\|^2} \\color{black}{ - 2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) } '}
 		/>
 		<Katex
 			displayMode={true}
@@ -89,15 +92,9 @@
 			/>
 		</fieldset>
 	</div>
+</Col2>
 
-	<div style="display: flex; flex-flow: column nowrap; align-items:center;">
-		<p>Figure 2</p>
-		<!-- <object title="law of cosine" width="400" type="image/svg+xml" data={innerProduct2DCosine}
-			>Boo your browser does not support SVGs</object
-		> -->
-		<div bind:this={fig2} />
-	</div>
-</div>
+
 <hr style="border-top: 1px grey dotted" />
 
 <b>Step 2. Making a new Triangle:</b>
@@ -109,11 +106,18 @@
 	/>:
 </p>
 
-<div style="display: flex; gap:20px;">
-	<div style="margin: auto; margin-left:0;margin-right:0;">
+<Col2>
+	<div slot='col1'>
+		<p>Figure 3</p>
+		<!-- <object title="law of cosine" width="400" type="image/svg+xml" data={innerProduct2DCosine}
+			>Boo your browser does not support SVGs</object
+		> -->
+		<div bind:this={fig3} />
+	</div>
+	<div slot='col2' >
 		<Katex
-			displayMode={true}
-			math={'\\color{brown}{d_x} \\color{black} = | \\color{red}a_x \\color{brown} \\color{black} - \\color{blue}b_x \\color{black} | '}
+		displayMode={true}
+		math={'\\color{brown}{d_x} \\color{black} = | \\color{red}a_x \\color{brown} \\color{black} - \\color{blue}b_x \\color{black} | '}
 		/>
 		<Katex
 			displayMode={true}
@@ -128,15 +132,7 @@
 			/>
 		</fieldset>
 	</div>
-
-	<div style="display: flex; flex-flow: column nowrap; align-items:center;">
-		<p>Figure 3</p>
-		<!-- <object title="law of cosine" width="400" type="image/svg+xml" data={innerProduct2DCosine}
-			>Boo your browser does not support SVGs</object
-		> -->
-		<div bind:this={fig3} />
-	</div>
-</div>
+</Col2>
 
 <hr style="border-top: 1px grey dotted" />
 
@@ -194,3 +190,11 @@
 </div>
 
 <hr />
+
+
+<style>
+fieldset {
+    border: 1px dashed #555555;
+}
+
+</style>

@@ -3,14 +3,19 @@
 	import { onMount } from 'svelte';
 	import { Universe as Fig4 } from './fig4/Universe';
 	import { Universe as Fig5 } from './fig5/Universe';
+	import { Universe as Fig6 } from './fig6/Universe';
 	import EventEmitter from 'eventemitter3';
 	import { getCircleNum } from '$lib/unicode';
+	import Col2 from '$lib/components/PageComp/Col2.svelte';
 
 	let divFig4: HTMLDivElement;
 	let divFig5: HTMLDivElement;
+	let divFig6: HTMLDivElement;
 	let universeFig4: Fig4;
 	let universeFig5: Fig5;
+	let universeFig6: Fig6;
 
+	let ax : number = 0;
 	onMount(() => {
 			universeFig4 = new Fig4(divFig4);
 			universeFig4.start();
@@ -20,10 +25,15 @@
 			universeFig5.start();
 			universeFig5.dispatchEvent({type:'setMathMeshes',target:universeFig5})
 
+			universeFig6 = new Fig6(divFig6);
+			universeFig6.start();
+			universeFig6.dispatchEvent({type:'setMathMeshes',target:universeFig6})
+
 
 			return ()=>{
-				// if (divFig4.firstChild) divFig4.removeChild(divFig4.firstChild);
+				if (divFig4.firstChild) divFig4.removeChild(divFig4.firstChild);
 				if (divFig5.firstChild) divFig5.removeChild(divFig5.firstChild);
+				if (divFig6.firstChild) divFig6.removeChild(divFig6.firstChild);
 			}
 	// 	(async function () {
 	// 		universe = new Universe(divFig4, eventBroker);
@@ -60,7 +70,7 @@
 	/>, with <Katex math={'d'} /> indicates the distance between two vectors.
 </p>
 
-<div style="display: flex; flex-flow: column nowrap; align-items:start; justify-content: start;">
+<div style="display: flex; flex-flow: column nowrap; align-items:start; justify-content: start; border: 1px black solid;width:500px">
 	<p id='fig4'>Figure 4</p>
 	<div style='cursor: pointer; position: relative; width:500px; height: 400px;'bind:this={divFig4}>
 		<button style='position:absolute; height:30px; width:30px; left:0px; top:0px;' on:click={()=>{universeFig4.camera.position.setZ( universeFig4.camera.position.z-1)}}>{'↗'}</button>
@@ -114,8 +124,62 @@
 	/>:
 </p>
 
+<Col2>
+	<div slot='col1'>
+		<p>Figure 5</p>
+		<div style='cursor: pointer;'bind:this={divFig5} />
+	</div>
+	<div slot='col2'>
+		<Katex
+			displayMode={true}
+			math={'\\color{brown}{d^2}  = ( |  \\color{brown}{a_x} - \\color{brown} b_x |^2+ | \\color{brown}{a_z} - \\color{brown} b_z  |^2 ) + | \\color{brown}{a_y} - \\color{brown} b_y  |^2'}
+		/>
+		<fieldset>
+			<legend>{getCircleNum(4)}</legend>
+			<Katex
+				displayMode={true}
+				math={'\\Rightarrow \\color{brown}{d^2}  = ( \\color{brown}{a_x} - \\color{brown} b_x )^2+( \\color{brown}{a_y} - \\color{brown} b_y )^2+( \\color{brown}{a_z} - \\color{brown} b_z )^2'}
+			/>
+		</fieldset>
+	</div>
+</Col2>
 
-<div style="display: flex; flex-flow: column nowrap; align-items:start; justify-content: start;">
-	<p id='fig5'>Figure 5</p>
-	<div style='cursor: pointer;'bind:this={divFig5} />
-</div>
+<p>By equating {getCircleNum(4)} = {getCircleNum(3)}, we can have the following:</p>
+
+<Katex displayMode={true} math={`
+\\color{brown}{d^2=(a_x-b_x)^2+(a_y-b_y)^2+ (a_z-b_z)^2} \\color{black}{=} \\color{red}{a_x^2+a_y^2+a_z^2} \\color{black}{+} \\color{blue}{b_x^2+b_y^2+b_z^2} \\color{black}{ - 2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) } 
+`} />
+<Katex displayMode={true} math={`\\Rightarrow \\color{black}{ (a_x-b_x)^2+(a_y-b_y)^2+ (a_z-b_z)^2} \\color{black}{=} \\color{red}{a_x^2+a_y^2+a_z^2} \\color{black}{+} \\color{blue}{b_x^2+b_y^2+b_z^2} \\color{black}{ - 2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) } `} />
+<Katex displayMode={true} math={`\\Rightarrow  a_x^2+b_x^2-2a_xb_x +a_y^2+b_y^2-2a_yb_y +a_z^2+b_z^2-2a_zb_z= \\color{red}{a_x^2+a_y^2+a_z^2} \\color{black}{+} \\color{blue}{b_x^2+b_y^2+b_z^2} \\color{black}{ - 2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) } `} />
+<Katex displayMode={true} math={`\\Rightarrow \\cancel{a_x^2}+\\cancel{b_x^2}-2a_xb_x +\\cancel{a_y^2}+\\cancel{b_y^2}-2a_yb_y+\\cancel{a_z^2}+\\cancel{b_z^2}-2a_zb_z= \\color{red}{\\cancel{a_x^2}+\\cancel{a_y^2}+\\cancel{a_z^2}} \\color{black}{+} \\color{blue}{\\cancel{b_x^2}+\\cancel{b_y^2}+\\cancel{b_z^2}} \\color{black}{ - 2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) } `} />
+<Katex displayMode={true} math={`\\Rightarrow -2a_xb_x-2a_yb_y -2a_zb_z= -2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) `} />
+<Katex displayMode={true} math={`\\Rightarrow a_xb_x+a_yb_y+a_zb_z = < \\vec{a},\\vec{b}> = \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) `} />
+<Katex displayMode={true} math={`\\Rightarrow cos(\\theta)   = \\frac{< \\vec{a},\\vec{b}>}{  \\| \\vec{a}  \\| \\|\\vec{b}\\| } `} />
+
+
+<p>Voilà!, we show that <Katex math={'cos(\\theta)=\\frac{<a,b>}{\\|a\\|\\|b\\|}'} /> holds for 3D vectors</p>
+	<form>
+		<Katex math={'\\color{red}\\vec{a_x}:'} />
+		<input type="number" id="ax" name="fname" value='0' />
+		<Katex math={'\\color{red}\\vec{a_y}:'} />
+		<input type="number" id="ay" name="fname"  value='0' />
+		<Katex math={'\\color{red}\\vec{a_z}:'} />
+		<input type="number" id="az" name="fname"  value='0' />
+	</form>
+
+	<form>
+		<Katex math={'\\color{blue}\\vec{b_x}:'} />
+		<input type="number" id="bx" name="fname"  bind:value={ax} on:change={()=>{console.log()}} />
+		<Katex math={'\\color{blue}\\vec{b_y}:'} />
+		<input type="number" id="by" name="fname"  value='0' />
+		<Katex math={'\\color{blue}\\vec{b_z}:'} />
+		<input type="number" id="bz" name="fname"  value='0' />
+	</form>
+
+	<div style='cursor: pointer;'bind:this={divFig6} />
+<style>
+	fieldset {
+			border: 1px dashed #555555;
+	}
+	
+	</style>
