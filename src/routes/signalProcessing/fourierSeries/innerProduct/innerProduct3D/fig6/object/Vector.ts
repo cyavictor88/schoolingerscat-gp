@@ -45,8 +45,7 @@ export class Vector {
     const direction = new THREE.Vector3();
     direction.subVectors(points[1], points[0]).normalize();
 
-    const arrowPos = new THREE.Vector3();
-    arrowPos.subVectors(points[1], points[0]).normalize();
+    const arrowPos = points[1].clone().normalize();
 
     arrowhead.position.copy(arrowPos.multiplyScalar(arrowPosLen));
     arrowhead.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), direction); //using (0,1,0) because cone initally is pointing (0,1,0)
@@ -67,7 +66,23 @@ export class Vector {
   }
 
 
-  setHelper(){
+  changeCoord(x:number,y:number,z:number){
+    this.coord.set(x,y,z);
+		const posLine = this.lineMesh.geometry.getAttribute( 'position' );
+		posLine.setXYZ(0,0,0,0);
+		posLine.setXYZ(1,x,y,z);
+		posLine.needsUpdate = true; 
+		const veca = new THREE.Vector3().fromArray([x,y,z]);
+
+		const conLen = 0.5
+    const arrowPosLen = veca.length() - conLen/2;
+		// universeFig6.veca.arrowMesh.position.set(1,1,1);
+		const arrowPos = veca.normalize().multiplyScalar(arrowPosLen).toArray()
+		this.arrowMesh.position.set(  ...arrowPos);
+		const direction = new THREE.Vector3().fromArray([x,y,z]).normalize();
+		this.arrowMesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), direction);
+		// this.vector.remove(this.line2X.lineMesh)
+		this.line2X.changeCoord(x,y,z)
 
   }
 

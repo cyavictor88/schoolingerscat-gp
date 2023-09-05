@@ -6,6 +6,8 @@
 	import { Universe as Fig6 } from './fig6/Universe';
 	import { getCircleNum } from '$lib/unicode';
 	import Col2 from '$lib/components/PageComp/Col2.svelte';
+	import * as THREE from 'three';
+
 
 	let divFig4: HTMLDivElement;
 	let divFig5: HTMLDivElement;
@@ -45,8 +47,31 @@
 	}
 
 	$: if(universeFig6) {
-		universeFig6.veca.coord.set(...veca_arr);
-		universeFig6.vecb.coord.set(...vecb_arr);
+		universeFig6.veca.changeCoord(...veca_arr)
+		// universeFig6.veca.coord.set(...veca_arr);
+		// universeFig6.vecb.coord.set(...vecb_arr);
+		// const posLine = universeFig6.veca.lineMesh.geometry.getAttribute( 'position' );
+		// posLine.setXYZ(0,0,0,0);
+		// posLine.setXYZ(1,...veca_arr);
+		// posLine.needsUpdate = true; 
+		// const veca = new THREE.Vector3().fromArray(veca_arr);
+
+		// const conLen = 0.5
+    // const arrowPosLen = veca.length() - conLen/2;
+		// // universeFig6.veca.arrowMesh.position.set(1,1,1);
+		// const arrowPos = veca.normalize().multiplyScalar(arrowPosLen).toArray()
+		// universeFig6.veca.arrowMesh.position.set(  ...arrowPos);
+		// const direction = new THREE.Vector3().fromArray(veca_arr).normalize();
+		// universeFig6.veca.arrowMesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), direction);
+		// // universeFig6.veca.vector.remove(universeFig6.veca.line2X.lineMesh)
+		// const posLine2X = universeFig6.veca.line2X.lineMesh.geometry.getAttribute( 'position' );
+		// posLine2X.setXYZ(0,veca.x,0,0);
+		// posLine2X.setXYZ(1,veca.x,0,veca.z);
+		// posLine2X.needsUpdate = true; 
+		// universeFig6.scene.remove(universeFig6.veca.line2X.lineMesh)
+
+		// universeFig6.veca.lineMesh.geometry.computeBoundingBox();
+		// universeFig6.veca.lineMesh.geometry.computeBoundingSphere();
 		console.log('veca delta',...veca_arr)
 		// universeFig6.setVeca(...veca_arr)
 		// universeFig6.setVecb(...vecb_arr)

@@ -65,4 +65,12 @@ export class Line {
     textMesh.position.set(x + centerOffsetX, y + centerOffsetY, z);
     return textMesh;
   }
+
+
+  changeCoord(x:number,y:number,z:number){
+    const posLine = this.lineMesh.geometry.getAttribute( 'position' );
+		posLine.setXYZ(0,x,0,0);
+		posLine.setXYZ(1,x,0,z);
+		posLine.needsUpdate = true; 
+  }
 }
