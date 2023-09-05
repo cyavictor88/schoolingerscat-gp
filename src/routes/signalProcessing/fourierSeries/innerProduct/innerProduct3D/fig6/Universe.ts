@@ -45,6 +45,14 @@ export class Universe extends THREE.EventDispatcher{
   axes : Axes;
 
   fig6triangle: Polygon2D | null = null;
+  fig6triangleLine1: Line | null = null;
+  fig6triangleLine2: Line | null = null;
+
+  dLine!: Line;
+
+
+  vecaMM! : MathText;
+  vecbMM! : MathText;
 
   constructor(refCurrent: HTMLDivElement) {
     super();
@@ -84,6 +92,7 @@ export class Universe extends THREE.EventDispatcher{
       d.setText(this.font,'d');
       d.textMesh?.scale.set(1.5,1.5,1.5);
       this.scene.add(d.lineMesh,d.textMesh!);
+      this.dLine = d;
     });
 
     this.showFig6Triangle()
@@ -105,7 +114,8 @@ export class Universe extends THREE.EventDispatcher{
       const line1 = new Line([...this.veca.coord.toArray()],[...this.veca.coord.clone().addScaledVector(new THREE.Vector3(0,0,this.vecb.coord.z-this.veca.coord.z),1).toArray()],'brown',true) 
       const line2 = new Line([...thirdPoint.toArray()],[...thirdPoint.clone().addScaledVector(new THREE.Vector3(this.vecb.coord.x-this.veca.coord.x,0,0),-1).toArray()],'brown',true) 
       this.scene.add(line1.lineMesh,line2.lineMesh)
-
+      this.fig6triangleLine1 = line1;
+      this.fig6triangleLine2 = line2;
 
       this.fig6triangle = new Polygon2D([this.veca.coord,this.vecb.coord,thirdPoint],'brown')
       this.scene.add(this.fig6triangle.mesh);

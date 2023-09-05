@@ -82,7 +82,9 @@ export class Vector {
 		const direction = new THREE.Vector3().fromArray([x,y,z]).normalize();
 		this.arrowMesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), direction);
 		// this.vector.remove(this.line2X.lineMesh)
-		this.line2X.changeCoord(x,y,z)
+		this.line2X.changeCoord(x,0,0,      x,0,z)
+		this.line2Z.changeCoord(0,0,z,      x,0,z)
+		this.line2XZ.changeCoord(x,0,z,      x,y,z)
 
   }
 

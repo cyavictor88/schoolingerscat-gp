@@ -46,8 +46,11 @@
 			}
 	}
 
-	$: if(universeFig6) {
-		universeFig6.veca.changeCoord(...veca_arr)
+	$: if(universeFig6 && universeFig6.dLine && universeFig6.fig6triangleLine1 && universeFig6.fig6triangleLine2 && universeFig6.fig6triangle) {
+		universeFig6.veca.changeCoord(...veca_arr);
+		universeFig6.vecb.changeCoord(...vecb_arr);
+		universeFig6.dLine.changeCoord(...veca_arr,...vecb_arr);
+		universeFig6.fig6triangle.changeCoord(...veca_arr,...vecb_arr,universeFig6.fig6triangleLine1,universeFig6.fig6triangleLine2);
 		// universeFig6.veca.coord.set(...veca_arr);
 		// universeFig6.vecb.coord.set(...vecb_arr);
 		// const posLine = universeFig6.veca.lineMesh.geometry.getAttribute( 'position' );

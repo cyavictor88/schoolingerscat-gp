@@ -67,10 +67,13 @@ export class Line {
   }
 
 
-  changeCoord(x:number,y:number,z:number){
+  changeCoord(x0:number,y0:number,z0:number, x1:number,y1:number,z1:number){
     const posLine = this.lineMesh.geometry.getAttribute( 'position' );
-		posLine.setXYZ(0,x,0,0);
-		posLine.setXYZ(1,x,0,z);
+		posLine.setXYZ(0,x0,y0,z0);
+		posLine.setXYZ(1,x1,y1,z1);
 		posLine.needsUpdate = true; 
+    if(this.textMesh){
+      this.textMesh.position.set((x0+x1)/2,(y0+y1)/2,(z0+z1)/2)
+    }
   }
 }
