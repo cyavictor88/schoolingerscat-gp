@@ -16,10 +16,10 @@ export class Polygon2D {
 
   changeCoord(x0:number,y0:number,z0:number, x1:number,y1:number,z1:number, line1:Line,line2:Line){
     let thirdPoint = new THREE.Vector3();
-    if(y1<y0)
-    thirdPoint= new THREE.Vector3(x0,y1,z0)
-    else
-    thirdPoint= new THREE.Vector3(x1,y0,z1)
+    // if(x1<x0)
+    thirdPoint= new THREE.Vector3(x0,y0,z1)
+    // else
+    // thirdPoint= new THREE.Vector3(x1,y1,z0)
 
     const pos = this.mesh.geometry.getAttribute('position')
     pos.setXYZ(0,x0,y0,z0);
@@ -31,8 +31,9 @@ export class Polygon2D {
     const newVeca = new THREE.Vector3().fromArray([x0,y0,z0]);
     const newVecb = new THREE.Vector3().fromArray([x1,y1,z1]);
 
-    line1.changeCoord(x0,y0,z0,...newVeca.clone().addScaledVector(new THREE.Vector3(0,0,newVecb.z-newVeca.z),1).toArray() )
-    line2.changeCoord(...thirdPoint.toArray(),...thirdPoint.clone().addScaledVector(new THREE.Vector3(newVecb.x-newVeca.x,0,0),-1).toArray())
+    line1.changeCoord(x1,y1,z1,...newVecb.clone().addScaledVector(new THREE.Vector3(0,newVecb.y-newVeca.y,0),-1).toArray() )
+    line2.changeCoord(...thirdPoint.toArray(),...thirdPoint.clone().addScaledVector(new THREE.Vector3(newVecb.x-newVeca.x,0,0),1).toArray())
+
 
 
 

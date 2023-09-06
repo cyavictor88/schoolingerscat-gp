@@ -129,12 +129,9 @@ export class Universe extends THREE.EventDispatcher{
 
       // simple method
       let thirdPoint = new THREE.Vector3();
-      if(this.vecb.coord.y<this.veca.coord.y)
-      thirdPoint= new THREE.Vector3(this.veca.coord.x,this.vecb.coord.y,this.veca.coord.z)
-      else
-      thirdPoint= new THREE.Vector3(this.vecb.coord.x,this.veca.coord.y,this.vecb.coord.z)
-      const line1 = new Line([...this.veca.coord.toArray()],[...this.veca.coord.clone().addScaledVector(new THREE.Vector3(0,0,this.vecb.coord.z-this.veca.coord.z),1).toArray()],'brown',true) 
-      const line2 = new Line([...thirdPoint.toArray()],[...thirdPoint.clone().addScaledVector(new THREE.Vector3(this.vecb.coord.x-this.veca.coord.x,0,0),-1).toArray()],'brown',true) 
+      thirdPoint= new THREE.Vector3(this.veca.coord.x,this.veca.coord.y,this.vecb.coord.z)
+      const line1 = new Line([...this.vecb.coord.toArray()],[...this.vecb.coord.clone().addScaledVector(new THREE.Vector3(0,this.vecb.coord.y-this.veca.coord.y,0),-1).toArray()],'brown',true) 
+      const line2 = new Line([...thirdPoint.toArray()],[...thirdPoint.clone().addScaledVector(new THREE.Vector3(this.vecb.coord.x-this.veca.coord.x,0,0),1).toArray()],'brown',true) 
       this.scene.add(line1.lineMesh,line2.lineMesh)
 
 
@@ -164,16 +161,13 @@ export class Universe extends THREE.EventDispatcher{
 
 
     let thirdPoint = new THREE.Vector3();
-    if(this.vecb.coord.y<this.veca.coord.y)
-    thirdPoint= new THREE.Vector3(this.veca.coord.x,this.vecb.coord.y,this.veca.coord.z)
-    else
-    thirdPoint= new THREE.Vector3(this.vecb.coord.x,this.veca.coord.y,this.vecb.coord.z)
-    const line1 = new Line([...this.veca.coord.toArray()],[...this.veca.coord.clone().addScaledVector(new THREE.Vector3(0,0,this.vecb.coord.z-this.veca.coord.z),1).toArray()],'brown',true) 
-    const line2 = new Line([...thirdPoint.toArray()],[...thirdPoint.clone().addScaledVector(new THREE.Vector3(this.vecb.coord.x-this.veca.coord.x,0,0),-1).toArray()],'brown',true) 
+    thirdPoint= new THREE.Vector3(this.veca.coord.x,this.veca.coord.y,this.vecb.coord.z)
+    const line1 = new Line([...this.vecb.coord.toArray()],[...this.vecb.coord.clone().addScaledVector(new THREE.Vector3(0,this.vecb.coord.y-this.veca.coord.y,0),-1).toArray()],'brown',true) 
+    const line2 = new Line([...thirdPoint.toArray()],[...thirdPoint.clone().addScaledVector(new THREE.Vector3(this.vecb.coord.x-this.veca.coord.x,0,0),1).toArray()],'brown',true) 
 
     const offset = 0.2
 
-    const mathText3 = await MathText.Init('| \\vec{a_z} - \\vec{b_z} |','brown');
+    const mathText3 = await MathText.Init('| \\vec{a_y} - \\vec{b_y} |','brown');
     let pos = new THREE.Vector3();
     line1.points.forEach(p=>{
       const parr = p.toArray();
@@ -182,7 +176,7 @@ export class Universe extends THREE.EventDispatcher{
       pos.z += parr[2]
     })
     mathText3.mesh.position.set(...pos.multiplyScalar(0.5).toArray());
-    mathText3.mesh.rotation.setFromVector3(new THREE.Vector3(3*Math.PI/2,0,0));
+    mathText3.mesh.rotation.setFromVector3(new THREE.Vector3(0,0,0));
 
     const mathText4 = await MathText.Init('| \\vec{a_x} - \\vec{b_x} |','brown');
     let pos2 = new THREE.Vector3();
@@ -194,13 +188,13 @@ export class Universe extends THREE.EventDispatcher{
     })
     mathText4.mesh.position.set(...pos2.multiplyScalar(0.5).toArray());
     // mathText4.mesh.rotation.setFromVector3(new THREE.Vector3(0,Math.PI/2,0));
-    mathText4.mesh.rotation.setFromVector3(new THREE.Vector3(3*Math.PI/2,0,Math.PI/2));
+    // mathText4.mesh.rotation.setFromVector3(new THREE.Vector3(3*Math.PI/2,0,Math.PI/2));
 
 
-    const mathText5 = await MathText.Init('| \\vec{a_y} - \\vec{b_y} |','brown');
-    let pos3 = new THREE.Vector3(thirdPoint.x+this.vecb.coord.x, thirdPoint.y+this.vecb.coord.y,-0.2+thirdPoint.z+this.vecb.coord.z);
+    const mathText5 = await MathText.Init('| \\vec{a_z} - \\vec{b_z} |','brown');
+    let pos3 = new THREE.Vector3(thirdPoint.x+this.veca.coord.x, thirdPoint.y+this.veca.coord.y,-0.2+thirdPoint.z+this.veca.coord.z);
     mathText5.mesh.position.set(...pos3.multiplyScalar(0.5).toArray());
-    mathText5.mesh.rotation.setFromVector3(new THREE.Vector3(0,Math.PI/2,0));
+    // mathText5.mesh.rotation.setFromVector3(new THREE.Vector3(0,Math.PI/2,0));
 
 
     this.scene.add(mathText3.mesh);

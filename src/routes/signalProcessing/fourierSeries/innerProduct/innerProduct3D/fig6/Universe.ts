@@ -115,10 +115,7 @@ export class Universe extends THREE.EventDispatcher{
     if(!this.fig6triangle){
       // simple method
       let thirdPoint = new THREE.Vector3();
-      if(this.vecb.coord.y<this.veca.coord.y)
       thirdPoint= new THREE.Vector3(this.veca.coord.x,this.vecb.coord.y,this.veca.coord.z)
-      else
-      thirdPoint= new THREE.Vector3(this.vecb.coord.x,this.veca.coord.y,this.vecb.coord.z)
       const line1 = new Line([...this.veca.coord.toArray()],[...this.veca.coord.clone().addScaledVector(new THREE.Vector3(0,0,this.vecb.coord.z-this.veca.coord.z),1).toArray()],'brown',true) 
       const line2 = new Line([...thirdPoint.toArray()],[...thirdPoint.clone().addScaledVector(new THREE.Vector3(this.vecb.coord.x-this.veca.coord.x,0,0),-1).toArray()],'brown',true) 
       this.scene.add(line1.lineMesh,line2.lineMesh)
@@ -146,9 +143,9 @@ export class Universe extends THREE.EventDispatcher{
     this.scene.add(mathText2.mesh);
 
     let thirdPoint = new THREE.Vector3();
-    if(this.vecb.coord.y<this.veca.coord.y)
-    thirdPoint= new THREE.Vector3(this.veca.coord.x,this.vecb.coord.y,this.veca.coord.z)
-    else
+    // if(this.vecb.coord.y<this.veca.coord.y)
+    // thirdPoint= new THREE.Vector3(this.veca.coord.x,this.vecb.coord.y,this.veca.coord.z)
+    // else
     thirdPoint= new THREE.Vector3(this.vecb.coord.x,this.veca.coord.y,this.vecb.coord.z)
     const line1 = new Line([...this.veca.coord.toArray()],[...this.veca.coord.clone().addScaledVector(new THREE.Vector3(0,0,this.vecb.coord.z-this.veca.coord.z),1).toArray()],'brown',true) 
     const line2 = new Line([...thirdPoint.toArray()],[...thirdPoint.clone().addScaledVector(new THREE.Vector3(this.vecb.coord.x-this.veca.coord.x,0,0),-1).toArray()],'brown',true) 
@@ -204,30 +201,38 @@ export class Universe extends THREE.EventDispatcher{
 
     this.veca.coord = new THREE.Vector3().fromArray([x0,y0,z0]);
     this.vecb.coord = new THREE.Vector3().fromArray([x1,y1,z1]);
+    // let thirdPoint = new THREE.Vector3();
+    // if(this.vecb.coord.y<this.veca.coord.y)
+    // thirdPoint= new THREE.Vector3(this.veca.coord.x,this.vecb.coord.y,this.veca.coord.z)
+    // else
+    // thirdPoint= new THREE.Vector3(this.vecb.coord.x,this.veca.coord.y,this.vecb.coord.z)
+
     let thirdPoint = new THREE.Vector3();
-    if(this.vecb.coord.y<this.veca.coord.y)
-    thirdPoint= new THREE.Vector3(this.veca.coord.x,this.vecb.coord.y,this.veca.coord.z)
-    else
-    thirdPoint= new THREE.Vector3(this.vecb.coord.x,this.veca.coord.y,this.vecb.coord.z)
+    // if(this.vecb.coord.x<this.veca.coord.x)
+    thirdPoint= new THREE.Vector3(this.veca.coord.x,this.veca.coord.y,this.vecb.coord.z)
+    // else
+    // thirdPoint= new THREE.Vector3(this.vecb.coord.x,this.vecb.coord.y,this.veca.coord.z)
+
+
 
     const offset = 0.2
 
 
-    let p1 = this.veca.coord.clone();
-    let p2 = this.veca.coord.clone().addScaledVector(new THREE.Vector3(0,0,this.vecb.coord.z-this.veca.coord.z),1);
+    let p1 = this.vecb.coord.clone();
+    let p2 = new THREE.Vector3(this.vecb.coord.x,this.veca.coord.y,this.vecb.coord.z);
     let final = p1.multiplyScalar(0.5).addScaledVector(p2,0.5);
     final.setX(final.x+offset)
-    this.azbzMM.changeCoordSimple(...final.toArray())
+    this.aybyMM.changeCoordSimple(...final.toArray())
 
     p1 = thirdPoint.clone();
-    p2 = thirdPoint.clone().addScaledVector(new THREE.Vector3(this.vecb.coord.x-this.veca.coord.x,0,0),-1)
+    p2 = new THREE.Vector3(this.vecb.coord.x,this.veca.coord.y,this.vecb.coord.z);
     final = p1.multiplyScalar(0.5).addScaledVector(p2,0.5);
     final.setZ(final.z-offset)
     this.axbxMM.changeCoordSimple(...final.toArray())
 
 
-    let pos3 = new THREE.Vector3(thirdPoint.x+this.vecb.coord.x, thirdPoint.y+this.vecb.coord.y,-offset+thirdPoint.z+this.vecb.coord.z);
-    this.aybyMM.changeCoordSimple(...pos3.multiplyScalar(0.5).toArray())
+    let pos3 = new THREE.Vector3(thirdPoint.x+this.veca.coord.x, thirdPoint.y+this.veca.coord.y,-offset+thirdPoint.z+this.veca.coord.z);
+    this.azbzMM.changeCoordSimple(...pos3.multiplyScalar(0.5).toArray())
 
 
 

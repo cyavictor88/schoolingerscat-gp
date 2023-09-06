@@ -169,7 +169,7 @@
 	<div slot='col2'>
 		<Katex
 			displayMode={true}
-			math={'\\color{brown}{d^2}  = ( |  \\color{brown}{a_x} - \\color{brown} b_x |^2+ | \\color{brown}{a_z} - \\color{brown} b_z  |^2 ) + | \\color{brown}{a_y} - \\color{brown} b_y  |^2'}
+			math={'\\color{brown}{d^2}  = ( |  \\color{brown}{a_x} - \\color{brown} b_x |^2+ | \\color{brown}{a_y} - \\color{brown} b_y  |^2 ) + | \\color{brown}{a_z} - \\color{brown} b_z  |^2'}
 		/>
 		<fieldset>
 			<legend>{getCircleNum(4)}</legend>

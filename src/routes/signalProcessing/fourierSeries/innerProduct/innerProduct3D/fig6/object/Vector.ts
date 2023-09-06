@@ -11,8 +11,8 @@ export class Vector {
 
 
   public coord: THREE.Vector3;
-  public line2XZ: Line;
-  public line2Z: Line;
+  public line2XY: Line;
+  public line2Y: Line;
   public line2X: Line;
 
   constructor( x:number,y:number,z:number, color:string|number){
@@ -20,7 +20,7 @@ export class Vector {
     const points = [];
     points.push(new THREE.Vector3(0, 0, 0));
     points.push(new THREE.Vector3(x, y, z));
-    const lineGeometry = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0, 0, 0),this.coord]  );
+    const lineGeometry = new THREE.BufferGeometry().setFromPoints(points);
 
     // Create line material
     this.matLine = new THREE.LineBasicMaterial({ color: color });
@@ -45,19 +45,26 @@ export class Vector {
     const direction = new THREE.Vector3();
     direction.subVectors(points[1], points[0]).normalize();
 
-    const arrowPos = points[1].clone().normalize();
+    const arrowPos = new THREE.Vector3();
+    arrowPos.subVectors(points[1], points[0]).normalize();
 
     arrowhead.position.copy(arrowPos.multiplyScalar(arrowPosLen));
     arrowhead.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), direction); //using (0,1,0) because cone initally is pointing (0,1,0)
     this.arrowMesh = arrowhead;
     this.vector = new THREE.Group();
     this.vector.add(this.arrowMesh,this.lineMesh);
-    this.line2XZ = new Line([x,0,z],[x,y,z],color,true);
-    this.line2X = new Line([x,0,z],[x,0,0],color,true);
-    this.line2Z = new Line([x,0,z],[0,0,z],color,true);
+    // this.line2XY = new Line([x,0,z],[x,y,z],color,true);
+    // this.line2X = new Line([x,0,z],[x,0,0],color,true);
+    // this.line2Y = new Line([x,0,z],[0,0,z],color,true);
+
+    this.line2XY = new Line([x,y,0],[x,y,z],color,true);
+    this.line2Y = new Line([x,y,0],[0,y,0],color,true);
+    this.line2X = new Line([x,y,0],[x,0,0],color,true);
+
+
     this.vector.add(this.line2X.lineMesh);
-    this.vector.add(this.line2XZ.lineMesh);
-    this.vector.add(this.line2Z.lineMesh);
+    this.vector.add(this.line2XY.lineMesh);
+    this.vector.add(this.line2Y.lineMesh);
   } 
 
   setDash(){
@@ -82,9 +89,10 @@ export class Vector {
 		const direction = new THREE.Vector3().fromArray([x,y,z]).normalize();
 		this.arrowMesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), direction);
 		// this.vector.remove(this.line2X.lineMesh)
-		this.line2X.changeCoord(x,0,0,      x,0,z)
-		this.line2Z.changeCoord(0,0,z,      x,0,z)
-		this.line2XZ.changeCoord(x,0,z,      x,y,z)
+		this.line2X.changeCoord(x,0,0,      x,y,0)
+		this.line2Y.changeCoord(0,y,0,      x,y,0)
+		this.line2XY.changeCoord(x,y,0,      x,y,z)
+
 
   }
 
