@@ -31,8 +31,8 @@ export class Polygon2D {
     const newVeca = new THREE.Vector3().fromArray([x0,y0,z0]);
     const newVecb = new THREE.Vector3().fromArray([x1,y1,z1]);
 
-    line1.changeCoord(x0,y0,z0,...newVeca.clone().addScaledVector(new THREE.Vector3(0,0,newVecb.z-newVecb.z),1).toArray() )
-    line2.changeCoord(...thirdPoint.toArray(),...thirdPoint.clone().addScaledVector(new THREE.Vector3(newVecb.x-newVecb.x,0,0),-1).toArray())
+    line1.changeCoord(x0,y0,z0,...newVeca.clone().addScaledVector(new THREE.Vector3(0,0,newVecb.z-newVeca.z),1).toArray() )
+    line2.changeCoord(...thirdPoint.toArray(),...thirdPoint.clone().addScaledVector(new THREE.Vector3(newVecb.x-newVeca.x,0,0),-1).toArray())
 
 
 

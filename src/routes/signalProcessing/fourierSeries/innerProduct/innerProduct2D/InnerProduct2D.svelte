@@ -172,7 +172,13 @@
 </p>
 
 <!-- <div bind:this={g1} /> -->
-<Game />
+<Col2 >
+	<div slot='col1'> 
+		<p>Interactive Demo:  (drag the vectors' arrow head around)</p>
+
+		<Game />
+	</div>
+</Col2>
 
 <div>
 	using the interactive demo above, you can verify that:

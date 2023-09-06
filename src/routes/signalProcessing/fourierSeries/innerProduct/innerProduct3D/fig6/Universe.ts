@@ -50,9 +50,13 @@ export class Universe extends THREE.EventDispatcher{
 
   dLine!: Line;
 
+  theta!: Theta;
 
   vecaMM! : MathText;
   vecbMM! : MathText;
+  azbzMM! : MathText;
+  aybyMM! : MathText;
+  axbxMM! : MathText;
 
   constructor(refCurrent: HTMLDivElement) {
     super();
@@ -82,7 +86,9 @@ export class Universe extends THREE.EventDispatcher{
     this.vecb = new Vector(4,8,-5,0x0000ff);
     this.scene.add(this.veca.vector);
     this.scene.add(this.vecb.vector);
-    this.axes = new Axes(this.scene,10,10,10);
+    this.axes = new Axes(this.scene,10,10,10,this.camera);
+
+    this.tickingWorld.updatables.push(this.axes);
 
 
     const loader = new FontLoader();
@@ -100,6 +106,8 @@ export class Universe extends THREE.EventDispatcher{
 
     this.addEventListener('setMathMeshes',()=>{this.setMathMeshes()})
 
+
+    
 
   }
 
@@ -123,6 +131,12 @@ export class Universe extends THREE.EventDispatcher{
   }
 
   async setMathMeshes(){
+    const theta = await Theta.Init(this.veca.coord,this.vecb.coord);
+    this.scene.add(theta.curveMesh);
+    this.scene.add(theta.textMesh.mesh);
+    this.theta= theta;
+
+
     const mathText = await MathText.Init('\\vec{a} \\\\ (a_x,a_y,a_z)','red');
     mathText.mesh.position.set(this.veca.coord.x, this.veca.coord.y, this.veca.coord.z);
     this.scene.add(mathText.mesh);
@@ -130,13 +144,6 @@ export class Universe extends THREE.EventDispatcher{
     const mathText2 = await MathText.Init('\\vec{b} \\\\ (b_x,b_y,b_z)','blue');
     mathText2.mesh.position.set(this.vecb.coord.x, this.vecb.coord.y, this.vecb.coord.z)
     this.scene.add(mathText2.mesh);
-
-
-
-    const theta = await Theta.Init(this.veca.coord,this.vecb.coord);
-    this.scene.add(theta.curveMesh);
-    this.scene.add(theta.textMesh.mesh);
-
 
     let thirdPoint = new THREE.Vector3();
     if(this.vecb.coord.y<this.veca.coord.y)
@@ -146,16 +153,19 @@ export class Universe extends THREE.EventDispatcher{
     const line1 = new Line([...this.veca.coord.toArray()],[...this.veca.coord.clone().addScaledVector(new THREE.Vector3(0,0,this.vecb.coord.z-this.veca.coord.z),1).toArray()],'brown',true) 
     const line2 = new Line([...thirdPoint.toArray()],[...thirdPoint.clone().addScaledVector(new THREE.Vector3(this.vecb.coord.x-this.veca.coord.x,0,0),-1).toArray()],'brown',true) 
 
+    const offset = 0.2
 
     const mathText3 = await MathText.Init('| \\vec{a_z} - \\vec{b_z} |','brown');
     let pos = new THREE.Vector3();
     line1.points.forEach(p=>{
       const parr = p.toArray();
-      pos.x += parr[0]
+      pos.x += parr[0] + offset
       pos.y += parr[1]
-      pos.z += parr[2]
+      pos.z += parr[2] 
     })
     mathText3.mesh.position.set(...pos.multiplyScalar(0.5).toArray());
+    mathText3.mesh.rotation.setFromVector3(new THREE.Vector3(3*Math.PI/2,0,0));
+
 
     const mathText4 = await MathText.Init('| \\vec{a_x} - \\vec{b_x} |','brown');
     let pos2 = new THREE.Vector3();
@@ -163,14 +173,15 @@ export class Universe extends THREE.EventDispatcher{
       const parr = p.toArray();
       pos2.x += parr[0]
       pos2.y += parr[1]
-      pos2.z += parr[2]
+      pos2.z += parr[2] - offset
     })
     mathText4.mesh.position.set(...pos2.multiplyScalar(0.5).toArray());
-    mathText4.mesh.rotation.setFromVector3(new THREE.Vector3(0,Math.PI/2,0));
+    mathText4.mesh.rotation.setFromVector3(new THREE.Vector3(3*Math.PI/2,0,Math.PI/2));
+    // mathText4.mesh.rotation.setFromVector3(new THREE.Vector3(0,0,Math.PI/2));
 
 
     const mathText5 = await MathText.Init('| \\vec{a_y} - \\vec{b_y} |','brown');
-    let pos3 = new THREE.Vector3(thirdPoint.x+this.vecb.coord.x, thirdPoint.y+this.vecb.coord.y,-0.2+thirdPoint.z+this.vecb.coord.z);
+    let pos3 = new THREE.Vector3(thirdPoint.x+this.vecb.coord.x, thirdPoint.y+this.vecb.coord.y,-offset+thirdPoint.z+this.vecb.coord.z);
     mathText5.mesh.position.set(...pos3.multiplyScalar(0.5).toArray());
     mathText5.mesh.rotation.setFromVector3(new THREE.Vector3(0,Math.PI/2,0));
 
@@ -178,6 +189,47 @@ export class Universe extends THREE.EventDispatcher{
     this.scene.add(mathText3.mesh);
     this.scene.add(mathText4.mesh);
     this.scene.add(mathText5.mesh);
+
+    this.azbzMM = mathText3;
+    this.axbxMM = mathText4;
+    this.aybyMM = mathText5;
+
+    this.vecaMM = mathText;
+    this.vecbMM = mathText2;
+
+  }
+
+
+  changeBrownTriangleMathTextCoord(x0:number,y0:number,z0:number, x1:number,y1:number,z1:number){
+
+    this.veca.coord = new THREE.Vector3().fromArray([x0,y0,z0]);
+    this.vecb.coord = new THREE.Vector3().fromArray([x1,y1,z1]);
+    let thirdPoint = new THREE.Vector3();
+    if(this.vecb.coord.y<this.veca.coord.y)
+    thirdPoint= new THREE.Vector3(this.veca.coord.x,this.vecb.coord.y,this.veca.coord.z)
+    else
+    thirdPoint= new THREE.Vector3(this.vecb.coord.x,this.veca.coord.y,this.vecb.coord.z)
+
+    const offset = 0.2
+
+
+    let p1 = this.veca.coord.clone();
+    let p2 = this.veca.coord.clone().addScaledVector(new THREE.Vector3(0,0,this.vecb.coord.z-this.veca.coord.z),1);
+    let final = p1.multiplyScalar(0.5).addScaledVector(p2,0.5);
+    final.setX(final.x+offset)
+    this.azbzMM.changeCoordSimple(...final.toArray())
+
+    p1 = thirdPoint.clone();
+    p2 = thirdPoint.clone().addScaledVector(new THREE.Vector3(this.vecb.coord.x-this.veca.coord.x,0,0),-1)
+    final = p1.multiplyScalar(0.5).addScaledVector(p2,0.5);
+    final.setZ(final.z-offset)
+    this.axbxMM.changeCoordSimple(...final.toArray())
+
+
+    let pos3 = new THREE.Vector3(thirdPoint.x+this.vecb.coord.x, thirdPoint.y+this.vecb.coord.y,-offset+thirdPoint.z+this.vecb.coord.z);
+    this.aybyMM.changeCoordSimple(...pos3.multiplyScalar(0.5).toArray())
+
+
 
   }
 

@@ -31,6 +31,29 @@ export class Theta {
     return obj;
   }
 
+
+  changeCoord(x0:number,y0:number,z0:number, x1:number,y1:number,z1:number){
+    this.veca = new THREE.Vector3(x0,y0,z0)
+    this.vecb = new THREE.Vector3(x1,y1,z1)
+    const veca_n = this.veca.clone().normalize();
+    const vecb_n = this.vecb.clone().normalize();
+    const vecn_n = this.veca.clone().cross(this.vecb).normalize();
+    //change of basis matrix
+    const cob_mat = new THREE.Matrix3(veca_n.x,vecb_n.x,vecn_n.x,veca_n.y,vecb_n.y,vecn_n.y,veca_n.z,vecb_n.z,vecn_n.z );
+    const curvePoints = linspace(0,Math.PI/2,10).map(angle=>new THREE.Vector3(Math.cos(angle),Math.sin(angle),0));
+    curvePoints.forEach(p=>p.applyMatrix3(cob_mat));
+    this.curveMesh.geometry.setFromPoints(curvePoints);
+    this.curveMesh.geometry.attributes.position.needsUpdate = true;
+
+    const veca = this.veca;
+    const vecb = this.vecb;
+    const curveLen = veca.length() > vecb.length() ? vecb.length()/5 :  veca.length()/5;
+    const shortVeca = veca.normalize().multiplyScalar(curveLen);
+    const shortVecb = vecb.normalize().multiplyScalar(curveLen);
+    const textPos = shortVeca.add(shortVecb).multiplyScalar(0.5);
+    this.textMesh.mesh.position.set(textPos.x,textPos.y,textPos.z);
+  }
+
   setCurveWithChangeOfBasis(){
     const veca_n = this.veca.clone().normalize();
     const vecb_n = this.vecb.clone().normalize();

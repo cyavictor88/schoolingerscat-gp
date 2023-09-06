@@ -116,7 +116,6 @@
 	};
 </script>
 <div style='background: {SITE_COLOR.CompRouteDefaultBG}; width:{game.width+game.marginLeft}px;'>
-<h4>Interactive Demo:  (drag the vectors' arrow head around)</h4>
 <svg width={game.width} height={game.height}  overflow="visible">
 
 

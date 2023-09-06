@@ -23,6 +23,9 @@ export class MathText {
  };
 
 
+ changeCoordSimple(x0:number,y0:number,z0:number){
+  this.mesh.position.set(x0,y0,z0)
+ }
 
   // const mm = await mathmesh("\\int_{a}^{b}x^2 \\,dx \\frac{3}{4} \\vec{a}");
   // const geometry = new THREE.BufferGeometry()

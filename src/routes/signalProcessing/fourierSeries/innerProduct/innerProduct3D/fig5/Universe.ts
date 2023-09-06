@@ -171,16 +171,18 @@ export class Universe extends THREE.EventDispatcher{
     const line1 = new Line([...this.veca.coord.toArray()],[...this.veca.coord.clone().addScaledVector(new THREE.Vector3(0,0,this.vecb.coord.z-this.veca.coord.z),1).toArray()],'brown',true) 
     const line2 = new Line([...thirdPoint.toArray()],[...thirdPoint.clone().addScaledVector(new THREE.Vector3(this.vecb.coord.x-this.veca.coord.x,0,0),-1).toArray()],'brown',true) 
 
+    const offset = 0.2
 
     const mathText3 = await MathText.Init('| \\vec{a_z} - \\vec{b_z} |','brown');
     let pos = new THREE.Vector3();
     line1.points.forEach(p=>{
       const parr = p.toArray();
-      pos.x += parr[0]
+      pos.x += parr[0]+ offset
       pos.y += parr[1]
       pos.z += parr[2]
     })
     mathText3.mesh.position.set(...pos.multiplyScalar(0.5).toArray());
+    mathText3.mesh.rotation.setFromVector3(new THREE.Vector3(3*Math.PI/2,0,0));
 
     const mathText4 = await MathText.Init('| \\vec{a_x} - \\vec{b_x} |','brown');
     let pos2 = new THREE.Vector3();
@@ -188,10 +190,11 @@ export class Universe extends THREE.EventDispatcher{
       const parr = p.toArray();
       pos2.x += parr[0]
       pos2.y += parr[1]
-      pos2.z += parr[2]
+      pos2.z += parr[2]- offset
     })
     mathText4.mesh.position.set(...pos2.multiplyScalar(0.5).toArray());
-    mathText4.mesh.rotation.setFromVector3(new THREE.Vector3(0,Math.PI/2,0));
+    // mathText4.mesh.rotation.setFromVector3(new THREE.Vector3(0,Math.PI/2,0));
+    mathText4.mesh.rotation.setFromVector3(new THREE.Vector3(3*Math.PI/2,0,Math.PI/2));
 
 
     const mathText5 = await MathText.Init('| \\vec{a_y} - \\vec{b_y} |','brown');

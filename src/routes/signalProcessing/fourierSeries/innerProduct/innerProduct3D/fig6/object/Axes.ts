@@ -19,11 +19,13 @@ export class Axes {
   public yTextMesh!: THREE.Mesh;
   public zTextMesh!: THREE.Mesh;
   public font!: Font;
+  camera : THREE.Camera;
 
-  constructor(scene: THREE.Scene, x: number, y: number, z: number) {
+  constructor(scene: THREE.Scene, x: number, y: number, z: number, camera:THREE.Camera) {
     this.xAxisLine = new Line([-x - 0.1, 0, 0], [x + 0.1, 0, 0], 'black');
     this.yAxisLine = new Line([0, -y - 0.1, 0], [0, y + 0.1, 0], 'black');
     this.zAxisLine = new Line([0, 0, -z - 0.1], [0, 0, z + 0.1], 'black');
+    this.camera = camera;
 
     scene.add(this.xAxisLine.lineMesh);
     scene.add(this.yAxisLine.lineMesh);
@@ -41,11 +43,10 @@ export class Axes {
       scene.add(this.zTextMesh);
 
 
+
+
     });
 
-    this.xTickMeshArr = this.makeTicks(scene, Dir.X, x);
-    this.yTickMeshArr = this.makeTicks(scene, Dir.Y, y);
-    this.zTickMeshArr = this.makeTicks(scene, Dir.Z, z);
 
 
 
@@ -53,6 +54,14 @@ export class Axes {
 
 
 
+  }
+
+  tick(){
+    if(this.xTextMesh && this.yTextMesh && this.zTextMesh) {
+      this.xTextMesh.lookAt(this.camera.position);
+      this.yTextMesh.lookAt(this.camera.position);
+      this.zTextMesh.lookAt(this.camera.position);
+    }
   }
 
 
