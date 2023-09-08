@@ -4,12 +4,19 @@
 	import { Universe as Fig6 } from './Universe';
 	import Col2 from '$lib/components/PageComp/Col2.svelte';
 
-
+	function calculateMagnitude(vector: [number,number,number]) {
+  const squaredSum = vector.reduce((sumOfSquares, element) => sumOfSquares + element ** 2, 0);
+  	return Math.sqrt(squaredSum);
+	}
 	let divFig6: HTMLDivElement;
 	let universeFig6: Fig6;
 
 	let veca_arr : [number,number,number] = [9,-4,8];
 	let vecb_arr : [number,number,number] = [4,8,-5];
+	$: innerProduct = veca_arr.reduce((result, currentValue, index) => {
+  	return result + (currentValue * vecb_arr[index]);
+	}, 0);
+	$: theta = Math.acos( innerProduct/(calculateMagnitude(veca_arr)*calculateMagnitude(vecb_arr)) ) *180/Math.PI;
 	onMount(() => {
 
 			universeFig6 = new Fig6(divFig6);
@@ -41,7 +48,9 @@
 		universeFig6.vecbMM?.changeCoordSimple(...vecb_arr);
 		if(universeFig6.azbzMM) universeFig6.changeBrownTriangleMathTextCoord(...veca_arr,...vecb_arr) 
 		console.log('veca delta',...veca_arr)
+		// if(universeFig6?.theta) theta = universeFig6.theta.theta;
 	}
+
 </script>
 	<Col2>
 		<div slot='col1'>
@@ -62,8 +71,17 @@
 				<Katex math={'\\color{blue}\\vec{b_z}:'} />
 				<input style='width: 40px;' type="number" id="bz" name="fname"  bind:value={vecb_arr[2]} />
 			</form>
-      <!-- <span><Katex math={'\\theta'} />:{theta}</span> -->
-			<div style='cursor: pointer;'bind:this={divFig6} />
+			<div style='display: flex; flex-flow: row nowrap; gap:20px;'>
+				<p><Katex math={`\\color{red}|\\vec{a}|=${calculateMagnitude(veca_arr).toFixed()}`}/> </p>
+				<p><Katex math={`\\color{blue}|\\vec{b}|=${calculateMagnitude(vecb_arr).toFixed()}`}/> </p>
+				<p><Katex math={'< \\vec{a},\\vec{b}>'} />={innerProduct.toFixed(2)}</p>
+			</div>
+			<div style='display: flex; flex-flow: row nowrap; gap:20px;'>
+				<p><Katex math={'\\theta'} /> = {theta.toFixed(2)}</p>
+				<p><Katex math={'cos(\\theta)'} /> = {Math.cos(theta/180*Math.PI).toFixed(2)}</p>
+				<p><Katex math={'\\frac{< \\vec{a},\\vec{b}>}{  \\| \\vec{a}  \\| \\|\\vec{b}\\|}'} /> = {(innerProduct/(calculateMagnitude(veca_arr)*calculateMagnitude(vecb_arr))).toFixed(2)}</p>
+			</div>
+				<div style='cursor: pointer;'bind:this={divFig6} />
 		</div>
 		<div slot='col2'>
 		</div>

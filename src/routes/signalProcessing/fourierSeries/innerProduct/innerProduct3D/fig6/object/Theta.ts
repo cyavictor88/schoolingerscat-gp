@@ -35,6 +35,8 @@ export class Theta {
   changeCoord(x0:number,y0:number,z0:number, x1:number,y1:number,z1:number){
     this.veca = new THREE.Vector3(x0,y0,z0)
     this.vecb = new THREE.Vector3(x1,y1,z1)
+    this.theta = Math.acos(this.veca.dot(this.vecb)/ (this.veca.length()*this.vecb.length()) );
+
     const veca_n = this.veca.clone().normalize();
     const vecb_n = this.vecb.clone().normalize();
     const vecn_n = this.veca.clone().cross(this.vecb).normalize();
