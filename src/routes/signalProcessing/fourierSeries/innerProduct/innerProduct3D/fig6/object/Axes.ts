@@ -49,6 +49,9 @@ export class Axes {
 
 
 
+    this.xTickMeshArr = this.makeTicks(scene, Dir.X, x);
+    this.yTickMeshArr = this.makeTicks(scene, Dir.Y, y);
+    this.zTickMeshArr = this.makeTicks(scene, Dir.Z, z);
 
 
 

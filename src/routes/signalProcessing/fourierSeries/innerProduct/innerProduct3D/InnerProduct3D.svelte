@@ -7,17 +7,14 @@
 	import { getCircleNum } from '$lib/unicode';
 	import Col2 from '$lib/components/PageComp/Col2.svelte';
 	import * as THREE from 'three';
+	import GameInnerProduct3D from './fig6/GameInnerProduct3D.svelte';
 
 
 	let divFig4: HTMLDivElement;
 	let divFig5: HTMLDivElement;
-	let divFig6: HTMLDivElement;
 	let universeFig4: Fig4;
 	let universeFig5: Fig5;
-	let universeFig6: Fig6;
 
-	let veca_arr : [number,number,number] = [9,-4,8];
-	let vecb_arr : [number,number,number] = [4,8,-5];
 	onMount(() => {
 			universeFig4 = new Fig4(divFig4);
 			universeFig4.start();
@@ -27,62 +24,12 @@
 			universeFig5.start();
 			universeFig5.dispatchEvent({type:'setMathMeshes',target:universeFig5})
 
-			universeFig6 = new Fig6(divFig6);
-			universeFig6.start();
-			universeFig6.dispatchEvent({type:'setMathMeshes',target:universeFig6})
-
-
 			return ()=>{
 				if (divFig4.firstChild) divFig4.removeChild(divFig4.firstChild);
 				if (divFig5.firstChild) divFig5.removeChild(divFig5.firstChild);
-				if (divFig6.firstChild) divFig6.removeChild(divFig6.firstChild);
 			}
 	});
 
-
-	function validVecInput(event: any){
-			if (Math.abs(vecb_arr[0])<=10){
-				console.log(vecb_arr[0])
-			}
-	}
-
-	$: if(universeFig6){// && universeFig6.dLine && universeFig6.fig6triangleLine1 && universeFig6.fig6triangleLine2 && universeFig6.fig6triangle && universeFig6.theta) {
-		universeFig6.veca?.changeCoord(...veca_arr);
-		universeFig6.vecb?.changeCoord(...vecb_arr);
-		universeFig6.dLine?.changeCoord(...veca_arr,...vecb_arr);
-		universeFig6.fig6triangle?.changeCoord(...veca_arr,...vecb_arr,universeFig6.fig6triangleLine1!,universeFig6.fig6triangleLine2!);
-		universeFig6.theta?.changeCoord(...veca_arr,...vecb_arr);
-		universeFig6.vecaMM?.changeCoordSimple(...veca_arr);
-		universeFig6.vecbMM?.changeCoordSimple(...vecb_arr);
-		if(universeFig6.azbzMM) universeFig6.changeBrownTriangleMathTextCoord(...veca_arr,...vecb_arr) 
-		// universeFig6.veca.coord.set(...veca_arr);
-		// universeFig6.vecb.coord.set(...vecb_arr);
-		// const posLine = universeFig6.veca.lineMesh.geometry.getAttribute( 'position' );
-		// posLine.setXYZ(0,0,0,0);
-		// posLine.setXYZ(1,...veca_arr);
-		// posLine.needsUpdate = true; 
-		// const veca = new THREE.Vector3().fromArray(veca_arr);
-
-		// const conLen = 0.5
-    // const arrowPosLen = veca.length() - conLen/2;
-		// // universeFig6.veca.arrowMesh.position.set(1,1,1);
-		// const arrowPos = veca.normalize().multiplyScalar(arrowPosLen).toArray()
-		// universeFig6.veca.arrowMesh.position.set(  ...arrowPos);
-		// const direction = new THREE.Vector3().fromArray(veca_arr).normalize();
-		// universeFig6.veca.arrowMesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), direction);
-		// // universeFig6.veca.vector.remove(universeFig6.veca.line2X.lineMesh)
-		// const posLine2X = universeFig6.veca.line2X.lineMesh.geometry.getAttribute( 'position' );
-		// posLine2X.setXYZ(0,veca.x,0,0);
-		// posLine2X.setXYZ(1,veca.x,0,veca.z);
-		// posLine2X.needsUpdate = true; 
-		// universeFig6.scene.remove(universeFig6.veca.line2X.lineMesh)
-
-		// universeFig6.veca.lineMesh.geometry.computeBoundingBox();
-		// universeFig6.veca.lineMesh.geometry.computeBoundingSphere();
-		console.log('veca delta',...veca_arr)
-		// universeFig6.setVeca(...veca_arr)
-		// universeFig6.setVecb(...vecb_arr)
-	}
 </script>
 
 <p>
@@ -161,66 +108,7 @@
 	/>:
 </p>
 
-<Col2>
-	<div slot='col1'>
-		<p>Figure 5</p>
-		<div style='cursor: pointer;'bind:this={divFig5} />
-	</div>
-	<div slot='col2'>
-		<Katex
-			displayMode={true}
-			math={'\\color{brown}{d^2}  = ( |  \\color{brown}{a_x} - \\color{brown} b_x |^2+ | \\color{brown}{a_y} - \\color{brown} b_y  |^2 ) + | \\color{brown}{a_z} - \\color{brown} b_z  |^2'}
-		/>
-		<fieldset>
-			<legend>{getCircleNum(4)}</legend>
-			<Katex
-				displayMode={true}
-				math={'\\Rightarrow \\color{brown}{d^2}  = ( \\color{brown}{a_x} - \\color{brown} b_x )^2+( \\color{brown}{a_y} - \\color{brown} b_y )^2+( \\color{brown}{a_z} - \\color{brown} b_z )^2'}
-			/>
-		</fieldset>
-	</div>
-</Col2>
-
-<p>By equating {getCircleNum(4)} = {getCircleNum(3)}, we can have the following:</p>
-
-<Katex displayMode={true} math={`
-\\color{brown}{d^2=(a_x-b_x)^2+(a_y-b_y)^2+ (a_z-b_z)^2} \\color{black}{=} \\color{red}{a_x^2+a_y^2+a_z^2} \\color{black}{+} \\color{blue}{b_x^2+b_y^2+b_z^2} \\color{black}{ - 2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) } 
-`} />
-<Katex displayMode={true} math={`\\Rightarrow \\color{black}{ (a_x-b_x)^2+(a_y-b_y)^2+ (a_z-b_z)^2} \\color{black}{=} \\color{red}{a_x^2+a_y^2+a_z^2} \\color{black}{+} \\color{blue}{b_x^2+b_y^2+b_z^2} \\color{black}{ - 2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) } `} />
-<Katex displayMode={true} math={`\\Rightarrow  a_x^2+b_x^2-2a_xb_x +a_y^2+b_y^2-2a_yb_y +a_z^2+b_z^2-2a_zb_z= \\color{red}{a_x^2+a_y^2+a_z^2} \\color{black}{+} \\color{blue}{b_x^2+b_y^2+b_z^2} \\color{black}{ - 2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) } `} />
-<Katex displayMode={true} math={`\\Rightarrow \\cancel{a_x^2}+\\cancel{b_x^2}-2a_xb_x +\\cancel{a_y^2}+\\cancel{b_y^2}-2a_yb_y+\\cancel{a_z^2}+\\cancel{b_z^2}-2a_zb_z= \\color{red}{\\cancel{a_x^2}+\\cancel{a_y^2}+\\cancel{a_z^2}} \\color{black}{+} \\color{blue}{\\cancel{b_x^2}+\\cancel{b_y^2}+\\cancel{b_z^2}} \\color{black}{ - 2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) } `} />
-<Katex displayMode={true} math={`\\Rightarrow -2a_xb_x-2a_yb_y -2a_zb_z= -2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) `} />
-<Katex displayMode={true} math={`\\Rightarrow a_xb_x+a_yb_y+a_zb_z = < \\vec{a},\\vec{b}> = \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) `} />
-<Katex displayMode={true} math={`\\Rightarrow cos(\\theta)   = \\frac{< \\vec{a},\\vec{b}>}{  \\| \\vec{a}  \\| \\|\\vec{b}\\| } `} />
-
-
-<p>Voilà!, we show that <Katex math={'cos(\\theta)=\\frac{<a,b>}{\\|a\\|\\|b\\|}'} /> holds for 3D vectors</p>
-	
-	<Col2>
-		<div slot='col1'>
-			<p>Interactive Demo:</p>
-			<form>
-				<Katex math={'\\color{red}\\vec{a_x}:'} />
-				<input style='width: 40px;' type="number" id="ax" name="fname" bind:value={veca_arr[0]} />
-				<Katex math={'\\color{red}\\vec{a_y}:'} />
-				<input style='width: 40px;' type="number" id="ay" name="fname" bind:value={veca_arr[1]} />
-				<Katex math={'\\color{red}\\vec{a_z}:'} />
-				<input style='width: 40px;' type="number" id="az" name="fname" bind:value={veca_arr[2]}/>
-			</form>
-			<form>
-				<Katex math={'\\color{blue}\\vec{b_x}:'} />
-				<input style='width: 40px;' type="number" id="bx" name="fname"  bind:value={vecb_arr[0]} on:input={validVecInput} />
-				<Katex math={'\\color{blue}\\vec{b_y}:'} />
-				<input style='width: 40px;' type="number" id="by" name="fname"  bind:value={vecb_arr[1]} />
-				<Katex math={'\\color{blue}\\vec{b_z}:'} />
-				<input style='width: 40px;' type="number" id="bz" name="fname"  bind:value={vecb_arr[2]} />
-			</form>
-			<div style='cursor: pointer;'bind:this={divFig6} />
-		</div>
-		<div slot='col2'>
-		</div>
-
-	</Col2>
+<GameInnerProduct3D />
 
 <style>
 	fieldset {
