@@ -3,11 +3,10 @@
 	import { onMount } from 'svelte';
 	import { Universe as Fig4 } from './fig4/Universe';
 	import { Universe as Fig5 } from './fig5/Universe';
-	import { Universe as Fig6 } from './fig6/Universe';
 	import { getCircleNum } from '$lib/unicode';
 	import Col2 from '$lib/components/PageComp/Col2.svelte';
 	import * as THREE from 'three';
-	import GameInnerProduct3D from './fig6/GameInnerProduct3D.svelte';
+	import GameInnerProduct3D from './game/GameInnerProduct3D.svelte';
 
 
 	let divFig4: HTMLDivElement;
@@ -70,7 +69,7 @@
 	Now we will show <Katex math={'cos(\\theta)=\\frac{<a,b>}{\\|a\\|\\|b\\|}'} /> still holds in 3D by solving for <Katex math={'d'} />
 </p>
 <hr style="border-top: 1px grey dotted" />
-<b>Step 1. Using law of Cosine:</b>
+<b>Step 1. Use Law of Cosine:</b>
 
 <p>
 	Using <a href="https://en.wikipedia.org/wiki/Law_of_cosines"
@@ -99,7 +98,7 @@
 
 
 <hr style="border-top: 1px grey dotted" />
-<b>Step 2. Making a new Triangle:</b>
+<b>Step 2. Make a Right Triangle:</b>
 
 <p>
 	We can use the x,y,z coordinates of <Katex math={'\\vec{a}'} /> and <Katex math={'\\vec{b}'} /> to construct

@@ -62,7 +62,7 @@
 	<Katex math={'d'} />.
 </p>
 <hr style="border-top: 1px grey dotted" />
-<b>Step 1. Using law of Cosine:</b>
+<b>Step 1. Use Law of Cosine:</b>
 <p>
 	As shown in Figure 2, by using <a href="https://en.wikipedia.org/wiki/Law_of_cosines"
 		>Low of Cosines</a
@@ -97,7 +97,7 @@
 
 <hr style="border-top: 1px grey dotted" />
 
-<b>Step 2. Making a new Triangle:</b>
+<b>Step 2. Make a Right Triangle:</b>
 
 <p>
 	We can use the x,y coordinates of <Katex math={'\\vec{a}'} /> and <Katex math={'\\vec{b}'} /> to construct

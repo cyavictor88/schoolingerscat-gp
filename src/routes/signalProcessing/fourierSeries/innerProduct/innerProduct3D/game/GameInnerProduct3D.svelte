@@ -1,15 +1,15 @@
 <script lang="ts">
 	import Katex from '$lib/components/Katex/Katex.svelte';
 	import { onMount } from 'svelte';
-	import { Universe as Fig6 } from './Universe';
+	import { Universe as FunThreeJsGame } from './Universe';
 	import Col2 from '$lib/components/PageComp/Col2.svelte';
 
 	function calculateMagnitude(vector: [number,number,number]) {
   const squaredSum = vector.reduce((sumOfSquares, element) => sumOfSquares + element ** 2, 0);
   	return Math.sqrt(squaredSum);
 	}
-	let divFig6: HTMLDivElement;
-	let universeFig6: Fig6;
+	let divFunThreeJsGame: HTMLDivElement;
+	let universeFunThreeJsGame: FunThreeJsGame;
 
 	let veca_arr : [number,number,number] = [9,-4,8];
 	let vecb_arr : [number,number,number] = [4,8,-5];
@@ -19,13 +19,13 @@
 	$: theta = Math.acos( innerProduct/(calculateMagnitude(veca_arr)*calculateMagnitude(vecb_arr)) ) *180/Math.PI;
 	onMount(() => {
 
-			universeFig6 = new Fig6(divFig6);
-			universeFig6.start();
-			universeFig6.dispatchEvent({type:'setMathMeshes',target:universeFig6})
+			universeFunThreeJsGame = new FunThreeJsGame(divFunThreeJsGame);
+			universeFunThreeJsGame.start();
+			universeFunThreeJsGame.dispatchEvent({type:'setMathMeshes',target:universeFunThreeJsGame})
 
 
 			return ()=>{
-				if (divFig6.firstChild) divFig6.removeChild(divFig6.firstChild);
+				if (divFunThreeJsGame.firstChild) divFunThreeJsGame.removeChild(divFunThreeJsGame.firstChild);
 			}
 	});
 
@@ -35,20 +35,20 @@
 				console.log(vecb_arr[0])
 			}
 	}
-  // $: theta = universeFig6?.theta.theta;
+  // $: theta = universeFunThreeJsGame?.theta.theta;
 
 
-	$: if(universeFig6){// && universeFig6.dLine && universeFig6.fig6triangleLine1 && universeFig6.fig6triangleLine2 && universeFig6.fig6triangle && universeFig6.theta) {
-		universeFig6.veca?.changeCoord(...veca_arr);
-		universeFig6.vecb?.changeCoord(...vecb_arr);
-		universeFig6.dLine?.changeCoord(...veca_arr,...vecb_arr);
-		universeFig6.fig6triangle?.changeCoord(...veca_arr,...vecb_arr,universeFig6.fig6triangleLine1!,universeFig6.fig6triangleLine2!);
-		universeFig6.theta?.changeCoord(...veca_arr,...vecb_arr);
-		universeFig6.vecaMM?.changeCoordSimple(...veca_arr);
-		universeFig6.vecbMM?.changeCoordSimple(...vecb_arr);
-		if(universeFig6.azbzMM) universeFig6.changeBrownTriangleMathTextCoord(...veca_arr,...vecb_arr) 
+	$: if(universeFunThreeJsGame){// && universeFunThreeJsGame.dLine && universeFunThreeJsGame.funThreeJsGametriangleLine1 && universeFunThreeJsGame.funThreeJsGametriangleLine2 && universeFunThreeJsGame.funThreeJsGametriangle && universeFunThreeJsGame.theta) {
+		universeFunThreeJsGame.veca?.changeCoord(...veca_arr);
+		universeFunThreeJsGame.vecb?.changeCoord(...vecb_arr);
+		universeFunThreeJsGame.dLine?.changeCoord(...veca_arr,...vecb_arr);
+		universeFunThreeJsGame.funGameTriangle?.changeCoord(...veca_arr,...vecb_arr,universeFunThreeJsGame.funGameTriangleLine1!,universeFunThreeJsGame.funGameTriangleLine2!);
+		universeFunThreeJsGame.theta?.changeCoord(...veca_arr,...vecb_arr);
+		universeFunThreeJsGame.vecaMM?.changeCoordSimple(...veca_arr);
+		universeFunThreeJsGame.vecbMM?.changeCoordSimple(...vecb_arr);
+		if(universeFunThreeJsGame.azbzMM) universeFunThreeJsGame.changeBrownTriangleMathTextCoord(...veca_arr,...vecb_arr) 
 		console.log('veca delta',...veca_arr)
-		// if(universeFig6?.theta) theta = universeFig6.theta.theta;
+		// if(universeFunThreeJsGame?.theta) theta = universeFunThreeJsGame.theta.theta;
 	}
 
 </script>
@@ -81,7 +81,7 @@
 				<p><Katex math={'cos(\\theta)'} /> = {Math.cos(theta/180*Math.PI).toFixed(2)}</p>
 				<p><Katex math={'\\frac{< \\vec{a},\\vec{b}>}{  \\| \\vec{a}  \\| \\|\\vec{b}\\|}'} /> = {(innerProduct/(calculateMagnitude(veca_arr)*calculateMagnitude(vecb_arr))).toFixed(2)}</p>
 			</div>
-				<div style='cursor: pointer;'bind:this={divFig6} />
+				<div style='cursor: pointer;'bind:this={divFunThreeJsGame} />
 		</div>
 		<div slot='col2'>
 		</div>

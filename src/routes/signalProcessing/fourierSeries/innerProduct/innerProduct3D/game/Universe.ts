@@ -44,9 +44,9 @@ export class Universe extends THREE.EventDispatcher{
   vecb : Vector;
   axes : Axes;
 
-  fig6triangle: Polygon2D | null = null;
-  fig6triangleLine1: Line | null = null;
-  fig6triangleLine2: Line | null = null;
+  funGameTriangle: Polygon2D | null = null;
+  funGameTriangleLine1: Line | null = null;
+  funGameTriangleLine2: Line | null = null;
 
   dLine!: Line;
 
@@ -101,7 +101,7 @@ export class Universe extends THREE.EventDispatcher{
       this.dLine = d;
     });
 
-    this.showFig6Triangle()
+    this.showFunGameTriangle()
 
 
     this.addEventListener('setMathMeshes',()=>{this.setMathMeshes()})
@@ -111,19 +111,19 @@ export class Universe extends THREE.EventDispatcher{
 
   }
 
-  showFig6Triangle(){
-    if(!this.fig6triangle){
+  showFunGameTriangle(){
+    if(!this.funGameTriangle){
       // simple method
       let thirdPoint = new THREE.Vector3();
       thirdPoint= new THREE.Vector3(this.veca.coord.x,this.vecb.coord.y,this.veca.coord.z)
       const line1 = new Line([...this.veca.coord.toArray()],[...this.veca.coord.clone().addScaledVector(new THREE.Vector3(0,0,this.vecb.coord.z-this.veca.coord.z),1).toArray()],'brown',true) 
       const line2 = new Line([...thirdPoint.toArray()],[...thirdPoint.clone().addScaledVector(new THREE.Vector3(this.vecb.coord.x-this.veca.coord.x,0,0),-1).toArray()],'brown',true) 
       this.scene.add(line1.lineMesh,line2.lineMesh)
-      this.fig6triangleLine1 = line1;
-      this.fig6triangleLine2 = line2;
+      this.funGameTriangleLine1 = line1;
+      this.funGameTriangleLine2 = line2;
 
-      this.fig6triangle = new Polygon2D([this.veca.coord,this.vecb.coord,thirdPoint],'brown')
-      this.scene.add(this.fig6triangle.mesh);
+      this.funGameTriangle = new Polygon2D([this.veca.coord,this.vecb.coord,thirdPoint],'brown')
+      this.scene.add(this.funGameTriangle.mesh);
       } 
   }
 
