@@ -44,14 +44,18 @@ export class Universe extends THREE.EventDispatcher {
   vecb : Vector;
   axes : Axes;
 
-  focusTriangle: Polygon2D | null = null;
-  focusTriangleLine1: Line | null = null;
-  focusTriangleLine2: Line | null = null;
+  focusTriangle3D: Polygon2D | null = null;
+  leg3D_2: Line | null = null;
+  leg3D_1: Line | null = null;
 
-  hypoteneuse: Line | null = null;
-  leg: Line | null = null;
 
-  thirdPoint: THREE.Vector3 | null = null;
+  focusTriangle2D: Polygon2D | null = null;
+  leg2D_2: Line | null = null;
+  leg2D_1: Line | null = null;
+
+
+  thirdPoint2D: THREE.Vector3 | null = null;
+  thirdPoint3D: THREE.Vector3 | null = null;
   constructor(refCurrent: HTMLDivElement) {
     super();
     // this.eventBroker = new EventEmitter();
@@ -90,10 +94,10 @@ export class Universe extends THREE.EventDispatcher {
 
     // universe setup done
 
-    // this.controls.addEventListener('change', () => {
-    //   const cameraPosition = this.camera.position.clone();
-    //   console.log('Camera Position:', cameraPosition,this.camera.zoom);
-    // });
+    this.controls.addEventListener('change', () => {
+      const cameraPosition = this.camera.position.clone();
+      console.log('Camera Position:', cameraPosition,this.camera.zoom);
+    });
 
     this.veca = new Vector(9,-4,8,0xff0000);
     this.vecb = new Vector(4,8,-5,0x0000ff);
@@ -129,76 +133,155 @@ export class Universe extends THREE.EventDispatcher {
 
     this.addEventListener('setMathMeshes',()=>{this.setMathMeshes()})
 
-    this.addEventListener('showFocusTriangle',()=>{this.showFocusTriangle()});
-    this.addEventListener('showHypotenuse',()=>{this.showHypotenuse()});
-    this.addEventListener('showLeg',()=>{this.showLeg()});
+    this.addEventListener('showFocusTriangle3D',()=>{this.showFocusTriangle3D()});
+    this.addEventListener('showLeg3D_2',()=>{this.showLeg3D_2()});
+    this.addEventListener('showLeg3D_1',()=>{this.showLeg3D_1()});
+
+    this.addEventListener('showFocusTriangle2D',()=>{this.showFocusTriangle2D()});
+    this.addEventListener('showLeg2D_2',()=>{this.showLeg2D_2()});
+    this.addEventListener('showLeg2D_1',()=>{this.showLeg2D_1()});
+
 
   }
 
-  // showFocusTriangle(){
-  //   if(!this.focusTriangle){
-  //     this.focusTriangle = new Polygon2D([this.veca.coord,this.vecb.coord,new THREE.Vector3()],'lightgrey')
-  //     this.scene.add(this.focusTriangle.mesh);
-  //   } else {
-  //     this.focusTriangle.mesh.visible = !this.focusTriangle.mesh.visible;
-  //   }
-
-  // }
-
-  showFocusTriangle(){
-    if(!this.focusTriangle){
+  showFocusTriangle2D(){
+    if(!this.focusTriangle2D){
       // simple method
-      let thirdPoint = new THREE.Vector3();
-      thirdPoint= new THREE.Vector3(this.vecb.coord.x,this.veca.coord.y,this.vecb.coord.z);
-      this.thirdPoint = thirdPoint;
 
-      this.focusTriangle = new Polygon2D([this.veca.coord,this.vecb.coord,thirdPoint],'brown')
-      this.scene.add(this.focusTriangle.mesh);
+      // this.thirdPoint2D = new THREE.Vector3(this.vecb.coord.x,this.veca.coord.y,this.vecb.coord.z);
+      // this.thirdPoint3D = new THREE.Vector3(this.veca.coord.x,this.veca.coord.y,this.vecb.coord.z);
+
+      this.thirdPoint2D = new THREE.Vector3(this.vecb.coord.x,this.veca.coord.y,this.veca.coord.z);
+      this.thirdPoint3D= new THREE.Vector3(this.vecb.coord.x,this.vecb.coord.y,this.veca.coord.z);
+
+      this.focusTriangle2D = new Polygon2D([this.thirdPoint3D,this.veca.coord,this.thirdPoint2D],'yellow')
+      this.scene.add(this.focusTriangle2D.mesh);
       this.ressetCamera();
 
       } else {
-        this.focusTriangle.mesh.visible = !this.focusTriangle.mesh.visible;
-      if(this.focusTriangle.mesh.visible) this.ressetCamera();
+        this.focusTriangle2D.mesh.visible = !this.focusTriangle2D.mesh.visible;
+      if(this.focusTriangle2D.mesh.visible) this.ressetCamera();
 
       }
   }
 
-  showHypotenuse(){
-    if(!this.hypoteneuse){
-      let thirdPoint = new THREE.Vector3();
-      thirdPoint= new THREE.Vector3(this.vecb.coord.x,this.veca.coord.y,this.vecb.coord.z);
-      this.thirdPoint = thirdPoint;
-      this.hypoteneuse = new Line([...this.vecb.coord.toArray()],[...thirdPoint.toArray()],'black') 
-      this.hypoteneuse.setText(this.font!,'Hypotenuse');
-      this.scene.add(this.hypoteneuse.lineMesh,this.hypoteneuse.textMesh!);
+  showFocusTriangle3D(){
+    if(!this.focusTriangle3D){
+      // simple method
+
+      this.thirdPoint2D = new THREE.Vector3(this.vecb.coord.x,this.veca.coord.y,this.veca.coord.z);
+      this.thirdPoint3D= new THREE.Vector3(this.vecb.coord.x,this.vecb.coord.y,this.veca.coord.z);
+
+      this.focusTriangle3D = new Polygon2D([this.veca.coord,this.vecb.coord,this.thirdPoint3D],'brown')
+      this.scene.add(this.focusTriangle3D.mesh);
+      this.ressetCamera(5.6,2.7,19);
+
+      } else {
+        this.focusTriangle3D.mesh.visible = !this.focusTriangle3D.mesh.visible;
+      if(this.focusTriangle3D.mesh.visible) this.ressetCamera(5.6,2.7,19);
+
+      }
+
+      if(this.focusTriangle3D && this.focusTriangle3D.mesh.visible) {
+        this.showFocusTriangle2D();
+        this.focusTriangle2D!.mesh.visible=true;
+        this.showLeg2D_1();
+        this.leg2D_1!.lineMesh.visible=true;
+        this.leg2D_1!.textMesh!.visible=true;
+        this.showLeg2D_2();
+        this.leg2D_2!.lineMesh.visible=true;
+        this.leg2D_2!.textMesh!.visible=true;
+        this.showLeg3D_1();
+        this.leg3D_1!.lineMesh.visible=true;
+        this.leg3D_1!.textMesh!.visible=true;
+        this.showLeg3D_2();
+        this.leg3D_2!.lineMesh.visible=true;
+        this.leg3D_2!.textMesh!.visible=true;
+        this.ressetCamera(5.6,2.7,19);
+      }
+  }
+
+  showLeg3D_2(){
+    if(!this.leg3D_2){
+      this.thirdPoint2D = new THREE.Vector3(this.vecb.coord.x,this.veca.coord.y,this.veca.coord.z);
+      this.thirdPoint3D= new THREE.Vector3(this.vecb.coord.x,this.vecb.coord.y,this.veca.coord.z);
+      this.leg3D_2 = new Line([...this.vecb.coord.toArray()],[...this.thirdPoint3D.toArray()],'black') 
+      this.leg3D_2.setText(this.font!,'Brown Leg2');
+      this.scene.add(this.leg3D_2.lineMesh,this.leg3D_2.textMesh!);
+      this.ressetCamera(5.6,2.7,19);
+
+    } else {
+      this.leg3D_2.lineMesh.visible = !this.leg3D_2.lineMesh.visible;
+      this.leg3D_2.textMesh!.visible = !this.leg3D_2.textMesh!.visible;
+
+      if(this.leg3D_2.lineMesh.visible) this.ressetCamera(5.6,2.7,19);
+    }
+  }
+
+  showLeg2D_2(){
+    if(!this.leg2D_2){
+      this.thirdPoint2D = new THREE.Vector3(this.vecb.coord.x,this.veca.coord.y,this.veca.coord.z);
+      this.thirdPoint3D= new THREE.Vector3(this.vecb.coord.x,this.vecb.coord.y,this.veca.coord.z);
+      this.leg2D_2 = new Line([...this.thirdPoint3D.toArray()],[...this.thirdPoint2D.toArray()],'black') 
+      this.leg2D_2.setText(this.font!,'Yellow Leg2','yellow');
+      this.leg2D_2.textMesh?.position.setY(this.leg2D_2.textMesh?.position.y+1);
+
+      this.scene.add(this.leg2D_2.lineMesh,this.leg2D_2.textMesh!);
       this.ressetCamera();
 
     } else {
-      this.hypoteneuse.lineMesh.visible = !this.hypoteneuse.lineMesh.visible;
-      this.hypoteneuse.textMesh!.visible = !this.hypoteneuse.textMesh!.visible;
+      this.leg2D_2.lineMesh.visible = !this.leg2D_2.lineMesh.visible;
+      this.leg2D_2.textMesh!.visible = !this.leg2D_2.textMesh!.visible;
 
-      if(this.hypoteneuse.lineMesh.visible) this.ressetCamera();
+      if(this.leg2D_2.lineMesh.visible) this.ressetCamera();
     }
   }
-  showLeg(){
-    if(!this.leg){
-      let thirdPoint = new THREE.Vector3();
-      thirdPoint= new THREE.Vector3(this.vecb.coord.x,this.veca.coord.y,this.vecb.coord.z);
-      this.thirdPoint = thirdPoint;
-      this.leg = new Line([...this.veca.coord.toArray()],[...thirdPoint.toArray()],'black') 
-      this.leg.setText(this.font!,'Leg');
-      this.scene.add(this.leg.lineMesh,this.leg.textMesh!);
+
+
+  showLeg2D_1(){
+    if(!this.leg2D_1){
+
+      this.thirdPoint2D = new THREE.Vector3(this.vecb.coord.x,this.veca.coord.y,this.veca.coord.z);
+      this.thirdPoint3D= new THREE.Vector3(this.vecb.coord.x,this.vecb.coord.y,this.veca.coord.z);
+
+      this.leg2D_1 = new Line([...this.veca.coord.toArray()],[...this.thirdPoint2D.toArray()],'black');
+      this.leg2D_1.setText(this.font!,'Yellow Leg1','yellow');
+      this.scene.add(this.leg2D_1.lineMesh,this.leg2D_1.textMesh!);
       this.ressetCamera();
     } else {
-      this.leg.lineMesh.visible = !this.leg.lineMesh.visible;
-      this.leg.textMesh!.visible = !this.leg.textMesh!.visible;
-      if(this.leg.lineMesh.visible) this.ressetCamera();
+      this.leg2D_1.lineMesh.visible = !this.leg2D_1.lineMesh.visible;
+      this.leg2D_1.textMesh!.visible = !this.leg2D_1.textMesh!.visible;
+      if(this.leg2D_1.lineMesh.visible) this.ressetCamera();
 
     }
   }
 
-  ressetCamera(){
+  showLeg3D_1(){
+    if(!this.leg3D_1){
+
+      this.thirdPoint2D = new THREE.Vector3(this.vecb.coord.x,this.veca.coord.y,this.veca.coord.z);
+      this.thirdPoint3D= new THREE.Vector3(this.vecb.coord.x,this.vecb.coord.y,this.veca.coord.z);
+
+      this.leg3D_1 = new Line([...this.veca.coord.toArray()],[...this.thirdPoint3D.toArray()],'black');
+      this.leg3D_1.setText(this.font!,'Brown Leg1');
+      this.leg3D_1.textMesh?.position.setY(this.leg3D_1.textMesh?.position.y-1);
+
+      this.scene.add(this.leg3D_1.lineMesh,this.leg3D_1.textMesh!);
+      this.ressetCamera(5.6,2.7,19);
+    } else {
+      this.leg3D_1.lineMesh.visible = !this.leg3D_1.lineMesh.visible;
+      this.leg3D_1.textMesh!.visible = !this.leg3D_1.textMesh!.visible;
+      if(this.leg3D_1.lineMesh.visible) this.ressetCamera(5.6,2.7,19);
+
+    }
+  }
+
+  ressetCamera(x?:number,y?:number,z?:number){
+    if(!x && !y && !z)
     this.camera!.position.set( 0,0, 20 );
+    else
+    this.camera!.position.set(x!,y!,z!);
+
     this.camera!.zoom = 2;
     this.camera!.lookAt(new THREE.Vector3());
     this.camera!.updateProjectionMatrix();

@@ -47,3 +47,41 @@ math={'\\color{brown}{d^2} \\color{black}{=} \\color{red}{\\| \\vec{a}  \\|^2} \
 
 <Fig6 />
 <Fig7 />
+<hr />
+<strong>Generalizing finding <Latex math={'\\color{brown}d^2'} /> in higher dimension:</strong>:
+<p>As you can see from the Extending 2D to 3D example, when we add a dimension, the lower dimension '<Latex math={'\\color{brown}d_{low}'} />' we have is just a leg of the right triangle that contains the 
+  <Latex math={'\\color{brown}d'} /> in the higher dimension. And the other leg is the distance between the two vectors in that added dimension.</p>
+  <p>So given two vectors in <Latex math={'\\mathrm{R}^n'} />, we can build up from <Latex math={'\\mathrm{R}^2'} /> and show that the square of the distance between those two vectors is:</p>
+
+  <fieldset>
+    <legend>{getCircleNum(6)}</legend>
+    <Latex
+      displayMode={true}
+      math={'\\Rightarrow \\color{brown}{d^2} \\color{black}{=} \\sum_{m=1}^{n} (\\color{red}{a_m} \\color{black}- \\color{blue}{b_m} \\color{black} )^2 '}
+    />
+  </fieldset>
+
+
+  <p>Now we can set  <Latex math={'\\color{brown}d^2'} /> = {getCircleNum(5)} = {getCircleNum(6)} :</p> 
+    <Latex
+      displayMode={true}
+      math={`\\Rightarrow \\color{brown}{d^2} \\color{black}{=} \\color{red}{\\sum_{m=1}^{n} {a_m^2}} \\color{black}{+} \\color{blue}{\\sum_{m=1}^{n} b_m^2}\\color{black}{ - 2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta)}
+     
+      \\color{black}{=} \\sum_{m=1}^{n} (\\color{red}{a_m} \\color{black}- \\color{blue}{b_m} \\color{black} )^2 `}
+    />
+
+    <Latex displayMode={true}
+    math={`\\Rightarrow  - 2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) = 
+    \\sum_{m=1}^{n} -2a_m b_m 
+    `}
+    />
+
+
+    <Latex displayMode={true}
+    math={`\\Rightarrow   cos(\\theta) = 
+         \\frac{ \\sum_{m=1}^{n} a_m b_m } { \\| \\vec{a}  \\| \\|\\vec{b}\\|}  = \\frac{<\\vec{a},\\vec{b}>}  { \\| \\vec{a}  \\| \\|\\vec{b}\\|}
+    `}
+    />
+
+
+    <p>Voilà!, we show that <Latex math={'cos(\\theta)=\\frac{<a,b>}{\\|a\\|\\|b\\|}'} /> holds for <Latex math={'\\mathrm{R}^n'}/> vectors.</p>

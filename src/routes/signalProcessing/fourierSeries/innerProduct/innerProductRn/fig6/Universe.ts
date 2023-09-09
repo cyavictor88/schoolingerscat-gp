@@ -48,8 +48,8 @@ export class Universe extends THREE.EventDispatcher {
   focusTriangleLine1: Line | null = null;
   focusTriangleLine2: Line | null = null;
 
-  hypoteneuse: Line | null = null;
-  leg: Line | null = null;
+  leg2: Line | null = null;
+  leg1: Line | null = null;
 
   thirdPoint: THREE.Vector3 | null = null;
   constructor(refCurrent: HTMLDivElement) {
@@ -130,8 +130,8 @@ export class Universe extends THREE.EventDispatcher {
     this.addEventListener('setMathMeshes',()=>{this.setMathMeshes()})
 
     this.addEventListener('showFocusTriangle',()=>{this.showFocusTriangle()});
-    this.addEventListener('showHypotenuse',()=>{this.showHypotenuse()});
-    this.addEventListener('showLeg',()=>{this.showLeg()});
+    this.addEventListener('showLeg2',()=>{this.showLeg2()});
+    this.addEventListener('showLeg1',()=>{this.showLeg1()});
 
   }
 
@@ -159,30 +159,30 @@ export class Universe extends THREE.EventDispatcher {
       }
   }
 
-  showHypotenuse(){
-    if(!this.hypoteneuse){
+  showLeg2(){
+    if(!this.leg2){
       let thirdPoint = new THREE.Vector3();
       thirdPoint= new THREE.Vector3(this.vecb.coord.x,this.veca.coord.y,this.vecb.coord.z);
       this.thirdPoint = thirdPoint;
-      this.hypoteneuse = new Line([...this.vecb.coord.toArray()],[...thirdPoint.toArray()],'black') 
-      this.hypoteneuse.setText(this.font!,'Hypotenuse');
-      this.scene.add(this.hypoteneuse.lineMesh,this.hypoteneuse.textMesh!);
+      this.leg2 = new Line([...this.vecb.coord.toArray()],[...thirdPoint.toArray()],'black') 
+      this.leg2.setText(this.font!,'leg2');
+      this.scene.add(this.leg2.lineMesh,this.leg2.textMesh!);
     } else {
-      this.hypoteneuse.lineMesh.visible = !this.hypoteneuse.lineMesh.visible;
-      this.hypoteneuse.textMesh!.visible = !this.hypoteneuse.textMesh!.visible;
+      this.leg2.lineMesh.visible = !this.leg2.lineMesh.visible;
+      this.leg2.textMesh!.visible = !this.leg2.textMesh!.visible;
     }
   }
-  showLeg(){
-    if(!this.leg){
+  showLeg1(){
+    if(!this.leg1){
       let thirdPoint = new THREE.Vector3();
       thirdPoint= new THREE.Vector3(this.vecb.coord.x,this.veca.coord.y,this.vecb.coord.z);
       this.thirdPoint = thirdPoint;
-      this.leg = new Line([...this.veca.coord.toArray()],[...thirdPoint.toArray()],'black') 
-      this.leg.setText(this.font!,'Leg');
-      this.scene.add(this.leg.lineMesh,this.leg.textMesh!);
+      this.leg1 = new Line([...this.veca.coord.toArray()],[...thirdPoint.toArray()],'black') 
+      this.leg1.setText(this.font!,'Leg1');
+      this.scene.add(this.leg1.lineMesh,this.leg1.textMesh!);
     } else {
-      this.leg.lineMesh.visible = !this.leg.lineMesh.visible;
-      this.leg.textMesh!.visible = !this.leg.textMesh!.visible;
+      this.leg1.lineMesh.visible = !this.leg1.lineMesh.visible;
+      this.leg1.textMesh!.visible = !this.leg1.textMesh!.visible;
     }
   }
 

@@ -32,12 +32,12 @@ export class Line {
 
   }
 
-  setText(font: Font, text: string, position?: THREE.Vector3){
+  setText(font: Font, text: string, color?: string | number, position?: THREE.Vector3){
     // create font
     this.font = font;
     let textPosition = this.points[0].add(this.points[1]).divideScalar(2);
     if(position)textPosition=position;
-    this.textMesh = this.makeTextMesh(text, textPosition);
+    this.textMesh = this.makeTextMesh(text, textPosition,color);
 
   }
 
@@ -45,7 +45,8 @@ export class Line {
     this.textMesh!.position.set(position.x,position.y,position.z);
   }
 
-  makeTextMesh(text: string, position: THREE.Vector3) {
+  makeTextMesh(text: string, position: THREE.Vector3, color?:string|number) {
+    let textColor = color ? color: 'brown'; 
     const x = position.x;
     const y = position.y;
     const z = position.z;
@@ -58,8 +59,8 @@ export class Line {
     const centerOffsetX = - 0.5 * (textGeo.boundingBox!.max.x - textGeo.boundingBox!.min.x);
     const centerOffsetY = - 0.5 * (textGeo.boundingBox!.max.y - textGeo.boundingBox!.min.y);
     let materials = [
-      new THREE.MeshPhongMaterial({ color: 'brown', flatShading: true }), // front
-      new THREE.MeshPhongMaterial({ color: 'brown' }) // side
+      new THREE.MeshPhongMaterial({ color: textColor, flatShading: true }), // front
+      new THREE.MeshPhongMaterial({ color: textColor }) // side
     ];
     const textMesh = new THREE.Mesh(textGeo, materials);
     textMesh.position.set(x + centerOffsetX, y + centerOffsetY, z);

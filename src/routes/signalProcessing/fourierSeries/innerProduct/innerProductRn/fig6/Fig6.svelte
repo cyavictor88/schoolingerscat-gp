@@ -26,8 +26,8 @@
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<!-- svelte-ignore a11y-no-static-element-interactions -->
 		<p>In Figure 6, you can form the <span class='toggleFig' on:click={()=>{universe.dispatchEvent({type:'showFocusTriangle'})}}>right triangle</span>
-		 	and get the <span class='toggleFig' on:click={()=>{universe.dispatchEvent({type:'showHypotenuse'})}}> hypotenuse </span>  <Latex math={'=|a_y-b_y|'} />
-			and <span class='toggleFig' on:click={()=>{universe.dispatchEvent({type:'showLeg'})}}>leg</span> <Latex math={'=|a_x-b_x|'} />
+		 	and get the <span class='toggleFig' on:click={()=>{universe.dispatchEvent({type:'showLeg1'})}}> Leg1 </span>  <Latex math={'=|a_x-b_x|'} />
+			and <span class='toggleFig' on:click={()=>{universe.dispatchEvent({type:'showLeg2'})}}>Leg2</span> <Latex math={'=|a_y-b_y|'} />
 		</p>
 
 		<p>With Pythagorean Theorem, we can 	have the equation: </p>
