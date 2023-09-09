@@ -5,7 +5,7 @@
 	import { getContext } from 'svelte';
 	import type { Writable } from 'svelte/store';
 	import Title from '$lib/components/PageComp/Title.svelte';
-	import Katex from '$lib/components/Katex/Katex.svelte';
+	import Latex from '$lib/components/Latex/Latex.svelte';
 	import Scrollspy from '$lib/components/Scrollspy/Scrollspy.svelte';
 
 	const innerPageRoute = getContext<Writable<IRoute>>('innerPageRoute');
@@ -29,7 +29,7 @@
 		vectors are to each other.
 	</p>
 	<p>
-		In this page, We will start with explaining inner product of vectors in <Katex
+		In this page, We will start with explaining inner product of vectors in <Latex
 			math={'\\mathbb{R}^2'}
 		/>
 		, and end with explaining inner product of functions.
@@ -37,19 +37,19 @@
 
 	<section id="innerProduct2D">
 		<Title hLevel={2} backgroudColor={SITE_COLOR.TitleBG}>
-			Inner Product in <Katex math={'\\mathbb{R}^2'} />:
+			Inner Product in <Latex math={'\\mathbb{R}^2'} />:
 		</Title>
 		<InnerProduct2D />
 	</section>
 	<section id="innerProduct3D">
 		<Title hLevel={2} backgroudColor={SITE_COLOR.TitleBG}>
-			Inner Product in <Katex math={'\\mathbb{R}^3'} />:
+			Inner Product in <Latex math={'\\mathbb{R}^3'} />:
 		</Title>
 		<InnerProduct3D />
 	</section>
 	<section id="innerProductRn">
 		<Title hLevel={2} backgroudColor={SITE_COLOR.TitleBG}>
-			Inner Product in <Katex math={'\\mathbb{R}^n'} />:
+			Inner Product in <Latex math={'\\mathbb{R}^n'} />:
 		</Title>
 		<InnerProductRn />
 	</section>

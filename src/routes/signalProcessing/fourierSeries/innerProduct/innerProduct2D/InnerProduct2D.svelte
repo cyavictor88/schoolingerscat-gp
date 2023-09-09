@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Katex from '$lib/components/Katex/Katex.svelte';
+	import Latex from '$lib/components/Latex/Latex.svelte';
 	import innerProduct2D from '$lib/assets/fourierSeries/innerProduct/innerProduct2D.svg';
 	import innerProduct2DCosine from '$lib/assets/fourierSeries/innerProduct/innerProduct2DCosine.svg';
 	import { onMount } from 'svelte';
@@ -20,10 +20,10 @@
 </script>
 
 <p>
-	Given two <Katex math={'\\mathbb{R}^2'} /> vectors, <Katex math={'\\vec{a}=(a_x,a_y)'} /> and <Katex
+	Given two <Latex math={'\\mathbb{R}^2'} /> vectors, <Latex math={'\\vec{a}=(a_x,a_y)'} /> and <Latex
 		math={'\\vec{b}=(b_x,b_y)'}
 	/>, as shown in Figure 1, you can see that
-	<Katex math={'\\theta'} /> indicates how closely aligned <Katex math={'\\vec{a}'} /> and <Katex
+	<Latex math={'\\theta'} /> indicates how closely aligned <Latex math={'\\vec{a}'} /> and <Latex
 		math={'\\vec{b}'}
 	/> are.
 </p>
@@ -37,18 +37,18 @@
 </div>
 
 <p>
-	Next I will give you the inner product formula and show how the inner product of <Katex
+	Next I will give you the inner product formula and show how the inner product of <Latex
 		math={'\\vec{a}'}
-	/> and <Katex math={'\\vec{b}'} /> is related to <Katex math={'\\theta'} />.
+	/> and <Latex math={'\\vec{b}'} /> is related to <Latex math={'\\theta'} />.
 </p>
 <strong>
-	Inner Product in <Katex math={'\\mathbb{R}^2'} />:
+	Inner Product in <Latex math={'\\mathbb{R}^2'} />:
 </strong>
-<Katex
+<Latex
 	displayMode={true}
 	math={'\\mathrm{for} \\; \\vec{a}= \\left[\\begin{array}{c} a_x \\\\ a_y \\end{array} \\right] \\; \\mathrm{and} \\; \\vec{b}= \\left[\\begin{array}{c} b_x \\\\ b_y \\end{array}\\right],'}
 />
-<Katex
+<Latex
 	displayMode={true}
 	math={'<\\vec{a},\\vec{b}>:= \\vec{a}^T \\vec{b} =' +
 		' \\left[\\begin{array}{cc}a_x & a_y \\end{array}\\right]' +
@@ -56,10 +56,10 @@
 />
 
 <p>
-	Now, I will show how the Inner Product of <Katex math={'\\vec{a}'} /> and <Katex
+	Now, I will show how the Inner Product of <Latex math={'\\vec{a}'} /> and <Latex
 		math={'\\vec{b}'}
-	/>, which is <Katex math={'a_xb_x+a_yb_y'} />, is related to <Katex math={'\\theta'} /> using
-	<Katex math={'d'} />.
+	/>, which is <Latex math={'a_xb_x+a_yb_y'} />, is related to <Latex math={'\\theta'} /> using
+	<Latex math={'d'} />.
 </p>
 <hr style="border-top: 1px grey dotted" />
 <b>Step 1. Use Law of Cosine:</b>
@@ -67,7 +67,7 @@
 	As shown in Figure 2, by using <a href="https://en.wikipedia.org/wiki/Law_of_cosines"
 		>Low of Cosines</a
 	>
-	on the triangle in the figure, we can get the following equation for <Katex math={'d'} />:
+	on the triangle in the figure, we can get the following equation for <Latex math={'d'} />:
 </p>
 
 <Col2>
@@ -76,17 +76,17 @@
 		<div bind:this={fig2} />
 	</div>
 	<div slot='col2'>
-		<Katex
+		<Latex
 		displayMode={true}
 		math={'\\color{brown}{d^2} \\color{black}{=} \\color{red}{\\| \\vec{a}  \\|^2} \\color{black}{+} \\color{blue}{\\| \\vec{b}  \\|^2} \\color{black}{ - 2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) } '}
 		/>
-		<Katex
+		<Latex
 			displayMode={true}
 			math={'\\mathrm{where} \\ \\color{red}{\\| \\vec{a}  \\|^2 = a_x^2+a_y^2} \\color{black}{\\quad \\mathrm{and \\quad }}  \\color{blue}{\\| \\vec{b}  \\|^2 = b_x^2+b_y^2}'}
 		/>
 		<fieldset>
 			<legend>{getCircleNum(1)}</legend>
-			<Katex
+			<Latex
 				displayMode={true}
 				math={'\\Rightarrow \\color{brown}{d^2} \\color{black}{=} \\color{red}{a_x^2+a_y^2} \\color{black}{+} \\color{blue}{b_x^2+b_y^2} \\color{black}{ - 2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) }'}
 			/>
@@ -100,8 +100,8 @@
 <b>Step 2. Make a Right Triangle:</b>
 
 <p>
-	We can use the x,y coordinates of <Katex math={'\\vec{a}'} /> and <Katex math={'\\vec{b}'} /> to construct
-	the brown right triangle as shown in Figure 3, and use the brown trianlge to get <Katex
+	We can use the x,y coordinates of <Latex math={'\\vec{a}'} /> and <Latex math={'\\vec{b}'} /> to construct
+	the brown right triangle as shown in Figure 3, and use the brown trianlge to get <Latex
 		math={'d'}
 	/>:
 </p>
@@ -115,18 +115,18 @@
 		<div bind:this={fig3} />
 	</div>
 	<div slot='col2' >
-		<Katex
+		<Latex
 		displayMode={true}
 		math={'\\color{brown}{d_x} \\color{black} = | \\color{red}a_x \\color{brown} \\color{black} - \\color{blue}b_x \\color{black} | '}
 		/>
-		<Katex
+		<Latex
 			displayMode={true}
 			math={'\\color{brown}{d_y} \\color{black} = | \\color{red}a_y \\color{brown} \\color{black} - \\color{blue}b_y \\color{black} | '}
 		/>
-		<Katex displayMode={true} math={'\\color{brown}{d^2} = {d_x}^2 + {d_y}^2'} />
+		<Latex displayMode={true} math={'\\color{brown}{d^2} = {d_x}^2 + {d_y}^2'} />
 		<fieldset>
 			<legend>{getCircleNum(2)}</legend>
-			<Katex
+			<Latex
 				displayMode={true}
 				math={'\\Rightarrow \\color{brown}{d^2} \\color{black} = ( \\color{red}{a_x} \\color{black}- \\color{blue} b_x \\color{black})^2+( \\color{red}{a_y} \\color{black}- \\color{blue} b_y \\color{black})^2'}
 			/>
@@ -137,31 +137,31 @@
 <hr style="border-top: 1px grey dotted" />
 
 <p>
-	Now we equate <Katex math={'\\color{brown}{d^2}'} /> = {getCircleNum(2)} = {getCircleNum(1)} and get:
+	Now we equate <Latex math={'\\color{brown}{d^2}'} /> = {getCircleNum(2)} = {getCircleNum(1)} and get:
 </p>
 
-<Katex
+<Latex
 	displayMode={true}
 	math={'\\color{brown}{d^2} \\color{black} =    ( \\color{red}{a_x} \\color{black}- \\color{blue} b_x \\color{black})^2+( \\color{red}{a_y} \\color{black}- \\color{blue} b_y \\color{black})^2 \\color{black}{=} \\color{red}{a_x^2+a_y^2} \\color{black}{+} \\color{blue}{b_x^2+b_y^2} \\color{black}{ - 2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) }'}
 />
 
-<Katex
+<Latex
 	displayMode={true}
 	math={'\\Rightarrow  (a_x^2+b_x^2-2a_xb_x) +(a_y^2+b_y^2-2a_yb_y)= \\color{red}{a_x^2+a_y^2} \\color{black}{+} \\color{blue}{b_x^2+b_y^2} \\color{black}{ - 2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) }'}
 />
-<Katex
+<Latex
 	displayMode={true}
 	math={'\\Rightarrow (\\cancel{a_x^2}+\\cancel{b_x^2}-2a_xb_x )+(\\cancel{a_y^2}+\\cancel{b_y^2}-2a_yb_y)= \\color{red}{\\cancel{a_x^2}+\\cancel{a_y^2}} \\color{black}{+} \\color{blue}{\\cancel{b_x^2}+\\cancel{b_y^2}} \\color{black}{ - 2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) }'}
 />
-<Katex
+<Latex
 	displayMode={true}
 	math={'\\Rightarrow -2a_xb_x-2a_yb_y = -2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta)'}
 />
-<Katex
+<Latex
 	displayMode={true}
 	math={'\\Rightarrow a_xb_x+a_yb_y = < \\vec{a},\\vec{b}> = \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta)'}
 />
-<Katex
+<Latex
 	displayMode={true}
 	math={'\\Rightarrow cos(\\theta)   = \\frac{< \\vec{a},\\vec{b}>}{  \\| \\vec{a}  \\| \\|\\vec{b}\\| }'}
 />

@@ -3,7 +3,7 @@
 	import * as PIXI from 'pixi.js';
 	import { mathmesh2D } from '$lib/mathmesh/mathmesh';
 	import { figure1 } from './figure1';
-	import Loader from '$lib/components/Katex/Loader/Loader.svelte';
+	import Loader from '$lib/components/Latex/Loader/Loader.svelte';
 
 	let fig1: HTMLDivElement;
   async function loadF1(){

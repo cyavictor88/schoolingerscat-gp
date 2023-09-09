@@ -1,7 +1,7 @@
 <script lang="ts">
 	import * as d3 from 'd3';
 	import { onMount } from 'svelte';
-	import Katex from '$lib/components/Katex/Katex.svelte';
+	import Latex from '$lib/components/Latex/Latex.svelte';
 	import { GameObj } from './GameObj';
 	import Arrow from './Arrow.svelte';
 	import { setUpCircle } from './d3DraggableCircle';
@@ -130,12 +130,12 @@
 		style="font-size: 14px;"
 	>
 	<div>
-		<p><Katex math={`\\color{red} \\|\\vec{a}\\|=${game.vecMag(game.veca).toFixed(2)}`}/></p>
-		<p><Katex math={`\\color{blue} \\|\\vec{b}\\|=${game.vecMag(game.vecb).toFixed(2)}`}/></p>
-		<p><Katex math={`<\\vec{a},\\vec{b}>=${game.calcInnerProduct().toFixed(2)}`}/></p>
-		<p><Katex math={`\\frac{< \\vec{a},\\vec{b}>}{  \\| \\vec{a}  \\| \\|\\vec{b}\\|} = \\color{green}${(game.calcInnerProduct()/(game.vecMag(game.veca))/(game.vecMag(game.vecb))).toFixed(3)}`}/></p>
-		<p><Katex math={`cos(\\theta)=\\color{green}${Math.cos(game.calcAngleBetween(game.veca,game.vecb)).toFixed(3)}`}/></p>
-		<p><Katex math={'\\theta'}/>= {(game.calcAngleBetween(game.veca,game.vecb)*180/Math.PI).toFixed(3)}</p>
+		<p><Latex math={`\\color{red} \\|\\vec{a}\\|=${game.vecMag(game.veca).toFixed(2)}`}/></p>
+		<p><Latex math={`\\color{blue} \\|\\vec{b}\\|=${game.vecMag(game.vecb).toFixed(2)}`}/></p>
+		<p><Latex math={`<\\vec{a},\\vec{b}>=${game.calcInnerProduct().toFixed(2)}`}/></p>
+		<p><Latex math={`\\frac{< \\vec{a},\\vec{b}>}{  \\| \\vec{a}  \\| \\|\\vec{b}\\|} = \\color{green}${(game.calcInnerProduct()/(game.vecMag(game.veca))/(game.vecMag(game.vecb))).toFixed(3)}`}/></p>
+		<p><Latex math={`cos(\\theta)=\\color{green}${Math.cos(game.calcAngleBetween(game.veca,game.vecb)).toFixed(3)}`}/></p>
+		<p><Latex math={'\\theta'}/>= {(game.calcAngleBetween(game.veca,game.vecb)*180/Math.PI).toFixed(3)}</p>
 		<label><input type="checkbox" bind:checked={snap2Grid} disabled={false}>Snap to Grid</label>
 		<br />
 		<label><input type="checkbox" bind:checked={fixedRadius} disabled={false}>Fixed Radius = 1</label>
@@ -153,7 +153,7 @@
 		style="font-size: 12px;"
 	>
 	<div>
-		<p><Katex math={`\\color{red}${game.vecStr(game.veca)}`}/></p>
+		<p><Latex math={`\\color{red}${game.vecStr(game.veca)}`}/></p>
 	</div>
 
 	</foreignObject>
@@ -167,7 +167,7 @@
 		style="font-size: 12px;"
 	>
 	<div>
-		<p><Katex math={`\\color{blue}${game.vecStr(game.vecb)}`}/></p>
+		<p><Latex math={`\\color{blue}${game.vecStr(game.vecb)}`}/></p>
 	</div>
 
 	</foreignObject>
@@ -233,7 +233,7 @@
 		overflow="visible"
 		style="font-size: 12px;"
 	>
-		<div style="transform: translateY(-50%);"><Katex math={`\\theta=${realTheta}`} /></div>
+		<div style="transform: translateY(-50%);"><Latex math={`\\theta=${realTheta}`} /></div>
 	</foreignObject>
 
 	<path stroke="black" fill="none" d={drawCurve(d3.path()).toString()} />

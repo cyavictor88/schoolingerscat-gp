@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Katex from '$lib/components/Katex/Katex.svelte';
+	import Latex from '$lib/components/Latex/Latex.svelte';
 	import { onMount } from 'svelte';
 	import { Universe as Fig4 } from './fig4/Universe';
 	import { Universe as Fig5 } from './fig5/Universe';
@@ -32,13 +32,13 @@
 </script>
 
 <p>
-	Let's expand inner product for vectors in <Katex math={'\\mathbb{R}^2'} /> to <Katex
+	Let's expand inner product for vectors in <Latex math={'\\mathbb{R}^2'} /> to <Latex
 		math={'\\mathbb{R}^3'}
 	/> and see if the relation between the angle and inner product equation still holds in 3D:
 </p>
 <p>Inner product for 3D vectors is:</p>
 
-<Katex
+<Latex
 	displayMode={true}
 	math={`<\\vec{a},\\vec{b}>:= 
 \\left[\\begin{array}{ccc} a_x & a_y & a_z \\end{array}\\right]
@@ -48,9 +48,9 @@
 />
 
 <p>
-	Figure 4 shows two <Katex math={'\\mathbb{R}^3'} /> vectors, <Katex math={'\\vec{a}'} /> and <Katex
+	Figure 4 shows two <Latex math={'\\mathbb{R}^3'} /> vectors, <Latex math={'\\vec{a}'} /> and <Latex
 		math={'\\vec{b}'}
-	/>, with <Katex math={'d'} /> indicates the distance between two vectors.
+	/>, with <Latex math={'d'} /> indicates the distance between two vectors.
 </p>
 
 <div style="display: flex; flex-flow: column nowrap; align-items:start; justify-content: start; border: 1px black solid;width:500px">
@@ -66,7 +66,7 @@
 </div>
 
 <p>
-	Now we will show <Katex math={'cos(\\theta)=\\frac{<a,b>}{\\|a\\|\\|b\\|}'} /> still holds in 3D by solving for <Katex math={'d'} />
+	Now we will show <Latex math={'cos(\\theta)=\\frac{<a,b>}{\\|a\\|\\|b\\|}'} /> still holds in 3D by solving for <Latex math={'d'} />
 </p>
 <hr style="border-top: 1px grey dotted" />
 <b>Step 1. Use Law of Cosine:</b>
@@ -75,21 +75,21 @@
 	Using <a href="https://en.wikipedia.org/wiki/Law_of_cosines"
 		>Low of Cosines</a
 	>
-	on the <a href="#fig4" on:click={()=>{universeFig4.eventBroker.emit('showFig4Triangle')}}>triangle</a> in Figure 4, we can get the following equation for <Katex math={'d'} />:
+	on the <a href="#fig4" on:click={()=>{universeFig4.eventBroker.emit('showFig4Triangle')}}>triangle</a> in Figure 4, we can get the following equation for <Latex math={'d'} />:
 </p>
 
 <div style="margin: auto; margin-left:0;margin-right:0;">
-	<Katex
+	<Latex
 		displayMode={true}
 		math={'\\color{brown}{d^2} \\color{black}{=} \\color{red}{\\| \\vec{a}  \\|^2} \\color{black}{+} \\color{blue}{\\| \\vec{b}  \\|^2} \\color{black}{ - 2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) } '}
 	/>
-	<Katex
+	<Latex
 		displayMode={true}
 		math={'\\mathrm{where} \\ \\color{red}{\\| \\vec{a}  \\|^2 = a_x^2+a_y^2+a_z^2} \\color{black}{\\quad \\mathrm{and \\quad }}  \\color{blue}{\\| \\vec{b}  \\|^2 = b_x^2+b_y^2+b_z^2}'}
 	/>
 	<fieldset>
 		<legend>{getCircleNum(3)}</legend>
-		<Katex
+		<Latex
 			displayMode={true}
 			math={'\\Rightarrow \\color{brown}{d^2} \\color{black}{=} \\color{red}{a_x^2+a_y^2+a_z^2} \\color{black}{+} \\color{blue}{b_x^2+b_y^2+b_z^2}\\color{black}{ - 2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) }'}
 		/>
@@ -101,8 +101,8 @@
 <b>Step 2. Make a Right Triangle:</b>
 
 <p>
-	We can use the x,y,z coordinates of <Katex math={'\\vec{a}'} /> and <Katex math={'\\vec{b}'} /> to construct
-	the brown right triangle as shown in Figure 5, and use the brown trianlge to get <Katex
+	We can use the x,y,z coordinates of <Latex math={'\\vec{a}'} /> and <Latex math={'\\vec{b}'} /> to construct
+	the brown right triangle as shown in Figure 5, and use the brown trianlge to get <Latex
 		math={'d'}
 	/>:
 </p>
@@ -114,13 +114,13 @@
 		<div style='cursor: pointer;'bind:this={divFig5} />
 	</div>
 	<div slot='col2'>
-		<Katex
+		<Latex
 			displayMode={true}
 			math={'\\color{brown}{d^2}  = ( |  \\color{brown}{a_x} - \\color{brown} b_x |^2+ | \\color{brown}{a_y} - \\color{brown} b_y  |^2 ) + | \\color{brown}{a_z} - \\color{brown} b_z  |^2'}
 		/>
 		<fieldset>
 			<legend>{getCircleNum(4)}</legend>
-			<Katex
+			<Latex
 				displayMode={true}
 				math={'\\Rightarrow \\color{brown}{d^2}  = ( \\color{brown}{a_x} - \\color{brown} b_x )^2+( \\color{brown}{a_y} - \\color{brown} b_y )^2+( \\color{brown}{a_z} - \\color{brown} b_z )^2'}
 			/>
@@ -130,18 +130,18 @@
 
 <p>By equating {getCircleNum(4)} = {getCircleNum(3)}, we can have the following:</p>
 
-<Katex displayMode={true} math={`
+<Latex displayMode={true} math={`
 \\color{brown}{d^2=(a_x-b_x)^2+(a_y-b_y)^2+ (a_z-b_z)^2} \\color{black}{=} \\color{red}{a_x^2+a_y^2+a_z^2} \\color{black}{+} \\color{blue}{b_x^2+b_y^2+b_z^2} \\color{black}{ - 2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) } 
 `} />
-<Katex displayMode={true} math={`\\Rightarrow \\color{black}{ (a_x-b_x)^2+(a_y-b_y)^2+ (a_z-b_z)^2} \\color{black}{=} \\color{red}{a_x^2+a_y^2+a_z^2} \\color{black}{+} \\color{blue}{b_x^2+b_y^2+b_z^2} \\color{black}{ - 2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) } `} />
-<Katex displayMode={true} math={`\\Rightarrow  a_x^2+b_x^2-2a_xb_x +a_y^2+b_y^2-2a_yb_y +a_z^2+b_z^2-2a_zb_z= \\color{red}{a_x^2+a_y^2+a_z^2} \\color{black}{+} \\color{blue}{b_x^2+b_y^2+b_z^2} \\color{black}{ - 2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) } `} />
-<Katex displayMode={true} math={`\\Rightarrow \\cancel{a_x^2}+\\cancel{b_x^2}-2a_xb_x +\\cancel{a_y^2}+\\cancel{b_y^2}-2a_yb_y+\\cancel{a_z^2}+\\cancel{b_z^2}-2a_zb_z= \\color{red}{\\cancel{a_x^2}+\\cancel{a_y^2}+\\cancel{a_z^2}} \\color{black}{+} \\color{blue}{\\cancel{b_x^2}+\\cancel{b_y^2}+\\cancel{b_z^2}} \\color{black}{ - 2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) } `} />
-<Katex displayMode={true} math={`\\Rightarrow -2a_xb_x-2a_yb_y -2a_zb_z= -2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) `} />
-<Katex displayMode={true} math={`\\Rightarrow a_xb_x+a_yb_y+a_zb_z = < \\vec{a},\\vec{b}> = \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) `} />
-<Katex displayMode={true} math={`\\Rightarrow cos(\\theta)   = \\frac{< \\vec{a},\\vec{b}>}{  \\| \\vec{a}  \\| \\|\\vec{b}\\| } `} />
+<Latex displayMode={true} math={`\\Rightarrow \\color{black}{ (a_x-b_x)^2+(a_y-b_y)^2+ (a_z-b_z)^2} \\color{black}{=} \\color{red}{a_x^2+a_y^2+a_z^2} \\color{black}{+} \\color{blue}{b_x^2+b_y^2+b_z^2} \\color{black}{ - 2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) } `} />
+<Latex displayMode={true} math={`\\Rightarrow  a_x^2+b_x^2-2a_xb_x +a_y^2+b_y^2-2a_yb_y +a_z^2+b_z^2-2a_zb_z= \\color{red}{a_x^2+a_y^2+a_z^2} \\color{black}{+} \\color{blue}{b_x^2+b_y^2+b_z^2} \\color{black}{ - 2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) } `} />
+<Latex displayMode={true} math={`\\Rightarrow \\cancel{a_x^2}+\\cancel{b_x^2}-2a_xb_x +\\cancel{a_y^2}+\\cancel{b_y^2}-2a_yb_y+\\cancel{a_z^2}+\\cancel{b_z^2}-2a_zb_z= \\color{red}{\\cancel{a_x^2}+\\cancel{a_y^2}+\\cancel{a_z^2}} \\color{black}{+} \\color{blue}{\\cancel{b_x^2}+\\cancel{b_y^2}+\\cancel{b_z^2}} \\color{black}{ - 2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) } `} />
+<Latex displayMode={true} math={`\\Rightarrow -2a_xb_x-2a_yb_y -2a_zb_z= -2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) `} />
+<Latex displayMode={true} math={`\\Rightarrow a_xb_x+a_yb_y+a_zb_z = < \\vec{a},\\vec{b}> = \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) `} />
+<Latex displayMode={true} math={`\\Rightarrow cos(\\theta)   = \\frac{< \\vec{a},\\vec{b}>}{  \\| \\vec{a}  \\| \\|\\vec{b}\\| } `} />
 
 
-<p>Voilà!, we show that <Katex math={'cos(\\theta)=\\frac{<a,b>}{\\|a\\|\\|b\\|}'} /> holds for 3D vectors</p>
+<p>Voilà!, we show that <Latex math={'cos(\\theta)=\\frac{<a,b>}{\\|a\\|\\|b\\|}'} /> holds for 3D vectors</p>
 
 <GameInnerProduct3D />
 

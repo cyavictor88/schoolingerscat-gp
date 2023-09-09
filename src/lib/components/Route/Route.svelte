@@ -6,9 +6,9 @@
 	import { browser } from '$app/environment';
 	import { afterNavigate } from '$app/navigation';
 	import { mixin } from 'lodash';
-	import KatexMix from '../Katex/KatexMix.svelte';
 	import url from './url';
 	import { SITE_COLOR } from '$lib/theme/colors';
+	import LatexMix from '../Latex/LatexMix.svelte';
 	export let route: IRoute | null = null;
 	export let indent = 0;
 	export let toggleMenu: any = () => {console.log('doing nothing')};
@@ -53,7 +53,7 @@
 							? SITE_COLOR.CompRouteFocusBG
 							: ''}>
 							{#if route.katexMix}
-								<KatexMix mixedString={route.katexMix} />
+								<LatexMix mixedString={route.katexMix} />
 							{:else}
 								{route.label}
 							{/if}

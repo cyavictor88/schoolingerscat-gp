@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Katex from '$lib/components/Katex/Katex.svelte';
+	import Latex from '$lib/components/Latex/Latex.svelte';
 	import { onMount } from 'svelte';
 	import { Universe as FunThreeJsGame } from './Universe';
 	import Col2 from '$lib/components/PageComp/Col2.svelte';
@@ -56,30 +56,30 @@
 		<div slot='col1'>
 			<p>Interactive Demo:</p>
 			<form>
-				<Katex math={'\\color{red}\\vec{a_x}:'} />
+				<Latex math={'\\color{red}\\vec{a_x}:'} />
 				<input style='width: 40px;' type="number" id="ax" name="fname" bind:value={veca_arr[0]} />
-				<Katex math={'\\color{red}\\vec{a_y}:'} />
+				<Latex math={'\\color{red}\\vec{a_y}:'} />
 				<input style='width: 40px;' type="number" id="ay" name="fname" bind:value={veca_arr[1]} />
-				<Katex math={'\\color{red}\\vec{a_z}:'} />
+				<Latex math={'\\color{red}\\vec{a_z}:'} />
 				<input style='width: 40px;' type="number" id="az" name="fname" bind:value={veca_arr[2]}/>
 			</form>
 			<form>
-				<Katex math={'\\color{blue}\\vec{b_x}:'} />
+				<Latex math={'\\color{blue}\\vec{b_x}:'} />
 				<input style='width: 40px;' type="number" id="bx" name="fname"  bind:value={vecb_arr[0]} on:input={validVecInput} />
-				<Katex math={'\\color{blue}\\vec{b_y}:'} />
+				<Latex math={'\\color{blue}\\vec{b_y}:'} />
 				<input style='width: 40px;' type="number" id="by" name="fname"  bind:value={vecb_arr[1]} />
-				<Katex math={'\\color{blue}\\vec{b_z}:'} />
+				<Latex math={'\\color{blue}\\vec{b_z}:'} />
 				<input style='width: 40px;' type="number" id="bz" name="fname"  bind:value={vecb_arr[2]} />
 			</form>
 			<div style='display: flex; flex-flow: row nowrap; gap:20px;'>
-				<p><Katex math={`\\color{red}|\\vec{a}|=${calculateMagnitude(veca_arr).toFixed()}`}/> </p>
-				<p><Katex math={`\\color{blue}|\\vec{b}|=${calculateMagnitude(vecb_arr).toFixed()}`}/> </p>
-				<p><Katex math={'< \\vec{a},\\vec{b}>'} />={innerProduct.toFixed(2)}</p>
+				<p><Latex math={`\\color{red}|\\vec{a}|=${calculateMagnitude(veca_arr).toFixed()}`}/> </p>
+				<p><Latex math={`\\color{blue}|\\vec{b}|=${calculateMagnitude(vecb_arr).toFixed()}`}/> </p>
+				<p><Latex math={'< \\vec{a},\\vec{b}>'} />={innerProduct.toFixed(2)}</p>
 			</div>
 			<div style='display: flex; flex-flow: row nowrap; gap:20px;'>
-				<p><Katex math={'\\theta'} /> = {theta.toFixed(2)}</p>
-				<p><Katex math={'cos(\\theta)'} /> = {Math.cos(theta/180*Math.PI).toFixed(2)}</p>
-				<p><Katex math={'\\frac{< \\vec{a},\\vec{b}>}{  \\| \\vec{a}  \\| \\|\\vec{b}\\|}'} /> = {(innerProduct/(calculateMagnitude(veca_arr)*calculateMagnitude(vecb_arr))).toFixed(2)}</p>
+				<p><Latex math={'\\theta'} /> = {theta.toFixed(2)}</p>
+				<p><Latex math={'cos(\\theta)'} /> = {Math.cos(theta/180*Math.PI).toFixed(2)}</p>
+				<p><Latex math={'\\frac{< \\vec{a},\\vec{b}>}{  \\| \\vec{a}  \\| \\|\\vec{b}\\|}'} /> = {(innerProduct/(calculateMagnitude(veca_arr)*calculateMagnitude(vecb_arr))).toFixed(2)}</p>
 			</div>
 				<div style='cursor: pointer;'bind:this={divFunThreeJsGame} />
 		</div>

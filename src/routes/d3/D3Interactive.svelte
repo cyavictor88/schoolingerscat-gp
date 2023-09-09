@@ -2,7 +2,7 @@
   import * as d3 from 'd3';
 	import { onMount } from 'svelte';
 	import { FourierSeries } from '../signalProcessing/fourierSeries/intro/exampleFunc/FourierSeries';
-  import Katex from '$lib/components/Katex/Katex.svelte';
+  import Latex from '$lib/components/Latex/Latex.svelte';
 
   export let data = [{x:-1.5,y:2},{x:-.5,y:4},{x:0.5,y:-2},{x:1.5,y:9}];
   export let oriData = [{x:-1.5,y:2},{x:-.5,y:4},{x:0.5,y:-2},{x:1.5,y:9}];
@@ -57,7 +57,7 @@
       <circle name={i.toString()} cx={xScale(d.x)} cy={yScale(d.y)} r="2.5"  color='red'/>
     {/each}
     <foreignObject x={xScale(2)} y="200" width="160" height="160">
-      <Katex math={'\\vec{f}'} />
+      <Latex math={'\\vec{f}'} />
     </foreignObject>
   </g>
 </svg>

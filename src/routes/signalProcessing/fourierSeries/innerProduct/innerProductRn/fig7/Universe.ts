@@ -95,8 +95,8 @@ export class Universe extends THREE.EventDispatcher {
     //   console.log('Camera Position:', cameraPosition,this.camera.zoom);
     // });
 
-    this.veca = new Vector(9,-4,0,0xff0000);
-    this.vecb = new Vector(4,8,0,0x0000ff);
+    this.veca = new Vector(9,-4,8,0xff0000);
+    this.vecb = new Vector(4,8,-5,0x0000ff);
     this.scene.add(this.veca.vector);
     this.scene.add(this.vecb.vector);
     this.axes = new Axes(this.scene,10,10,10);
@@ -154,8 +154,12 @@ export class Universe extends THREE.EventDispatcher {
 
       this.focusTriangle = new Polygon2D([this.veca.coord,this.vecb.coord,thirdPoint],'brown')
       this.scene.add(this.focusTriangle.mesh);
+      this.ressetCamera();
+
       } else {
         this.focusTriangle.mesh.visible = !this.focusTriangle.mesh.visible;
+      if(this.focusTriangle.mesh.visible) this.ressetCamera();
+
       }
   }
 
@@ -167,9 +171,13 @@ export class Universe extends THREE.EventDispatcher {
       this.hypoteneuse = new Line([...this.vecb.coord.toArray()],[...thirdPoint.toArray()],'black') 
       this.hypoteneuse.setText(this.font!,'Hypotenuse');
       this.scene.add(this.hypoteneuse.lineMesh,this.hypoteneuse.textMesh!);
+      this.ressetCamera();
+
     } else {
       this.hypoteneuse.lineMesh.visible = !this.hypoteneuse.lineMesh.visible;
       this.hypoteneuse.textMesh!.visible = !this.hypoteneuse.textMesh!.visible;
+
+      if(this.hypoteneuse.lineMesh.visible) this.ressetCamera();
     }
   }
   showLeg(){
@@ -180,21 +188,31 @@ export class Universe extends THREE.EventDispatcher {
       this.leg = new Line([...this.veca.coord.toArray()],[...thirdPoint.toArray()],'black') 
       this.leg.setText(this.font!,'Leg');
       this.scene.add(this.leg.lineMesh,this.leg.textMesh!);
+      this.ressetCamera();
     } else {
       this.leg.lineMesh.visible = !this.leg.lineMesh.visible;
       this.leg.textMesh!.visible = !this.leg.textMesh!.visible;
+      if(this.leg.lineMesh.visible) this.ressetCamera();
+
     }
+  }
+
+  ressetCamera(){
+    this.camera!.position.set( 0,0, 20 );
+    this.camera!.zoom = 2;
+    this.camera!.lookAt(new THREE.Vector3());
+    this.camera!.updateProjectionMatrix();
   }
 
 
 
 
   async setMathMeshes(){
-    const mathText = await MathText.Init('\\vec{a} \\\\ (a_x,a_y,0)','red');
+    const mathText = await MathText.Init('\\vec{a} \\\\ (a_x,a_y,a_z)','red');
     mathText.mesh.position.set(this.veca.coord.x, this.veca.coord.y, this.veca.coord.z);
     this.scene.add(mathText.mesh);
 
-    const mathText2 = await MathText.Init('\\vec{b} \\\\ (b_x,b_y,0)','blue');
+    const mathText2 = await MathText.Init('\\vec{b} \\\\ (b_x,b_y,b_z)','blue');
     mathText2.mesh.position.set(this.vecb.coord.x, this.vecb.coord.y, this.vecb.coord.z)
     this.scene.add(mathText2.mesh);
 

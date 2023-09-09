@@ -17,29 +17,31 @@
 	});
 </script>
 <hr />
-<strong>2D Example:</strong>
+<strong>3D Example:</strong>
 <Col2>
 	<div slot="col1" style='width: 400px;'>
 
-		<p>Say we have two 2D vectors <Latex math={'\\color{red}\\vec{a}'} /> and <Latex math={'\\color{blue}\\vec{b}'} /> drawn in 3D space by having  <Latex math={'\\color{red}{a_z}\\color{black}=\\color{blue}{\\vec{b_z}}\\color{black}=0'} />, as shown in Figure 6</p>
+		<p>Now we extend the vectors to 3D vectors by assign non-zero value to  <Latex math={'\\color{red}a_z'} /> and <Latex math={'\\color{blue}b_z'} />, as shown in Figure 7(use mouse to change the view around)</p>
 		
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<!-- svelte-ignore a11y-no-static-element-interactions -->
-		<p>In Figure 6, you can form the <span class='toggleFig' on:click={()=>{universe.dispatchEvent({type:'showFocusTriangle'})}}>right triangle</span>
-		 	and get the <span class='toggleFig' on:click={()=>{universe.dispatchEvent({type:'showHypotenuse'})}}> hypotenuse </span>  <Latex math={'=|a_y-b_y|'} />
+		<p>Even though now we have 3D vectors, you can treat them as 2D and still form the <span class='toggleFig' on:click={()=>{universe.dispatchEvent({type:'showFocusTriangle'})}}>right triangle</span>
+			and get the <span class='toggleFig' on:click={()=>{universe.dispatchEvent({type:'showHypotenuse'})}}> hypotenuse </span>  <Latex math={'=|a_y-b_y|'} />
 			and <span class='toggleFig' on:click={()=>{universe.dispatchEvent({type:'showLeg'})}}>leg</span> <Latex math={'=|a_x-b_x|'} />
 		</p>
 
-		<p>With Pythagorean Theorem, we can 	have the equation: </p>
+
+		<strong>BUT</strong>
+		<!-- <p>With Pythagorean Theorem, we can have the equation: </p>
 		<Latex
 		displayMode={true}
-		math={'\\Rightarrow \\color{brown}{d^2} \\color{black} = ( \\color{red}{a_x} \\color{black}- \\color{blue} b_x \\color{black})^2+( \\color{red}{a_y} \\color{black}- \\color{blue} b_y \\color{black})^2'}
+		math={'\\Rightarrow \\color{brown}{d^2} \\color{black} = ( \\color{red}{a_x} \\color{black}- \\color{blue} b_x \\color{black})^2+( \\color{red}{a_y} \\color{black}- \\color{blue} b_y \\color{black})^2'} -->
 	/>
 
 	</div>
 
 	<div slot="col2" style="border: 1px black solid">
-		<p>Figure 6</p>
+		<p>Figure 7</p>
 		<div bind:this={divUniverse} />
 	</div>
 </Col2>

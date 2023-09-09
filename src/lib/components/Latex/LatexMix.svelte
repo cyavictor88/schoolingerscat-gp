@@ -1,8 +1,8 @@
 <script lang='ts'>
 	import katex from "katex";
-	import type { IKatexMix } from "./katexMix";
+	import type { ILatexMix } from "./latexMix";
 
-	export let mixedString: IKatexMix[] = [];
+	export let mixedString: ILatexMix[] = [];
 	export let displayMode = false;
 	let katexMixString = '';
 	const options = {
