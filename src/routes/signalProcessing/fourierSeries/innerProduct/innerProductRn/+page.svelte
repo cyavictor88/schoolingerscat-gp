@@ -89,3 +89,23 @@ math={'\\color{brown}{d^2} \\color{black}{=} \\color{red}{\\| \\vec{a}  \\|^2} \
 
 
     <p>Voilà!, we show that <Latex math={'cos(\\theta)=\\frac{<a,b>}{\\|a\\|\\|b\\|}'} /> holds for <Latex math={'\\mathrm{R}^n'}/> vectors.</p>
+<hr />
+
+<p>Now let's go over some facts that will be useful later:</p>
+<ol>
+
+  <li>
+    <strong>Inner Product of two same vector gives square of the magnitude of that vector:</strong>
+    <p>
+    <Latex displayMode={true} math={'cos(0)= \\frac{< \\vec{a},\\vec{a}> }{  \\| \\vec{a}  \\| \\|\\vec{a}\\|} '} />
+      <Latex displayMode={true} math={'\\Rightarrow < \\vec{a},\\vec{a}> =  \\| \\vec{a}  \\| ^2 \\times 1 '} />
+      <Latex displayMode={true} math={'\\Rightarrow < \\vec{a},\\vec{a}> =  \\| \\vec{a}  \\| ^2 = a_1^2+a_2^2+ ... + a_n^2'} />
+      </p>
+  </li>
+  <li>
+    <strong>Inner product of two orthognal vectors is 0:</strong>
+    <Latex displayMode={true} math={' < \\vec{a},\\vec{b}> =  \\| \\vec{a}  \\| \\|\\vec{b}\\| cos( \\frac{\\pi}{2})'} />
+      <Latex displayMode={true} math={'\\Rightarrow < \\vec{a},\\vec{b}> =  \\| \\vec{a}  \\| \\|\\vec{b}\\| \\times 0 '} />
+          <Latex displayMode={true} math={'\\Rightarrow < \\vec{a},\\vec{b}> =  0 '} />
+  </li>
+</ol>

@@ -68,9 +68,7 @@
 <hr style="border-top: 1px grey dotted" />
 <b>Step 1. Use Law of Cosine:</b>
 <p>
-	As shown in Figure 2, by using <a href="https://en.wikipedia.org/wiki/Law_of_cosines"
-		>Low of Cosines</a
-	>
+	As shown in Figure 2, by using Law of Cosine
 	on the triangle in the figure, we can get the following equation for <Latex math={'d'} />:
 </p>
 
