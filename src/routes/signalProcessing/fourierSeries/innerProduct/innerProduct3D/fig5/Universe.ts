@@ -177,6 +177,7 @@ export class Universe extends THREE.EventDispatcher{
     })
     mathText3.mesh.position.set(...pos.multiplyScalar(0.5).toArray());
     mathText3.mesh.rotation.setFromVector3(new THREE.Vector3(0,0,0));
+    mathText3.mesh.rotation.setFromVector3(new THREE.Vector3(3*Math.PI/2,0,0));
 
     const mathText4 = await MathText.Init('| \\vec{a_x} - \\vec{b_x} |','brown');
     let pos2 = new THREE.Vector3();
@@ -187,6 +188,8 @@ export class Universe extends THREE.EventDispatcher{
       pos2.z += parr[2]- offset
     })
     mathText4.mesh.position.set(...pos2.multiplyScalar(0.5).toArray());
+    mathText4.mesh.rotation.setFromVector3(new THREE.Vector3(3*Math.PI/2,0,Math.PI/2));
+
     // mathText4.mesh.rotation.setFromVector3(new THREE.Vector3(0,Math.PI/2,0));
     // mathText4.mesh.rotation.setFromVector3(new THREE.Vector3(3*Math.PI/2,0,Math.PI/2));
 

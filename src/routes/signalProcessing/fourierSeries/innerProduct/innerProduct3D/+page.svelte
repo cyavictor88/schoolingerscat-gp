@@ -38,7 +38,7 @@
 <p>
 	Let's expand inner product for vectors in <Latex math={'\\mathbb{R}^2'} /> to <Latex
 		math={'\\mathbb{R}^3'}
-	/> and see if the relation between the angle and inner product equation still holds in 3D:
+	/> and see if  <Latex math={'cos(\\theta)=\\frac{<a,b>}{\\|a\\|\\|b\\|}'} />  still holds for 3D vectors:
 </p>
 <p>Inner product for 3D vectors is:</p>
 
