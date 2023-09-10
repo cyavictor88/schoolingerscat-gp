@@ -3,8 +3,20 @@
 	import { getCircleNum } from "$lib/unicode";
 	import Fig6 from "./fig6/Fig6.svelte";
 	import Fig7 from "./fig7/Fig7.svelte";
-</script> 
+  import Title from "$lib/components/PageComp/Title.svelte";
+	import { SITE_COLOR } from "$lib/theme/colors";
+	import { onMount } from "svelte";
 
+  onMount(()=>{
+        if(window){
+      console.log('scrollinggg');
+      window.scrollTo(0,0);
+    }
+  })
+</script> 
+<Title hLevel={2} backgroudColor={SITE_COLOR.TitleBG}>
+  Inner Product in <Latex math={'\\mathbb{R}^n'} />:
+</Title>
 <p>So what about inner product in <Latex math={'\\mathrm{R}^n'}/> for <Latex math={'n>3'} />?</p>
 
 <strong>Inner Product in <Latex math={'\\mathrm{R}^n'}/>:</strong> 

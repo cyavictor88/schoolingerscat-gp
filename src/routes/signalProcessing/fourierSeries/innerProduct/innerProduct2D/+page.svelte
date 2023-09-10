@@ -17,8 +17,12 @@
 		fig3.append(d3Fig.getFig3()!);
 		// g1.append(d3G.baseFig()!);
 	});
-</script>
-
+  import Title from "$lib/components/PageComp/Title.svelte";
+	import { SITE_COLOR } from "$lib/theme/colors";
+</script> 
+<Title hLevel={2} backgroudColor={SITE_COLOR.TitleBG}>
+  Inner Product in <Latex math={'\\mathbb{R}^2'} />:
+</Title>
 <p>
 	Given two <Latex math={'\\mathbb{R}^2'} /> vectors, <Latex math={'\\vec{a}=(a_x,a_y)'} /> and <Latex
 		math={'\\vec{b}=(b_x,b_y)'}

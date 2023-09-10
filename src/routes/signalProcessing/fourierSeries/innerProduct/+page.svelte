@@ -16,25 +16,40 @@
 		})();
 	});
 
-	import InnerProduct2D from './innerProduct2D/InnerProduct2D.svelte';
-	import InnerProduct3D from './innerProduct3D/InnerProduct3D.svelte';
+	import InnerProduct2D from './innerProduct2D/+page.svelte';
+	import InnerProduct3D from './innerProduct3D/+page.svelte';
 	import { SITE_COLOR } from '$lib/theme/colors';
-	import InnerProductRn from './innerProductRn/InnerProductRn.svelte';
+	import InnerProductRn from './innerProductRn/+page.svelte';
+	import Route from '$lib/components/Route/Route.svelte';
+
+
+
+	// $: if(window) {
+	// 	console.log(window.location.hash)
+	// }
 </script>
 
-<Scrollspy>
-	<Title hLevel={1} id={'innerProduct'}>Inner Product</Title>
-	<p>
-		What is inner product? The inner product of 2 vectors indicates how closely aligned the 2
-		vectors are to each other.
-	</p>
-	<p>
-		In this page, We will start with explaining inner product of vectors in <Latex
-			math={'\\mathbb{R}^2'}
-		/>
-		, and end with explaining inner product of functions.
-	</p>
 
+<Title hLevel={1} id={'innerProduct'}>Inner Product</Title>
+<p>
+	What is inner product? The inner product of 2 vectors indicates how closely aligned the 2
+	vectors are to each other.
+</p>
+<p>
+	We will start with explaining inner product of vectors in <Latex
+		math={'\\mathbb{R}^2'}
+	/>
+	, and end with explaining inner product of functions.
+</p>
+
+<!-- <Route route={$innerPageRoute} indent={0} bgColor={SITE_COLOR.CompRouteDefaultBG} /> -->
+
+
+{#if false}
+<Scrollspy>
+	<Title hLevel={2} backgroudColor={SITE_COLOR.TitleBG}>
+		Inner Product in <Latex math={'\\mathbb{R}^2'} />:
+	</Title>
 	<section id="innerProduct2D">
 		<Title hLevel={2} backgroudColor={SITE_COLOR.TitleBG}>
 			Inner Product in <Latex math={'\\mathbb{R}^2'} />:
@@ -54,3 +69,4 @@
 		<InnerProductRn />
 	</section>
 </Scrollspy>
+{/if}

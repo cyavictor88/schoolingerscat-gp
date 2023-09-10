@@ -29,8 +29,12 @@
 			}
 	});
 
-</script>
-
+  import Title from "$lib/components/PageComp/Title.svelte";
+	import { SITE_COLOR } from "$lib/theme/colors";
+</script> 
+<Title hLevel={2} backgroudColor={SITE_COLOR.TitleBG}>
+  Inner Product in <Latex math={'\\mathbb{R}^3'} />:
+</Title>
 <p>
 	Let's expand inner product for vectors in <Latex math={'\\mathbb{R}^2'} /> to <Latex
 		math={'\\mathbb{R}^3'}
