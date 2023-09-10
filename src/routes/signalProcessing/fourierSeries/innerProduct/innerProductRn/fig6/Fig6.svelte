@@ -19,7 +19,7 @@
 <hr />
 <strong>2D Example:</strong>
 <Col2>
-	<div slot="col1" style='width: 400px;'>
+	<div slot="col1" style='width: 400px; border: 1px black solid;'>
 
 		<p>Say we have two 2D vectors <Latex math={'\\color{red}\\vec{a}'} /> and <Latex math={'\\color{blue}\\vec{b}'} /> drawn in 3D space by having  <Latex math={'\\color{red}{a_z}\\color{black}=\\color{blue}{\\vec{b_z}}\\color{black}=0'} />, as shown in Figure 6</p>
 		

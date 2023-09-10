@@ -114,21 +114,22 @@
 
 <Col2>
 	<div slot='col1'>
-		<p>Figure 5</p>
-		<div style='cursor: pointer;'bind:this={divFig5} />
-	</div>
-	<div slot='col2'>
+		<Latex
+		displayMode={true}
+		math={'\\color{brown}{d^2}  = ( |  \\color{brown}{a_x} - \\color{brown} b_x |^2+ | \\color{brown}{a_y} - \\color{brown} b_y  |^2 ) + | \\color{brown}{a_z} - \\color{brown} b_z  |^2'}
+	/>
+	<fieldset>
+		<legend>{getCircleNum(4)}</legend>
 		<Latex
 			displayMode={true}
-			math={'\\color{brown}{d^2}  = ( |  \\color{brown}{a_x} - \\color{brown} b_x |^2+ | \\color{brown}{a_y} - \\color{brown} b_y  |^2 ) + | \\color{brown}{a_z} - \\color{brown} b_z  |^2'}
+			math={'\\Rightarrow \\color{brown}{d^2}  = ( \\color{brown}{a_x} - \\color{brown} b_x )^2+( \\color{brown}{a_y} - \\color{brown} b_y )^2+( \\color{brown}{a_z} - \\color{brown} b_z )^2'}
 		/>
-		<fieldset>
-			<legend>{getCircleNum(4)}</legend>
-			<Latex
-				displayMode={true}
-				math={'\\Rightarrow \\color{brown}{d^2}  = ( \\color{brown}{a_x} - \\color{brown} b_x )^2+( \\color{brown}{a_y} - \\color{brown} b_y )^2+( \\color{brown}{a_z} - \\color{brown} b_z )^2'}
-			/>
-		</fieldset>
+	</fieldset>
+
+	</div>
+	<div slot='col2' style='border: 1px black solid;'>
+		<p>Figure 5</p>
+		<div style='cursor: pointer;'bind:this={divFig5} />
 	</div>
 </Col2>
 

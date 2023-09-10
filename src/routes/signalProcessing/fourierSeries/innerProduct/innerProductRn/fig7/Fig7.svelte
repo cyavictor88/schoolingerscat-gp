@@ -19,7 +19,7 @@
 <hr />
 <strong>Extending 2D to 3D Example:</strong>
 <Col2>
-	<div slot="col1" style='width: 400px;'>
+	<div slot="col1" style='width: 400px;border: 1px black solid;'>
 
 		<p>Now we extend the vectors to 3D vectors by assign non-zero value to  <Latex math={'\\color{red}a_z'} /> and <Latex math={'\\color{blue}b_z'} />, as shown in Figure 7(use mouse to pan the view around)</p>
 		

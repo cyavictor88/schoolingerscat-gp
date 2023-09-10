@@ -53,7 +53,7 @@
 
 </script>
 	<Col2>
-		<div slot='col1'>
+		<div slot='col1' style='border: 1px black solid;'>
 			<p>Interactive Demo:</p>
 			<form>
 				<Latex math={'\\color{red}\\vec{a_x}:'} />

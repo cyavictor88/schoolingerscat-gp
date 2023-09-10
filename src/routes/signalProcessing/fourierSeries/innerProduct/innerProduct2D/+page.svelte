@@ -76,10 +76,7 @@
 
 <Col2>
 	<div slot='col1'>
-		<p>Figure 2</p>
-		<div bind:this={fig2} />
-	</div>
-	<div slot='col2'>
+
 		<Latex
 		displayMode={true}
 		math={'\\color{brown}{d^2} \\color{black}{=} \\color{red}{\\| \\vec{a}  \\|^2} \\color{black}{+} \\color{blue}{\\| \\vec{b}  \\|^2} \\color{black}{ - 2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) } '}
@@ -95,6 +92,10 @@
 				math={'\\Rightarrow \\color{brown}{d^2} \\color{black}{=} \\color{red}{a_x^2+a_y^2} \\color{black}{+} \\color{blue}{b_x^2+b_y^2} \\color{black}{ - 2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) }'}
 			/>
 		</fieldset>
+	</div>
+	<div slot='col2' style='border: 1px black solid;'>
+		<p>Figure 2</p>
+		<div bind:this={fig2} />
 	</div>
 </Col2>
 
@@ -112,13 +113,7 @@
 
 <Col2>
 	<div slot='col1'>
-		<p>Figure 3</p>
-		<!-- <object title="law of cosine" width="400" type="image/svg+xml" data={innerProduct2DCosine}
-			>Boo your browser does not support SVGs</object
-		> -->
-		<div bind:this={fig3} />
-	</div>
-	<div slot='col2' >
+
 		<Latex
 		displayMode={true}
 		math={'\\color{brown}{d_x} \\color{black} = | \\color{red}a_x \\color{brown} \\color{black} - \\color{blue}b_x \\color{black} | '}
@@ -135,6 +130,10 @@
 				math={'\\Rightarrow \\color{brown}{d^2} \\color{black} = ( \\color{red}{a_x} \\color{black}- \\color{blue} b_x \\color{black})^2+( \\color{red}{a_y} \\color{black}- \\color{blue} b_y \\color{black})^2'}
 			/>
 		</fieldset>
+	</div>
+	<div slot='col2' style='border: 1px black solid;'>
+		<p>Figure 3</p>
+		<div bind:this={fig3} />
 	</div>
 </Col2>
 
@@ -177,7 +176,7 @@
 
 <!-- <div bind:this={g1} /> -->
 <Col2 >
-	<div slot='col1'> 
+	<div slot='col1' style='border: 1px black solid;'> 
 		<p>Interactive Demo:  (drag the vectors' arrow head around)</p>
 
 		<Game />
