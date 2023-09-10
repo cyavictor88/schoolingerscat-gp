@@ -5,14 +5,6 @@
 	import Fig7 from "./fig7/Fig7.svelte";
   import Title from "$lib/components/PageComp/Title.svelte";
 	import { SITE_COLOR } from "$lib/theme/colors";
-	import { onMount } from "svelte";
-
-  onMount(()=>{
-        if(window){
-      console.log('scrollinggg');
-      window.scrollTo(0,0);
-    }
-  })
 </script> 
 <Title hLevel={2} backgroudColor={SITE_COLOR.TitleBG}>
   Inner Product in <Latex math={'\\mathbb{R}^n'} />:

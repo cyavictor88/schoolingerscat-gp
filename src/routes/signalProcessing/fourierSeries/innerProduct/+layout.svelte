@@ -9,6 +9,7 @@
 	const innerPageRoute = getContext<Writable<IRoute>>('innerPageRoute');
 
 
+	let topOfPageElement : HTMLDivElement ;
 
 	onMount(() => {
     
@@ -18,21 +19,15 @@
 	import { SITE_COLOR } from '$lib/theme/colors';
 	import Route from '$lib/components/Route/Route.svelte';
 
-	$: if ($url && typeof $url !== 'string') {
-		// currentHash = ($url as URL).hash;
+	// when url changes, scroll to the top of the page
+	$: if ($url && typeof $url !== 'string' && topOfPageElement) {
     console.log($url);
-    // if(window){
-    //   console.log('scrollinggg');
-    //   window.scrollTo(0,0);
-    // }
+		topOfPageElement.scrollIntoView();
 	}
 
-	// $: if(window) {
-	// 	console.log(window.location.hash)
-	// }
 </script>
 
-
+<div bind:this={topOfPageElement}></div>
 <slot />
 <hr />
 <Route route={$innerPageRoute} indent={0} bgColor={SITE_COLOR.LayoutFSPageRouteBG} />
