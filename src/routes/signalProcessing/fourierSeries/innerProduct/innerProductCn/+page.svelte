@@ -15,11 +15,11 @@
   \\left[\\begin{array}{c}
   a_1 \\\\ a_2 \\\\ . \\\\ . \\\\ . \\\\ a_n \\end{array}\\right]
   =
-  \\sum_{m=1}^{n} (a_n) (b_n^*)
+  \\sum_{m=1}^{n} (a_m) (b_m^*)
  `} />
 
- <p>where  <Latex math={`*`} />
-  indicates complex conjugate</p>
+<p style='text-align: center;'> ( * is complex conjugate)</p>
+
 
   <p>When I first saw this formula for complex numbers, I was like, why taking conjugate?</p>
 
@@ -39,6 +39,6 @@
 
 <p>You might also ask why flip the order to <Latex math={'<\\vec{a},\\vec{b}> = \\vec{b}^* \\vec{a} '} /> instead of using <Latex math={'<\\vec{a},\\vec{b}> =\\vec{a}^* \\vec{b} '} />? </p>
   <p>That I am not sure, my guess is to keep the first vector, <Latex math={'\\vec{a}'} />
-    , unmodified in the summation <Latex math={'\\sum_{m=1}^{n} (a_n) (b_n^*) '} />
+    , unmodified in the summation <Latex math={'\\sum_{m=1}^{n} (a_m) (b_m^*) '} />
    </p>
  
