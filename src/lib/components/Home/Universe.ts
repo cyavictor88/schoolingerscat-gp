@@ -66,19 +66,18 @@ export class Universe extends THREE.EventDispatcher{
     mathText.mesh.position.set(0,0,0);
     mathText.mesh.scale.set(10,10,10);
     this.scene.add(mathText.mesh);
-    this.mathText=mathText;
-    (mathText.mesh as any).scaler = 10.1;
-    (mathText.mesh as any).cnt = 0;
+    this.mathText = mathText;
+
+    // add to updateables, changing color
+    (mathText.mesh as any).cnt = 1;
     (mathText.mesh as any).tick = function(delta:number){
-      (mathText.mesh as any).scaler += 0.01;
-      (mathText.mesh as any).scaler %= 2.5 ;
-      // (mathText.mesh as any).scaler += 1 ;
-      // if((mathText.mesh as any).cnt>1) return
-      let scale = new THREE.Vector3( (mathText.mesh as any).scaler,(mathText.mesh as any).scaler,(mathText.mesh as any).scaler );
-      scale.addVectors(scale, new THREE.Vector3(2,2,2))
-      // if(scale.length()>10.5) (mathText.mesh as any).scaler-=0.1;
-      // if(scale.length()<10.2) (mathText.mesh as any).scaler+=0.1;
-      mathText.mesh.scale.set(...scale.multiplyScalar((mathText.mesh as any).scaler).toArray());
+      (mathText.mesh as any).cnt += 1;
+      if((mathText.mesh as any).cnt % 51 === 0) {
+        (mathText.mesh.material as any).color.setHex( 0xff0000);
+      } else if ((mathText.mesh as any).cnt % 101 === 0){
+        (mathText.mesh.material as any).color.setHex( 0x009900 );
+        (mathText.mesh as any).cnt = 1
+      }
     }
     this.tickingWorld.updatables.push(mathText.mesh);
   }
