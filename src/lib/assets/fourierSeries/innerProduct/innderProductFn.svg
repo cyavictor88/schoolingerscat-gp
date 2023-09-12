@@ -2461,7 +2461,7 @@
          y="39.687515">6</tspan></text>
     <g
        id="g11618"
-       transform="translate(-6.0914323,3.3420003)">
+       transform="translate(-6.0914323,3.3420003)" style='display:none'>
       <g
          transform="matrix(0.264583,0,0,0.264583,53.0207,7.41678)"
          ns12:version="1.8.1"

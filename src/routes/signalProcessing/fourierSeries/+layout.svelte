@@ -90,7 +90,7 @@
 			</p>
 		</div>
 		<SideBar route={sectionRoute} />
-		<p>Current Page:</p>
+		<p>Current Topic:</p>
 		<SideBar route={$innerPageRoute} routeBgColor={SITE_COLOR.LayoutFSPageRouteBG} />
 	</div>
 {/if}
@@ -105,7 +105,7 @@
 				}}>{leftTriangle}</button
 			>
 			<SideBar route={sectionRoute} />
-			<p>Current Page:</p>
+			<p>Current Topic:</p>
 			<SideBar route={$innerPageRoute} routeBgColor={SITE_COLOR.LayoutFSPageRouteBG} />
 		</div>
 	{:else if window.outerWidth < 800}

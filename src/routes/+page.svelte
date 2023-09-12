@@ -6,6 +6,7 @@
 	let route: IRoute;
 	import { browser } from '$app/environment';
 	import { SITE_COLOR } from '$lib/theme/colors';
+	import Latex from '$lib/components/Latex/Latex.svelte';
 	if(browser){
 		route = getSiteRootRoute(window.location.hostname === 'localhost');
 	}
@@ -16,8 +17,10 @@
 <div style="padding: 8px;">
 	<img style="height: 150px;" src="/images/title.jpg" alt="" />
 	<p>
-		Hi, I use this site to share my notes on EE subjects. It is NOT a textbook, the goal is to help
-		understand the core idea.
+		Hi, The goal of Schoolingers Cat is to help myself to have better understanding on various subjects by explaining the way I understand them.
+	</p>
+	<p>
+		It is NOT a textbook, the mathmetical languages are not the most accurate. The core idea is to grasp the concept first, and if interested, can pursuit further in depth.
 	</p>
 	<span>Prerequisite: Calc 2 and basic Linear Algebra</span>
 	<div style="background-color: lightgrey;">
@@ -30,6 +33,7 @@
 		{/if}
 		<hr />
 	</div>
+	<p>If you like to give me some feedback:  schoolingerscat <Latex math={'@'} /> <Latex math={' g\\Mu\\alpha\\iota \\lfloor'} /> <Latex math={'\\cdot \\subset \\varnothing \\Mu'} /></p>
 </div>
 
 <style>
