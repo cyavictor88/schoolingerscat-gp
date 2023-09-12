@@ -12,6 +12,22 @@
 	}
 	let routeBgColor: string = SITE_COLOR.IndexPageRouteBG;
 	$: if (route) route.open = true;
+
+	import { Universe } from '$lib/components/Home/Universe';
+
+	let divEmail: HTMLDivElement;
+	let universe: Universe;
+
+	onMount(() => {
+		universe = new Universe(divEmail);
+			universe.start();
+			universe.dispatchEvent({type:'setMathMeshes',target:universe})
+
+			return ()=>{
+				if (divEmail.firstChild) divEmail.removeChild(divEmail.firstChild);
+			}
+	});
+
 </script>
 
 <div style="padding: 8px;">
@@ -33,7 +49,8 @@
 		{/if}
 		<hr />
 	</div>
-	<p>If you like to give me some feedback:  schoolingerscat <Latex math={'@'} /> <Latex math={' g\\Mu\\alpha\\iota \\lfloor'} /> <Latex math={'\\cdot \\subset \\varnothing \\Mu'} /></p>
+	<p>If you like to give me some feedback:</p>
+	<div style='cursor: pointer;'bind:this={divEmail} />
 </div>
 
 <style>

@@ -1,6 +1,5 @@
 import * as THREE from 'three';
 import { TickingWorld } from './TickingWorld';
-import EventEmitter from 'eventemitter3';
 import { mathmesh } from '$lib/mathmesh/mathmesh';
 // import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
@@ -11,7 +10,6 @@ import { Font, FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 import { MathText } from './object/MathText';
 import { Theta } from './object/Theta';
 import { Polygon2D } from './object/Polygon2D';
-import { functionsIn } from 'lodash';
 
 // import { mathmesh } from 'mathmesh';
 
