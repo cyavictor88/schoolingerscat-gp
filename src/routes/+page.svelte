@@ -49,8 +49,8 @@
 		{/if}
 		<hr />
 	</div>
-	<p>If you like to give me some feedback:</p>
-	<div style='cursor: pointer;'bind:this={divEmail} />
+	<p>If you'd like to give me some feedback:</p>
+	<div bind:this={divEmail} />
 </div>
 
 <style>
