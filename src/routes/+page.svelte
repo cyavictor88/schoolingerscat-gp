@@ -33,10 +33,10 @@
 <div style="padding: 8px;">
 	<img style="height: 150px;" src="/images/title.jpg" alt="" />
 	<p>
-		Hi, The goal of Schoolingers Cat is to help myself to have better understanding on various subjects by explaining the way I understand them.
+		Meow, Schoolinger's Cat hope to help people(and myself) understand various subjects by explaining the way I understand them.
 	</p>
 	<p>
-		It is NOT a textbook, the mathmetical languages are not the most accurate. The core idea is to grasp the concept first, and if interested, can pursuit further in depth.
+		It is NOT a textbook, the mathematical languages are not the most accurate. The core idea is to grasp the concept first, and if interested, can pursuit further in depth.
 	</p>
 	<span>Prerequisite: Calc 2 and basic Linear Algebra</span>
 	<div style="background-color: lightgrey;">
