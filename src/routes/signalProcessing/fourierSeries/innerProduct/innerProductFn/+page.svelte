@@ -34,7 +34,7 @@
 
 
 </script> 
-<Title hLevel={2} backgroudColor={SITE_COLOR.TitleBG}>
+<Title hLevel={2} backgroundColor={SITE_COLOR.TitleBG}>
   Inner Product for Functions:
 </Title>
 <p>Using the definition of Inner Product for complex vectors in n-dimensional space

@@ -23,5 +23,11 @@
 </script>
 
 
-<Title hLevel={1} >Basis</Title>
+<Title hLevel={1}>Basis</Title>
+
+<p>A basis for a vector space of any dimension is a set of vectors that satisfies the following 2 conditions:</p>
+<ol>
+	<li>The vectors in the set are linear independent</li>
+	<li>The vectors in the set span the vector space</li>
+</ol>
 

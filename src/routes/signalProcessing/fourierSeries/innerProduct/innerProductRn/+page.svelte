@@ -6,7 +6,7 @@
   import Title from "$lib/components/PageComp/Title.svelte";
 	import { SITE_COLOR } from "$lib/theme/colors";
 </script> 
-<Title hLevel={2} backgroudColor={SITE_COLOR.TitleBG}>
+<Title hLevel={2} backgroundColor={SITE_COLOR.TitleBG}>
   Inner Product in <Latex math={'\\mathbb{R}^n'} />:
 </Title>
 <p>So what about inner product in <Latex math={'\\mathrm{R}^n'}/> for <Latex math={'n>3'} />?</p>

@@ -1,7 +1,7 @@
 <script lang='ts'>
   export let hLevel: number = 1;
   export let id: string = 'null';
-  export let backgroudColor : string = '';
+  export let backgroundColor : string = '';
   import { afterNavigate } from "$app/navigation";
   let showHighlight = false;
   afterNavigate(()=>{
@@ -9,7 +9,7 @@
     showHighlight = path[path.length-1] === id;
   })
 </script>
-<div class:highlight={showHighlight} style='background-color: {backgroudColor};'>
+<div class:highlight={showHighlight} style='background-color: {backgroundColor};'>
 {#if hLevel === 1}
 	<h1 id={id}><slot/></h1>
 {:else if hLevel === 2}

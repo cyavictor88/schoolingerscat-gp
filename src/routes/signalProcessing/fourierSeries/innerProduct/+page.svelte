@@ -47,23 +47,23 @@
 
 {#if false}
 <Scrollspy>
-	<Title hLevel={2} backgroudColor={SITE_COLOR.TitleBG}>
+	<Title hLevel={2} backgroundColor={SITE_COLOR.TitleBG}>
 		Inner Product in <Latex math={'\\mathbb{R}^2'} />:
 	</Title>
 	<section id="innerProduct2D">
-		<Title hLevel={2} backgroudColor={SITE_COLOR.TitleBG}>
+		<Title hLevel={2} backgroundColor={SITE_COLOR.TitleBG}>
 			Inner Product in <Latex math={'\\mathbb{R}^2'} />:
 		</Title>
 		<InnerProduct2D />
 	</section>
 	<section id="innerProduct3D">
-		<Title hLevel={2} backgroudColor={SITE_COLOR.TitleBG}>
+		<Title hLevel={2} backgroundColor={SITE_COLOR.TitleBG}>
 			Inner Product in <Latex math={'\\mathbb{R}^3'} />:
 		</Title>
 		<InnerProduct3D />
 	</section>
 	<section id="innerProductRn">
-		<Title hLevel={2} backgroudColor={SITE_COLOR.TitleBG}>
+		<Title hLevel={2} backgroundColor={SITE_COLOR.TitleBG}>
 			Inner Product in <Latex math={'\\mathbb{R}^n'} />:
 		</Title>
 		<InnerProductRn />
