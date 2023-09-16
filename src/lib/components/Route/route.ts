@@ -36,6 +36,7 @@ export function getSiteRootRoute(isLocal:boolean) : IRoute {
     {label: 'Scrollspy', subRoutes: [
       {label: 'Scrollspy1', path: '/hello/scroll'},
       {label: 'Scrollspy2', path: '/hello/scrollspy'},
+      {label: 'Scrollspy3', path: '/hello/scrollspy3'},
     ]}
   ]}
   const devRootRoute = {...rootRoute};

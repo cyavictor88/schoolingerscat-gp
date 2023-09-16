@@ -1,10 +1,16 @@
 import type { IRoute } from "$lib/components/Route/route";
 
+
+const baseRoute = '/signalProcessing/fourierSeries/basis'
+
+
+
+
 export const pageRoute : IRoute = {
   label: 'Basis',
   subRoutes: [
-    { label: 'b-tag1', path: '#t1'},
-    { label: 'b-tag2', path: '#t2'},
-    { label: 'b-tag3', path: '#t3'},
+    { label: 'Orthogonal Basis', path: baseRoute+'/orthogonalBasis'},
+    { label: 'Vector Decomposition', path: baseRoute+'/vectorDecomposition'},
+    { label: 'Function Decomposition', path: baseRoute+'/functionDecomposition'},
   ]
 }
