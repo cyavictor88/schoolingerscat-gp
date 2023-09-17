@@ -8,21 +8,18 @@
 	import HiddenBlock from './HiddenBlock.svelte';
 
 	const innerPageRoute = getContext<Writable<IRoute | null>>('innerPageRoute');
-  let clickedIndex: Set<number> = new Set<number>(); 
-  const click = (idx:number) => {
-    const newMap = new Set<number>(clickedIndex);
-    if(clickedIndex.has(idx))newMap.delete(idx)
-    else newMap.add(idx);
-    clickedIndex = newMap
+  let showSet: Set<number> = new Set<number>(); 
+  const toggleShow = (idx:number) => {
+    const newSet = new Set<number>(showSet);
+    if(showSet.has(idx)) newSet.delete(idx);
+    else newSet.add(idx);
+    showSet = newSet;
   }
 
   const showAll = ()=>{
-    let newMap = new Set<number>();
-    if(clickedIndex.size === 0) {
-      newMap.add(0);
-      newMap.add(1);
-    }
-    clickedIndex = newMap;
+    let newSet = new Set<number>();
+    if(showSet.size === 0) for (let index = 0; index < 2; index++) newSet.add(index);
+    showSet = newSet;
   }
 	onMount(() => {
 		(async () => {
@@ -49,7 +46,7 @@
 	First we prove the above set of <Latex math={'sin'} /> and <Latex math={'cos'} /> is indeed a orthogonal
 	basis:
 </p>
-<ol >
+<ol  style="list-style-type: upper-roman;">
 	<li>
 		Orthogonality:
 		<p>
@@ -71,35 +68,27 @@
 `}
 		/>
       <p>to be more explicit, we need to show the following: 
-
-        <!-- svelte-ignore missing-declaration -->
-        <!-- svelte-ignore a11y-click-events-have-key-events -->
-        <!-- svelte-ignore a11y-no-static-element-interactions -->
-        <span on:click={showAll}>show all</span>
-
-
+        <button on:click={showAll}>{showSet.size === 0? 'show all': 'hide all'}</button>
       </p>
-      <ol style="list-style-type: upper-roman;">
-        <!-- svelte-ignore missing-declaration -->
-        <!-- svelte-ignore a11y-click-events-have-key-events -->
-        <!-- svelte-ignore a11y-no-static-element-interactions -->
-        <li><span on:click={()=>click(0)}><Latex math={'\\langle  cos( \\frac{2\\pi}{T} kt ) ,  cos( \\frac{2\\pi}{T} kt ) \\rangle \\ne 0'} /></span></li>
-        {#if (clickedIndex.has(0))}
-        <HiddenBlock>
-          sup
-        </HiddenBlock>
-
+      <ol>
+        <li>
+          <Latex math={'\\langle  cos( \\frac{2\\pi}{T} kt ) ,  cos( \\frac{2\\pi}{T} kt ) \\rangle \\ne 0'} />
+          <button on:click={()=>toggleShow(0)}>{showSet.has(0)? 'hide': 'show'}</button>
+        </li>
+        {#if showSet.has(0)}
+          <HiddenBlock>
+            sup
+          </HiddenBlock>
         {/if}
         <br />
-                <!-- svelte-ignore missing-declaration -->
-        <!-- svelte-ignore a11y-click-events-have-key-events -->
-        <!-- svelte-ignore a11y-no-static-element-interactions -->
-        <li><span on:click={()=>click(1)}><Latex math={'\\langle  sin( \\frac{2\\pi}{T} kt ) ,  sin( \\frac{2\\pi}{T} kt ) \\rangle\\ne 0'} /></span></li>
-        {#if (clickedIndex.has(1))}
-        <HiddenBlock>
-          sup2
-        </HiddenBlock>
-
+        <li>
+          <Latex math={'\\langle  sin( \\frac{2\\pi}{T} kt ) ,  sin( \\frac{2\\pi}{T} kt ) \\rangle\\ne 0'} />
+          <button on:click={()=>toggleShow(1)}>{showSet.has(0)? 'hide': 'show'}</button>
+        </li>
+        {#if (showSet.has(1))}
+          <HiddenBlock>
+            sup2
+          </HiddenBlock>
         {/if}
         <br />
         <li><Latex math={'\\langle  cos( \\frac{2\\pi}{T} kt ) ,  sin( \\frac{2\\pi}{T} kt ) \\rangle = 0'} /></li>
@@ -119,14 +108,3 @@
 </ol>
 
 
-
-<style>
-
-  span {
-    text-decoration: underline;
-    cursor: pointer;
-    color: blue;
-  }
-
-
-</style>

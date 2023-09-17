@@ -1,6 +1,5 @@
 <div>
   <slot />
-
 </div>
 
 <style>
