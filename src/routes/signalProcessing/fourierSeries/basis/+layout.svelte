@@ -12,7 +12,6 @@
 	let topOfPageElement : HTMLDivElement ;
 
 	onMount(() => {
-    
 		innerPageRoute.set(pageRoute);
 	});
 
@@ -22,7 +21,7 @@
 	// when url changes, scroll to the top of the page
 	$: if ($url && typeof $url !== 'string' && topOfPageElement) {
     console.log($url);
-		topOfPageElement.scrollIntoView();
+		topOfPageElement.scrollTo();
 	}
 
 </script>

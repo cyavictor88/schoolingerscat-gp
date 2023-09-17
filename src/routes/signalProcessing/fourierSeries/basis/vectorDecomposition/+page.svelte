@@ -10,7 +10,7 @@
 <p>Given a orthogonal basis for a n-dimensional space: <Latex math={'\\{v_1, v_2,...,v_n\\}'} /></p>
  
 <p>
- Say there is a vector, <Latex math={'u'} />, we to express <Latex math={'u'}/> 
+ Say there is a vector, <Latex math={'u'} />, and we want to express <Latex math={'u'}/> 
  as a linear combination of <Latex math={'\\{v_1, v_2,...,v_n\\}'} /> such that:
 </p>
 

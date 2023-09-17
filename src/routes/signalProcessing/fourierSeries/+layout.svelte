@@ -90,8 +90,10 @@
 			</p>
 		</div>
 		<SideBar route={sectionRoute} />
-		<p>Current Topic:</p>
-		<SideBar route={$innerPageRoute} routeBgColor={SITE_COLOR.LayoutFSPageRouteBG} />
+		{#if $innerPageRoute}
+			<p>Current Topic:</p>
+			<SideBar route={$innerPageRoute} routeBgColor={SITE_COLOR.LayoutFSPageRouteBG} />
+		{/if}
 	</div>
 {/if}
 
@@ -105,8 +107,10 @@
 				}}>{leftTriangle}</button
 			>
 			<SideBar route={sectionRoute} />
-			<p>Current Topic:</p>
-			<SideBar route={$innerPageRoute} routeBgColor={SITE_COLOR.LayoutFSPageRouteBG} />
+			{#if $innerPageRoute}
+				<p>Current Topic:</p>
+				<SideBar route={$innerPageRoute} routeBgColor={SITE_COLOR.LayoutFSPageRouteBG} />
+			{/if}
 		</div>
 	{:else if window.outerWidth < 800}
 		<button
@@ -136,18 +140,13 @@
 		style="padding-left:{10+sideBarDivWidth}px; top:{$topBarHeight}px; 
                           max-height: 100%;
 													height: 100%;
+													min-height: calc( 100vh - {$topBarHeight+10}px);
 													background-color: {SITE_COLOR.LayoutFSContentBG};
 													border-bottom: 6px {SITE_COLOR.LayoutFSBorderBottom} solid;
 
                           "
 	>
 		<slot />
-		<br/>
-		<br/>
-		<br/>
-		<br/>
-		<br/>
-		<hr />
 	</div>
 </div>
 
