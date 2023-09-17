@@ -49,11 +49,11 @@
 	Inner Product in <Latex math={'\\mathbb{R}^2'} />:
 </strong>
 <Latex
-	displayMode={true}
+	center={true}
 	math={'\\mathrm{for} \\; \\vec{a}= \\left[\\begin{array}{c} a_x \\\\ a_y \\end{array} \\right] \\; \\mathrm{and} \\; \\vec{b}= \\left[\\begin{array}{c} b_x \\\\ b_y \\end{array}\\right],'}
 />
 <Latex
-	displayMode={true}
+	center={true}
 	math={'<\\vec{a},\\vec{b}>:= \\vec{a}^T \\vec{b} =' +
 		' \\left[\\begin{array}{cc}a_x & a_y \\end{array}\\right]' +
 		'\\left[\\begin{array}{c}b_x \\\\ b_y \\end{array}\\right]=a_x\\,b_x+a_y\\,b_y'}
@@ -76,17 +76,17 @@
 	<div slot='col1'>
 
 		<Latex
-		displayMode={true}
+		center={true}
 		math={'\\color{brown}{d^2} \\color{black}{=} \\color{red}{\\| \\vec{a}  \\|^2} \\color{black}{+} \\color{blue}{\\| \\vec{b}  \\|^2} \\color{black}{ - 2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) } '}
 		/>
 		<Latex
-			displayMode={true}
+			center={true}
 			math={'\\mathrm{where} \\ \\color{red}{\\| \\vec{a}  \\|^2 = a_x^2+a_y^2} \\color{black}{\\quad \\mathrm{and \\quad }}  \\color{blue}{\\| \\vec{b}  \\|^2 = b_x^2+b_y^2}'}
 		/>
 		<fieldset>
 			<legend>{getCircleNum(1)}</legend>
 			<Latex
-				displayMode={true}
+				center={true}
 				math={'\\Rightarrow \\color{brown}{d^2} \\color{black}{=} \\color{red}{a_x^2+a_y^2} \\color{black}{+} \\color{blue}{b_x^2+b_y^2} \\color{black}{ - 2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) }'}
 			/>
 		</fieldset>
@@ -113,18 +113,18 @@
 	<div slot='col1'>
 
 		<Latex
-		displayMode={true}
+		center={true}
 		math={'\\color{brown}{d_x} \\color{black} = | \\color{red}a_x \\color{brown} \\color{black} - \\color{blue}b_x \\color{black} | '}
 		/>
 		<Latex
-			displayMode={true}
+			center={true}
 			math={'\\color{brown}{d_y} \\color{black} = | \\color{red}a_y \\color{brown} \\color{black} - \\color{blue}b_y \\color{black} | '}
 		/>
-		<Latex displayMode={true} math={'\\color{brown}{d^2} = {d_x}^2 + {d_y}^2'} />
+		<Latex center={true} math={'\\color{brown}{d^2} = {d_x}^2 + {d_y}^2'} />
 		<fieldset>
 			<legend>{getCircleNum(2)}</legend>
 			<Latex
-				displayMode={true}
+				center={true}
 				math={'\\Rightarrow \\color{brown}{d^2} \\color{black} = ( \\color{red}{a_x} \\color{black}- \\color{blue} b_x \\color{black})^2+( \\color{red}{a_y} \\color{black}- \\color{blue} b_y \\color{black})^2'}
 			/>
 		</fieldset>
@@ -142,28 +142,28 @@
 </p>
 
 <Latex
-	displayMode={true}
+	center={true}
 	math={'\\color{brown}{d^2} \\color{black} =    ( \\color{red}{a_x} \\color{black}- \\color{blue} b_x \\color{black})^2+( \\color{red}{a_y} \\color{black}- \\color{blue} b_y \\color{black})^2 \\color{black}{=} \\color{red}{a_x^2+a_y^2} \\color{black}{+} \\color{blue}{b_x^2+b_y^2} \\color{black}{ - 2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) }'}
 />
 
 <Latex
-	displayMode={true}
+	center={true}
 	math={'\\Rightarrow  (a_x^2+b_x^2-2a_xb_x) +(a_y^2+b_y^2-2a_yb_y)= \\color{red}{a_x^2+a_y^2} \\color{black}{+} \\color{blue}{b_x^2+b_y^2} \\color{black}{ - 2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) }'}
 />
 <Latex
-	displayMode={true}
+	center={true}
 	math={'\\Rightarrow (\\cancel{a_x^2}+\\cancel{b_x^2}-2a_xb_x )+(\\cancel{a_y^2}+\\cancel{b_y^2}-2a_yb_y)= \\color{red}{\\cancel{a_x^2}+\\cancel{a_y^2}} \\color{black}{+} \\color{blue}{\\cancel{b_x^2}+\\cancel{b_y^2}} \\color{black}{ - 2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) }'}
 />
 <Latex
-	displayMode={true}
+	center={true}
 	math={'\\Rightarrow -2a_xb_x-2a_yb_y = -2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta)'}
 />
 <Latex
-	displayMode={true}
+	center={true}
 	math={'\\Rightarrow a_xb_x+a_yb_y = < \\vec{a},\\vec{b}> = \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta)'}
 />
 <Latex
-	displayMode={true}
+	center={true}
 	math={'\\Rightarrow cos(\\theta)   = \\frac{< \\vec{a},\\vec{b}>}{  \\| \\vec{a}  \\| \\|\\vec{b}\\| }'}
 />
 

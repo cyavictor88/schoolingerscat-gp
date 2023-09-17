@@ -31,7 +31,7 @@ function fsData(){
     bk.push(simpSin.integrate(-T/2,T/2,k,1000));
   });
   ak[0] = ak[0]/2;
-  const xs = linspace(-5,5,100);
+  const xs = linspace(-20,20,100);
   const ys = xs.map((x,i)=>{
     let cos = 0;
     let sin = 0;
@@ -56,11 +56,11 @@ export function makeChart(ctx:HTMLCanvasElement) {
         {
           label: 'y(t) = t^3 - 12t + 16',
           data: chartData,
-          borderWidth: 1,
+          borderWidth: 5,
           pointStyle: false,
           showLine: true,
-          borderColor: 'red',
-          backgroundColor: 'red'
+          borderColor: 'rgba(255, 0, 0, 0.5)',
+          backgroundColor: 'rgba(255, 0, 0, 0.5)',
         },
         {
           label: 'fourier series approximation',
@@ -76,12 +76,12 @@ export function makeChart(ctx:HTMLCanvasElement) {
     options: {
       responsive: true,
       maintainAspectRatio: false,
-      scales: {
-        y :{
-          min:chartData[0].y,
-          max:chartData[chartData.length-1].y,
-        }
-        }
+      // scales: {
+        // y :{
+        //   min:chartData[0].y,
+        //   max:chartData[chartData.length-1].y,
+        // }
+        // }
     }
   });
 }

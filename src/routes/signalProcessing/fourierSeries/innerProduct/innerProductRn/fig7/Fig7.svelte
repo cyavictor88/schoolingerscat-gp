@@ -72,7 +72,7 @@
 
 		<!-- <p>With Pythagorean Theorem, we can have the equation: </p>
 		<Latex
-		displayMode={true}
+		center={true}
 		math={'\\Rightarrow \\color{brown}{d^2} \\color{black} = ( \\color{red}{a_x} \\color{black}- \\color{blue} b_x \\color{black})^2+( \\color{red}{a_y} \\color{black}- \\color{blue} b_y \\color{black})^2'} 
 	/>-->
 

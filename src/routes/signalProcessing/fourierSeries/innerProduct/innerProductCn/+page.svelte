@@ -10,7 +10,7 @@
 <p>Inner Product also works with complex vectors in n-dimensional space</p>
 
 <strong>Inner Product in <Latex math={'\\mathrm{C}^n'}/>:</strong> 
-<Latex displayMode={true} math={`  <\\vec{a},\\vec{b}>:=\\vec{b}^* \\vec{a} =  \\left[\\begin{array}{cccc}
+<Latex center={true} math={`  <\\vec{a},\\vec{b}>:=\\vec{b}^* \\vec{a} =  \\left[\\begin{array}{cccc}
   b_1^* & b_2^* & ... & b_n^* \\end{array}\\right]
   \\left[\\begin{array}{c}
   a_1 \\\\ a_2 \\\\ . \\\\ . \\\\ . \\\\ a_n \\end{array}\\right]
@@ -29,10 +29,10 @@
 
   <p>For example:</p>
   <p>suppose  <Latex math={`\\vec{c} \\in \\mathbb{C}^1 \\; \\mathrm{and} \\; \\vec{c}= (g+if) \\; \\mathrm{where} \\; g,f \\in \\mathbb{R}`} />
-  <Latex displayMode={true} math={`\\Rightarrow < \\vec{c} , \\vec{c} > =  \\| \\vec{c} \\| ^2`} />
-  <Latex displayMode={true} math={`\\mathrm{where} \\; \\| \\vec{c} \\| ^2 = g^2 + f^2 = (g+fi) \\times (g-fi) = (\\vec{c})(\\vec{c}^*)`} />
-  <Latex displayMode={true} math={`\\Rightarrow < \\vec{c} , \\vec{c} > =  \\| \\vec{c} \\| ^2 =  (\\vec{c})(\\vec{c}^*) `} />
-    <Latex displayMode={true} math={`\\Rightarrow < \\vec{c} , \\vec{c} > = (\\vec{c})(\\vec{c}^*) `} />
+  <Latex center={true} math={`\\Rightarrow < \\vec{c} , \\vec{c} > =  \\| \\vec{c} \\| ^2`} />
+  <Latex center={true} math={`\\mathrm{where} \\; \\| \\vec{c} \\| ^2 = g^2 + f^2 = (g+fi) \\times (g-fi) = (\\vec{c})(\\vec{c}^*)`} />
+  <Latex center={true} math={`\\Rightarrow < \\vec{c} , \\vec{c} > =  \\| \\vec{c} \\| ^2 =  (\\vec{c})(\\vec{c}^*) `} />
+    <Latex center={true} math={`\\Rightarrow < \\vec{c} , \\vec{c} > = (\\vec{c})(\\vec{c}^*) `} />
 
 
 </p>

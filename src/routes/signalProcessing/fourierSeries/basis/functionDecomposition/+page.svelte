@@ -12,7 +12,7 @@
 	<Latex math={'\\{g_1(t), g_2(t),...\\}'} />, such that for each function in that basis:</p>
 
 <Latex 
-displayMode={true}
+center={true}
 math={`
  \\langle g_i(t),g_j(t) \\rangle =
     \\left\\{
@@ -23,19 +23,19 @@ math={`
     \\right. 
 `}/>
 
-<Latex displayMode={true}
+<Latex center={true}
 math={'\\mathrm{where}'}/>
 
-<Latex displayMode={true}
+<Latex center={true}
 math={'\\langle g_i(t) , g_j(t) \\rangle = \\int_T g_i(t) g_j^*(t) \\,dt'} />
 
 
 
 <p>Then given a function <Latex math={'f(t)'}/>, we can decompose that function into:</p>
-<Latex displayMode={true} math={`\\Rightarrow f(t) = \\sum_{i=1}^{n} c_i g_i(t)`} />
+<Latex center={true} math={`\\Rightarrow f(t) = \\sum_{i=1}^{n} c_i g_i(t)`} />
 
-<Latex displayMode={true} math={`\\Rightarrow  f(t) = \\sum_{i=1}^{n} \\frac{ \\langle f(t), g_i(t) \\rangle }{ \\langle g_i(t), g_i(t) \\rangle } v_i`} />
-<Latex displayMode={true}
+<Latex center={true} math={`\\Rightarrow  f(t) = \\sum_{i=1}^{n} \\frac{ \\langle f(t), g_i(t) \\rangle }{ \\langle g_i(t), g_i(t) \\rangle } v_i`} />
+<Latex center={true}
 math={'\\mathrm{where \\; }n=\\infty'}/>
 
 <p>And is there such basis? Yes! thats basically what fourier series is.</p>

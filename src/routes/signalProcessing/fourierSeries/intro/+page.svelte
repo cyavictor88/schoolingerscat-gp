@@ -20,9 +20,8 @@
 
 <Title hLevel={1}>Fourier Series - Introduction</Title>
 <p>
-	Fourier Series is a method to decompose a given periodic function <Latex math={'y(t)'} /> into sum
-	of <Latex math={'sin'} /> and <Latex math={'cos'} /> functions. (periodic? we will elaborate on that
-	later)
+	Fourier Series is a method to decompose a periodic function <Latex math={'y(t)'} /> into sum
+	of <Latex math={'sin'} /> and <Latex math={'cos'} /> functions.
 </p>
 <p>Example:</p>
 <Latex math={'\\color{green} y(t) = 12cos(2t)sin(t) + 16'} />
@@ -31,11 +30,11 @@
 </div>
 <hr />
 <p>
-	For non-periodic function, Fourier Series can approximate a given non-periodic function with sum
-	of <Latex math={'sin'} /> and <Latex math={'cos'} /> functions.
+	For non-periodic function, Fourier Series can approximate <b>an interval</b> of a given non-periodic function. Using that interval to be the period, we can manufacture a 
+	periodic function for applying Fourier Series.
 </p>
 <p>Example:</p>
-<Latex math={'\\color{red} y(t) = t^3 -12 t +16 \\; \\text{,} \\; t\\in [-5,5]'} />
+<Latex math={'\\color{red} y(t) = t^3 -12 t +16 \\; \\text{, for} \\; t\\in [-5,5]'} />
 <div style="max-width: 500px; height:200px;">
 	<canvas bind:this={exampleFunctionCanvas2} />
 </div>

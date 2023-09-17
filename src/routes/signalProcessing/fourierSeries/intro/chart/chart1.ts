@@ -56,11 +56,11 @@ export function makeChart(ctx:HTMLCanvasElement) {
         {
           label: 'y(t) =  12cos(2t)sin(t) + 16',
           data: chartData,
-          borderWidth: 1,
+          borderWidth: 5,
           pointStyle: false,
           showLine: true,
-          borderColor: 'green',
-          backgroundColor: 'green'
+          borderColor: 'rgba(0, 255, 0, 0.5)',
+          backgroundColor: 'rgba(0, 255, 0, 0.5)',
         },
         {
           label: 'fourier series decomposition',
@@ -68,8 +68,8 @@ export function makeChart(ctx:HTMLCanvasElement) {
           borderWidth: 2,
           pointStyle: false,
           showLine: true,
-          borderColor: 'cyan',
-          backgroundColor: 'cyan'
+          borderColor: 'black',
+          backgroundColor: 'black'
         }
       ]
     },

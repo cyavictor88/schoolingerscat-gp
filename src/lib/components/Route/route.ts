@@ -19,6 +19,7 @@ export const rootRoute : IRoute = {
         {label: 'Introduction', path: '/signalProcessing/fourierSeries/intro'},
         {label: 'Inner Product', path: '/signalProcessing/fourierSeries/innerProduct'},
         {label: 'Basis', path: '/signalProcessing/fourierSeries/basis'},
+        {label: 'Fourier Series Proof', path: '/signalProcessing/fourierSeries/fourierSeriesProof'},
       ]}
     ]}
   ] 

@@ -2,10 +2,10 @@
 	import katex from "katex";
 
 	export let math: string;
-	export let displayMode = false;
+	export let center = false;
 	
 	const options = {
-		displayMode: displayMode,
+		displayMode: center,
 		throwOnError: false
 	}
 	

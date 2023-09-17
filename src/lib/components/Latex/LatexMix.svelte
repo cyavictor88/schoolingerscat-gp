@@ -3,10 +3,10 @@
 	import type { ILatexMix } from "./latexMix";
 
 	export let mixedString: ILatexMix[] = [];
-	export let displayMode = false;
+	export let center = false;
 	let katexMixString = '';
 	const options = {
-		displayMode: displayMode,
+		displayMode: center,
 		throwOnError: false
 	}
   mixedString.forEach(s=>{

@@ -7,7 +7,7 @@ function latex(math: string) {
   const mathmlHtml = katex.renderToString(math, {
     throwOnError: false,
     output: "mathml",
-    displayMode: false,
+    center: false,
   });
   return mathmlHtml;
 
@@ -368,7 +368,7 @@ export function svg2() {
     const mathmlHtml = katex.renderToString(`\\theta\\frac{${h}}{${k}}`, {
       throwOnError: false,
       output: "mathml",
-      displayMode: false,
+      center: false,
     });
 
     return mathmlHtml; `<math><mrow><mfrac><mn>${h}</mn><mn>${k}</mn></mfrac></mrow></math>`;

@@ -47,7 +47,7 @@
 
 <strong>Inner Product for Functions:</strong>
 
-<Latex displayMode={true} math={`
+<Latex center={true} math={`
     \\langle f(t) , g(t) \\rangle = \\int_{t_1}^{t_2} f(t) g^*(t) \\,dt
   `}
 />
@@ -69,7 +69,7 @@
     results in infinite sums, and since the functions are continuous, you can turn <Latex math={'\\sum_{}^{}'} /> into integral <Latex math={'\\int_{}^{}'} />.
   </li>
   <li>
-    New variables  <Latex math={'t_1'} /> and <Latex math={'t_2'} /> let you specify the bounds, it is useful for periodic functions.
+    New variables  <Latex math={'t_1'} /> and <Latex math={'t_2'} /> let you specify the bounds.
   </li>
 </ol>
 
@@ -83,6 +83,10 @@
     for getting the accurate inner product: <Latex math={` \\int_{T}^{} f(t) g^*(t) \\,dt 
    `} /> </p>
 
+<p>This example also illustrate why having a periodic function making it nice work with inner product;
+  if we are given periodic functions, by setting the integral bound to be the functions' period, we then have all the information needed since 
+ larger bound will just give us duplicate information.
+</p>
 <div style='border: 1px black solid; padding: 12px'>
 <b>Figure 8:</b>
 <!-- svelte-ignore a11y-missing-attribute -->
@@ -93,7 +97,7 @@
 <ol>
   <li>The Formula of Inner product for functions is <Latex math={` \\int_{T}^{} f(t) g^*(t) \\,dt 
   `} /> 
- <li>The Inner product of two orthogonal functions or two orthgonal vectors is <Latex math={`0`} /></li>
+ <li>The Inner product of two orthogonal functions or two orthogonal vectors is <Latex math={`0`} /></li>
   
 </ol>
 <hr />

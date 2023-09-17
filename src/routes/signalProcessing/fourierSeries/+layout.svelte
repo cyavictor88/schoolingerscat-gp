@@ -36,17 +36,17 @@
 	setContext('innerPageRoute', innerPageRoute);
 
 	let mobileShowSide = false;
-	let displayModeFullSide = true;
+	let centerFullSide = true;
 
 	$: {
 		if (sideBarWidth > narrowSideBarWidth && mobileShowSide) {
-			displayModeFullSide = false;
+			centerFullSide = false;
 		}
 		if (sideBarWidth > narrowSideBarWidth && !mobileShowSide) {
-			displayModeFullSide = true;
+			centerFullSide = true;
 		}
 		if (sideBarWidth < wideSideBarWidth) {
-			displayModeFullSide = false;
+			centerFullSide = false;
 		}
 	}
 
@@ -99,7 +99,7 @@
 
 <div style="display:flex; flex-flow: row nowrap; ">
 	<div bind:clientWidth={sideBarDivWidth} style='position:fixed;'>
-	{#if displayModeFullSide}
+	{#if centerFullSide}
 		<div in:fly={{ y: 200, duration: 1000 }} >
 			<button
 				on:click={() => {

@@ -26,7 +26,7 @@ export async function mathmesh(input:string):Promise<ThreeD>{
     const mathmlHtml = katex.renderToString(input, {
         throwOnError: false,
         output: "mathml",
-        displayMode: true,
+        center: true,
     });
 
     const xmlParser = new XMLParser({
@@ -97,7 +97,7 @@ export async function mathmeshBoxAtLevel(input:string,lvl:number):Promise<{ posi
     var html = katex.renderToString(input, {
         throwOnError: false,
         output: "mathml",
-        displayMode: true,
+        center: true,
     });
    // console.log(html);
     var options = {

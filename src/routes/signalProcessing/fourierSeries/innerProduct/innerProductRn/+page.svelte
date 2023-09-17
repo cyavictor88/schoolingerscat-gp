@@ -13,7 +13,7 @@
 
 <strong>Inner Product in <Latex math={'\\mathrm{R}^n'}/>:</strong> 
 
-<Latex displayMode={true} math={`
+<Latex center={true} math={`
   <\\vec{a},\\vec{b}>:= \\vec{a}^T \\vec{b} = 
   \\left[\\begin{array}{cccc}
   a_1 & a_2 & ... & a_n \\end{array}\\right]
@@ -29,7 +29,7 @@
 
 <strong>Step 1. Use Law of Cosine:</strong>
 <Latex
-displayMode={true}
+center={true}
 math={'\\color{brown}{d^2} \\color{black}{=} \\color{red}{\\| \\vec{a}  \\|^2} \\color{black}{+} \\color{blue}{\\| \\vec{b}  \\|^2} \\color{black}{ - 2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) } '}
 />
 
@@ -39,7 +39,7 @@ math={'\\color{brown}{d^2} \\color{black}{=} \\color{red}{\\| \\vec{a}  \\|^2} \
 <fieldset>
   <legend>{getCircleNum(5)}</legend>
   <Latex
-    displayMode={true}
+    center={true}
     math={'\\Rightarrow \\color{brown}{d^2} \\color{black}{=} \\color{red}{\\sum_{m=1}^{n} {a_m^2}} \\color{black}{+} \\color{blue}{\\sum_{m=1}^{n} b_m^2}\\color{black}{ - 2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) }'}
   />
 </fieldset>
@@ -60,7 +60,7 @@ math={'\\color{brown}{d^2} \\color{black}{=} \\color{red}{\\| \\vec{a}  \\|^2} \
   <fieldset>
     <legend>{getCircleNum(6)}</legend>
     <Latex
-      displayMode={true}
+      center={true}
       math={'\\Rightarrow \\color{brown}{d^2} \\color{black}{=} \\sum_{m=1}^{n} (\\color{red}{a_m} \\color{black}- \\color{blue}{b_m} \\color{black} )^2 '}
     />
   </fieldset>
@@ -68,20 +68,20 @@ math={'\\color{brown}{d^2} \\color{black}{=} \\color{red}{\\| \\vec{a}  \\|^2} \
 
   <p>Now we can set  <Latex math={'\\color{brown}d^2'} /> = {getCircleNum(5)} = {getCircleNum(6)} :</p> 
     <Latex
-      displayMode={true}
+      center={true}
       math={`\\Rightarrow \\color{brown}{d^2} \\color{black}{=} \\color{red}{\\sum_{m=1}^{n} {a_m^2}} \\color{black}{+} \\color{blue}{\\sum_{m=1}^{n} b_m^2}\\color{black}{ - 2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta)}
      
       \\color{black}{=} \\sum_{m=1}^{n} (\\color{red}{a_m} \\color{black}- \\color{blue}{b_m} \\color{black} )^2 `}
     />
 
-    <Latex displayMode={true}
+    <Latex center={true}
     math={`\\Rightarrow  - 2 \\| \\vec{a}  \\| \\|\\vec{b}\\| cos(\\theta) = 
     \\sum_{m=1}^{n} -2a_m b_m 
     `}
     />
 
 
-    <Latex displayMode={true}
+    <Latex center={true}
     math={`\\Rightarrow   cos(\\theta) = 
          \\frac{ \\sum_{m=1}^{n} a_m b_m } { \\| \\vec{a}  \\| \\|\\vec{b}\\|}  = \\frac{<\\vec{a},\\vec{b}>}  { \\| \\vec{a}  \\| \\|\\vec{b}\\|}
     `}
@@ -97,15 +97,15 @@ math={'\\color{brown}{d^2} \\color{black}{=} \\color{red}{\\| \\vec{a}  \\|^2} \
   <li>
     <strong>Inner Product of two same vector gives square of the magnitude of that vector:</strong>
     <p>
-    <Latex displayMode={true} math={'cos(0)= \\frac{< \\vec{a},\\vec{a}> }{  \\| \\vec{a}  \\| \\|\\vec{a}\\|} '} />
-      <Latex displayMode={true} math={'\\Rightarrow < \\vec{a},\\vec{a}> =  \\| \\vec{a}  \\| ^2 \\times 1 '} />
-      <Latex displayMode={true} math={'\\Rightarrow < \\vec{a},\\vec{a}> =  \\| \\vec{a}  \\| ^2 = a_1^2+a_2^2+ ... + a_n^2'} />
+    <Latex center={true} math={'cos(0)= \\frac{< \\vec{a},\\vec{a}> }{  \\| \\vec{a}  \\| \\|\\vec{a}\\|} '} />
+      <Latex center={true} math={'\\Rightarrow < \\vec{a},\\vec{a}> =  \\| \\vec{a}  \\| ^2 \\times 1 '} />
+      <Latex center={true} math={'\\Rightarrow < \\vec{a},\\vec{a}> =  \\| \\vec{a}  \\| ^2 = a_1^2+a_2^2+ ... + a_n^2'} />
       </p>
   </li>
   <li>
     <strong>Inner product of two orthognal vectors is 0:</strong>
-    <Latex displayMode={true} math={' < \\vec{a},\\vec{b}> =  \\| \\vec{a}  \\| \\|\\vec{b}\\| cos( \\frac{\\pi}{2})'} />
-      <Latex displayMode={true} math={'\\Rightarrow < \\vec{a},\\vec{b}> =  \\| \\vec{a}  \\| \\|\\vec{b}\\| \\times 0 '} />
-          <Latex displayMode={true} math={'\\Rightarrow < \\vec{a},\\vec{b}> =  0 '} />
+    <Latex center={true} math={' < \\vec{a},\\vec{b}> =  \\| \\vec{a}  \\| \\|\\vec{b}\\| cos( \\frac{\\pi}{2})'} />
+      <Latex center={true} math={'\\Rightarrow < \\vec{a},\\vec{b}> =  \\| \\vec{a}  \\| \\|\\vec{b}\\| \\times 0 '} />
+          <Latex center={true} math={'\\Rightarrow < \\vec{a},\\vec{b}> =  0 '} />
   </li>
 </ol>

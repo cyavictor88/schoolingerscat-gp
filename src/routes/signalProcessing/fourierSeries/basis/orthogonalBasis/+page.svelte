@@ -21,7 +21,7 @@
 <p>An orthogonal basis for a n-dimensional space can be expressed as <Latex math={'\\{v_1, v_2,...,v_n\\}'} /> where:</p>
 
 <Latex 
-displayMode={true}
+center={true}
 math={`
  \\langle v_i,v_j \\rangle =
     \\left\\{

@@ -20,7 +20,7 @@ export function latex(math: string) {
   const mathmlHtml = katex.renderToString(math, {
     throwOnError: false,
     output: "mathml",
-    displayMode: false,
+    center: false,
   });
   return mathmlHtml;
 }
