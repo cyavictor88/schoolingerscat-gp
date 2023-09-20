@@ -3,6 +3,7 @@
 
 
 	import SvgD3 from "./SvgD3.svelte";
+	import Map from "./map/Map.svelte";
 
 </script>
 <h1>d3 playground</h1>
