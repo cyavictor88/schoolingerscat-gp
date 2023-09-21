@@ -24,7 +24,11 @@
     height: 20px;
   }
   
-
+  svg {
+    background-image: url("/images/map.png");
+    background-repeat: no-repeat;
+    background-size: 1500px;
+  }
   
   #content .bounding-box rect {
     fill: none;
