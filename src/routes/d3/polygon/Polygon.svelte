@@ -10,7 +10,7 @@
 <div id="content">
 	<div class="info">Hover over a country</div>
 	<svg id='svgg' width="100vw" height="100vh">
-    <image href="/images/map.png"  />
+    <!-- <image href="/images/map.png"  /> -->
 		<g class="map" />
 		<g class="bounding-box"><rect /></g>
 		<g class="centroid"><circle r="4" /></g>
