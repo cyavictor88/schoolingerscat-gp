@@ -22,6 +22,7 @@
     showSet = newSet;
   }
 	onMount(() => {
+    showAll()
 		(async () => {
 			innerPageRoute.set(null);
 		})();
@@ -72,17 +73,23 @@
       </p>
       <ol>
         <li>
-          <Latex math={'\\langle  cos( \\frac{2\\pi}{T} kt ) ,  cos( \\frac{2\\pi}{T} kt ) \\rangle \\ne 0'} />
+          <Latex math={'\\langle  cos( \\frac{2\\pi}{T} kt ) ,  cos( \\frac{2\\pi}{T} kt ) \\rangle = \\frac{1}{2}T'} />
           <button on:click={()=>toggleShow(0)}>{showSet.has(0)? 'hide': 'show'}</button>
         </li>
         {#if showSet.has(0)}
           <HiddenBlock>
-            sup
+            <Latex center math={'\\langle  cos( \\frac{2\\pi}{T} kt ) ,  cos( \\frac{2\\pi}{T} kt ) \\rangle = \\int_{0}^{T} cos(\\frac{2\\pi}{T}kt)cos(\\frac{2\\pi}{T}kt) \\,dt'}/>
+            <Latex center math={'= \\int_{0}^{T} cos^2(\\frac{2\\pi}{T}kt) \\,dt'} />
+<p style='text-align: center;'>( by using <Latex math={'cos(2\\theta) = 2cos^2(\\theta)-1 \\Rightarrow  cos^2(\\theta) =  \\frac{1}{2}+ \\frac{cos(2\\theta)}{2} '} />)</p>
+<Latex center math={'= \\int_{0}^{T} \\frac{1}{2} + \\frac{cos(2\\frac{2\\pi}{T}kt)}{2} \\,dt'} />
+<Latex center math={'= \\frac{1}{2}t\\bigr]_0^T + \\frac{1}{2} \\bigl[ sin(2\\frac{2\\pi}{T}kt) \\cdot\\frac{T}{2 \\cdot 2\\pi k} \\bigr]_0^T '} />
+<Latex center math={'= \\frac{1}{2}t\\bigr]_0^T = \\frac{1}{2}T'} />
+
           </HiddenBlock>
         {/if}
         <br />
         <li>
-          <Latex math={'\\langle  sin( \\frac{2\\pi}{T} kt ) ,  sin( \\frac{2\\pi}{T} kt ) \\rangle\\ne 0'} />
+          <Latex math={'\\langle  sin( \\frac{2\\pi}{T} kt ) ,  sin( \\frac{2\\pi}{T} kt ) \\rangle = \\frac{1}{2}T'} />
           <button on:click={()=>toggleShow(1)}>{showSet.has(0)? 'hide': 'show'}</button>
         </li>
         {#if (showSet.has(1))}
