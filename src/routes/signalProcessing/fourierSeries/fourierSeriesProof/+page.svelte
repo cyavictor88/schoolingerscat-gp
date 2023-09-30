@@ -85,7 +85,7 @@
 						center
 						math={'\\langle  cos( \\frac{2\\pi}{T} kt ) ,  cos( \\frac{2\\pi}{T} kt ) \\rangle = \\int_{0}^{T} cos(\\frac{2\\pi}{T}kt)cos(\\frac{2\\pi}{T}kt) \\,dt'}
 					/>
-					<Latex center math={'= \\int_{0}^{T} cos^2(\\frac{2\\pi}{T}kt) \\,dt'} />
+					<Latex center math={'= \\int_{0}^{T} cos^2(\\frac{2\\pi}{T}kt) \\,dt = \\int_{0}^{T} cos^2(\\theta) \\,dt \\text{, where } \\theta =  \\frac{2\\pi}{T}kt' } />
 					<p style="text-align: center;">
 						( by using <Latex
 							math={'cos(2\\theta) = 2cos^2(\\theta)-1 \\Rightarrow  cos^2(\\theta) =  \\frac{1}{2}+ \\frac{cos(2\\theta)}{2} '}
@@ -93,7 +93,7 @@
 					</p>
 					<Latex
 						center
-						math={'= \\int_{0}^{T} \\frac{1}{2} + \\frac{cos(2\\frac{2\\pi}{T}kt)}{2} \\,dt'}
+						math={'=\\int_{0}^{T} \\frac{1}{2} + \\frac{cos(2\\theta)}{2} \\,dt = \\int_{0}^{T} \\frac{1}{2} + \\frac{cos(2\\frac{2\\pi}{T}kt)}{2} \\,dt'}
 					/>
 					<Latex
 						center
@@ -115,7 +115,7 @@
 						center
 						math={'\\langle  sin( \\frac{2\\pi}{T} kt ) ,  sin( \\frac{2\\pi}{T} kt ) \\rangle = \\int_{0}^{T} sin(\\frac{2\\pi}{T}kt)sin(\\frac{2\\pi}{T}kt) \\,dt'}
 					/>
-					<Latex center math={'= \\int_{0}^{T} sin^2(\\frac{2\\pi}{T}kt) \\,dt'} />
+					<Latex center math={'= \\int_{0}^{T} sin^2(\\frac{2\\pi}{T}kt) \\,dt = \\int_{0}^{T} sin^2(\\theta) \\,dt \\text{, where } \\theta =  \\frac{2\\pi}{T}kt' } />
 					<p style="text-align: center;">
 						( by using <Latex
 							math={'sin^2(\\theta) =  \\frac{1}{2} - \\frac{cos(2\\theta)}{2} '}
@@ -123,7 +123,7 @@
 					</p>
 					<Latex
 						center
-						math={'= \\int_{0}^{T} \\frac{1}{2} - \\frac{cos(2\\frac{2\\pi}{T}kt)}{2} \\,dt'}
+						math={'= \\int_{0}^{T} \\frac{1}{2} - \\frac{cos(2\\theta)}{2} \\,dt =\\int_{0}^{T} \\frac{1}{2} - \\frac{cos(2\\frac{2\\pi}{T}kt)}{2} \\,dt'}
 					/>
 					<Latex
 						center
@@ -135,7 +135,7 @@
 			<br />
 			<li>
 				<Latex
-					math={'\\langle  cos( \\frac{2\\pi}{T} kt ) ,  sin( \\frac{2\\pi}{T} kt ) \\rangle = 0'}
+					math={'\\langle  sin( \\frac{2\\pi}{T} kt ) ,  cos( \\frac{2\\pi}{T} kt ) \\rangle = 0'}
 				/>
 				<button on:click={() => toggleShow(3)}>{showSet.has(3) ? 'hide' : 'show'}</button>
 			</li>
@@ -143,44 +143,145 @@
 				<HiddenBlock>
 					<Latex
 						center
-						math={'\\langle  sin( \\frac{2\\pi}{T} kt ) ,  sin( \\frac{2\\pi}{T} kt ) \\rangle = \\int_{0}^{T} sin(\\frac{2\\pi}{T}kt)sin(\\frac{2\\pi}{T}kt) \\,dt'}
+						math={'\\langle  sin( \\frac{2\\pi}{T} kt ) ,  cos( \\frac{2\\pi}{T} kt ) \\rangle = \\int_{0}^{T} sin(\\frac{2\\pi}{T}kt)cos(\\frac{2\\pi}{T}kt) \\,dt'}
 					/>
-					<Latex center math={'= \\int_{0}^{T} sin^2(\\frac{2\\pi}{T}kt) \\,dt'} />
+					<Latex
+						center
+						math={' = \\int_{0}^{T} sin(\\theta)cos(\\theta) \\,dt\\text{, where } \\theta =  \\frac{2\\pi}{T}kt'}
+					/>
 					<p style="text-align: center;">
 						( by using <Latex
-							math={'sin^2(\\theta) =  \\frac{1}{2} - \\frac{cos(2\\theta)}{2} '}
+							math={'sin(2\\theta) = 2sin(\\theta)cos(\\theta)  '}
 						/>)
 					</p>
 					<Latex
 						center
-						math={'= \\int_{0}^{T} \\frac{1}{2} - \\frac{cos(2\\frac{2\\pi}{T}kt)}{2} \\,dt'}
+						math={'= \\int_{0}^{T}  \\frac{1}{2} sin(2\\theta) \\,dt =\\int_{0}^{T}  \\frac{1}{2} sin(2\\frac{2\\pi}{T}kt) \\,dt'}
 					/>
 					<Latex
 						center
-						math={'= \\frac{1}{2}t\\bigr]_0^T - \\frac{1}{2} \\bigl[ sin(2\\frac{2\\pi}{T}kt) \\cdot\\frac{T}{2 \\cdot 2\\pi k} \\bigr]_0^T '}
+						math={'=  - \\frac{1}{2} \\bigl[ cos(2\\frac{2\\pi}{T}kt) \\cdot\\frac{T}{2 \\cdot 2\\pi k} \\bigr]_0^T  = 0'}
 					/>
-					<Latex center math={'= \\frac{1}{2}t\\bigr]_0^T = \\frac{1}{2}T'} />
 
         </HiddenBlock>
 			{/if}
 			<br />
 			<li>
 				<Latex
-					math={'\\langle  cos( \\frac{2\\pi}{T} k_1t ) ,  sin( \\frac{2\\pi}{T} k_2t ) \\rangle = 0'}
-				/>
-			</li>
-			<br />
-			<li>
-				<Latex
 					math={'\\langle  cos( \\frac{2\\pi}{T} k_1t ) ,  cos( \\frac{2\\pi}{T} k_2t ) \\rangle = 0'}
 				/>
+				<button on:click={() => toggleShow(4)}>{showSet.has(4) ? 'hide' : 'show'}</button>
 			</li>
+			{#if showSet.has(4)}
+				<HiddenBlock>
+					<Latex
+						center
+						math={'\\langle  cos( \\frac{2\\pi}{T} k_1t ) ,  cos( \\frac{2\\pi}{T} k_2t ) \\rangle = \\int_{0}^{T} cos(\\frac{2\\pi}{T}k_1t)cos(\\frac{2\\pi}{T}k_2t) \\,dt'}
+					/>
+					<Latex
+						center
+						math={' = \\int_{0}^{T} cos(\\alpha)cos(\\beta) \\,dt\\text{, where } \\alpha =  \\frac{2\\pi}{T}k_1t \\text{  and  } \\beta = \\frac{2\\pi}{T}k_2t '}
+					/>
+					<p style="text-align: center;">
+						( by using <Latex
+							math={'cos(\\alpha)cos(\\beta) = \\frac{cos(\\alpha+\\beta)}{2} + \\frac{cos(\\alpha-\\beta)}{2} '}
+						/>)
+					</p>
+					<Latex
+						center
+						math={`= \\frac{1}{2} \\int_{0}^{T}  cos(\\alpha+\\beta)+cos(\\alpha-\\beta) \\,dt =
+						 \\frac{1}{2} \\int_{0}^{T}  
+						cos( \\frac{(k_1+k_2)2\\pi t}{T}) +cos( \\frac{(k_1-k_2)2\\pi t}{T}) \\,dt`}
+					/>
+					<Latex
+						center
+						math={`=  \\frac{1}{2} \\bigl[ 
+							sin(\\frac{(k_1+k_2)2\\pi t}{T}) \\cdot \\frac{T}{(k_1+k_2)2\\pi }  + 
+							sin(\\frac{(k_1-k_2)2\\pi t}{T}) \\cdot \\frac{T}{(k_1-k_2)2\\pi }  
+							
+							\\bigr]_0^T  = 0`}
+					/>
+
+        </HiddenBlock>
+			{/if}
 			<br />
 			<li>
 				<Latex
 					math={'\\langle  sin( \\frac{2\\pi}{T} k_1t ) ,  sin( \\frac{2\\pi}{T} k_2t ) \\rangle = 0'}
 				/>
+					<button on:click={() => toggleShow(5)}>{showSet.has(5) ? 'hide' : 'show'}</button>
 			</li>
+			{#if showSet.has(5)}
+				<HiddenBlock>
+					<Latex
+						center
+						math={'\\langle  sin( \\frac{2\\pi}{T} k_1t ) ,  sin( \\frac{2\\pi}{T} k_2t ) \\rangle = \\int_{0}^{T} sin(\\frac{2\\pi}{T}k_1t)sin(\\frac{2\\pi}{T}k_2t) \\,dt'}
+					/>
+					<Latex
+						center
+						math={' = \\int_{0}^{T} sin(\\alpha)sin(\\beta) \\,dt\\text{, where } \\alpha =  \\frac{2\\pi}{T}k_1t \\text{  and  } \\beta = \\frac{2\\pi}{T}k_2t '}
+					/>
+					<p style="text-align: center;">
+						( by using <Latex
+							math={'sin(\\alpha)sin(\\beta) = \\frac{cos(\\alpha-\\beta)}{2} - \\frac{cos(\\alpha+\\beta)}{2} '}
+						/>)
+					</p>
+					<Latex
+						center
+						math={`= \\frac{1}{2} \\int_{0}^{T}  cos(\\alpha-\\beta)-cos(\\alpha+\\beta) \\,dt =
+						 \\frac{1}{2} \\int_{0}^{T}  
+						cos( \\frac{(k_1-k_2)2\\pi t}{T}) -cos( \\frac{(k_1+k_2)2\\pi t}{T}) \\,dt`}
+					/>
+					<Latex
+						center
+						math={`=  \\frac{1}{2} \\bigl[ 
+							sin(\\frac{(k_1-k_2)2\\pi t}{T}) \\cdot \\frac{T}{(k_1-k_2)2\\pi }  
+							-sin(\\frac{(k_1+k_2)2\\pi t}{T}) \\cdot \\frac{T}{(k_1+k_2)2\\pi }  
+							
+							\\bigr]_0^T  = 0`}
+					/>
+
+        </HiddenBlock>
+			{/if}
+			<br />
+			<li>
+				<Latex
+					math={'\\langle  sin( \\frac{2\\pi}{T} k_1t ) ,  cos( \\frac{2\\pi}{T} k_2t ) \\rangle = 0'}
+				/>
+				<button on:click={() => toggleShow(6)}>{showSet.has(6) ? 'hide' : 'show'}</button>
+			</li>
+			{#if showSet.has(6)}
+				<HiddenBlock>
+								<Latex
+						center
+						math={'\\langle  sin( \\frac{2\\pi}{T} k_1t ) ,  cos( \\frac{2\\pi}{T} k_2t ) \\rangle = \\int_{0}^{T} sin(\\frac{2\\pi}{T}k_1t)cos(\\frac{2\\pi}{T}k_2t) \\,dt'}
+					/>
+					<Latex
+						center
+						math={' = \\int_{0}^{T} sin(\\alpha)cos(\\beta) \\,dt\\text{, where } \\alpha =  \\frac{2\\pi}{T}k_1t \\text{  and  } \\beta = \\frac{2\\pi}{T}k_2t '}
+					/>
+					<p style="text-align: center;">
+						( by using <Latex
+							math={'sin(\\alpha)cos(\\beta) = \\frac{sin(\\alpha+\\beta)}{2} + \\frac{sin(\\alpha-\\beta)}{2} '}
+						/>)
+					</p>
+					<Latex
+						center
+						math={`= \\frac{1}{2} \\int_{0}^{T}  sin(\\alpha+\\beta)+sin(\\alpha-\\beta) \\,dt =
+						 \\frac{1}{2} \\int_{0}^{T}  
+						sin( \\frac{(k_1+k_2)2\\pi t}{T}) +sin( \\frac{(k_1-k_2)2\\pi t}{T}) \\,dt`}
+					/>
+					<Latex
+						center
+						math={`=  \\frac{1}{2} \\bigl[ 
+							-cos(\\frac{(k_1+k_2)2\\pi t}{T}) \\cdot \\frac{T}{(k_1+k_2)2\\pi }  
+							-cos(\\frac{(k_1-k_2)2\\pi t}{T}) \\cdot \\frac{T}{(k_1-k_2)2\\pi }  
+							
+							\\bigr]_0^T  = 0`}
+					/>
+
+        </HiddenBlock>
+			{/if}
 		</ol>
 	</li>
 </ol>
