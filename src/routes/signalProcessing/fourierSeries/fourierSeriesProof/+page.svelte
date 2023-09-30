@@ -22,7 +22,7 @@
 		showSet = newSet;
 	};
 	onMount(() => {
-		showAll();
+		// showAll();
 		(async () => {
 			innerPageRoute.set(null);
 		})();
@@ -31,7 +31,7 @@
 
 <Title hLevel={1}>Fourier Series - Proof</Title>
 <p>
-	Fourier Series for me is basically applying function decomposition to a function of <Latex
+	Fourier Series for me is basically applying function decomposition to a periodic function of <Latex
 		math={'t'}
 	/> with period
 	<Latex math={'T'} /> using the following the basis:
@@ -39,7 +39,7 @@
 <Latex
 	center={true}
 	math={`
-\\{ \\; cos( \\frac{2\\pi}{T} kt ) \\; , \\; sin( \\frac{2\\pi}{T} kt ) \\; \\}  , \\ \\; k \\in [ -\\infty, \\infty] 
+\\{ \\; cos( \\frac{2\\pi}{T} kt ) \\; , \\; sin( \\frac{2\\pi}{T} kt ) \\; \\}  , \\ \\; k \\in \\mathbb{Z}
 `}
 />
 
@@ -48,8 +48,11 @@
 	basis:
 </p>
 <ol style="list-style-type: upper-roman;">
+
 	<li>
-		Orthogonality:
+	<hr />
+
+		<b>Orthogonality:</b>
 		<p>
 			we need to show that for any function <Latex
 				math={'g_i(t) \\in \\{ \\; cos( \\frac{2\\pi}{T} kt ) \\; , \\; sin( \\frac{2\\pi}{T} kt ) \\; \\} '}
@@ -283,5 +286,11 @@
         </HiddenBlock>
 			{/if}
 		</ol>
+		<br />
+	</li>
+
+	<li>
+		<hr/>
+		<b>Show how this basis can span any periodic function:</b>
 	</li>
 </ol>

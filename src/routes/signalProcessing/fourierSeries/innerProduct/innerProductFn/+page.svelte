@@ -69,7 +69,16 @@
     results in infinite sums, and since the functions are continuous, you can turn <Latex math={'\\sum_{}^{}'} /> into integral <Latex math={'\\int_{}^{}'} />.
   </li>
   <li>
-   The bound <Latex math={'T'} /> is the common period for both  <Latex math={'f(t)'} /> and  <Latex math={'g(t)'} />  .
+   <p>The bound <Latex math={'T'} /> let us specify the interval we are interested for calculating inner product of <Latex math={'f(t)'} /> and  <Latex math={'g(t)'} />.</p>
+   <b>NOTE:</b>
+   <br />
+   <b>For Fourier Series, we are interested in periodic functions. What periodic function means is if a function 
+    <Latex math={'f(t)'} /> is periodic with period = <Latex math={'\\tau'} />,
+    then <Latex center math={'f(t+\\tau)=f(t)'} /></b>
+    <p> Regarding inner product for periodic functions, we use their period as the integral bound for inner product.
+      The reason is because since those functions are periodic, then we only need the information from one period to know 
+      the functions' behavior across the domain. 
+    </p>
   </li>
 </ol>
 
@@ -85,6 +94,7 @@
 
 <p>This example also illustrate why having a periodic function making it nice work with inner product; The common period of  <Latex math={'f(t)'} /> and  <Latex math={'g(t)'} /> 
   is T=6. With T=6, you can see that the value inner product integral repeats every T=6, so we only need to one period to have enough information about this two functions regarding inner product.
+  Because for T>6, information repeats.
 </p>
 <div style='border: 1px black solid; padding: 12px'>
 <b>Figure 8:</b>

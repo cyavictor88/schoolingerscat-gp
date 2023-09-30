@@ -39,3 +39,4 @@ math={'\\langle g_i(t) , g_j(t) \\rangle = \\int_T g_i(t) g_j^*(t) \\,dt'} />
 math={'\\mathrm{where \\; }n=\\infty'}/>
 
 <p>And is there such basis? Yes! thats basically what fourier series is.</p>
+<p>Next: <a href='/signalProcessing/fourierSeries/fourierSeriesProof'>Fourier Series Proof</a></p>
