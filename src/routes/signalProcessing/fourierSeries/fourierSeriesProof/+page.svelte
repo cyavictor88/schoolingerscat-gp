@@ -8,21 +8,21 @@
 	import HiddenBlock from './HiddenBlock.svelte';
 
 	const innerPageRoute = getContext<Writable<IRoute | null>>('innerPageRoute');
-  let showSet: Set<number> = new Set<number>(); 
-  const toggleShow = (idx:number) => {
-    const newSet = new Set<number>(showSet);
-    if(showSet.has(idx)) newSet.delete(idx);
-    else newSet.add(idx);
-    showSet = newSet;
-  }
+	let showSet: Set<number> = new Set<number>();
+	const toggleShow = (idx: number) => {
+		const newSet = new Set<number>(showSet);
+		if (showSet.has(idx)) newSet.delete(idx);
+		else newSet.add(idx);
+		showSet = newSet;
+	};
 
-  const showAll = ()=>{
-    let newSet = new Set<number>();
-    if(showSet.size === 0) for (let index = 0; index < 2; index++) newSet.add(index);
-    showSet = newSet;
-  }
+	const showAll = () => {
+		let newSet = new Set<number>();
+		if (showSet.size === 0) for (let index = 1; index <=6 ; index++) newSet.add(index);
+		showSet = newSet;
+	};
 	onMount(() => {
-    showAll()
+		showAll();
 		(async () => {
 			innerPageRoute.set(null);
 		})();
@@ -47,7 +47,7 @@
 	First we prove the above set of <Latex math={'sin'} /> and <Latex math={'cos'} /> is indeed a orthogonal
 	basis:
 </p>
-<ol  style="list-style-type: upper-roman;">
+<ol style="list-style-type: upper-roman;">
 	<li>
 		Orthogonality:
 		<p>
@@ -68,50 +68,119 @@
     \\right. 
 `}
 		/>
-      <p>to be more explicit, we need to show the following: 
-        <button on:click={showAll}>{showSet.size === 0? 'show all': 'hide all'}</button>
-      </p>
-      <ol>
-        <li>
-          <Latex math={'\\langle  cos( \\frac{2\\pi}{T} kt ) ,  cos( \\frac{2\\pi}{T} kt ) \\rangle = \\frac{1}{2}T'} />
-          <button on:click={()=>toggleShow(0)}>{showSet.has(0)? 'hide': 'show'}</button>
-        </li>
-        {#if showSet.has(0)}
-          <HiddenBlock>
-            <Latex center math={'\\langle  cos( \\frac{2\\pi}{T} kt ) ,  cos( \\frac{2\\pi}{T} kt ) \\rangle = \\int_{0}^{T} cos(\\frac{2\\pi}{T}kt)cos(\\frac{2\\pi}{T}kt) \\,dt'}/>
-            <Latex center math={'= \\int_{0}^{T} cos^2(\\frac{2\\pi}{T}kt) \\,dt'} />
-<p style='text-align: center;'>( by using <Latex math={'cos(2\\theta) = 2cos^2(\\theta)-1 \\Rightarrow  cos^2(\\theta) =  \\frac{1}{2}+ \\frac{cos(2\\theta)}{2} '} />)</p>
-<Latex center math={'= \\int_{0}^{T} \\frac{1}{2} + \\frac{cos(2\\frac{2\\pi}{T}kt)}{2} \\,dt'} />
-<Latex center math={'= \\frac{1}{2}t\\bigr]_0^T + \\frac{1}{2} \\bigl[ sin(2\\frac{2\\pi}{T}kt) \\cdot\\frac{T}{2 \\cdot 2\\pi k} \\bigr]_0^T '} />
-<Latex center math={'= \\frac{1}{2}t\\bigr]_0^T = \\frac{1}{2}T'} />
+		<p>
+			to be more explicit, we need to show the following:
+			<button on:click={showAll}>{showSet.size === 0 ? 'show all' : 'hide all'}</button>
+		</p>
+		<ol>
+			<li>
+				<Latex
+					math={'\\langle  cos( \\frac{2\\pi}{T} kt ) ,  cos( \\frac{2\\pi}{T} kt ) \\rangle = \\frac{1}{2}T'}
+				/>
+				<button on:click={() => toggleShow(1)}>{showSet.has(1) ? 'hide' : 'show'}</button>
+			</li>
+			{#if showSet.has(1)}
+				<HiddenBlock>
+					<Latex
+						center
+						math={'\\langle  cos( \\frac{2\\pi}{T} kt ) ,  cos( \\frac{2\\pi}{T} kt ) \\rangle = \\int_{0}^{T} cos(\\frac{2\\pi}{T}kt)cos(\\frac{2\\pi}{T}kt) \\,dt'}
+					/>
+					<Latex center math={'= \\int_{0}^{T} cos^2(\\frac{2\\pi}{T}kt) \\,dt'} />
+					<p style="text-align: center;">
+						( by using <Latex
+							math={'cos(2\\theta) = 2cos^2(\\theta)-1 \\Rightarrow  cos^2(\\theta) =  \\frac{1}{2}+ \\frac{cos(2\\theta)}{2} '}
+						/>)
+					</p>
+					<Latex
+						center
+						math={'= \\int_{0}^{T} \\frac{1}{2} + \\frac{cos(2\\frac{2\\pi}{T}kt)}{2} \\,dt'}
+					/>
+					<Latex
+						center
+						math={'= \\frac{1}{2}t\\bigr]_0^T + \\frac{1}{2} \\bigl[ sin(2\\frac{2\\pi}{T}kt) \\cdot\\frac{T}{2 \\cdot 2\\pi k} \\bigr]_0^T '}
+					/>
+					<Latex center math={'= \\frac{1}{2}t\\bigr]_0^T = \\frac{1}{2}T'} />
+				</HiddenBlock>
+			{/if}
+			<br />
+			<li>
+				<Latex
+					math={'\\langle  sin( \\frac{2\\pi}{T} kt ) ,  sin( \\frac{2\\pi}{T} kt ) \\rangle = \\frac{1}{2}T'}
+				/>
+				<button on:click={() => toggleShow(2)}>{showSet.has(2) ? 'hide' : 'show'}</button>
+			</li>
+			{#if showSet.has(2)}
+				<HiddenBlock>
+					<Latex
+						center
+						math={'\\langle  sin( \\frac{2\\pi}{T} kt ) ,  sin( \\frac{2\\pi}{T} kt ) \\rangle = \\int_{0}^{T} sin(\\frac{2\\pi}{T}kt)sin(\\frac{2\\pi}{T}kt) \\,dt'}
+					/>
+					<Latex center math={'= \\int_{0}^{T} sin^2(\\frac{2\\pi}{T}kt) \\,dt'} />
+					<p style="text-align: center;">
+						( by using <Latex
+							math={'sin^2(\\theta) =  \\frac{1}{2} - \\frac{cos(2\\theta)}{2} '}
+						/>)
+					</p>
+					<Latex
+						center
+						math={'= \\int_{0}^{T} \\frac{1}{2} - \\frac{cos(2\\frac{2\\pi}{T}kt)}{2} \\,dt'}
+					/>
+					<Latex
+						center
+						math={'= \\frac{1}{2}t\\bigr]_0^T - \\frac{1}{2} \\bigl[ sin(2\\frac{2\\pi}{T}kt) \\cdot\\frac{T}{2 \\cdot 2\\pi k} \\bigr]_0^T '}
+					/>
+					<Latex center math={'= \\frac{1}{2}t\\bigr]_0^T = \\frac{1}{2}T'} />
+				</HiddenBlock>
+			{/if}
+			<br />
+			<li>
+				<Latex
+					math={'\\langle  cos( \\frac{2\\pi}{T} kt ) ,  sin( \\frac{2\\pi}{T} kt ) \\rangle = 0'}
+				/>
+				<button on:click={() => toggleShow(3)}>{showSet.has(3) ? 'hide' : 'show'}</button>
+			</li>
+			{#if showSet.has(3)}
+				<HiddenBlock>
+					<Latex
+						center
+						math={'\\langle  sin( \\frac{2\\pi}{T} kt ) ,  sin( \\frac{2\\pi}{T} kt ) \\rangle = \\int_{0}^{T} sin(\\frac{2\\pi}{T}kt)sin(\\frac{2\\pi}{T}kt) \\,dt'}
+					/>
+					<Latex center math={'= \\int_{0}^{T} sin^2(\\frac{2\\pi}{T}kt) \\,dt'} />
+					<p style="text-align: center;">
+						( by using <Latex
+							math={'sin^2(\\theta) =  \\frac{1}{2} - \\frac{cos(2\\theta)}{2} '}
+						/>)
+					</p>
+					<Latex
+						center
+						math={'= \\int_{0}^{T} \\frac{1}{2} - \\frac{cos(2\\frac{2\\pi}{T}kt)}{2} \\,dt'}
+					/>
+					<Latex
+						center
+						math={'= \\frac{1}{2}t\\bigr]_0^T - \\frac{1}{2} \\bigl[ sin(2\\frac{2\\pi}{T}kt) \\cdot\\frac{T}{2 \\cdot 2\\pi k} \\bigr]_0^T '}
+					/>
+					<Latex center math={'= \\frac{1}{2}t\\bigr]_0^T = \\frac{1}{2}T'} />
 
-          </HiddenBlock>
-        {/if}
-        <br />
-        <li>
-          <Latex math={'\\langle  sin( \\frac{2\\pi}{T} kt ) ,  sin( \\frac{2\\pi}{T} kt ) \\rangle = \\frac{1}{2}T'} />
-          <button on:click={()=>toggleShow(1)}>{showSet.has(0)? 'hide': 'show'}</button>
-        </li>
-        {#if (showSet.has(1))}
-          <HiddenBlock>
-            sup2
-          </HiddenBlock>
-        {/if}
-        <br />
-        <li><Latex math={'\\langle  cos( \\frac{2\\pi}{T} kt ) ,  sin( \\frac{2\\pi}{T} kt ) \\rangle = 0'} /></li>
-        <br/>
-        <li><Latex math={'\\langle  cos( \\frac{2\\pi}{T} k_1t ) ,  sin( \\frac{2\\pi}{T} k_2t ) \\rangle = 0'} /></li>
-        <br/>
-        <li><Latex math={'\\langle  cos( \\frac{2\\pi}{T} k_1t ) ,  sin( \\frac{2\\pi}{T} k_2t ) \\rangle = 0'} /></li>
-        <br/>
-        <li><Latex math={'\\langle  cos( \\frac{2\\pi}{T} k_1t ) ,  cos( \\frac{2\\pi}{T} k_2t ) \\rangle = 0'} /></li>
-        <br/>
-        <li><Latex math={'\\langle  sin( \\frac{2\\pi}{T} k_1t ) ,  sin( \\frac{2\\pi}{T} k_2t ) \\rangle = 0'} /></li>
-      </ol>
-
-
-
+        </HiddenBlock>
+			{/if}
+			<br />
+			<li>
+				<Latex
+					math={'\\langle  cos( \\frac{2\\pi}{T} k_1t ) ,  sin( \\frac{2\\pi}{T} k_2t ) \\rangle = 0'}
+				/>
+			</li>
+			<br />
+			<li>
+				<Latex
+					math={'\\langle  cos( \\frac{2\\pi}{T} k_1t ) ,  cos( \\frac{2\\pi}{T} k_2t ) \\rangle = 0'}
+				/>
+			</li>
+			<br />
+			<li>
+				<Latex
+					math={'\\langle  sin( \\frac{2\\pi}{T} k_1t ) ,  sin( \\frac{2\\pi}{T} k_2t ) \\rangle = 0'}
+				/>
+			</li>
+		</ol>
 	</li>
 </ol>
-
-
