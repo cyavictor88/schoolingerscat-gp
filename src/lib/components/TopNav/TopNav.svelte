@@ -8,7 +8,13 @@
 
 <div class="top-navbar" style="--height: {$topBarHeight}px; --nav-bg-color:{SITE_COLOR.CompTopNavBG};">
 	<Directory />
-	<div class="logo"><a href='{base}/' style="--logo-color:{SITE_COLOR.CompTopNavLogo}">Schoolinger's Cat</a></div>
+	
+	<div class="logo"><a href='{base}/' style="--logo-color:{SITE_COLOR.CompTopNavLogo}">
+		<img style="height: 30px; border-radius: 50%;" src="/images/catHead.jpg" alt="" />
+		Schoolinger's Cat 
+		<img style="height: 30px; border-radius: 50%;" src="/images/catHead.jpg" alt="" />
+		</a>
+	</div>
 </div>
 
 <style>
@@ -38,7 +44,30 @@
 		font-weight: bold;
 		display: flex;
 		justify-content: center;
-		
-		
 	}
+
+	.logo:hover img {
+		/* transition: transform .8s ease-in-out;
+		transform: rotate(45deg); */
+		animation: rotateAnimation 2s linear infinite; 
+	}
+
+	@keyframes rotateAnimation {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-45deg);
+  }
+	50% {
+		transform: rotate(0deg);
+	}
+	75% {
+		transform: rotate(45deg);
+	}
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
 </style>

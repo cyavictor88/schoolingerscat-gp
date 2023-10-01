@@ -31,7 +31,7 @@
 </script>
 
 <div style="padding: 8px;">
-	<img style="height: 150px;" src="/images/title.jpg" alt="" />
+	<img style="height: 150px;" src="/images/catSit.jpg" alt="" />
 	<p>
 		Meow, Schoolinger's Cat hope to help people(and myself) understand various subjects by explaining the way I understand them.
 	</p>
@@ -51,6 +51,7 @@
 	</div>
 	<p>If you'd like to give me some feedback:</p>
 	<div bind:this={divEmail} />
+	<img style="height: 150px;" src="/images/catHit.jpg" alt="" />
 </div>
 
 <style>
