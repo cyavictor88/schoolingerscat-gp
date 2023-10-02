@@ -8,6 +8,8 @@
 	import Title from '$lib/components/PageComp/Title.svelte';
 	import HiddenBlock from './HiddenBlock.svelte';
 	import { SITE_COLOR } from '$lib/theme/colors';
+	import { getCircleNum } from '$lib/unicode';
+	import ShowOnHover from './ShowOnHover.svelte';
 
 	let showSet: Set<number> = new Set<number>();
 	const toggleShow = (idx: number) => {
@@ -39,7 +41,7 @@
 <Latex
 	center={true}
 	math={`
-\\{ \\; cos( \\frac{2\\pi}{T} kt ) \\; , \\; sin( \\frac{2\\pi}{T} kt ) \\; \\}  , \\ \\; k \\in \\mathbb{Z}
+\\{ \\; cos( \\tfrac{2\\pi}{T} kt ) \\; , \\; sin( \\tfrac{2\\pi}{T} kt ) \\; \\}  , \\ \\; k \\in \\mathbb{Z}^+
 `}
 />
 
@@ -55,7 +57,7 @@
 		<b>Orthogonality:</b>
 		<p>
 			we need to show that for any basis function <Latex
-				math={'g_i(t) \\in \\{ \\; cos( \\frac{2\\pi}{T} kt ) \\; , \\; sin( \\frac{2\\pi}{T} kt ) \\; \\} '}
+				math={'g_i(t) \\in \\{ \\; cos( \\tfrac{2\\pi}{T} k_it ) \\; , \\; sin( \\tfrac{2\\pi}{T} k_it ) \\; \\} '}
 			/>
 			,
 		</p>
@@ -75,82 +77,92 @@
 			to be more explicit, we need to show the following:
 			<button on:click={showAll}>{showSet.size === 0 ? 'show all' : 'hide all'}</button>
 		</p>
-		<ol>
-			<li>
-				<Latex
-					math={'\\langle  cos( \\frac{2\\pi}{T} kt ) ,  cos( \\frac{2\\pi}{T} kt ) \\rangle = \\frac{1}{2}T'}
-				/>
-				<button on:click={() => toggleShow(1)}>{showSet.has(1) ? 'hide' : 'show'}</button>
+		<ol style='list-style: none'>
+			<li >
+				<fieldset>
+					<legend>{getCircleNum(1)}</legend>
+					<Latex
+						math={'\\langle  cos( \\tfrac{2\\pi}{T} k_i t ) ,  cos( \\tfrac{2\\pi}{T} k_i t ) \\rangle = \\tfrac{1}{2}T'}
+					/>
+					<button on:click={() => toggleShow(1)}>{showSet.has(1) ? 'hide' : 'show'}</button>
+				</fieldset>
 			</li>
 			{#if showSet.has(1)}
 				<HiddenBlock>
 					<Latex
 						center
-						math={'\\langle  cos( \\frac{2\\pi}{T} kt ) ,  cos( \\frac{2\\pi}{T} kt ) \\rangle = \\int_{0}^{T} cos(\\frac{2\\pi}{T}kt)cos(\\frac{2\\pi}{T}kt) \\,dt'}
+						math={'\\langle  cos( \\tfrac{2\\pi}{T} k_i t ) ,  cos( \\tfrac{2\\pi}{T} k_i t ) \\rangle = \\int_{0}^{T} cos(\\tfrac{2\\pi}{T}k_i t)cos(\\tfrac{2\\pi}{T}k_i t) \\,dt'}
 					/>
-					<Latex center math={'= \\int_{0}^{T} cos^2(\\frac{2\\pi}{T}kt) \\,dt = \\int_{0}^{T} cos^2(\\theta) \\,dt \\text{, where } \\theta =  \\frac{2\\pi}{T}kt' } />
+					<Latex center math={'= \\int_{0}^{T} cos^2(\\tfrac{2\\pi}{T}k_i t) \\,dt = \\int_{0}^{T} cos^2(\\theta) \\,dt \\text{, where } \\theta =  \\tfrac{2\\pi}{T}k_i t' } />
 					<p style="text-align: center;">
 						( by using <Latex
-							math={'cos(2\\theta) = 2cos^2(\\theta)-1 \\Rightarrow  cos^2(\\theta) =  \\frac{1}{2}+ \\frac{cos(2\\theta)}{2} '}
+							math={'cos(2\\theta) = 2cos^2(\\theta)-1 \\Rightarrow  cos^2(\\theta) =  \\tfrac{1}{2}+ \\tfrac{cos(2\\theta)}{2} '}
 						/>)
 					</p>
 					<Latex
 						center
-						math={'=\\int_{0}^{T} \\frac{1}{2} + \\frac{cos(2\\theta)}{2} \\,dt = \\int_{0}^{T} \\frac{1}{2} + \\frac{cos(2\\frac{2\\pi}{T}kt)}{2} \\,dt'}
+						math={'=\\int_{0}^{T} \\tfrac{1}{2} + \\tfrac{cos(2\\theta)}{2} \\,dt = \\int_{0}^{T} \\tfrac{1}{2} + \\tfrac{cos(2\\tfrac{2\\pi}{T}k_i t)}{2} \\,dt'}
 					/>
 					<Latex
 						center
-						math={'= \\frac{1}{2}t\\bigr]_0^T + \\frac{1}{2} \\bigl[ sin(2\\frac{2\\pi}{T}kt) \\cdot\\frac{T}{2 \\cdot 2\\pi k} \\bigr]_0^T '}
+						math={'= \\tfrac{1}{2}t\\bigr]_0^T + \\tfrac{1}{2} \\bigl[ sin(2\\tfrac{2\\pi}{T}k_i t) \\cdot\\tfrac{T}{2 \\cdot 2\\pi k_i} \\bigr]_0^T '}
 					/>
-					<Latex center math={'= \\frac{1}{2}t\\bigr]_0^T = \\frac{1}{2}T'} />
+					<Latex center math={'= \\tfrac{1}{2}t\\bigr]_0^T = \\tfrac{1}{2}T'} />
 				</HiddenBlock>
 			{/if}
 			<br />
 			<li>
+				<fieldset>
+					<legend>{getCircleNum(2)}</legend>
 				<Latex
-					math={'\\langle  sin( \\frac{2\\pi}{T} kt ) ,  sin( \\frac{2\\pi}{T} kt ) \\rangle = \\frac{1}{2}T'}
+					math={'\\langle  sin( \\tfrac{2\\pi}{T} k_i t ) ,  sin( \\tfrac{2\\pi}{T} k_i t ) \\rangle = \\tfrac{1}{2}T'}
 				/>
 				<button on:click={() => toggleShow(2)}>{showSet.has(2) ? 'hide' : 'show'}</button>
+				</fieldset>
 			</li>
 			{#if showSet.has(2)}
 				<HiddenBlock>
 					<Latex
 						center
-						math={'\\langle  sin( \\frac{2\\pi}{T} kt ) ,  sin( \\frac{2\\pi}{T} kt ) \\rangle = \\int_{0}^{T} sin(\\frac{2\\pi}{T}kt)sin(\\frac{2\\pi}{T}kt) \\,dt'}
+						math={'\\langle  sin( \\tfrac{2\\pi}{T} k_i t ) ,  sin( \\tfrac{2\\pi}{T} k_i t ) \\rangle = \\int_{0}^{T} sin(\\tfrac{2\\pi}{T}k_i t)sin(\\tfrac{2\\pi}{T}k_i t) \\,dt'}
 					/>
-					<Latex center math={'= \\int_{0}^{T} sin^2(\\frac{2\\pi}{T}kt) \\,dt = \\int_{0}^{T} sin^2(\\theta) \\,dt \\text{, where } \\theta =  \\frac{2\\pi}{T}kt' } />
+					<Latex center math={'= \\int_{0}^{T} sin^2(\\tfrac{2\\pi}{T}k_i t) \\,dt = \\int_{0}^{T} sin^2(\\theta) \\,dt \\text{, where } \\theta =  \\tfrac{2\\pi}{T}k_i t' } />
 					<p style="text-align: center;">
 						( by using <Latex
-							math={'sin^2(\\theta) =  \\frac{1}{2} - \\frac{cos(2\\theta)}{2} '}
+							math={'sin^2(\\theta) =  \\tfrac{1}{2} - \\tfrac{cos(2\\theta)}{2} '}
 						/>)
 					</p>
 					<Latex
 						center
-						math={'= \\int_{0}^{T} \\frac{1}{2} - \\frac{cos(2\\theta)}{2} \\,dt =\\int_{0}^{T} \\frac{1}{2} - \\frac{cos(2\\frac{2\\pi}{T}kt)}{2} \\,dt'}
+						math={'= \\int_{0}^{T} \\tfrac{1}{2} - \\tfrac{cos(2\\theta)}{2} \\,dt =\\int_{0}^{T} \\tfrac{1}{2} - \\tfrac{cos(2\\tfrac{2\\pi}{T}k_i t)}{2} \\,dt'}
 					/>
 					<Latex
 						center
-						math={'= \\frac{1}{2}t\\bigr]_0^T - \\frac{1}{2} \\bigl[ sin(2\\frac{2\\pi}{T}kt) \\cdot\\frac{T}{2 \\cdot 2\\pi k} \\bigr]_0^T '}
+						math={'= \\tfrac{1}{2}t\\bigr]_0^T - \\tfrac{1}{2} \\bigl[ sin(2\\tfrac{2\\pi}{T}k_i t) \\cdot\\tfrac{T}{2 \\cdot 2\\pi k_i} \\bigr]_0^T '}
 					/>
-					<Latex center math={'= \\frac{1}{2}t\\bigr]_0^T = \\frac{1}{2}T'} />
+					<Latex center math={'= \\tfrac{1}{2}t\\bigr]_0^T = \\tfrac{1}{2}T'} />
 				</HiddenBlock>
 			{/if}
 			<br />
 			<li>
+				<li >
+					<fieldset>
+						<legend>{getCircleNum(3)}</legend>
 				<Latex
-					math={'\\langle  sin( \\frac{2\\pi}{T} kt ) ,  cos( \\frac{2\\pi}{T} kt ) \\rangle = 0'}
+					math={'\\langle  sin( \\tfrac{2\\pi}{T} k_i t ) ,  cos( \\tfrac{2\\pi}{T} k_i t ) \\rangle = 0'}
 				/>
 				<button on:click={() => toggleShow(3)}>{showSet.has(3) ? 'hide' : 'show'}</button>
+				</fieldset>
 			</li>
 			{#if showSet.has(3)}
 				<HiddenBlock>
 					<Latex
 						center
-						math={'\\langle  sin( \\frac{2\\pi}{T} kt ) ,  cos( \\frac{2\\pi}{T} kt ) \\rangle = \\int_{0}^{T} sin(\\frac{2\\pi}{T}kt)cos(\\frac{2\\pi}{T}kt) \\,dt'}
+						math={'\\langle  sin( \\tfrac{2\\pi}{T} k_i t ) ,  cos( \\tfrac{2\\pi}{T} k_i t ) \\rangle = \\int_{0}^{T} sin(\\tfrac{2\\pi}{T}k_i t)cos(\\tfrac{2\\pi}{T}k_i t) \\,dt'}
 					/>
 					<Latex
 						center
-						math={' = \\int_{0}^{T} sin(\\theta)cos(\\theta) \\,dt\\text{, where } \\theta =  \\frac{2\\pi}{T}kt'}
+						math={' = \\int_{0}^{T} sin(\\theta)cos(\\theta) \\,dt\\text{, where } \\theta =  \\tfrac{2\\pi}{T}k_i t'}
 					/>
 					<p style="text-align: center;">
 						( by using <Latex
@@ -159,48 +171,52 @@
 					</p>
 					<Latex
 						center
-						math={'= \\int_{0}^{T}  \\frac{1}{2} sin(2\\theta) \\,dt =\\int_{0}^{T}  \\frac{1}{2} sin(2\\frac{2\\pi}{T}kt) \\,dt'}
+						math={'= \\int_{0}^{T}  \\tfrac{1}{2} sin(2\\theta) \\,dt =\\int_{0}^{T}  \\tfrac{1}{2} sin(2\\tfrac{2\\pi}{T}k_i t) \\,dt'}
 					/>
 					<Latex
 						center
-						math={'=  - \\frac{1}{2} \\bigl[ cos(2\\frac{2\\pi}{T}kt) \\cdot\\frac{T}{2 \\cdot 2\\pi k} \\bigr]_0^T  = 0'}
+						math={'=  - \\tfrac{1}{2} \\bigl[ cos(2\\tfrac{2\\pi}{T}k_i t) \\cdot\\tfrac{T}{2 \\cdot 2\\pi k_i} \\bigr]_0^T  = 0'}
 					/>
 
         </HiddenBlock>
 			{/if}
 			<br />
 			<li>
+				<li >
+					<fieldset>
+						<legend>{getCircleNum(4)}</legend>
 				<Latex
-					math={'\\langle  cos( \\frac{2\\pi}{T} k_1t ) ,  cos( \\frac{2\\pi}{T} k_2t ) \\rangle = 0'}
+					math={'\\langle  cos( \\tfrac{2\\pi}{T} k_it ) ,  cos( \\tfrac{2\\pi}{T} k_jt ) \\rangle = 0'}
 				/>
 				<button on:click={() => toggleShow(4)}>{showSet.has(4) ? 'hide' : 'show'}</button>
+				</fieldset>
 			</li>
 			{#if showSet.has(4)}
 				<HiddenBlock>
 					<Latex
 						center
-						math={'\\langle  cos( \\frac{2\\pi}{T} k_1t ) ,  cos( \\frac{2\\pi}{T} k_2t ) \\rangle = \\int_{0}^{T} cos(\\frac{2\\pi}{T}k_1t)cos(\\frac{2\\pi}{T}k_2t) \\,dt'}
+						math={'\\langle  cos( \\tfrac{2\\pi}{T} k_it ) ,  cos( \\tfrac{2\\pi}{T} k_jt ) \\rangle = \\int_{0}^{T} cos(\\tfrac{2\\pi}{T}k_it)cos(\\tfrac{2\\pi}{T}k_jt) \\,dt'}
 					/>
 					<Latex
 						center
-						math={' = \\int_{0}^{T} cos(\\alpha)cos(\\beta) \\,dt\\text{, where } \\alpha =  \\frac{2\\pi}{T}k_1t \\text{  and  } \\beta = \\frac{2\\pi}{T}k_2t '}
+						math={' = \\int_{0}^{T} cos(\\alpha)cos(\\beta) \\,dt\\text{, where } \\alpha =  \\tfrac{2\\pi}{T}k_it \\text{  and  } \\beta = \\tfrac{2\\pi}{T}k_jt '}
 					/>
 					<p style="text-align: center;">
 						( by using <Latex
-							math={'cos(\\alpha)cos(\\beta) = \\frac{cos(\\alpha+\\beta)}{2} + \\frac{cos(\\alpha-\\beta)}{2} '}
+							math={'cos(\\alpha)cos(\\beta) = \\tfrac{cos(\\alpha+\\beta)}{2} + \\tfrac{cos(\\alpha-\\beta)}{2} '}
 						/>)
 					</p>
 					<Latex
 						center
-						math={`= \\frac{1}{2} \\int_{0}^{T}  cos(\\alpha+\\beta)+cos(\\alpha-\\beta) \\,dt =
-						 \\frac{1}{2} \\int_{0}^{T}  
-						cos( \\frac{(k_1+k_2)2\\pi t}{T}) +cos( \\frac{(k_1-k_2)2\\pi t}{T}) \\,dt`}
+						math={`= \\tfrac{1}{2} \\int_{0}^{T}  cos(\\alpha+\\beta)+cos(\\alpha-\\beta) \\,dt =
+						 \\tfrac{1}{2} \\int_{0}^{T}  
+						cos( \\tfrac{(k_i+k_j)2\\pi t}{T}) +cos( \\tfrac{(k_i-k_j)2\\pi t}{T}) \\,dt`}
 					/>
 					<Latex
 						center
-						math={`=  \\frac{1}{2} \\bigl[ 
-							sin(\\frac{(k_1+k_2)2\\pi t}{T}) \\cdot \\frac{T}{(k_1+k_2)2\\pi }  + 
-							sin(\\frac{(k_1-k_2)2\\pi t}{T}) \\cdot \\frac{T}{(k_1-k_2)2\\pi }  
+						math={`=  \\tfrac{1}{2} \\bigl[ 
+							sin(\\tfrac{(k_i+k_j)2\\pi t}{T}) \\cdot \\tfrac{T}{(k_i+k_j)2\\pi }  + 
+							sin(\\tfrac{(k_i-k_j)2\\pi t}{T}) \\cdot \\tfrac{T}{(k_i-k_j)2\\pi }  
 							
 							\\bigr]_0^T  = 0`}
 					/>
@@ -209,37 +225,41 @@
 			{/if}
 			<br />
 			<li>
+				<li >
+					<fieldset>
+						<legend>{getCircleNum(5)}</legend>
 				<Latex
-					math={'\\langle  sin( \\frac{2\\pi}{T} k_1t ) ,  sin( \\frac{2\\pi}{T} k_2t ) \\rangle = 0'}
+					math={'\\langle  sin( \\tfrac{2\\pi}{T} k_it ) ,  sin( \\tfrac{2\\pi}{T} k_jt ) \\rangle = 0'}
 				/>
 					<button on:click={() => toggleShow(5)}>{showSet.has(5) ? 'hide' : 'show'}</button>
+					</fieldset>
 			</li>
 			{#if showSet.has(5)}
 				<HiddenBlock>
 					<Latex
 						center
-						math={'\\langle  sin( \\frac{2\\pi}{T} k_1t ) ,  sin( \\frac{2\\pi}{T} k_2t ) \\rangle = \\int_{0}^{T} sin(\\frac{2\\pi}{T}k_1t)sin(\\frac{2\\pi}{T}k_2t) \\,dt'}
+						math={'\\langle  sin( \\tfrac{2\\pi}{T} k_it ) ,  sin( \\tfrac{2\\pi}{T} k_jt ) \\rangle = \\int_{0}^{T} sin(\\tfrac{2\\pi}{T}k_it)sin(\\tfrac{2\\pi}{T}k_jt) \\,dt'}
 					/>
 					<Latex
 						center
-						math={' = \\int_{0}^{T} sin(\\alpha)sin(\\beta) \\,dt\\text{, where } \\alpha =  \\frac{2\\pi}{T}k_1t \\text{  and  } \\beta = \\frac{2\\pi}{T}k_2t '}
+						math={' = \\int_{0}^{T} sin(\\alpha)sin(\\beta) \\,dt\\text{, where } \\alpha =  \\tfrac{2\\pi}{T}k_it \\text{  and  } \\beta = \\tfrac{2\\pi}{T}k_jt '}
 					/>
 					<p style="text-align: center;">
 						( by using <Latex
-							math={'sin(\\alpha)sin(\\beta) = \\frac{cos(\\alpha-\\beta)}{2} - \\frac{cos(\\alpha+\\beta)}{2} '}
+							math={'sin(\\alpha)sin(\\beta) = \\tfrac{cos(\\alpha-\\beta)}{2} - \\tfrac{cos(\\alpha+\\beta)}{2} '}
 						/>)
 					</p>
 					<Latex
 						center
-						math={`= \\frac{1}{2} \\int_{0}^{T}  cos(\\alpha-\\beta)-cos(\\alpha+\\beta) \\,dt =
-						 \\frac{1}{2} \\int_{0}^{T}  
-						cos( \\frac{(k_1-k_2)2\\pi t}{T}) -cos( \\frac{(k_1+k_2)2\\pi t}{T}) \\,dt`}
+						math={`= \\tfrac{1}{2} \\int_{0}^{T}  cos(\\alpha-\\beta)-cos(\\alpha+\\beta) \\,dt =
+						 \\tfrac{1}{2} \\int_{0}^{T}  
+						cos( \\tfrac{(k_i-k_j)2\\pi t}{T}) -cos( \\tfrac{(k_i+k_j)2\\pi t}{T}) \\,dt`}
 					/>
 					<Latex
 						center
-						math={`=  \\frac{1}{2} \\bigl[ 
-							sin(\\frac{(k_1-k_2)2\\pi t}{T}) \\cdot \\frac{T}{(k_1-k_2)2\\pi }  
-							-sin(\\frac{(k_1+k_2)2\\pi t}{T}) \\cdot \\frac{T}{(k_1+k_2)2\\pi }  
+						math={`=  \\tfrac{1}{2} \\bigl[ 
+							sin(\\tfrac{(k_i-k_j)2\\pi t}{T}) \\cdot \\tfrac{T}{(k_i-k_j)2\\pi }  
+							-sin(\\tfrac{(k_i+k_j)2\\pi t}{T}) \\cdot \\tfrac{T}{(k_i+k_j)2\\pi }  
 							
 							\\bigr]_0^T  = 0`}
 					/>
@@ -248,37 +268,41 @@
 			{/if}
 			<br />
 			<li>
+				<li >
+					<fieldset>
+						<legend>{getCircleNum(6)}</legend>
 				<Latex
-					math={'\\langle  sin( \\frac{2\\pi}{T} k_1t ) ,  cos( \\frac{2\\pi}{T} k_2t ) \\rangle = 0'}
+					math={'\\langle  sin( \\tfrac{2\\pi}{T} k_it ) ,  cos( \\tfrac{2\\pi}{T} k_jt ) \\rangle = 0'}
 				/>
 				<button on:click={() => toggleShow(6)}>{showSet.has(6) ? 'hide' : 'show'}</button>
+				</fieldset>
 			</li>
 			{#if showSet.has(6)}
 				<HiddenBlock>
 								<Latex
 						center
-						math={'\\langle  sin( \\frac{2\\pi}{T} k_1t ) ,  cos( \\frac{2\\pi}{T} k_2t ) \\rangle = \\int_{0}^{T} sin(\\frac{2\\pi}{T}k_1t)cos(\\frac{2\\pi}{T}k_2t) \\,dt'}
+						math={'\\langle  sin( \\tfrac{2\\pi}{T} k_it ) ,  cos( \\tfrac{2\\pi}{T} k_jt ) \\rangle = \\int_{0}^{T} sin(\\tfrac{2\\pi}{T}k_it)cos(\\tfrac{2\\pi}{T}k_jt) \\,dt'}
 					/>
 					<Latex
 						center
-						math={' = \\int_{0}^{T} sin(\\alpha)cos(\\beta) \\,dt\\text{, where } \\alpha =  \\frac{2\\pi}{T}k_1t \\text{  and  } \\beta = \\frac{2\\pi}{T}k_2t '}
+						math={' = \\int_{0}^{T} sin(\\alpha)cos(\\beta) \\,dt\\text{, where } \\alpha =  \\tfrac{2\\pi}{T}k_it \\text{  and  } \\beta = \\tfrac{2\\pi}{T}k_jt '}
 					/>
 					<p style="text-align: center;">
 						( by using <Latex
-							math={'sin(\\alpha)cos(\\beta) = \\frac{sin(\\alpha+\\beta)}{2} + \\frac{sin(\\alpha-\\beta)}{2} '}
+							math={'sin(\\alpha)cos(\\beta) = \\tfrac{sin(\\alpha+\\beta)}{2} + \\tfrac{sin(\\alpha-\\beta)}{2} '}
 						/>)
 					</p>
 					<Latex
 						center
-						math={`= \\frac{1}{2} \\int_{0}^{T}  sin(\\alpha+\\beta)+sin(\\alpha-\\beta) \\,dt =
-						 \\frac{1}{2} \\int_{0}^{T}  
-						sin( \\frac{(k_1+k_2)2\\pi t}{T}) +sin( \\frac{(k_1-k_2)2\\pi t}{T}) \\,dt`}
+						math={`= \\tfrac{1}{2} \\int_{0}^{T}  sin(\\alpha+\\beta)+sin(\\alpha-\\beta) \\,dt =
+						 \\tfrac{1}{2} \\int_{0}^{T}  
+						sin( \\tfrac{(k_i+k_j)2\\pi t}{T}) +sin( \\tfrac{(k_i-k_j)2\\pi t}{T}) \\,dt`}
 					/>
 					<Latex
 						center
-						math={`=  \\frac{1}{2} \\bigl[ 
-							-cos(\\frac{(k_1+k_2)2\\pi t}{T}) \\cdot \\frac{T}{(k_1+k_2)2\\pi }  
-							-cos(\\frac{(k_1-k_2)2\\pi t}{T}) \\cdot \\frac{T}{(k_1-k_2)2\\pi }  
+						math={`=  \\tfrac{1}{2} \\bigl[ 
+							-cos(\\tfrac{(k_i+k_j)2\\pi t}{T}) \\cdot \\tfrac{T}{(k_i+k_j)2\\pi }  
+							-cos(\\tfrac{(k_i-k_j)2\\pi t}{T}) \\cdot \\tfrac{T}{(k_i-k_j)2\\pi }  
 							
 							\\bigr]_0^T  = 0`}
 					/>
@@ -291,6 +315,40 @@
 
 	<li>
 		<hr/>
-		<b>Show how this basis can span any periodic function:</b>
+		<b>Show how this basis can decompose any periodic function with period <Latex math={'T'} />:</b>
+		<p>In other words, given a periodic function <Latex math={'f(t)'}/>, how do we find all the <Latex math={'a_k'}/> and <Latex math={'b_k'}/> such that:</p>
+		<Latex center math={'f(t)= \\sum_{k=0}^{\\infty} {a_k cos(\\tfrac{2 \\pi k}{T}t)} +  \\sum_{k=0}^{\\infty} {b_k sin(\\tfrac{2 \\pi k}{T}t)} '} />
+
+		<p>First let's solve for a particular <Latex math={`a_{k_i}`} />:</p>
+
+		<Latex center math={`\\langle f(t), cos(\\tfrac{2 \\pi k_i }{T} t) \\rangle`} />
+		<Latex center math={`= \\langle  \\sum_{k=0}^{\\infty} {a_k cos(\\tfrac{2 \\pi k}{T}t)} +  \\sum_{k=0}^{\\infty} {b_k sin(\\tfrac{2 \\pi k}{T}t)} , cos(\\tfrac{2 \\pi k_i }{T} t) \\rangle`} />
+		<Latex center math={`= \\sum_{k=0}^{\\infty}  \\langle  a_k cos(\\tfrac{2 \\pi k}{T}t), cos(\\tfrac{2 \\pi k_i }{T} t) \\rangle +  \\sum_{k=0}^{\\infty} \\langle  b_k sin(\\tfrac{2 \\pi k}{T}t),cos(\\tfrac{2 \\pi k_i }{T} t) \\rangle`} />
+		
+		<p style="text-align:center">
+			(with  
+			<ShowOnHover>
+				<span slot='label'> {getCircleNum(3)} </span>
+				<Latex slot='tooltip'
+				math={`\\langle  sin( \\tfrac{2\\pi}{T} k_i t ) ,  cos( \\tfrac{2\\pi}{T} k_i t ) \\rangle = 0`}
+			/> 
+			</ShowOnHover> 
+			and {getCircleNum(6)}, all the <Latex math={'sin'} /> terms become 0s) 
+		</p>
+		
+
+		
+		<Latex center math={`= \\langle a_{k_i}cos(\\tfrac{2 \\pi k_i}{T}t) , cos(\\tfrac{2 \\pi k_i}{T}t) \\rangle = \\frac{1}{2}a_{k_i}T`} />
+		<p style="text-align: center;">
+			(by using 
+				{#each [1,3,4,6] as num }
+					<span>{getCircleNum(num)}
+					{#if num!=6},
+						{/if}
+					</span>
+				{/each}
+			)
+		</p>
+
 	</li>
 </ol>
