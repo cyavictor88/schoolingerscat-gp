@@ -35,4 +35,8 @@
 
 <span class="tooltip" style='--isHovered:{display}; 
   --mouseX:{mouseX};
-   --mouseY:{mouseY};'><slot name='tooltip'/></span>
+  --mouseY:{mouseY};
+  background-color: cyan; 
+  padding: 8px;
+  z-index: 1;
+   '><slot name='tooltip'/></span>

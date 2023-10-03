@@ -78,7 +78,7 @@
 			<button on:click={showAll}>{showSet.size === 0 ? 'show all' : 'hide all'}</button>
 		</p>
 		<ol style='list-style: none'>
-			<li >
+			<li id='f1'>
 				<fieldset>
 					<legend>{getCircleNum(1)}</legend>
 					<Latex
@@ -111,7 +111,7 @@
 				</HiddenBlock>
 			{/if}
 			<br />
-			<li>
+			<li  id='f2'>
 				<fieldset>
 					<legend>{getCircleNum(2)}</legend>
 				<Latex
@@ -144,8 +144,8 @@
 				</HiddenBlock>
 			{/if}
 			<br />
-			<li>
-				<li >
+			<li  id='f3'>
+
 					<fieldset>
 						<legend>{getCircleNum(3)}</legend>
 				<Latex
@@ -181,8 +181,8 @@
         </HiddenBlock>
 			{/if}
 			<br />
-			<li>
-				<li >
+			<li  id='f4'>
+
 					<fieldset>
 						<legend>{getCircleNum(4)}</legend>
 				<Latex
@@ -224,8 +224,7 @@
         </HiddenBlock>
 			{/if}
 			<br />
-			<li>
-				<li >
+			<li  id='f5'>
 					<fieldset>
 						<legend>{getCircleNum(5)}</legend>
 				<Latex
@@ -267,8 +266,7 @@
         </HiddenBlock>
 			{/if}
 			<br />
-			<li>
-				<li >
+				<li  id='f6'>
 					<fieldset>
 						<legend>{getCircleNum(6)}</legend>
 				<Latex
@@ -317,38 +315,124 @@
 		<hr/>
 		<b>Show how this basis can decompose any periodic function with period <Latex math={'T'} />:</b>
 		<p>In other words, given a periodic function <Latex math={'f(t)'}/>, how do we find all the <Latex math={'a_k'}/> and <Latex math={'b_k'}/> such that:</p>
-		<Latex center math={'f(t)= \\sum_{k=0}^{\\infty} {a_k cos(\\tfrac{2 \\pi k}{T}t)} +  \\sum_{k=0}^{\\infty} {b_k sin(\\tfrac{2 \\pi k}{T}t)} '} />
+		<Latex center math={'f(t)= \\sum_{k=0}^{\\infty} {\\color{blue} a_k  \\color{black} cos(\\tfrac{2 \\pi }{T}kt)} +  \\sum_{k=0}^{\\infty} { \\color{green} b_k  \\color{black} sin(\\tfrac{2 \\pi }{T}kt)} '} />
 
-		<p>First let's solve for a particular <Latex math={`a_{k_i}`} />:</p>
+		<p>First let's solve for a particular <Latex math={` \\color{blue} a_{k_i}`} />:</p>
 
-		<Latex center math={`\\langle f(t), cos(\\tfrac{2 \\pi k_i }{T} t) \\rangle`} />
-		<Latex center math={`= \\langle  \\sum_{k=0}^{\\infty} {a_k cos(\\tfrac{2 \\pi k}{T}t)} +  \\sum_{k=0}^{\\infty} {b_k sin(\\tfrac{2 \\pi k}{T}t)} , cos(\\tfrac{2 \\pi k_i }{T} t) \\rangle`} />
-		<Latex center math={`= \\sum_{k=0}^{\\infty}  \\langle  a_k cos(\\tfrac{2 \\pi k}{T}t), cos(\\tfrac{2 \\pi k_i }{T} t) \\rangle +  \\sum_{k=0}^{\\infty} \\langle  b_k sin(\\tfrac{2 \\pi k}{T}t),cos(\\tfrac{2 \\pi k_i }{T} t) \\rangle`} />
+		<Latex center math={`\\langle f(t),  \\color{blue} cos(\\tfrac{2 \\pi }{T}k_i t)  \\color{black} \\rangle = \\langle  \\sum_{k=0}^{\\infty} {a_k cos(\\tfrac{2 \\pi }{T}kt)} +  \\sum_{k=0}^{\\infty} {b_k sin(\\tfrac{2 \\pi }{T}kt)} ,\\color{blue} cos(\\tfrac{2 \\pi }{T}k_i t) \\color{black}\\rangle`} />
+		<Latex center math={`= \\sum_{k=0}^{\\infty}  \\langle  a_k cos(\\tfrac{2 \\pi }{T}kt),\\color{blue} cos(\\tfrac{2 \\pi }{T}k_i t)\\color{black} \\rangle 
+		+  \\sum_{k=0}^{\\infty} \\langle  b_k sin(\\tfrac{2 \\pi }{T}kt),\\color{blue}cos(\\tfrac{2 \\pi}{T} k_i  t)\\color{black} \\rangle`} />
 		
 		<p style="text-align:center">
 			(with  
-			<ShowOnHover>
+			<a href='#f3'><ShowOnHover>
 				<span slot='label'> {getCircleNum(3)} </span>
 				<Latex slot='tooltip'
 				math={`\\langle  sin( \\tfrac{2\\pi}{T} k_i t ) ,  cos( \\tfrac{2\\pi}{T} k_i t ) \\rangle = 0`}
 			/> 
 			</ShowOnHover> 
-			and {getCircleNum(6)}, all the <Latex math={'sin'} /> terms become 0s) 
+		</a>
+			and 			
+			<a href='#f6'><ShowOnHover>
+				<span slot='label'> {getCircleNum(6)}</span>
+				<Latex slot='tooltip'
+				math={`\\langle  sin( \\tfrac{2\\pi}{T} k_i t ) ,  cos( \\tfrac{2\\pi}{T} k_j t ) \\rangle = 0`}
+			/> 
+			</ShowOnHover></a>, all the <Latex math={'sin'} /> terms become 0s) 
 		</p>
-		
 
+		<Latex center math={`= \\sum_{k=0}^{\\infty}  \\langle  a_k cos(\\tfrac{2 \\pi }{T}kt),\\color{blue} cos(\\tfrac{2 \\pi }{T}k_i t)\\color{black} \\rangle 
+		+  \\overset{0}{\\cancel{ \\sum_{k=0}^{\\infty} \\langle  b_k sin(\\tfrac{2 \\pi }{T}kt),\\color{blue}cos(\\tfrac{2 \\pi}{T} k_i  t)\\color{black} \\rangle}}`} />
+
+
+
+		<Latex center math={`=\\sum_{k=0}^{\\infty}  \\langle  a_k cos(\\tfrac{2 \\pi }{T}kt),\\color{blue} cos(\\tfrac{2 \\pi }{T}k_i t)\\color{black} \\rangle + 0`} />
 		
-		<Latex center math={`= \\langle a_{k_i}cos(\\tfrac{2 \\pi k_i}{T}t) , cos(\\tfrac{2 \\pi k_i}{T}t) \\rangle = \\frac{1}{2}a_{k_i}T`} />
-		<p style="text-align: center;">
-			(by using 
-				{#each [1,3,4,6] as num }
-					<span>{getCircleNum(num)}
-					{#if num!=6},
-						{/if}
-					</span>
-				{/each}
+		<p style="text-align:center">
+			(with  
+			<a href='#f4'><ShowOnHover>
+				<span slot='label'> {getCircleNum(4)} </span>
+				<Latex slot='tooltip'
+				math={`\\langle  cos( \\tfrac{2\\pi}{T} k_i t ) ,  cos( \\tfrac{2\\pi}{T} k_j t ) \\rangle = 0`}
+			/> 
+			</ShowOnHover> 
+		</a>
+			 all the <Latex math={'cos'} /> terms with <Latex math={'k \\neq k_i '} /> become 0s
+			 , and for <Latex math={'k = k_i'} /> we use 
+			 <a href='#f1'><ShowOnHover>
+				<span slot='label'> {getCircleNum(1)} </span>
+				<Latex slot='tooltip'
+				math={`\\langle  cos( \\tfrac{2\\pi}{T} k_i t ) ,  cos( \\tfrac{2\\pi}{T} k_i t )  \\rangle = \\tfrac{1}{2}T`}
+			/> 
+			</ShowOnHover> 
 			)
+		</a>
+		</p>
+		
+		<Latex center math={`= \\langle \\color{blue} a_{k_i}cos(\\tfrac{2 \\pi }{T}k_i t) , \\color{blue} cos(\\tfrac{2 \\pi }{T}k_i t)\\color{black} \\rangle = \\frac{1}{2}a_{k_i}T`} />
+		<Latex center math={`\\Rightarrow   \\frac{1}{2}a_{k_i}T = \\langle f(t),  \\color{blue} cos(\\tfrac{2 \\pi }{T}k_i t)  \\color{black} \\rangle `} />
+		<Latex center math={`\\boxed{\\color{blue} a_{k_i} \\color{black} =\\frac{2}{T} \\langle f(t),  \\color{blue} cos(\\tfrac{2 \\pi }{T}k_i t)  \\color{black} \\rangle}`} />
+
+		<p>Next let's solve for a particular <Latex math={` \\color{green} b_{k_i}`} />:</p>
+
+		<Latex center math={`\\langle f(t),  \\color{green} sin(\\tfrac{2 \\pi }{T}k_i t)  \\color{black} \\rangle= \\langle  \\sum_{k=0}^{\\infty} {a_k cos(\\tfrac{2 \\pi }{T}kt)} +  \\sum_{k=0}^{\\infty} {b_k sin(\\tfrac{2 \\pi }{T}kt)} ,\\color{green} sin(\\tfrac{2 \\pi }{T}k_i t) \\color{black}\\rangle`} />
+		<Latex center math={`= \\sum_{k=0}^{\\infty}  \\langle  a_k cos(\\tfrac{2 \\pi }{T}kt),\\color{green} sin(\\tfrac{2 \\pi }{T}k_i t)\\color{black} \\rangle 
+		+  \\sum_{k=0}^{\\infty} \\langle  b_k sin(\\tfrac{2 \\pi }{T}kt),\\color{green} sin(\\tfrac{2 \\pi}{T} k_i  t)\\color{black} \\rangle`} />
+		
+		<p style="text-align:center">
+			(with  
+			<a href='#f3'><ShowOnHover>
+				<span slot='label'> {getCircleNum(3)} </span>
+				<Latex slot='tooltip'
+				math={`\\langle  sin( \\tfrac{2\\pi}{T} k_i t ) ,  cos( \\tfrac{2\\pi}{T} k_i t ) \\rangle = 0`}
+			/> 
+			</ShowOnHover> 
+		</a>
+			and 			
+			<a href='#f6'><ShowOnHover>
+				<span slot='label'> {getCircleNum(6)}</span>
+				<Latex slot='tooltip'
+				math={`\\langle  sin( \\tfrac{2\\pi}{T} k_i t ) ,  cos( \\tfrac{2\\pi}{T} k_j t ) \\rangle = 0`}
+			/> 
+			</ShowOnHover></a>, all the <Latex math={'cos'} /> terms become 0s) 
 		</p>
 
+		<Latex center math={`= \\overset{0}{ \\cancel{ \\sum_{k=0}^{\\infty}  \\langle  a_k cos(\\tfrac{2 \\pi }{T}kt),\\color{green} sin(\\tfrac{2 \\pi }{T}k_i t)\\color{black} \\rangle }}
+		+  \\sum_{k=0}^{\\infty} \\langle  b_k sin(\\tfrac{2 \\pi }{T}kt),\\color{green} sin(\\tfrac{2 \\pi}{T} k_i  t)\\color{black} \\rangle`} />
+		
+
+		<Latex center math={`=\\sum_{k=0}^{\\infty}  \\langle  b_k sin(\\tfrac{2 \\pi }{T}kt),\\color{green} sin(\\tfrac{2 \\pi }{T}k_i t)\\color{black} \\rangle + 0`} />
+		
+		<p style="text-align:center">
+			(with  
+			<a href='#f5'><ShowOnHover>
+				<span slot='label'> {getCircleNum(5)} </span>
+				<Latex slot='tooltip'
+				math={`\\langle  sin( \\tfrac{2\\pi}{T} k_i t ) ,  sin( \\tfrac{2\\pi}{T} k_j t ) \\rangle = 0`}
+			/> 
+			</ShowOnHover> 
+		</a>
+			 all the <Latex math={'sin'} /> terms with <Latex math={'k \\neq k_i '} /> become 0s
+			 , and for <Latex math={'k = k_i'} /> we use 
+			 <a href='#f2'><ShowOnHover>
+				<span slot='label'> {getCircleNum(2)} </span>
+				<Latex slot='tooltip'
+				math={`\\langle  sin( \\tfrac{2\\pi}{T} k_i t ) ,  sin( \\tfrac{2\\pi}{T} k_i t ) \\rangle = \\tfrac{1}{2}T`}
+			/> 
+			</ShowOnHover> 
+			)
+		</a>
+		</p>
+		
+		<Latex center math={`= \\langle\\color{green} b_{k_i}sin(\\tfrac{2 \\pi }{T}k_i t) , sin(\\tfrac{2 \\pi }{T}k_i t) \\color{black} \\rangle = \\frac{1}{2}b_{k_i}T`} />
+		<Latex center math={`\\Rightarrow   \\frac{1}{2}b_{k_i}T = \\langle f(t),  \\color{green} sin(\\tfrac{2 \\pi }{T}k_i t)  \\color{black} \\rangle `} />
+		<Latex center math={`\\boxed{ \\color{green} b_{k_i} \\color{black} =\\frac{2}{T} \\langle f(t),  \\color{green} sin(\\tfrac{2 \\pi }{T}k_i t)  \\color{black} \\rangle}`} />
+
+
+
+		<p>Now we know how to solve for <Latex math={'\\color{blue}{a_k}'} /> and <Latex math={'\\color{green}{b_k}'} />, we can put it together:</p>
+		<Latex center math={'f(t)= \\sum_{k=0}^{\\infty} {\\color{blue} a_k  \\color{black} cos(\\tfrac{2 \\pi }{T}kt)} +  \\sum_{k=0}^{\\infty} { \\color{green} b_k  \\color{black} sin(\\tfrac{2 \\pi }{T}kt)} '} />
+		<Latex center math={'\\boxed{f(t)= \\sum_{k=0}^{\\infty} {\\color{blue} \\frac{2}{T} \\langle f(t), cos(\\tfrac{2 \\pi }{T}kt) \\rangle   \\color{black} cos(\\tfrac{2 \\pi }{T}kt)} +  \\sum_{k=0}^{\\infty} {  \\color{green}  \\frac{2}{T} \\langle f(t), sin(\\tfrac{2 \\pi }{T}kt)  \\color{black} \\rangle  \\color{black} sin(\\tfrac{2 \\pi }{T}kt)}} '} />
+		<p>That's it! so if we are given a periodic function <Latex math={'f(t)'} /> with period = <Latex math={'T'} /> , we can rewrite(decompose)  <Latex math={'f(t)'} /> with the fourier basis into the above equation. </p>
 	</li>
 </ol>
