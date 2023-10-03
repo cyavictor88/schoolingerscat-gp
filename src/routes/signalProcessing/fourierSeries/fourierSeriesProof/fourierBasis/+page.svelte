@@ -433,6 +433,8 @@
 		<p>Now we know how to solve for <Latex math={'\\color{blue}{a_k}'} /> and <Latex math={'\\color{green}{b_k}'} />, we can put it together:</p>
 		<Latex center math={'f(t)= \\sum_{k=0}^{\\infty} {\\color{blue} a_k  \\color{black} cos(\\tfrac{2 \\pi }{T}kt)} +  \\sum_{k=0}^{\\infty} { \\color{green} b_k  \\color{black} sin(\\tfrac{2 \\pi }{T}kt)} '} />
 		<Latex center math={'\\boxed{f(t)= \\sum_{k=0}^{\\infty} {\\color{blue} \\frac{2}{T} \\langle f(t), cos(\\tfrac{2 \\pi }{T}kt) \\rangle   \\color{black} cos(\\tfrac{2 \\pi }{T}kt)} +  \\sum_{k=0}^{\\infty} {  \\color{green}  \\frac{2}{T} \\langle f(t), sin(\\tfrac{2 \\pi }{T}kt)  \\color{black} \\rangle  \\color{black} sin(\\tfrac{2 \\pi }{T}kt)}} '} />
-		<p>That's it! so if we are given a periodic function <Latex math={'f(t)'} /> with period = <Latex math={'T'} /> , we can rewrite(decompose)  <Latex math={'f(t)'} /> with the fourier basis into the above equation. </p>
+		<p>That's it! so if we are given a periodic function <Latex math={'f(t)'} /> with period = <Latex math={'T'} /> , we can rewrite(decompose)  <Latex math={'f(t)'} /> using the fourier basis into the above equation. </p>
+
+		<p>In the next page, we will use the examples from <a href='/signalProcessing/fourierSeries/intro'>Introduction</a> to show how Fourier Series work.</p>
 	</li>
 </ol>
