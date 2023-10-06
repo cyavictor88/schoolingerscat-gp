@@ -43,9 +43,10 @@
 
 <ol>
 	<li><a href="/signalProcessing/fourierSeries/innerProduct">Inner Product</a></li>
-	<p>With inner product, we can then define orthogonality, and using it, we then can understand:</p>
+	<p>With inner product, we can then define orthogonality, and using it, we then can understand Basis</p>
 	<li><a href="/signalProcessing/fourierSeries/basis">Basis</a></li>
-	<p>With basis, we can then understand how to decompose a vector/function and finally we can go over:</p>
+	<p>With basis, we can then understand how to decompose a vector/function and finally we can go over the proof for Fourier Series</p>
 	<li><a href="/signalProcessing/fourierSeries/fourierSeriesProof">Fourier Series Proof</a></li>
+	<p>With understanding of Fourier Series, then we can explain how to get the examples above. And finally show the exponential form of Fourier Series</p>
 </ol>
 
