@@ -3,7 +3,12 @@
   import Latex from "$lib/components/Latex/Latex.svelte";
 	import { SITE_COLOR } from "$lib/theme/colors";
 	import { getCircleNum } from '$lib/unicode';
-
+	import { onMount } from "svelte";
+	import { drawFunc } from "./d3/drawFunc";
+  let fig1D3: HTMLDivElement;
+  onMount(()=>{
+    fig1D3.append(drawFunc()!);
+  })
 </script>
 
 <Title hLevel={2} backgroundColor={SITE_COLOR.TitleBG}>
@@ -30,8 +35,10 @@
 <p>
   So together, the Least Common Multiple is <Latex math={'lcm(\\pi,2\\pi)=2\\pi'}/> ,
     so the period for <Latex math={'\\color{green} y(t)=12cos(2t)sin(t)+16'}/> is <Latex math={'T=2\\pi'}/>,
-  as shown in Figure meow
+  as shown in Figure 1.
 </p>
 
+
+<div bind:this={fig1D3} style='border: 1px solid black; width: 500px;'><p>Figure 1</p></div>
 
 

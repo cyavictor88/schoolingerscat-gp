@@ -8,7 +8,7 @@ export async function callLambdaFunction(chars:string) : Promise<Record<string,C
   let url = 'https://70z9hnualj.execute-api.us-west-2.amazonaws.com/mathmesh?'+'chars='+chars;
   
 
-  if(location && location.hostname.includes("localhost")){
+  if(location && (location.hostname.includes("localhost") || location.hostname.includes("127.0.0.1")) ){
     // console.log('calling local mathmesh')
     url = 'http://localhost:3001/mathmesh?chars='+chars;
   }

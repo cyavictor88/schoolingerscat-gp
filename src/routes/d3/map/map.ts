@@ -1,7 +1,7 @@
 
 import * as d3 from 'd3';
-import type { GCPTransformInfo, ImageWorldGCP }  from '@allmaps/transform'
-import  { createTransformer, toWorld }  from '@allmaps/transform'
+// import type { GCPTransformInfo, ImageWorldGCP }  from '@allmaps/transform'
+// import  { createTransformer, toWorld }  from '@allmaps/transform'
 
 export function africa() {
 
@@ -131,17 +131,17 @@ export function africa() {
       // })
   }
 
-  const gcps:ImageWorldGCP[] = [
-    { image: [5004, 2150], world: [25.29662, 121.56499] },
-    { image: [6137, 1066], world: [44.336, 145.33675] },
-    { image: [629, 2022], world: [27.75091, 34.25212] }
-  ]
-  const transformer =  createTransformer(gcps);
+//   const gcps:ImageWorldGCP[] = [
+//     { image: [5004, 2150], world: [25.29662, 121.56499] },
+//     { image: [6137, 1066], world: [44.336, 145.33675] },
+//     { image: [629, 2022], world: [27.75091, 34.25212] }
+//   ]
+//   const transformer =  createTransformer(gcps);
 
-  // forward transform
-// const result = transformer.adfToGeoX([100,100])
-const result = toWorld(transformer, [2811, 3046])
-console.log(result)
+//   // forward transform
+// // const result = transformer.adfToGeoX([100,100])
+// const result = toWorld(transformer, [2811, 3046])
+// console.log(result)
 
 // REQUEST DATA
   // d3.json('https://assets.codepen.io/2814973/africa.json')

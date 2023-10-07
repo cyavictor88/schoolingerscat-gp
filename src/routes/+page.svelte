@@ -8,7 +8,7 @@
 	import { SITE_COLOR } from '$lib/theme/colors';
 	import Latex from '$lib/components/Latex/Latex.svelte';
 	if(browser){
-		route = getSiteRootRoute(window.location.hostname === 'localhost');
+		route = getSiteRootRoute(window.location.hostname === 'localhost' || location.hostname.includes("127.0.0.1"));
 	}
 	let routeBgColor: string = SITE_COLOR.IndexPageRouteBG;
 	$: if (route) route.open = true;

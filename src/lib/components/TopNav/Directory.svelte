@@ -6,7 +6,7 @@
 	import { SITE_COLOR } from '$lib/theme/colors';
 	let rootRoute : IRoute = {label:'none'};
 	if(browser){
-		rootRoute = getSiteRootRoute(window.location.hostname==='localhost');
+		rootRoute = getSiteRootRoute(window.location.hostname==='localhost' || location.hostname.includes("127.0.0.1"));
 	}
 	let open = false;
 	function toggleOpen() {
