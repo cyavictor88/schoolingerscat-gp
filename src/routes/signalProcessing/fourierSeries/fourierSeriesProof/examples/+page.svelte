@@ -4,10 +4,10 @@
 	import { SITE_COLOR } from "$lib/theme/colors";
 	import { getCircleNum } from '$lib/unicode';
 	import { onMount } from "svelte";
-	import { drawFunc } from "./d3/drawFunc";
+	import { drawFunc1 } from "./d3/drawFunc1";
   let fig1D3: HTMLDivElement;
   onMount(()=>{
-    fig1D3.append(drawFunc()!);
+    fig1D3.append(drawFunc1()!);
   })
 </script>
 
@@ -39,6 +39,11 @@
 </p>
 
 
-<div bind:this={fig1D3} style='border: 1px solid black; width: 500px;'><p>Figure 1</p></div>
+<div bind:this={fig1D3} />
+
+<p>
+  cool
+
+</p>
 
 

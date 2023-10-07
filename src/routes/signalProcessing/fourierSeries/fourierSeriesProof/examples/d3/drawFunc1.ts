@@ -10,20 +10,18 @@ function latex(math: string) {
   return mathmlHtml;
 }
 
-
-
 const xlb = -4 * Math.PI;
 const xub = -1 * xlb;
 
 const yub = 30;
 const ylb = 0;
 
-const period = 2*Math.PI;
+const period = 2 * Math.PI;
 
-const getPeriodBound = (lb:number,ub:number) =>{
-  const maxPeriod = Math.ceil(ub/period);
-  const minPeriod = Math.floor(lb/period)-1;
-  return [maxPeriod*period, minPeriod * period,maxPeriod-minPeriod+1];
+const getPeriodBound = (lb: number, ub: number) => {
+  const maxPeriod = Math.ceil(ub / period);
+  const minPeriod = Math.floor(lb / period) - 1;
+  return [maxPeriod * period, minPeriod * period, maxPeriod - minPeriod + 1];
 }
 
 interface MyData {
@@ -42,17 +40,18 @@ function genData(xBounds?: number[]): MyData[] {
   let bounds = [xlb, xub];
   if (xBounds) bounds = xBounds;
   const xs = linSpace(bounds[0], bounds[1], 100 * (bounds[1] - bounds[0]));
+  // function1 is here: y = 12cos(2t)sin(t)+16
   const ys = xs.map(t => 12 * Math.cos(2 * t) * Math.sin(t) + 16)
   const arr: MyData[] = [];
   for (let i = 0; i < xs.length; i++) arr.push({ x: xs[i], y: ys[i] });
   return arr;
 }
 
-export function drawFunc() {
+export function drawFunc1() {
   const data: MyData[] = genData();
   const width = 500;
   const height = 300;
-  const marginTop = 20;
+  const marginTop = 30;
   const marginRight = 20;
   const marginBottom = 30;
   const marginLeft = 40;
@@ -73,6 +72,7 @@ export function drawFunc() {
   const svg = d3.create("svg")
     .attr("width", width)
     .attr("height", height)
+    .style('border', '1px black solid')
   // .attr("overflow", 'visible');
 
   // Add the x-axis.
@@ -99,19 +99,19 @@ export function drawFunc() {
 
   funcPath.datum<MyData[]>(data.filter(d => d.x >= xScale.domain()[0] && d.x <= xScale.domain()[1])).attr('d', drawLine.x(d => xScale(d.x)));
 
-  const groupPeriodPath = svg.append('g').attr('class','periodPaths')
-  let periodLines = linSpace(...getPeriodBound(xScale.domain()[0], xScale.domain()[1]) as [number,number,number])
-  .map((x, i) => {
-    return [{ x: x, y: ylb }, { x: x, y: yub }]
-  });
+  const groupPeriodPath = svg.append('g').attr('class', 'periodPaths')
+  let periodLines = linSpace(...getPeriodBound(xScale.domain()[0], xScale.domain()[1]) as [number, number, number])
+    .map((x, i) => {
+      return [{ x: x, y: ylb }, { x: x, y: yub }]
+    });
 
-  const periodPaths = groupPeriodPath.selectAll('path')
+  groupPeriodPath.selectAll('path')
     .data(periodLines)
     .join('path')
     .style("stroke", "black")
     .attr("stroke-dasharray", "5,5")
     .style("fill", "none")
-    .attr("d", d=>drawLine(d as MyData[]))
+    .attr("d", d => drawLine(d as MyData[]))
 
   function zoomed(event: d3.D3ZoomEvent<Element, any>) {
     const new_xScale = event.transform.rescaleX(xScale);
@@ -124,31 +124,56 @@ export function drawFunc() {
       genData([new_xScale.domain()[0], new_xScale.domain()[1]])
     ).attr('d', drawLine.x(d => new_xScale(d.x)));
 
-    const newPeriodLines = linSpace(...getPeriodBound(new_xScale.domain()[0], new_xScale.domain()[1]) as [number,number,number] )
-    .map((x, i) => {
-      return [{ x: x, y: ylb }, { x: x, y: yub }]
-    }).filter(lineData=>{
-      return lineData[0].x  >= new_xScale.domain()[0] && lineData[0].x <= new_xScale.domain()[1]
-    });
-  
+    const newPeriodLines = linSpace(...getPeriodBound(new_xScale.domain()[0], new_xScale.domain()[1]) as [number, number, number])
+      .map((x, i) => {
+        return [{ x: x, y: ylb }, { x: x, y: yub }]
+      }).filter(lineData => {
+        return lineData[0].x >= new_xScale.domain()[0] && lineData[0].x <= new_xScale.domain()[1]
+      });
+
     const newDrawLine = d3.line<{ x: number, y: number }>()
-    .x(d => new_xScale(d.x))
-    .y(d => yScale(d.y))
+      .x(d => new_xScale(d.x))
+      .y(d => yScale(d.y))
 
     groupPeriodPath.selectAll('path')
-    .data(newPeriodLines)
-    .join('path')
-    .style("stroke", "black")
-    .attr("stroke-dasharray", "5,5")
-    .style("fill", "none")
-    .attr("d", d=>newDrawLine(d as MyData[]))
-
+      .data(newPeriodLines)
+      .join('path')
+      .style("stroke", "black")
+      .attr("stroke-dasharray", "5,5")
+      .style("fill", "none")
+      .attr("d", d => newDrawLine(d as MyData[]))
   }
+
   const zoomBehavior: any = d3.zoom<SVGSVGElement, unknown>()
     .scaleExtent([0.1, 10])
     .on('zoom', zoomed);
 
   d3.select(svg.node()).call(zoomBehavior)
+
+  const legendPoints: MyData[] = [{ x: 120, y: 10 }, { x: 150, y: 10 }]
+  const drawLineRawPixel = d3.line<{ x: number, y: number }>()
+    .x(d => (d.x))
+    .y(d => (d.y))
+  svg.append('path')
+    .style('fill', 'green')
+    .style("stroke", "green")
+    .attr("d", drawLineRawPixel(legendPoints))
+
+  svg
+    .append("svg:foreignObject")
+    .attr("width", 1)
+    .attr("height", 1)
+    .attr("overflow", 'visible')
+    .style("font-size", '12px')
+    .attr("x", 160)
+    .attr("y", 2)
+    .append("xhtml:div")
+    .html(latex('\\color{green}y(t)=12cos(2t)sin(t)+16'))
+
+  svg.append("text")
+    .text("Figure 1")
+    .attr("x", 5)
+    .attr("y", 15);
 
   return svg.node();
 }
