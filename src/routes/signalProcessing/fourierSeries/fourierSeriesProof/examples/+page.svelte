@@ -5,12 +5,15 @@
 	import { getCircleNum } from '$lib/unicode';
 	import { onMount } from "svelte";
 	import { drawFunc1 } from "./d3/drawFunc1";
+	import { drawFunc2 } from "./d3/drawFunc2";
 	import { drawFunc1FS } from "./d3/drawFunc1FS";
   let fig1D3: HTMLDivElement;
   let fig2D3: HTMLDivElement;
+  let fig3D3: HTMLDivElement;
   onMount(()=>{
     fig1D3.append(drawFunc1()!);
     fig2D3.append(drawFunc1FS()!);
+    fig3D3.append(drawFunc2()!);
   });
 </script>
 
@@ -89,3 +92,5 @@
   <p>{getCircleNum(2)}:
   <Latex math={'\\color{red} y(t) = t^3 -12 t +16 \\; \\text{, for} \\; t\\in [-5,5]'} />
 </p>
+<p>Well, this is not a periodic function as shown in Figure 3</p>
+<div bind:this={fig3D3} />
