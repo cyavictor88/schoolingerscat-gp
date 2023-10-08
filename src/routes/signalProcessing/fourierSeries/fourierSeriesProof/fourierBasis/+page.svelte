@@ -39,7 +39,7 @@
 <Latex
 	center={true}
 	math={`
-\\{ \\; cos( \\tfrac{2\\pi}{T} kt ) \\; , \\; sin( \\tfrac{2\\pi}{T} kt ) \\; \\}  , \\ \\; k \\in \\mathbb{Z}^+
+\\{ \\; cos( \\tfrac{2\\pi}{T} kt ) \\; , \\; sin( \\tfrac{2\\pi}{T} kt ) \\; \\}  , \\ \\; k \\in \\{0,1,2,3,...\\infty \\}
 `}
 />
 
@@ -83,8 +83,9 @@
 						math={`\\langle  cos( \\tfrac{2\\pi}{T} k_i t ) ,  cos( \\tfrac{2\\pi}{T} k_i t ) \\rangle = 
 						\\left\\{
         			\\begin{array}{ll}
-								\\tfrac{1}{2}T  & \\mathrm{,if} \\; k_i > 0 \\\\
-									T  & \\mathrm{,if} \\; k_i=0
+							T  & \\mathrm{,if} \\; k_i=0 \\\\
+								\\tfrac{1}{2}T  & \\mathrm{,if} \\; k_i > 0 
+									
         				\\end{array}
     				\\right.
 						`}
@@ -94,6 +95,11 @@
 			</li>
 			{#if showSet.has(1)}
 				<HiddenBlock>
+					<Latex  math={'\\text{For } k_i = 0:'} />
+					<Latex
+						center
+						math={'\\langle  cos( \\tfrac{2\\pi}{T} k_i t ) ,  cos( \\tfrac{2\\pi}{T} k_i t ) \\rangle = \\int_{0}^{T} cos(0)cos(0) \\,dt = T'}
+					/>
 					 <Latex  math={'\\text{For } k_i > 0:'} />
 					<Latex
 						center
@@ -118,11 +124,7 @@
 					/>
 					<Latex center math={'= \\tfrac{1}{2}t\\bigr]_0^T = \\tfrac{1}{2}T'} />
 
-					<Latex  math={'\\text{For } k_i = 0:'} />
-					<Latex
-						center
-						math={'\\langle  cos( \\tfrac{2\\pi}{T} k_i t ) ,  cos( \\tfrac{2\\pi}{T} k_i t ) \\rangle = \\int_{0}^{T} cos(0)cos(0) \\,dt = T'}
-					/>
+
 				</HiddenBlock>
 			{/if}
 			<br />
@@ -133,8 +135,8 @@
 						math={`\\langle  sin( \\tfrac{2\\pi}{T} k_i t ) ,  sin( \\tfrac{2\\pi}{T} k_i t ) \\rangle =
 						\\left\\{
         			\\begin{array}{ll}
+									0  & \\mathrm{,if} \\; k_i=0 \\\\
 								\\tfrac{1}{2}T  & \\mathrm{,if} \\; k_i > 0 \\\\
-									0  & \\mathrm{,if} \\; k_i=0
         				\\end{array}
     				\\right.
 						`}
@@ -144,6 +146,11 @@
 			</li>
 			{#if showSet.has(2)}
 				<HiddenBlock>
+					<Latex  math={'\\text{For } k_i = 0:'} />
+					<Latex
+						center
+						math={'\\langle  sin( \\tfrac{2\\pi}{T} k_i t ) ,  sin( \\tfrac{2\\pi}{T} k_i t ) \\rangle = \\int_{0}^{T} sin(0)sin(0) \\,dt = 0'}
+					/>
 					<Latex  math={'\\text{For } k_i > 0:'} />
 
 					<Latex
@@ -168,11 +175,7 @@
 						math={'= \\tfrac{1}{2}t\\bigr]_0^T - \\tfrac{1}{2} \\bigl[ sin(2\\tfrac{2\\pi}{T}k_i t) \\cdot\\tfrac{T}{2 \\cdot 2\\pi k_i} \\bigr]_0^T '}
 					/>
 					<Latex center math={'= \\tfrac{1}{2}t\\bigr]_0^T = \\tfrac{1}{2}T'} />
-					<Latex  math={'\\text{For } k_i = 0:'} />
-					<Latex
-						center
-						math={'\\langle  sin( \\tfrac{2\\pi}{T} k_i t ) ,  sin( \\tfrac{2\\pi}{T} k_i t ) \\rangle = \\int_{0}^{T} sin(0)sin(0) \\,dt = 0'}
-					/>
+
 				</HiddenBlock>
 			{/if}
 			<br />
@@ -352,7 +355,8 @@
 
 		<Latex
 			center
-			math={`\\langle f(t),  \\color{blue} cos(\\tfrac{2 \\pi }{T}k_i t)  \\color{black} \\rangle = \\langle  \\sum_{k=0}^{\\infty} {a_k cos(\\tfrac{2 \\pi }{T}kt)} +  \\sum_{k=0}^{\\infty} {b_k sin(\\tfrac{2 \\pi }{T}kt)} ,\\color{blue} cos(\\tfrac{2 \\pi }{T}k_i t) \\color{black}\\rangle`}
+		
+		math={`\\mathbf{ \\langle \\color{black} f(t),  \\color{blue} cos(\\tfrac{2 \\pi }{T}k_i t)  \\rangle }\\color{black} = \\langle  \\sum_{k=0}^{\\infty} {a_k cos(\\tfrac{2 \\pi }{T}kt)} +  \\sum_{k=0}^{\\infty} {b_k sin(\\tfrac{2 \\pi }{T}kt)} ,\\color{blue} cos(\\tfrac{2 \\pi }{T}k_i t) \\color{black}\\rangle`}
 		/>
 		<Latex
 			center
@@ -416,8 +420,9 @@
 						math={`\\langle  cos( \\tfrac{2\\pi}{T} k_i t ) ,  cos( \\tfrac{2\\pi}{T} k_i t )  \\rangle 
 											=	\\left\\{
         			\\begin{array}{ll}
+									T  & \\mathrm{,if} \\; k_i=0 \\\\
 								\\tfrac{1}{2}T  & \\mathrm{,if} \\; k_i > 0 \\\\
-									T  & \\mathrm{,if} \\; k_i=0
+
         				\\end{array}
     				\\right.`}
 					/>
@@ -428,22 +433,45 @@
 
 		<Latex
 			center
-			math={`= \\langle \\color{blue} a_{k_i}cos(\\tfrac{2 \\pi }{T}k_i t) , \\color{blue} cos(\\tfrac{2 \\pi }{T}k_i t)\\color{black} \\rangle = \\frac{1}{2}a_{k_i}T`}
+			math={`= \\langle \\color{blue} a_{k_i}cos(\\tfrac{2 \\pi }{T}k_i t) , \\color{blue} cos(\\tfrac{2 \\pi }{T}k_i t)\\color{black} \\rangle =
+															\\left\\{
+        			\\begin{array}{ll}
+									a_{k_i} \\cdot T  & \\mathrm{,if} \\; k_i=0 \\\\
+									a_{k_i} \\cdot \\frac{1}{2}T  & \\mathrm{,if} \\; k_i > 0 \\\\
+        				\\end{array}
+    				\\right.
+			
+			
+		`}
 		/>
+
+		<Latex center math={`
+		\\Rightarrow \\mathbf{ \\langle \\color{black} f(t),  \\color{blue} cos(\\tfrac{2 \\pi }{T}k_i t)  \\rangle }\\color{black} 
+		= 	\\left\\{	\\begin{array}{ll}
+									a_{k_i} \\cdot T  & \\mathrm{,if} \\; k_i=0 \\\\
+									a_{k_i} \\cdot \\frac{1}{2}T  & \\mathrm{,if} \\; k_i > 0 
+        				\\end{array}
+    		\\right.
+		`} />
 		<Latex
 			center
-			math={`\\Rightarrow   \\frac{1}{2}a_{k_i}T = \\langle f(t),  \\color{blue} cos(\\tfrac{2 \\pi }{T}k_i t)  \\color{black} \\rangle `}
-		/>
-		<Latex
-			center
-			math={`\\boxed{\\color{blue} a_{k_i} \\color{black} =\\frac{2}{T} \\langle f(t),  \\color{blue} cos(\\tfrac{2 \\pi }{T}k_i t)  \\color{black} \\rangle}`}
+			math={`\\boxed{\\color{blue} a_{k_i} \\color{black} 
+			= 	\\left\\{	\\begin{array}{ll}
+			\\frac{1}{T} \\langle f(t),  \\color{blue} cos(\\frac{2 \\pi }{T}k_i t)  \\color{black} \\rangle = \\tfrac{1}{T} \\int_{T}^{} f(t) \\, dt  & \\mathrm{,if} \\; k_i=0 \\\\ 
+			\\\\
+									\\frac{2}{T} \\langle f(t),  \\color{blue} cos(\\frac{2 \\pi }{T}k_i t)  \\color{black} \\rangle  & \\mathrm{,if} \\; k_i > 0 
+        				\\end{array}
+    		\\right.
+			
+			
+			}`}
 		/>
 
 		<p>Next let's solve for a particular <Latex math={` \\color{green} b_{k_i}`} />:</p>
 
 		<Latex
 			center
-			math={`\\langle f(t),  \\color{green} sin(\\tfrac{2 \\pi }{T}k_i t)  \\color{black} \\rangle= \\langle  \\sum_{k=0}^{\\infty} {a_k cos(\\tfrac{2 \\pi }{T}kt)} +  \\sum_{k=0}^{\\infty} {b_k sin(\\tfrac{2 \\pi }{T}kt)} ,\\color{green} sin(\\tfrac{2 \\pi }{T}k_i t) \\color{black}\\rangle`}
+			math={`\\mathbf{\\langle f(t),  \\color{green} sin(\\tfrac{2 \\pi }{T}k_i t)  \\color{black} \\rangle}= \\langle  \\sum_{k=0}^{\\infty} {a_k cos(\\tfrac{2 \\pi }{T}kt)} +  \\sum_{k=0}^{\\infty} {b_k sin(\\tfrac{2 \\pi }{T}kt)} ,\\color{green} sin(\\tfrac{2 \\pi }{T}k_i t) \\color{black}\\rangle`}
 		/>
 		<Latex
 			center
@@ -507,8 +535,9 @@
 						math={`\\langle  sin( \\tfrac{2\\pi}{T} k_i t ) ,  sin( \\tfrac{2\\pi}{T} k_i t ) \\rangle = 
 												\\left\\{
         			\\begin{array}{ll}
+									0  & \\mathrm{,if} \\; k_i=0 \\\\
 								\\tfrac{1}{2}T  & \\mathrm{,if} \\; k_i > 0 \\\\
-									0  & \\mathrm{,if} \\; k_i=0
+
         				\\end{array}
     				\\right.`}
 					/>
@@ -523,20 +552,36 @@
 			
 			\\left\\{
         			\\begin{array}{ll}
-							\\frac{1}{2}b_{k_i}T  & \\mathrm{,if} \\; k_i > 0 \\\\
-									0  & \\mathrm{,if} \\; k_i=0
+									0  & \\mathrm{,if} \\; k_i=0 \\\\
+									b_{k_i} \\cdot \\frac{1}{2}T  & \\mathrm{,if} \\; k_i > 0 \\\\
+
         				\\end{array}
     				\\right.
 			
 		`}
 		/>
-		<Latex
-			center
-			math={`\\Rightarrow   \\frac{1}{2}b_{k_i}T = \\langle f(t),  \\color{green} sin(\\tfrac{2 \\pi }{T}k_i t)  \\color{black} \\rangle `}
-		/>
-		<Latex
-			center
-			math={`\\boxed{ \\color{green} b_{k_i} \\color{black} =\\frac{2}{T} \\langle f(t),  \\color{green} sin(\\tfrac{2 \\pi }{T}k_i t)  \\color{black} \\rangle}`}
+
+
+<Latex center math={`
+	\\Rightarrow \\mathbf{ \\langle \\color{black} f(t),  \\color{green} sin(\\tfrac{2 \\pi }{T}k_i t)  \\rangle }\\color{black} 
+	= 	\\left\\{	\\begin{array}{ll}
+							0 & \\mathrm{,if} \\; k_i=0 \\\\
+								b_{k_i} \\cdot \\frac{1}{2}T  & \\mathrm{,if} \\; k_i > 0 
+							\\end{array}
+			\\right.
+	`} />
+	<Latex
+		center
+		math={`\\boxed{\\color{green} b_{k_i} \\color{black} 
+		= 	\\left\\{	\\begin{array}{ll}
+	0  & \\mathrm{,if} \\; k_i=0 \\\\ 
+		\\\\
+								\\frac{2}{T} \\langle f(t),  \\color{green} sin(\\frac{2 \\pi }{T}k_i t)  \\color{black} \\rangle  & \\mathrm{,if} \\; k_i > 0 
+							\\end{array}
+			\\right.
+		
+		
+		}`}
 		/>
 
 		<p>
@@ -546,11 +591,11 @@
 		</p>
 		<Latex
 			center
-			math={'f(t)= \\sum_{k=0}^{\\infty} {\\color{blue} a_k  \\color{black} cos(\\tfrac{2 \\pi }{T}kt)} +  \\sum_{k=0}^{\\infty} { \\color{green} b_k  \\color{black} sin(\\tfrac{2 \\pi }{T}kt)} '}
+			math={'f(t)= a_0 + \\sum_{k=1}^{\\infty} {\\color{blue} a_k  \\color{black} cos(\\tfrac{2 \\pi }{T}kt)} +  \\sum_{k=1}^{\\infty} { \\color{green} b_k  \\color{black} sin(\\tfrac{2 \\pi }{T}kt)} '}
 		/>
 		<Latex
 			center
-			math={'\\boxed{f(t)= \\sum_{k=0}^{\\infty} {\\color{blue} \\frac{2}{T} \\langle f(t), cos(\\tfrac{2 \\pi }{T}kt) \\rangle   \\color{black} cos(\\tfrac{2 \\pi }{T}kt)} +  \\sum_{k=0}^{\\infty} {  \\color{green}  \\frac{2}{T} \\langle f(t), sin(\\tfrac{2 \\pi }{T}kt)  \\color{black} \\rangle  \\color{black} sin(\\tfrac{2 \\pi }{T}kt)}} '}
+			math={'\\boxed{f(t)= \\tfrac{1}{T} \\int_{T} f(t) \\, dt + \\sum_{k=1}^{\\infty} {\\color{blue} \\tfrac{2}{T} \\langle f(t), cos(\\tfrac{2 \\pi }{T}kt) \\rangle   \\color{black} cos(\\tfrac{2 \\pi }{T}kt)} +  \\sum_{k=1}^{\\infty} {  \\color{green}  \\tfrac{2}{T} \\langle f(t), sin(\\tfrac{2 \\pi }{T}kt)  \\color{black} \\rangle  \\color{black} sin(\\tfrac{2 \\pi }{T}kt)}} '}
 		/>
 		<p>
 			That's it! so if we are given a periodic function <Latex math={'f(t)'} /> with period = <Latex

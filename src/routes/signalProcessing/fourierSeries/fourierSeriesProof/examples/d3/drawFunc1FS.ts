@@ -1,6 +1,7 @@
 import { goto } from '$app/navigation';
 import * as d3 from 'd3';
 import katex from "katex";
+import { genDataF1 } from './drawFunc1';
 
 function latex(math: string) {
   const mathmlHtml = katex.renderToString(math, {
@@ -36,19 +37,20 @@ function linSpace(startValue: number, stopValue: number, cardinality: number) {
   return arr;
 }
 
-export function genDataF1(xBounds?: number[]): MyData[] {
+function genData(xBounds?: number[]): MyData[] {
   let bounds = [xlb, xub];
   if (xBounds) bounds = xBounds;
   const xs = linSpace(bounds[0], bounds[1], 100 * (bounds[1] - bounds[0]));
-  // function1 is here: y = 12cos(2t)sin(t)+16
-  const ys = xs.map(t => 12 * Math.cos(2 * t) * Math.sin(t) + 16)
+  // function1 is here: y = 16 - 6sin(t) + 6sin(3t)
+  const ys = xs.map(t => 16 -6 * Math.sin(t)+6* Math.sin(3*t) )
   const arr: MyData[] = [];
   for (let i = 0; i < xs.length; i++) arr.push({ x: xs[i], y: ys[i] });
   return arr;
 }
 
-export function drawFunc1() {
-  const data: MyData[] = genDataF1();
+export function drawFunc1FS() {
+  const oriData: MyData[] = genDataF1();
+  const data: MyData[] = genData();
   const width = 500;
   const height = 300;
   const marginTop = 30;
@@ -93,11 +95,23 @@ export function drawFunc1() {
 
 
   const funcPath = svg.append('path')
+    .style("stroke", "olive")
+    .attr("stroke-dasharray","20,5")
+    .style("fill", "none")
+    .style('stroke-width','3px')
+    .attr("d", drawLine(oriData))
+
+  funcPath.datum<MyData[]>(data.filter(d => d.x >= xScale.domain()[0] && d.x <= xScale.domain()[1])).attr('d', drawLine.x(d => xScale(d.x)));
+
+  const oriFuncPath = svg.append('path')
     .style("stroke", "green")
     .style("fill", "none")
     .attr("d", drawLine(data))
 
-  funcPath.datum<MyData[]>(data.filter(d => d.x >= xScale.domain()[0] && d.x <= xScale.domain()[1])).attr('d', drawLine.x(d => xScale(d.x)));
+    oriFuncPath.datum<MyData[]>(data.filter(d => d.x >= xScale.domain()[0] && d.x <= xScale.domain()[1])).attr('d', drawLine.x(d => xScale(d.x)));
+
+
+
 
   const groupPeriodPath = svg.append('g').attr('class', 'periodPaths')
   let periodLines = linSpace(...getPeriodBound(xScale.domain()[0], xScale.domain()[1]) as [number, number, number])
@@ -118,9 +132,11 @@ export function drawFunc1() {
     xAxis.call(d3.axisBottom(new_xScale));
 
     funcPath.datum<MyData[]>(
-      //   data.filter(d =>{ 
-      //     d.x >= new_xScale.domain()[0] && d.x <= new_xScale.domain()[1]
-      //  })
+      genData([new_xScale.domain()[0], new_xScale.domain()[1]])
+    ).attr('d', drawLine.x(d => new_xScale(d.x)));
+
+
+    oriFuncPath.datum<MyData[]>(
       genDataF1([new_xScale.domain()[0], new_xScale.domain()[1]])
     ).attr('d', drawLine.x(d => new_xScale(d.x)));
 
@@ -150,14 +166,39 @@ export function drawFunc1() {
 
   d3.select(svg.node()).call(zoomBehavior)
 
-  const legendPoints: MyData[] = [{ x: 120, y: 10 }, { x: 150, y: 10 }]
   const drawLineRawPixel = d3.line<{ x: number, y: number }>()
     .x(d => (d.x))
-    .y(d => (d.y))
-  svg.append('path')
-    .style('fill', 'green')
-    .style("stroke", "green")
-    .attr("d", drawLineRawPixel(legendPoints))
+    .y(d => (d.y));
+
+    const legendPoints: MyData[] = [{ x: 80, y: 10 }, { x: 85, y: 10 }];
+    const legendPoints2: MyData[] = [{ x: 87, y: 10 }, { x: 93, y: 10 }];
+    const legendPoints3: MyData[] = [{ x: 95, y: 10 }, { x: 100, y: 10 }];
+
+    const dashLegend = svg.append('g').attr('class', 'dashLegend')
+
+    dashLegend.selectAll('path')
+    .data([legendPoints,legendPoints2,legendPoints3])
+    .join('path')
+    .style('fill', 'olive')
+    .style("stroke", "olive")
+    .attr("d", d => drawLineRawPixel(d))
+
+    const oriLegendPoints: MyData[] = [{ x: 300, y: 10 }, { x: 320, y: 10 }]
+
+    svg.append('path')
+      .style('fill', 'green')
+      .style("stroke", "green")
+      .attr("d", drawLineRawPixel(oriLegendPoints)) 
+    svg
+      .append("svg:foreignObject")
+      .attr("width", 1)
+      .attr("height", 1)
+      .attr("overflow", 'visible')
+      .style("font-size", '12px')
+      .attr("x", 325)
+      .attr("y", 2)
+      .append("xhtml:div")
+      .html(latex('\\color{green}y(t)=12cos(2t)sin(t)+16'))
 
   svg
     .append("svg:foreignObject")
@@ -165,13 +206,13 @@ export function drawFunc1() {
     .attr("height", 1)
     .attr("overflow", 'visible')
     .style("font-size", '12px')
-    .attr("x", 160)
+    .attr("x", 105)
     .attr("y", 2)
     .append("xhtml:div")
-    .html(latex('\\color{green}y(t)=12cos(2t)sin(t)+16'))
+    .html(latex('\\color{olive}y(t)=16-6sin(t)+6sin(3t)'))
 
   svg.append("text")
-    .text("Figure 1")
+    .text("Figure 2")
     .attr("x", 5)
     .attr("y", 15);
 

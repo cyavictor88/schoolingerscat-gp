@@ -5,9 +5,12 @@
 	import { getCircleNum } from '$lib/unicode';
 	import { onMount } from "svelte";
 	import { drawFunc1 } from "./d3/drawFunc1";
+	import { drawFunc1FS } from "./d3/drawFunc1FS";
   let fig1D3: HTMLDivElement;
+  let fig2D3: HTMLDivElement;
   onMount(()=>{
     fig1D3.append(drawFunc1()!);
+    fig2D3.append(drawFunc1FS()!);
   });
 </script>
 
@@ -42,11 +45,12 @@
 
 <p>
   Let's make 
-  <Latex center math={'y(t)= \\sum_{k=0}^{\\infty} {\\color{blue} a_k   cos(\\tfrac{2 \\pi }{T}kt)} +  \\sum_{k=0}^{\\infty} { \\color{green} b_k sin(\\tfrac{2 \\pi }{T}kt)} '} />
+  <Latex center math={'y(t)=  a_0 + \\sum_{k=1}^{\\infty} {\\color{blue} a_k   cos(\\tfrac{2 \\pi }{T}kt)} +  \\sum_{k=1}^{\\infty} { \\color{green} b_k sin(\\tfrac{2 \\pi }{T}kt)} '} />
   where,
 
    <Latex center math={'T=2\\pi'} />  
 
+   <Latex center math={'a_0= \\tfrac{1}{T} \\int_{T} y(t) \\, dt = \\tfrac{1}{2\\pi} \\int_{0}^{2\\pi} y(t) \\, dt '} />  
 		<Latex center math={`\\color{blue} a_{k} \\color{black} =\\tfrac{2}{T} \\langle y(t),  \\color{blue} cos(\\tfrac{2 \\pi }{T}k t)  \\color{black} \\rangle =
    \\color{black} \\tfrac{1}{\\pi} \\langle y(t), cos(k t)  \\color{black} \\rangle 
    = \\tfrac{1}{\\pi} \\int_{2\\pi}^{} y(t)cos(kt) \\,dt 
@@ -63,7 +67,25 @@
 </p>
 
 <p>
-  <Latex math={'a_k'} />
+  <Latex math={'a_0 = 16, b_1 = -6 , b_3 = 6'} />
+  </p>
+<p>
+  <Latex math={`\\rightarrow y(t) = a_0 + b_1 \\cdot sin(\\tfrac{2\\pi}{T}(1)t) + b_3 \\cdot sin(\\tfrac{2\\pi}{T}(3)t)
+  `} />
 </p>
+<p>
+  <Latex math={`\\rightarrow y(t) 
+  = 16 -6 sin(t) + 6 sin(3t)`} />
+  </p>
+<p> If we graph  <p>
+  <Latex math={`y(t) 
+  = 16 -6 sin(t) + 6 sin(3t)`} />
+  and <Latex math={'\\color{green} y(t)=12cos(2t)sin(t)+16'}/>, you will see they have the same values as shown in Figure 2.
+</p>
+  <div bind:this={fig2D3} />
 
 
+  <hr />
+  <p>{getCircleNum(2)}:
+  <Latex math={'\\color{red} y(t) = t^3 -12 t +16 \\; \\text{, for} \\; t\\in [-5,5]'} />
+</p>
