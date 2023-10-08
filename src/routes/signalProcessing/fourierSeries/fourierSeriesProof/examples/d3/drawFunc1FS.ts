@@ -37,7 +37,7 @@ function linSpace(startValue: number, stopValue: number, cardinality: number) {
   return arr;
 }
 
-function genData(xBounds?: number[]): MyData[] {
+function genDataF1FS(xBounds?: number[]): MyData[] {
   let bounds = [xlb, xub];
   if (xBounds) bounds = xBounds;
   const xs = linSpace(bounds[0], bounds[1], 100 * (bounds[1] - bounds[0]));
@@ -50,7 +50,7 @@ function genData(xBounds?: number[]): MyData[] {
 
 export function drawFunc1FS() {
   const oriData: MyData[] = genDataF1();
-  const data: MyData[] = genData();
+  const data: MyData[] = genDataF1FS();
   const width = 500;
   const height = 300;
   const marginTop = 30;
@@ -132,7 +132,7 @@ export function drawFunc1FS() {
     xAxis.call(d3.axisBottom(new_xScale));
 
     funcPath.datum<MyData[]>(
-      genData([new_xScale.domain()[0], new_xScale.domain()[1]])
+      genDataF1FS([new_xScale.domain()[0], new_xScale.domain()[1]])
     ).attr('d', drawLine.x(d => new_xScale(d.x)));
 
 

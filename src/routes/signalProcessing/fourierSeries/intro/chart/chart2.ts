@@ -9,7 +9,7 @@ function linspace(startValue:number , stopValue:number, cardinality:number) {
 }
 
 export function data():{x:number,y:number}[] {
-  const xs = linspace(-5,5,100);
+  const xs = linspace(-6,6,100);
   const ys = xs.map(x=> x**3 -12*x +16)// = (x-2)**2 * (x+4)*1 ;
   const arr = [];
   for (let i = 0; i < xs.length; i++) arr.push({x:xs[i],y:ys[i]});
@@ -31,6 +31,8 @@ function fsData(){
     bk.push(simpSin.integrate(-T/2,T/2,k,1000));
   });
   ak[0] = ak[0]/2;
+  // console.log('ak',ak.map(x=>x))
+  // console.log('bk',bk.map(x=>x))
   const xs = linspace(-20,20,100);
   const ys = xs.map((x,i)=>{
     let cos = 0;

@@ -34,7 +34,7 @@
 	periodic function for applying Fourier Series.
 </p>
 <p>Example:</p>
-<Latex math={'\\color{red} y(t) = t^3 -12 t +16 \\; \\text{, for} \\; t\\in [-5,5]'} />
+<Latex math={'\\color{red} y(t) = t^3 -12 t +16 \\; \\text{, for} \\; t\\in [-6,6]'} />
 <div style="max-width: 500px; height:200px;">
 	<canvas bind:this={exampleFunctionCanvas2} />
 </div>
