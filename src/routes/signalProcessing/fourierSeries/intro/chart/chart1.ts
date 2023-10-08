@@ -31,6 +31,9 @@ function fsData(){
     bk.push(simpSin.integrate(-T/2,T/2,k,1000));
   });
   ak[0] = ak[0]/2;
+
+  console.log('ak',ak.map(x=>x.toFixed(0)))
+  console.log('bk',bk.map(x=>x.toFixed(0)))
   const xs = linspace(-4*Math.PI,4*Math.PI,199);
   const ys = xs.map((x,i)=>{
     let cos = 0;
