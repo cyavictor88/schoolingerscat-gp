@@ -142,4 +142,7 @@
 
 <p>The result is shown in Figure 4:</p>
 <div bind:this={fig4D3} />
-<p>In Figure 4, you can see that Fourier Series was able to approximate the function in the focus interval. If you zoom in/out, you can see that the approximated function does has period = 12  </p>
+<p>In Figure 4, you can see that Fourier Series was able to approximate the function in the interval between -6 and 6. If you zoom in/out, you can see that the approximated function has period = 12  </p>
+
+
+

@@ -13,6 +13,11 @@
 													--bg: {SITE_COLOR.SiteLayoutContentBG}
                           ">
   <slot />
+	<hr/>
+	<hr/>
+	<hr/>
+	<hr/>
+	<hr/>
 </div>
 
 <style>
