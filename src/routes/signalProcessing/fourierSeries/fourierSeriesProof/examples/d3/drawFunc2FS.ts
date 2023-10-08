@@ -245,7 +245,7 @@ export function drawFunc2FS() {
     .html(latex('\\color{violet}y(t)=t^3-12t+16, t \\in [-6,6]'))
 
   svg.append("text")
-    .text("Figure 3")
+    .text("Figure 4")
     .attr("x", 5)
     .attr("y", 15);
 
