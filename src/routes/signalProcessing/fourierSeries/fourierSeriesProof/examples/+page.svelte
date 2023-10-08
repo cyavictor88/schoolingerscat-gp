@@ -21,7 +21,7 @@
 </script>
 
 <Title hLevel={2} backgroundColor={SITE_COLOR.TitleBG}>
-  Examples:
+  Examples from Introduction:
 </Title>
 
 <p>In the Introduction page, I showed 2 examples using:</p>
