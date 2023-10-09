@@ -54,7 +54,7 @@
 
 		<b>Orthogonality:</b>
 		<p>
-			we need to show that for any basis function <Latex
+			we need to show that for any function in the set <Latex
 				math={'g_i(t) \\in \\{ \\; cos( \\tfrac{2\\pi}{T} k_it ) \\; , \\; sin( \\tfrac{2\\pi}{T} k_it ) \\; \\} '}
 			/>
 			,
@@ -342,9 +342,9 @@
 		<hr />
 		<b>Show how this basis can decompose any periodic function with period <Latex math={'T'} />:</b>
 		<p>
-			In other words, given a periodic function <Latex math={'f(t)'} />, how do we find all the <Latex
-				math={'a_k'}
-			/> and <Latex math={'b_k'} /> such that:
+			In other words, given a periodic function <Latex math={'f(t)'} /> with period <Latex math={'T'}/> , how do we find all the <Latex
+				math={'a_k \\in \\mathbb{R}'}
+			/> and <Latex math={'b_k  \\in \\mathbb{R}'} /> such that:
 		</p>
 		<Latex
 			center
