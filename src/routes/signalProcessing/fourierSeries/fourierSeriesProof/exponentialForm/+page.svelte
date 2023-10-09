@@ -25,14 +25,14 @@
   Exponential Form:
 </Title>
 <p>
-Fourier Series is <Latex math={'f(t)= \\sum_{k=0}^{\\infty} {a_k cos(\\tfrac{2\\pi}{T} kt)} +  \\sum_{k=0}^{\\infty} {b_k sin(\\tfrac{2\\pi}{T} kt)}'} />
+Fourier Series is <Latex math={'f(t)= \\sum_{k=0}^{\\infty} {a_k cos(\\tfrac{2\\pi}{T} kt)} +  \\sum_{k=0}^{\\infty} {b_k sin(\\tfrac{2\\pi}{T} kt)}  , \\text{where } a_k,b_k  \\in \\mathbb{R}'} />
 </p>
 
 <p>
   But it can also be written in Exponential form:
 </p>
 
-<Latex center math={'f(t)= \\sum_{k=-\\infty}^{\\infty} {c_k e^{j\\tfrac{2\\pi}{T} kt}} , \\text{where } c_k  \\in \\mathbb{R}'} />
+<Latex center math={'f(t)= \\sum_{k=-\\infty}^{\\infty} {c_k e^{j\\tfrac{2\\pi}{T} kt}} , \\text{where } c_k  \\in \\mathbb{C}'} />
 
 
 <p>
@@ -187,7 +187,8 @@ Fourier Series is <Latex math={'f(t)= \\sum_{k=0}^{\\infty} {a_k cos(\\tfrac{2\\
 <p><strong>Ans:</strong> since <Latex math={'e^{jx}'}/> contains a <Latex math={'cos'}/> and <Latex math={'sin'}/>, you will need both  <Latex math={'c_k'}/> and  <Latex math={'c_{-k}'}/> 
 to get an equivalent  <Latex math={'a_k'}/> or  <Latex math={'b_k'}/>       </p>
 <hr />
-<p>Let me illustrate this is with an example:</p>
+<p>Let me illustrate this is with two examples:</p>
+<b>Example 1:</b>
 <p>Say we have a function <Latex math={`f(t)=cos(2\\pi 4 t)`}/> that has period <Latex math={'T=1'} /></p>
 
 <p>Let's do Fourier decomposition with <Latex math={'sin/cos'}/> basis and <Latex math={'  e^{j \\tfrac{2\\pi}{T} k t  }'}/> basis :</p>
@@ -211,7 +212,7 @@ to get an equivalent  <Latex math={'a_k'}/> or  <Latex math={'b_k'}/>       </p>
 		`}
 		
 	/>
-	<p  style="text-align: center;">which if u expand it, you will get:</p>
+	<p  style="text-align: center;">which if do the calculation, you will get:</p>
 	<Latex
 	center
 	math={`f(t)=\\tfrac{1}{2} e^{j 2\\pi 4 t } - \\tfrac{1}{2} e^{-j 2\\pi4 t } = cos(2\\pi4t)
@@ -219,15 +220,45 @@ to get an equivalent  <Latex math={'a_k'}/> or  <Latex math={'b_k'}/>       </p>
 	/>
 
 	</li>
+</ol>
+<b>Example 2:</b>
+<p>Say we have a function <Latex math={`f(t)=sin(2\\pi 4 t)`}/> that has period <Latex math={'T=1'} /></p>
 
+<p>Let's do Fourier decomposition with <Latex math={'sin/cos'}/> basis and <Latex math={'  e^{j \\tfrac{2\\pi}{T} k t  }'}/> basis :</p>
+<ol>
+	<li>
+		<b>Using <Latex math={'sin/cos'}/> basis:</b>
+		<p>After decomposition, the only non-zero term is <Latex math={'b_4=1'}/>:</p>
+		<Latex
+		center
+		math={'f(t)= a_0 + \\sum_{k=1}^{\\infty} {a_k  cos(\\tfrac{2 \\pi }{T}kt)} +  \\sum_{k=1}^{\\infty} { b_k  sin(\\tfrac{2 \\pi }{T}kt)} = b_4 sin(\\tfrac{2 \\pi }{T}4t) = sin(2\\pi4t) '}
+	/>
+	</li>
+	<li>
+		<b>Using <Latex math={' e^{j \\tfrac{2\\pi}{T} k t  }'}/> basis:</b>
+		<p>After decomposition, the only non-zero term are <Latex math={'c_4=\\tfrac{1}{2j}'}/> and <Latex math={'c_{-4}=-\\tfrac{1}{2j}'}/>:</p>
+		<Latex
+		center
+		math={`f(t)= \\sum_{k= -\\infty}^{\\infty} c_k e^{j \\tfrac{2\\pi}{T} k t } 
+		= c_4  \\cdot e^{j \\tfrac{2\\pi}{T} 4 t } +  c_{-4}\\cdot  e^{j \\tfrac{2\\pi}{T} (-4) t } 
+		= \\tfrac{1}{2j} e^{j 2\\pi 4 t } - \\tfrac{1}{2j} e^{-j 2\\pi4 t }
+		`}
+		
+	/>
+	<p  style="text-align: center;">which if do the calculation, you will get:</p>
+	<Latex
+	center
+	math={`f(t)=\\tfrac{1}{2j} e^{j 2\\pi 4 t } - \\tfrac{1}{2j} e^{-j 2\\pi4 t } = sin(2\\pi4t)
+	`}
+	/>
 
+	</li>
 </ol>
 
-
-<p>Basically, from the example, to get coefficient for  <Latex math={'f(t)=cos(2\\pi 4t)'}/> with exponential basis,
+<p>Basically, from the example, to get coefficient for  <Latex math={'f(t)=sin(2\\pi 4t)'}/> with exponential basis,
 you need two terms:  </p>
 <Latex center math={'c_4 \\; (\\text{ with } e^{j\\tfrac{2\\pi}{T} 4t} =  cos(2\\pi 4t) + j sin(2\\pi 4t) \\; )'}/> 
 
 <Latex center math={'c_{-4} \\; (\\text{ with }  e^{-j\\tfrac{2\\pi}{T} 4t} = cos(2\\pi 4t) - j sin(2\\pi 4t) \\; )'}/> 
 
-<p style="text-align: center;">for canceling out the  <Latex math={'j sin(2\\pi 4t)'}/> terms so can return the desired <Latex math={'cos(2\\pi 4t)'}/> </p>
+<p style="text-align: center;">for canceling out the  <Latex math={' cos(2\\pi 4t)'}/> terms so can return the desired <Latex math={'sin(2\\pi 4t)'}/> </p>
