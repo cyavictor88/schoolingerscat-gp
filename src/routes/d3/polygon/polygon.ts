@@ -20,7 +20,6 @@ const yScale = d3.scaleLinear()
   .range([0,height ]);
 
 
-
 export function polygon(){
   const lineGenerator = d3.line()
   .x(d =>  xScale(d[0]))

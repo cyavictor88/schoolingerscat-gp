@@ -19,8 +19,8 @@ export const rootRoute : IRoute = {
   label:'Home',
   path:'/',
   subRoutes: [
-    fourierSeriesRoute,
-    crossProductRoute
+   {label:'Signal Processing', subRoutes:[fourierSeriesRoute]} ,
+   {label:'Math', subRoutes:[crossProductRoute]} ,
   ] 
 };
 
