@@ -38,7 +38,7 @@
 		<a href='fourierSeriesProof/fourierBasis'>Fourier Basis</a>: We will first prove that a set of infinite <Latex math={'sin'} /> and <Latex math={'cos'} /> functions with period <Latex math={'T'} />
 		is an orthogonal basis that can decompose any function that has period <Latex math={'T'} /> .
 	</li>
-	<li><a href='fourierSeriesProof/examples'>Examples from Intro</a>:  After that, we will show you how to make the graphs shown in the <a href='/signalProcessing/fourierSeries/intro'>Introduction</a>.</li>
+	<li><a href='fourierSeriesProof/examples'>Examples from Intro</a>:  After that, we will show you how to make the graphs shown in the <a href='/signalProcessing/fourierSeries/introduction'>Introduction</a>.</li>
 	<li><a href='fourierSeriesProof/exponentialForm'>Exponential Form</a>:  Finally, we will show you how to represent fourier series in exponential form.</li>
 
 </ol>

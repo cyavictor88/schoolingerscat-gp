@@ -1,7 +1,7 @@
 <script lang='ts'>
   import * as d3 from 'd3';
 	import { onMount } from 'svelte';
-	import { FourierSeries } from '../signalProcessing/fourierSeries/intro/exampleFunc/FourierSeries';
+	import { FourierSeries } from '../signalProcessing/fourierSeries/introduction/exampleFunc/FourierSeries';
   import Latex from '$lib/components/Latex/Latex.svelte';
 
   export let data = [{x:-1.5,y:2},{x:-.5,y:4},{x:0.5,y:-2},{x:1.5,y:9}];

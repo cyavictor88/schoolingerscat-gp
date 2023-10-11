@@ -605,7 +605,7 @@
 
 		<p>
 			In the next page, we will use the examples from <a
-				href="/signalProcessing/fourierSeries/intro">Introduction</a
+				href="/signalProcessing/fourierSeries/introduction">Introduction</a
 			> to show how Fourier Series work.
 		</p>
 	</li>

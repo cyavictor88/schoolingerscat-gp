@@ -1,4 +1,6 @@
 import type { ILatexMix } from "../Latex/latexMix";
+import { sectionRoute as fourierSeriesRoute } from "../../../routes/signalProcessing/fourierSeries/route";
+import { sectionRoute as crossProductRoute } from "../../../routes/math/crossProduct/route";
 
 export interface IRoute {
   label: string;
@@ -9,19 +11,16 @@ export interface IRoute {
   katexMix?: ILatexMix[];
 }
 
+
+
+
 // https://svelte.dev/repl/347b37e18b5d4a65bbacfd097536db02?version=4.1.2
 export const rootRoute : IRoute = {
   label:'Home',
   path:'/',
   subRoutes: [
-    {label: 'Signal Processing', subRoutes: [
-      {label: 'Fourier Series', subRoutes:[
-        {label: 'Introduction', path: '/signalProcessing/fourierSeries/intro'},
-        {label: 'Inner Product', path: '/signalProcessing/fourierSeries/innerProduct'},
-        {label: 'Basis', path: '/signalProcessing/fourierSeries/basis'},
-        {label: 'Fourier Series Proof', path: '/signalProcessing/fourierSeries/fourierSeriesProof'},
-      ]}
-    ]}
+    fourierSeriesRoute,
+    crossProductRoute
   ] 
 };
 

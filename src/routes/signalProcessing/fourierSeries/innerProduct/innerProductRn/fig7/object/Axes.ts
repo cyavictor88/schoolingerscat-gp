@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { Line } from './Line';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
 import { Font, FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
-import { linspace } from '../../../../intro/exampleFunc/Simpson';
+import { linspace } from '../../../../introduction/exampleFunc/Simpson';
 import { Vector } from './Vector';
 import { Dir } from '../Universe';
 

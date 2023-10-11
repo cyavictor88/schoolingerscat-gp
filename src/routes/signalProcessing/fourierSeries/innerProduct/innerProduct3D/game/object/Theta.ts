@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { MathText } from './MathText';
 import { Vector } from './Vector';
-import { linspace } from '../../../../intro/exampleFunc/Simpson';
+import { linspace } from '../../../../introduction/exampleFunc/Simpson';
 
 
 export class Theta {
