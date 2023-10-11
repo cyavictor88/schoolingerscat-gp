@@ -7,7 +7,7 @@
 	import { SITE_COLOR } from '$lib/theme/colors';
 
 	import SideBar from '$lib/components/SideBar/SideBar.svelte';
-	import { sectionRoute } from '../route';
+	import { sectionRoute } from './route';
 	let downTriangle = '▼';
 	let upTriangle = '▲';
 	let leftTriangle = '◀';
