@@ -6,11 +6,22 @@
 	import Title from '$lib/components/PageComp/Title.svelte';
 	import Latex from '$lib/components/Latex/Latex.svelte';
 	import ColsVec from '../common/latex/ColsVec.svelte';
+	import { Universe as Fig1 } from './threejs/fig1/Universe';
 
 	const innerPageRoute = getContext<Writable<IRoute>>('innerPageRoute');
-	let exampleFunctionCanvas1: HTMLCanvasElement;
-	let exampleFunctionCanvas2: HTMLCanvasElement;
-	onMount(() => {});
+
+	let divFig1: HTMLDivElement;
+	let universeFig1: Fig1;
+
+	onMount(() => {
+		universeFig1 = new Fig1(divFig1);
+		universeFig1.start();
+		universeFig1.eventBroker.emit('setMathMeshes');
+
+		return ()=>{
+			if (divFig1.firstChild) divFig1.removeChild(divFig1.firstChild);
+		}
+	});
 </script>
 
 <Title hLevel={1}>Cross Product - Introduction</Title>
@@ -18,7 +29,7 @@
 <p>We all know the definition of Cross Product is:</p>
 <Latex center math={' \\vec{a} \\times \\vec{b} = \\| a \\| \\| b \\| sin(\\theta) \\hat{n}'} />
 
-<p>SHOW FIGURE</p>
+<div bind:this={divFig1}/>
 
 <p>
 	But in school, I was taught that given
@@ -77,7 +88,7 @@
     Cross Product Proof:
 		<ol>
 			<li>
-				Next we show thata x b = p by showing p has magnitude equals to the area formed by a and b,
+				Next we show that x b = p by showing p has magnitude equals to the area formed by a and b,
 				and is aligned with hat n
 			</li>
 
