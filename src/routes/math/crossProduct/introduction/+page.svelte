@@ -1,14 +1,14 @@
 <script lang="ts">
-	import type { IRoute } from '$lib/components/Route/route';
+	import { getHref, type IRoute } from '$lib/components/Route/route';
 	import { onMount } from 'svelte';
 	import { getContext } from 'svelte';
-	import type { Writable } from 'svelte/store';
+	import type { Readable, Writable } from 'svelte/store';
 	import Title from '$lib/components/PageComp/Title.svelte';
 	import Latex from '$lib/components/Latex/Latex.svelte';
 	import ColsVec from '../common/latex/ColsVec.svelte';
 	import { Universe as Fig1 } from './threejs/fig1/Universe';
 
-	const innerPageRoute = getContext<Writable<IRoute>>('innerPageRoute');
+	import { sectionRoute } from '../store';
 
 	let divFig1: HTMLDivElement;
 	let universeFig1: Fig1;
@@ -18,9 +18,10 @@
 		universeFig1.start();
 		universeFig1.eventBroker.emit('setMathMeshes');
 
-		return ()=>{
+		return () => {
+			universeFig1.eventBroker.removeAllListeners();
 			if (divFig1.firstChild) divFig1.removeChild(divFig1.firstChild);
-		}
+		};
 	});
 </script>
 
@@ -29,7 +30,7 @@
 <p>We all know the definition of Cross Product is:</p>
 <Latex center math={' \\vec{a} \\times \\vec{b} = \\| a \\| \\| b \\| sin(\\theta) \\hat{n}'} />
 
-<div bind:this={divFig1}/>
+<div bind:this={divFig1} />
 
 <p>
 	But in school, I was taught that given
@@ -62,18 +63,25 @@
 
 <ol>
 	<li>
-		<strong>Parallelepiped:</strong>
+		<strong><a href={getHref('parallelepiped', $sectionRoute)}>Parallelepiped</a>:</strong>
 		<ol>
 			<li>
-				We first show that the determine of 3 vectors (r,a,b) is equal to the volume of the pp
-				formed.
+				We first show that when we put together three vectors,
+				<Latex math={`\\vec{r} =`} /><ColsVec cols={['r']} dim={3} />
+				,
+				<Latex math={`\\vec{a} =`} /><ColsVec cols={['a']} dim={3} />
+				and
+				<Latex math={`\\vec{b} =`} /><ColsVec cols={['b']} dim={3} />,
+				to create a 3 x 3 matrix = <ColsVec cols={['r','a','b']} dim={3} />,
+				the determinant of this matrix is equal to the volume of the parallelepiped formed by 
+				<Latex math={`\\vec{r},\\vec{a},\\vec{b}`} />.
 			</li>
 		</ol>
 	</li>
-  <hr />
+	<hr />
 
 	<li>
-    Linear Functional:
+		<strong><a href={getHref('linear functional', $sectionRoute)}>Linear Functional</a>:</strong>
 		<ol>
 			<li>
 				next we show that if we fixed two vectors(a,b), and treat the third vector, r, as as a
@@ -82,10 +90,10 @@
 			<li>we can show that there is a unique vector p such that p cdot r equal to phi(r)</li>
 		</ol>
 	</li>
-  <hr />
+	<hr />
 
 	<li>
-    Cross Product Proof:
+		Cross Product Proof:
 		<ol>
 			<li>
 				Next we show that x b = p by showing p has magnitude equals to the area formed by a and b,
@@ -106,15 +114,14 @@
 	}
 	li {
 		display: block;
-    margin: 8px 0px;
+		margin: 8px 0px;
 		/* color: #666666; */
 	}
 	li:before {
 		content: counters(item, '.') ': ';
 		counter-increment: item;
 	}
-  /* strong {
+	/* strong {
     padding: 8px;
   } */
-
 </style>

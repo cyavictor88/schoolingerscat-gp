@@ -5,6 +5,7 @@
 	import { topBarHeight } from '$lib/store';
 	import { beforeUpdate, afterUpdate, onMount } from 'svelte';
 	import { SITE_COLOR } from '$lib/theme/colors';
+	import url from '$lib/components/Route/url';
 
 	import SideBar from '$lib/components/SideBar/SideBar.svelte';
 	import { sectionRoute } from './route';
@@ -66,7 +67,19 @@
 		};
 	});
 
+	let topBox : HTMLDivElement;
+	let prevPathname = 'init path';
+	afterUpdate(()=>{
+		const curPathname = $url ? ($url as URL).pathname : 'no path'
+		if (curPathname !==prevPathname ) {
+			console.log('path change from', prevPathname ,'to', curPathname);
+			prevPathname = curPathname;
+			topBox.scrollIntoView();
+		}
+	})
+
 </script>
+<div bind:this={topBox}></div>
 
 {#if mobileShowSide}
 	<div in:fly={{ y: 200, duration: 500 }} out:fade

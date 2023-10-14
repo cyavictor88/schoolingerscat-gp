@@ -11,9 +11,9 @@ export class Vector {
 
 
   public coord: THREE.Vector3;
-  public line2XY: Line;
-  public line2Y: Line;
-  public line2X: Line;
+  // public line2XY: Line;
+  // public line2Y: Line;
+  // public line2X: Line;
 
   constructor( x:number,y:number,z:number, color:string|number){
     this.coord = new THREE.Vector3(x,y,z);
@@ -57,12 +57,12 @@ export class Vector {
     // this.line2Y = new Line([x,0,z],[x,0,0],'grey',true);
     // this.line2Z = new Line([x,0,z],[0,0,z],'grey',true);
 
-    this.line2XY = new Line([x,y,0],[x,y,z],'grey',true);
-    this.line2Y = new Line([x,y,0],[0,y,0],'grey',true);
-    this.line2X = new Line([x,y,0],[x,0,0],'grey',true);
-    this.vector.add(this.line2X.lineMesh);
-    this.vector.add(this.line2XY.lineMesh);
-    this.vector.add(this.line2Y.lineMesh);
+    // this.line2XY = new Line([x,y,0],[x,y,z],'grey',true);
+    // this.line2Y = new Line([x,y,0],[0,y,0],'grey',true);
+    // this.line2X = new Line([x,y,0],[x,0,0],'grey',true);
+    // this.vector.add(this.line2X.lineMesh);
+    // this.vector.add(this.line2XY.lineMesh);
+    // this.vector.add(this.line2Y.lineMesh);
   } 
 
   setDash(){

@@ -67,3 +67,39 @@ export function setOpenedPath(route: IRoute, currentPath: string){
 }
 
 
+export function getHref(label:string,route: IRoute): string{
+
+  // function recurGet(label:string, route:IRoute, res:{href:string|null}){
+  //   if(route.label && route.label.toLowerCase()===label.toLowerCase() && route.path) {
+  //     res.href = route.path;
+  //     return
+  //   };
+  //   if(route.subRoutes){
+  //     for (let i = 0; i < route.subRoutes.length; i++) {
+  //       const subRoute = route.subRoutes[i];
+  //       recurGet(label,subRoute,res);
+  //       if(res.href)return;
+  //     }
+  //   }
+  // }
+  // let resHref = {href:null}
+  // recurGet(label,route,resHref);
+  // return resHref.href!
+
+  function recurGet(label:string, route:IRoute) :string|null{
+    if(route.label && route.label.toLowerCase()===label.toLowerCase() && route.path) {
+      return route.path;
+    };
+    if(route.subRoutes){
+      for (let i = 0; i < route.subRoutes.length; i++) {
+        const subRoute = route.subRoutes[i];
+        const href = recurGet(label,subRoute);
+        if(href) return href;
+      }
+    }
+    return null;
+  }
+  const href = recurGet(label,route);
+  return href ?? ''
+}
+

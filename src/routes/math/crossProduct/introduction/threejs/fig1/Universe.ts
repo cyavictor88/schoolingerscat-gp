@@ -7,7 +7,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { Vector } from './object/Vector';
 import { Line } from './object/Line';
 import { Axes } from './object/Axes';
-import { Font, FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
+import type { Font, FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 import { MathText } from './object/MathText';
 import { Theta } from './object/Theta';
 import { Polygon2D } from './object/Polygon2D';
@@ -42,6 +42,8 @@ export class Universe {
 
   veca : Vector;
   vecb : Vector;
+  vecCrossProduct: Vector;
+  vecn: Vector;
   axes : Axes;
 
   fig4triangle: Polygon2D | null = null;
@@ -86,34 +88,41 @@ export class Universe {
     //   console.log('Camera Position:', cameraPosition);
     // });
 
-    this.veca = new Vector(9,-4,8,0xff0000);
-    this.vecb = new Vector(4,8,-5,0x0000ff);
+    this.veca = new Vector(3,-2,3,0x008800);
+    this.vecb = new Vector(2,1,-2,0x0000ff);
+    const cp = new THREE.Vector3().crossVectors(this.veca.coord,this.vecb.coord);
+    this.vecCrossProduct = new Vector(cp.x,cp.y,cp.z,0xff0000);
+    const n = cp.normalize();
+    this.vecn = new Vector(n.x,n.y,n.z,0xff8000);
+
     this.scene.add(this.veca.vector);
     this.scene.add(this.vecb.vector);
+    this.scene.add(this.vecCrossProduct.vector);
+    this.scene.add(this.vecn.vector);
     this.axes = new Axes(this.scene,10,10,10);
 
 
-    const loader = new FontLoader();
-    loader.load('/fonts/helvetiker_regular.typeface.json', (font) => {
-      this.font = font;
-      const d = new Line(this.veca.coord.toArray(),this.vecb.coord.toArray(),'brown',true);
-      d.setText(this.font,'d');
-      this.scene.add(d.lineMesh,d.textMesh!);
+    // const loader = new FontLoader();
+    // loader.load('/fonts/helvetiker_regular.typeface.json', (font) => {
+    //   this.font = font;
+    //   const d = new Line(this.veca.coord.toArray(),this.vecb.coord.toArray(),'brown',true);
+    //   d.setText(this.font,'d');
+    //   this.scene.add(d.lineMesh,d.textMesh!);
 
-      // playing with updateable in tickingworld
-      (d.textMesh as any).scaler = 1.1;
-      (d.textMesh as any).cnt = 0;
-      (d.textMesh as any).tick = function(delta:number){
-        (d.textMesh as any).cnt += 1;
-        (d.textMesh as any).cnt %= 5;
-        if((d.textMesh as any).cnt>0) return
-        const scale = d.textMesh!.scale.clone();
-        if(scale.length()>2.5) (d.textMesh as any).scaler-=0.1;
-        if(scale.length()<1.5) (d.textMesh as any).scaler+=0.1;
-        d.textMesh!.scale.set(...scale.multiplyScalar((d.textMesh as any).scaler).toArray());
-      }
-      this.tickingWorld.updatables.push(d.textMesh);
-    });
+    //   // playing with updateable in tickingworld
+    //   (d.textMesh as any).scaler = 1.1;
+    //   (d.textMesh as any).cnt = 0;
+    //   (d.textMesh as any).tick = function(delta:number){
+    //     (d.textMesh as any).cnt += 1;
+    //     (d.textMesh as any).cnt %= 5;
+    //     if((d.textMesh as any).cnt>0) return
+    //     const scale = d.textMesh!.scale.clone();
+    //     if(scale.length()>2.5) (d.textMesh as any).scaler-=0.1;
+    //     if(scale.length()<1.5) (d.textMesh as any).scaler+=0.1;
+    //     d.textMesh!.scale.set(...scale.multiplyScalar((d.textMesh as any).scaler).toArray());
+    //   }
+    //   this.tickingWorld.updatables.push(d.textMesh);
+    // });
 
 
 
@@ -121,6 +130,7 @@ export class Universe {
     this.eventBroker.on('setMathMeshes',()=>{this.setMathMeshes()})
 
     this.eventBroker.on('showFig4Triangle',()=>{this.showFig4Triangle()});
+    
 
   }
 
@@ -135,7 +145,7 @@ export class Universe {
   }
 
   async setMathMeshes(){
-    const mathText = await MathText.Init('\\vec{a} \\\\ (a_x,a_y,a_z)','red');
+    const mathText = await MathText.Init('\\vec{a} \\\\ (a_x,a_y,a_z)','green');
     mathText.mesh.position.set(this.veca.coord.x, this.veca.coord.y, this.veca.coord.z);
     this.scene.add(mathText.mesh);
 
@@ -143,7 +153,13 @@ export class Universe {
     mathText2.mesh.position.set(this.vecb.coord.x, this.vecb.coord.y, this.vecb.coord.z)
     this.scene.add(mathText2.mesh);
 
+    const mathText3 = await MathText.Init('\\vec{a} \\times \\vec{b}','red');
+    mathText3.mesh.position.set(this.vecCrossProduct.coord.x, this.vecCrossProduct.coord.y, this.vecCrossProduct.coord.z)
+    this.scene.add(mathText3.mesh);
 
+    const mathText4 = await MathText.Init('\\hat{n}','orange');
+    mathText4.mesh.position.set(this.vecn.coord.x, this.vecn.coord.y, this.vecn.coord.z)
+    this.scene.add(mathText4.mesh);
 
     const theta = await Theta.Init(this.veca.coord,this.vecb.coord);
     this.scene.add(theta.curveMesh);

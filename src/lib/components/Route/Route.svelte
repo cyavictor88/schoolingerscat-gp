@@ -27,7 +27,7 @@
 		currentPath = window.location.pathname;
 	}
 	afterNavigate(() => {
-		console.log('navigating to ', window.location.pathname);
+		// console.log('navigating to ', window.location.pathname);
 		currentPath = window.location.pathname;
 	});
 
