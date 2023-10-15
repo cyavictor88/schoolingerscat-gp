@@ -8,11 +8,9 @@
 
 	const innerPageRoute = getContext<Writable<IRoute>>('innerPageRoute');
 
-
 	let topOfPageElement : HTMLDivElement ;
 
 	onMount(() => {
-    
 		innerPageRoute.set(pageRoute);
 	});
 

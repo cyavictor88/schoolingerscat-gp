@@ -1,15 +1,12 @@
 <script lang="ts">
 	import { getHref, type IRoute } from '$lib/components/Route/route';
 	import { onMount } from 'svelte';
-	import { getContext } from 'svelte';
-	import type { Readable, Writable } from 'svelte/store';
 	import Title from '$lib/components/PageComp/Title.svelte';
 	import Latex from '$lib/components/Latex/Latex.svelte';
 	import ColsVec from '../common/latex/ColsVec.svelte';
-	import { Universe as Fig1 } from './threejs/fig1/Universe';
 
 	import { sectionRoute } from '../store';
-
+	import { Universe as Fig1 } from './threejs/fig1/Universe';
 	let divFig1: HTMLDivElement;
 	let universeFig1: Fig1;
 
