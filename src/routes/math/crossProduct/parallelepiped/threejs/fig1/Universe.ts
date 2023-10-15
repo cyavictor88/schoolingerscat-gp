@@ -10,7 +10,8 @@ import type { Font, FontLoader } from 'three/examples/jsm/loaders/FontLoader.js'
 import { MathText } from './object/MathText';
 import { Theta } from './object/Theta';
 import { Polygon2D } from './object/Polygon2D';
-import { functionsIn } from 'lodash';
+
+
 
 export enum Dir {
   X,
@@ -34,6 +35,9 @@ export class Universe {
   controls: OrbitControls;
   font!: Font;
   canvasSize = { w: 500, h: 400 };
+
+
+
 
   veca : Vector;
   vecb : Vector;
