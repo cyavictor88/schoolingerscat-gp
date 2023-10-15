@@ -4,6 +4,7 @@
 	import Title from '$lib/components/PageComp/Title.svelte';
 	import Latex from '$lib/components/Latex/Latex.svelte';
 	import ColsVec from '../common/latex/ColsVec.svelte';
+	import RowsVec from '../common/latex/RowsVec.svelte';
 
 	import { sectionRoute } from '../store';
 	import { Universe as Fig1 } from './threejs/fig1/Universe';
@@ -40,9 +41,9 @@
 <Latex
 	center
 	math={`\\vec{a} \\times \\vec{b} = \\det \\begin{bmatrix}
-				\\vec{i} & a_1 & b_1 \\\\
-				\\vec{j} & a_2 & b_2 \\\\
-				\\vec{k} & a_3 & b_3
+				\\vec{i} & \\vec{j} & \\vec{k} \\\\
+				a_1 	   & a_2      & b_2 \\\\
+				b_1	     & a_3      & b_3
 				\\end{bmatrix}`}
 />
 
@@ -68,7 +69,8 @@
 				,
 				<Latex math={`\\vec{a} =`} /><ColsVec cols={['a']} dim={3} />
 				and
-				<Latex math={`\\vec{b} =`} /><ColsVec cols={['b']} dim={3} />, to create a 3 x 3 matrix = <ColsVec
+				<Latex math={`\\vec{b} =`} /><ColsVec cols={['b']} dim={3} />, to create a 3 x 3 matrix = 
+				<RowsVec
 					cols={['r', 'a', 'b']}
 					dim={3}
 				/>, the determinant of this matrix is equal to the volume of the parallelepiped formed by
@@ -88,7 +90,7 @@
 					math={`\\vec{r} =`}
 				/><ColsVec cols={['r']} dim={3} /> as a variable vector. we then can create a linear functional
 				<Latex math={'\\phi'} /> where <Latex math={'\\phi ( \\vec{r} )= \\det'} />
-				<ColsVec cols={['r', 'a', 'b']} dim={3} />.
+				<RowsVec cols={['r', 'a', 'b']} dim={3} />.
 			</li>
 			<li>
 				Then we can show that there is a unique vector, <Latex math={`\\vec{p}`} />, such that <Latex
@@ -100,7 +102,7 @@
 	<hr />
 
 	<li>
-		Cross Product Proof:
+		<strong><a href={getHref('cross product proof', $sectionRoute)}>Cross Product Proof</a>:</strong>
 		<ol>
 			<li>
 				Next we prove that <Latex math={`\\vec{p} = \\vec{a} \\times  \\vec{b} `} /> by showing that
@@ -110,18 +112,18 @@
 
 			<li>
 				Finally, with <Latex math={`\\vec{p} = \\vec{a} \\times  \\vec{b} `} />, and
-				<Latex math={`\\vec{p} \\cdot  \\vec{r} = \\phi( \\vec{r}) = \\det`} /><ColsVec
+				<Latex math={`\\vec{p} \\cdot  \\vec{r} = \\phi( \\vec{r}) = \\det`} /><RowsVec
 					cols={['r', 'a', 'b']}
 					dim={3}
-				/>, we can find <Latex math={` p_1 , p_2 , p_3`} /> by doing <Latex
-					math={` \\vec{p} \\cdot \\hat{i} ,  \\vec{p} \\cdot \\hat{j} ,  \\vec{p} \\cdot \\hat{k}`}
+				/>, we can find <Latex math={` p_1 , p_2 , p_3`} /> with <Latex
+					math={` p_1 = \\vec{p} \\cdot \\hat{i} , p_2 = \\vec{p} \\cdot \\hat{j} , p_3 = \\vec{p} \\cdot \\hat{k}`}
 				/>, which if you put them together, will give you the "notation":
 				<Latex
 					center
 					math={`\\vec{p} = \\det \\begin{bmatrix}
-								\\vec{i} & a_1 & b_1 \\\\
-								\\vec{j} & a_2 & b_2 \\\\
-								\\vec{k} & a_3 & b_3
+								\\vec{i} & \\vec{j} & \\vec{k} \\\\
+								a_1 	   & a_2      & b_2 \\\\
+								b_1	     & a_3      & b_3
 								\\end{bmatrix} = \\vec{a} \\times \\vec{b} `}
 				/>
 			</li>

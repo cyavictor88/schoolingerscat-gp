@@ -7,9 +7,9 @@
   export let center = false;
   $: rowsStr = Array.from({length:dim}, (v,rowIdx) => {
     const rowStrList = Array.from({length:cols.length}, (v,colIdx)=>{
-      const letter = cols[colIdx]
-      if(colIdx+1 === cols.length) return rowIdx===dim-1? `${letter}_${rowIdx+1}`: `${letter}_${rowIdx+1} \\\\`;
-      return `${letter}_${rowIdx+1} &`
+      const letter = cols[rowIdx]
+      if(colIdx+1 === cols.length) return rowIdx===dim-1? `${letter}_${colIdx+1}`: `${letter}_${colIdx+1} \\\\`;
+      return `${letter}_${colIdx+1} &`
     });
     return rowStrList.join(' ');
   })

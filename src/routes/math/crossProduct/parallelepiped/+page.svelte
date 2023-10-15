@@ -4,6 +4,7 @@
 	import Title from '$lib/components/PageComp/Title.svelte';
 	import Latex from '$lib/components/Latex/Latex.svelte';
 	import ColsVec from '../common/latex/ColsVec.svelte';
+	import RowsVec from '../common/latex/RowsVec.svelte';
 	import { Universe as Fig1 } from './threejs/fig1/Universe';
 
 	import { sectionRoute } from '../store';
@@ -30,10 +31,10 @@ We first show that when we put together three vectors,
 <Latex math={`\\vec{a} =`} /><ColsVec cols={['a']} dim={3} />
 and
 <Latex math={`\\vec{b} =`} /><ColsVec cols={['b']} dim={3} />,
-to create a 3 x 3 matrix = <ColsVec cols={['r','a','b']} dim={3} />,
+to create a 3 x 3 matrix = <RowsVec cols={['r','a','b']} dim={3} />,
 the determinant of this matrix is equal to the volume of the parallelepiped formed by 
 <Latex math={`\\vec{r},\\vec{a},\\vec{b}`} />, as shown in Figure 1.
 
 
-
+<!-- 3js convex geometry, or   baby3-react http://localhost:5173/threefiber/crossproduct  src/components/threefiber/crossproduct/views/Step1a.jsx -->
 <div bind:this={divFig1}/>
