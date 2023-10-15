@@ -40,10 +40,10 @@
 <Latex
 	center
 	math={`\\vec{a} \\times \\vec{b} = \\det \\begin{bmatrix}
-\\vec{i} & a_1 & b_1 \\\\
-\\vec{j} & a_2 & b_2 \\\\
-\\vec{k} & a_3 & b_3
-\\end{bmatrix}`}
+				\\vec{i} & a_1 & b_1 \\\\
+				\\vec{j} & a_2 & b_2 \\\\
+				\\vec{k} & a_3 & b_3
+				\\end{bmatrix}`}
 />
 
 <p>
@@ -68,9 +68,10 @@
 				,
 				<Latex math={`\\vec{a} =`} /><ColsVec cols={['a']} dim={3} />
 				and
-				<Latex math={`\\vec{b} =`} /><ColsVec cols={['b']} dim={3} />,
-				to create a 3 x 3 matrix = <ColsVec cols={['r','a','b']} dim={3} />,
-				the determinant of this matrix is equal to the volume of the parallelepiped formed by 
+				<Latex math={`\\vec{b} =`} /><ColsVec cols={['b']} dim={3} />, to create a 3 x 3 matrix = <ColsVec
+					cols={['r', 'a', 'b']}
+					dim={3}
+				/>, the determinant of this matrix is equal to the volume of the parallelepiped formed by
 				<Latex math={`\\vec{r},\\vec{a},\\vec{b}`} />.
 			</li>
 		</ol>
@@ -81,10 +82,19 @@
 		<strong><a href={getHref('linear functional', $sectionRoute)}>Linear Functional</a>:</strong>
 		<ol>
 			<li>
-				next we show that if we fixed two vectors(a,b), and treat the third vector, r, as as a
-				variable. we can create a linear functional phi where phi(r) = det [r ,a,b].
+				Next we show that if we treat <Latex math={`\\vec{a} =`} /><ColsVec cols={['a']} dim={3} />
+				and
+				<Latex math={`\\vec{b} =`} /><ColsVec cols={['b']} dim={3} /> as constants, and make <Latex
+					math={`\\vec{r} =`}
+				/><ColsVec cols={['r']} dim={3} /> as a variable vector. we then can create a linear functional
+				<Latex math={'\\phi'} /> where <Latex math={'\\phi ( \\vec{r} )= \\det'} />
+				<ColsVec cols={['r', 'a', 'b']} dim={3} />.
 			</li>
-			<li>we can show that there is a unique vector p such that p cdot r equal to phi(r)</li>
+			<li>
+				Then we can show that there is a unique vector, <Latex math={`\\vec{p}`} />, such that <Latex
+					math={`\\vec{p} \\cdot  \\vec{r} = \\phi( \\vec{r})`}
+				/>
+			</li>
 		</ol>
 	</li>
 	<hr />
@@ -93,13 +103,27 @@
 		Cross Product Proof:
 		<ol>
 			<li>
-				Next we show that x b = p by showing p has magnitude equals to the area formed by a and b,
-				and is aligned with hat n
+				Next we prove that <Latex math={`\\vec{p} = \\vec{a} \\times  \\vec{b} `} /> by showing that
+				<Latex math={`\\vec{p}`} /> is aligned with unit vector <Latex math={'\\hat{n}'} /> and
+				<Latex math={`\\| \\vec{p} \\| = \\text{ Area formed by } \\vec{a} \\text{ , } \\vec{b}`} />
 			</li>
 
 			<li>
-				Finally, with a x b = p, and p cdot r = phi(r) = det [r,a,b] , we can find p1, p2 , p3 by
-				doing p dot n1, n2, and n3. hence u have the formula
+				Finally, with <Latex math={`\\vec{p} = \\vec{a} \\times  \\vec{b} `} />, and
+				<Latex math={`\\vec{p} \\cdot  \\vec{r} = \\phi( \\vec{r}) = \\det`} /><ColsVec
+					cols={['r', 'a', 'b']}
+					dim={3}
+				/>, we can find <Latex math={` p_1 , p_2 , p_3`} /> by doing <Latex
+					math={` \\vec{p} \\cdot \\hat{i} ,  \\vec{p} \\cdot \\hat{j} ,  \\vec{p} \\cdot \\hat{k}`}
+				/>, which if you put them together, will give you the "notation":
+				<Latex
+					center
+					math={`\\vec{p} = \\det \\begin{bmatrix}
+								\\vec{i} & a_1 & b_1 \\\\
+								\\vec{j} & a_2 & b_2 \\\\
+								\\vec{k} & a_3 & b_3
+								\\end{bmatrix} = \\vec{a} \\times \\vec{b} `}
+				/>
 			</li>
 		</ol>
 	</li>
