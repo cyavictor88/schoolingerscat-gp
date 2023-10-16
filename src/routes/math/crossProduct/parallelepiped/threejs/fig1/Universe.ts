@@ -10,6 +10,7 @@ import type { Font, FontLoader } from 'three/examples/jsm/loaders/FontLoader.js'
 import { MathText } from './object/MathText';
 import { Theta } from './object/Theta';
 import { Polygon2D } from './object/Polygon2D';
+import { Parallelepiped } from './object/Parallelepiped';
 
 
 
@@ -124,7 +125,7 @@ export class Universe {
     // });
 
 
-
+    const pp = new Parallelepiped(this.scene,this.veca.coord,this.vecb.coord,this.vecCrossProduct.coord)
 
     this.eventBroker.on('setMathMeshes',()=>{this.setMathMeshes()})
 
