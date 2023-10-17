@@ -65,16 +65,16 @@
 		<ol>
 			<li>
 				We first show that when we put together three vectors,
-				<Latex math={`\\vec{r} =`} /><ColsVec cols={['r']} dim={3} />
+				<Latex math={`\\vec{v} =`} /><ColsVec cols={['v']} dim={3} />
 				,
 				<Latex math={`\\vec{a} =`} /><ColsVec cols={['a']} dim={3} />
 				and
 				<Latex math={`\\vec{b} =`} /><ColsVec cols={['b']} dim={3} />, to create a 3 x 3 matrix = 
 				<RowsVec
-					cols={['r', 'a', 'b']}
+					cols={['v', 'a', 'b']}
 					dim={3}
 				/>, the determinant of this matrix is equal to the volume of the parallelepiped formed by
-				<Latex math={`\\vec{r},\\vec{a},\\vec{b}`} />.
+				<Latex math={`\\vec{v},\\vec{a},\\vec{b}`} />.
 			</li>
 		</ol>
 	</li>
@@ -84,17 +84,17 @@
 		<strong><a href={getHref('linear functional', $sectionRoute)}>Linear Functional</a>:</strong>
 		<ol>
 			<li>
-				Next we show that if we treat <Latex math={`\\vec{a} =`} /><ColsVec cols={['a']} dim={3} />
+				Next we show that if we fix <Latex math={`\\vec{a} =`} /><ColsVec cols={['a']} dim={3} />
 				and
 				<Latex math={`\\vec{b} =`} /><ColsVec cols={['b']} dim={3} /> as constants, and make <Latex
-					math={`\\vec{r} =`}
-				/><ColsVec cols={['r']} dim={3} /> as a variable vector. we then can create a linear functional
-				<Latex math={'\\phi'} /> where <Latex math={'\\phi ( \\vec{r} )= \\det'} />
-				<RowsVec cols={['r', 'a', 'b']} dim={3} />.
+					math={`\\vec{v} =`}
+				/><ColsVec cols={['v']} dim={3} /> as a variable vector. we then can create a linear functional
+				<Latex math={'\\phi'} /> where <Latex math={'\\phi ( \\vec{v} )= \\det'} />
+				<RowsVec cols={['v', 'a', 'b']} dim={3} />.
 			</li>
 			<li>
 				Then we can show that there is a unique vector, <Latex math={`\\vec{p}`} />, such that <Latex
-					math={`\\vec{p} \\cdot  \\vec{r} = \\phi( \\vec{r})`}
+					math={`\\vec{p} \\cdot  \\vec{v} = \\phi( \\vec{v})`}
 				/>
 			</li>
 		</ol>
@@ -112,8 +112,8 @@
 
 			<li>
 				Finally, with <Latex math={`\\vec{p} = \\vec{a} \\times  \\vec{b} `} />, and
-				<Latex math={`\\vec{p} \\cdot  \\vec{r} = \\phi( \\vec{r}) = \\det`} /><RowsVec
-					cols={['r', 'a', 'b']}
+				<Latex math={`\\vec{p} \\cdot  \\vec{v} = \\phi( \\vec{v}) = \\det`} /><RowsVec
+					cols={['v', 'a', 'b']}
 					dim={3}
 				/>, we can find <Latex math={` p_1 , p_2 , p_3`} /> with <Latex
 					math={` p_1 = \\vec{p} \\cdot \\hat{i} , p_2 = \\vec{p} \\cdot \\hat{j} , p_3 = \\vec{p} \\cdot \\hat{k}`}

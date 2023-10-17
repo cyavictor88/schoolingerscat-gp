@@ -42,13 +42,13 @@ export class Universe {
 
   veca : Vector;
   vecb : Vector;
-  vecCrossProduct: Vector;
-  vecn: Vector;
+  vecv: Vector;
   axes : Axes;
 
   fig4triangle: Polygon2D | null = null;
 
   constructor(refCurrent: HTMLDivElement) {
+    
     this.eventBroker = new EventEmitter();
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color('lightblue');
@@ -90,15 +90,12 @@ export class Universe {
 
     this.veca = new Vector(3,-2,3,0x008800);
     this.vecb = new Vector(2,1,-2,0x0000ff);
-    const cp = new THREE.Vector3().crossVectors(this.veca.coord,this.vecb.coord);
-    this.vecCrossProduct = new Vector(cp.x,cp.y,cp.z,0xff0000);
-    const n = cp.normalize();
-    this.vecn = new Vector(n.x,n.y,n.z,0xff8000);
+    this.vecv = new Vector(-4,4,2,0xff0000);
+    // this.vecvrossProduct = new Vector(cp.x,cp.y,cp.z,0xff0000);
 
     this.scene.add(this.veca.vector);
     this.scene.add(this.vecb.vector);
-    this.scene.add(this.vecCrossProduct.vector);
-    this.scene.add(this.vecn.vector);
+    this.scene.add(this.vecv.vector);
     this.axes = new Axes(this.scene,10,10,10);
 
 
@@ -125,7 +122,7 @@ export class Universe {
     // });
 
 
-    const pp = new Parallelepiped(this.scene,this.veca.coord,this.vecb.coord,this.vecCrossProduct.coord)
+    const pp = new Parallelepiped(this.scene,this.veca.coord,this.vecb.coord,this.vecv.coord)
 
     this.eventBroker.on('setMathMeshes',()=>{this.setMathMeshes()})
 
@@ -145,25 +142,23 @@ export class Universe {
   }
 
   async setMathMeshes(){
-    const mathText = await MathText.Init('\\vec{a} \\\\ (a_x,a_y,a_z)','green');
+    const mathText = await MathText.Init('\\vec{a} ','green');
     mathText.mesh.position.set(this.veca.coord.x, this.veca.coord.y, this.veca.coord.z);
     this.scene.add(mathText.mesh);
 
-    const mathText2 = await MathText.Init('\\vec{b} \\\\ (b_x,b_y,b_z)','blue');
+    const mathText2 = await MathText.Init('\\vec{b} ','blue');
     mathText2.mesh.position.set(this.vecb.coord.x, this.vecb.coord.y, this.vecb.coord.z)
     this.scene.add(mathText2.mesh);
 
-    const mathText3 = await MathText.Init('\\vec{a} \\times \\vec{b}','red');
-    mathText3.mesh.position.set(this.vecCrossProduct.coord.x, this.vecCrossProduct.coord.y, this.vecCrossProduct.coord.z)
+    const mathText3 = await MathText.Init('\\vec{v}','red');
+    mathText3.mesh.position.set(this.vecv.coord.x, this.vecv.coord.y, this.vecv.coord.z)
     this.scene.add(mathText3.mesh);
 
-    const mathText4 = await MathText.Init('\\hat{n}','orange');
-    mathText4.mesh.position.set(this.vecn.coord.x, this.vecn.coord.y, this.vecn.coord.z)
-    this.scene.add(mathText4.mesh);
 
-    const theta = await Theta.Init(this.veca.coord,this.vecb.coord);
-    this.scene.add(theta.curveMesh);
-    this.scene.add(theta.textMesh.mesh);
+
+    // const theta = await Theta.Init(this.veca.coord,this.vecb.coord);
+    // this.scene.add(theta.curveMesh);
+    // this.scene.add(theta.textMesh.mesh);
 
 
   }

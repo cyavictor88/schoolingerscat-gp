@@ -25,16 +25,18 @@
 </script>
 
 <Title hLevel={1}>Cross Product - Parallelepiped</Title>
-We first show that when we put together three vectors,
-<Latex math={`\\vec{r} =`} /><ColsVec cols={['r']} dim={3} />
+In this section, we will show that the determinant of a 3 x 3 matrix, <RowsVec cols={['v','a','b']} dim={3} />,
+is equal to the parallelepiped volume formed by <Latex math={`\\vec{v} =`} /><ColsVec cols={['v']} dim={3} />
 ,
 <Latex math={`\\vec{a} =`} /><ColsVec cols={['a']} dim={3} />
 and
-<Latex math={`\\vec{b} =`} /><ColsVec cols={['b']} dim={3} />,
-to create a 3 x 3 matrix = <RowsVec cols={['r','a','b']} dim={3} />,
-the determinant of this matrix is equal to the volume of the parallelepiped formed by 
-<Latex math={`\\vec{r},\\vec{a},\\vec{b}`} />, as shown in Figure 1.
+<Latex math={`\\vec{b} =`} /><ColsVec cols={['b']} dim={3} />, as shown in Figure 1.
 
 
 <!-- 3js convex geometry, or   baby3-react http://localhost:5173/threefiber/crossproduct  src/components/threefiber/crossproduct/views/Step1a.jsx -->
+<p><b>Figure 1</b></p>
 <div bind:this={divFig1}/>
+
+
+<p>Step 1: Show Row Operation <Latex math={'r_m \\rightarrow r_m + c r_n'} /> does not change</p>
+<p></p>
