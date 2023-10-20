@@ -63,22 +63,11 @@ export class Parallelepiped {
 
 	createEdges(){
 		const vecs: THREE.Vector3[] = [this.veca,this.vecb,this.vecc];
-
-		const lineMaterial = new THREE.LineDashedMaterial( {
+		const lineMaterial = new THREE.LineBasicMaterial({
 			color: 0x222222,
 			transparent: true,
-			opacity: 0.5,
-			linewidth: 1,
-			scale: 1,
-			dashSize: 0.3,
-			gapSize: 0.1,
-	});
-
-		// const lineMaterial = new THREE.LineBasicMaterial({
-		// 	color: 0x222222,
-		// 	transparent: true,
-		// 	opacity: 0.5
-		// });
+			opacity: 0.5
+		});
 	
 		const linePoints = [];
 		linePoints.push([vecs[0], vecs[0].clone().add(vecs[1]) ]);
@@ -93,7 +82,6 @@ export class Parallelepiped {
 		return linePoints.map(ps => {
 			const geometry = new THREE.BufferGeometry().setFromPoints( ps );
 			const line = new THREE.Line( geometry, lineMaterial );
-			line.computeLineDistances();
 			this.scene.add( line );
 			return line;
 		})
