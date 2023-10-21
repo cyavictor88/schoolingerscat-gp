@@ -11,6 +11,7 @@ import { MathText } from './object/MathText';
 import { Theta } from './object/Theta';
 import { Polygon2D } from './object/Polygon2D';
 import { Parallelepiped } from './object/Parallelepiped';
+import { Plane } from './object/Plane';
 
 
 
@@ -99,6 +100,11 @@ export class Universe {
     this.axes = new Axes(this.scene,10,10,10);
 
 
+
+    const plane = new Plane(this.scene,[0,0,0],8,8,new THREE.Vector3(1,0,0));
+    const pp = new Parallelepiped(this.scene,this.veca.coord,this.vecb.coord,this.vecv.coord);
+
+
     // const loader = new FontLoader();
     // loader.load('/fonts/helvetiker_regular.typeface.json', (font) => {
     //   this.font = font;
@@ -122,7 +128,6 @@ export class Universe {
     // });
 
 
-    const pp = new Parallelepiped(this.scene,this.veca.coord,this.vecb.coord,this.vecv.coord)
 
     this.eventBroker.on('setMathMeshes',()=>{this.setMathMeshes()})
 

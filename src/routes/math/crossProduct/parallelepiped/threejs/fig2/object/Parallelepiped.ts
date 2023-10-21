@@ -1,6 +1,5 @@
 import * as THREE from 'three';
 import { ConvexGeometry } from 'three/examples/jsm/geometries/ConvexGeometry';
-import { Vector } from './Vector';
 
 export class Parallelepiped {
 	geometryVol : ConvexGeometry;

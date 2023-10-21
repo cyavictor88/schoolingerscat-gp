@@ -75,8 +75,15 @@ and
 
 <p><u><b>Step 1 Proof:</b></u></p>
 
-<p>The formula for the volume of a parallelepiped is</p>
-<Latex center math={`  volume  =area  \\times height`}/>
+<p>The general formula for the volume of a parallelepiped is:
+</p>
+<Latex center math={`  volume  = (area)  \\times depth = (base \\times height) \\times depth`}/>
+
+
+<p>We can get the area by focusing on <Latex math={`\\vec{a} = \\begin{bmatrix} 0 \\\\ a_2 \\\\ a_3 \\end{bmatrix}`} />
+and <Latex math={`\\vec{b} = \\begin{bmatrix} 0 \\\\ 0 \\\\ b_3 \\end{bmatrix}`} />.</p>
+
+<p>Since both <Latex math={`\\vec{a}`} /> and <Latex math={`\\vec{b}`}/> have 0 for X-axis, they are both on the YZ-plane</p>
 
 
 
