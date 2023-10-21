@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 
 export class Plane {
+  mesh : THREE.Mesh;
 	geometry : THREE.PlaneGeometry;
 	material : THREE.MeshBasicMaterial;
   center : THREE.Vector3Tuple = [0,0,0];
@@ -24,11 +25,12 @@ export class Plane {
     const color = planeColor ?? 0xffff00;
     this.material =  new THREE.MeshBasicMaterial( {color, side: THREE.DoubleSide,opacity: 0.5, transparent: false} );
     this.geometry = new THREE.PlaneGeometry( this.width, this.length );
-    const plane = new THREE.Mesh( this.geometry, this.material );
+    const planeMesh = new THREE.Mesh( this.geometry, this.material );
     const quat = new THREE.Quaternion();
     quat.setFromUnitVectors(this.defaultNormalVec.normalize(),this.normalVec.normalize());
-    plane.applyQuaternion(quat);
-    scene!.add( plane );
+    planeMesh.applyQuaternion(quat);
+    this.mesh = planeMesh;
+    scene!.add( planeMesh );
   }
 
 }

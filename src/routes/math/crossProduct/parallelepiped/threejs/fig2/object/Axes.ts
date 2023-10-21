@@ -3,7 +3,8 @@ import { Line } from './Line';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
 import { Font, FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 import { Vector } from './Vector';
-import { Dir } from '../Universe';
+import { Dir, Universe } from '../Universe';
+import type { TickingWorld } from '../TickingWorld';
 
 export class Axes {
   public xAxisLine: Line;
@@ -18,15 +19,16 @@ export class Axes {
   public yTextMesh!: THREE.Mesh;
   public zTextMesh!: THREE.Mesh;
   public font!: Font;
+  tick!: (delta:number)=>void;
 
-  constructor(scene: THREE.Scene, x: number, y: number, z: number) {
+  constructor(universe:Universe, x: number, y: number, z: number) {
     this.xAxisLine = new Line([-x - 0.1, 0, 0], [x + 0.1, 0, 0], 'black');
     this.yAxisLine = new Line([0, -y - 0.1, 0], [0, y + 0.1, 0], 'black');
     this.zAxisLine = new Line([0, 0, -z - 0.1], [0, 0, z + 0.1], 'black');
 
-    scene.add(this.xAxisLine.lineMesh);
-    scene.add(this.yAxisLine.lineMesh);
-    scene.add(this.zAxisLine.lineMesh);
+    universe.scene.add(this.xAxisLine.lineMesh);
+    universe.scene.add(this.yAxisLine.lineMesh);
+    universe.scene.add(this.zAxisLine.lineMesh);
 
     const loader = new FontLoader();
     loader.load('/fonts/helvetiker_regular.typeface.json', (font) => {
@@ -35,16 +37,22 @@ export class Axes {
       this.yTextMesh = this.makeTextMesh("Y", 0, y + 0.6, 0);
       this.zTextMesh = this.makeTextMesh("Z", 0, 0, z + 0.6);
 
-      scene.add(this.xTextMesh);
-      scene.add(this.yTextMesh);
-      scene.add(this.zTextMesh);
+      universe.scene.add(this.xTextMesh);
+      universe.scene.add(this.yTextMesh);
+      universe.scene.add(this.zTextMesh);
 
+      this.tick = function(delta:number){
+          this.xTextMesh.lookAt(universe.camera.position);
+          this.yTextMesh.lookAt(universe.camera.position);
+          this.zTextMesh.lookAt(universe.camera.position);
+      }
+      universe.tickingWorld.updatables.push(this);
 
     });
 
-    this.xTickMeshArr = this.makeTicks(scene, Dir.X, x);
-    this.yTickMeshArr = this.makeTicks(scene, Dir.Y, y);
-    this.zTickMeshArr = this.makeTicks(scene, Dir.Z, z);
+    this.xTickMeshArr = this.makeTicks(universe.scene, Dir.X, x);
+    this.yTickMeshArr = this.makeTicks(universe.scene, Dir.Y, y);
+    this.zTickMeshArr = this.makeTicks(universe.scene, Dir.Z, z);
 
 
 

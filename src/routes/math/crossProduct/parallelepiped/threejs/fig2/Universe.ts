@@ -89,21 +89,25 @@ export class Universe {
     //   console.log('Camera Position:', cameraPosition);
     // });
 
-    this.veca = new Vector(0,-2,3,0x008800);
-    this.vecb = new Vector(0,0,-2,0x0000ff);
-    this.vecv = new Vector(-4,4,2,0xff0000);
+    this.veca = new Vector(0,2,3,0x008800);
+    this.vecb = new Vector(0,0,5,0x0000ff);
+    this.vecv = new Vector(-4,4,-2,0xff0000);
     // this.vecvrossProduct = new Vector(cp.x,cp.y,cp.z,0xff0000);
 
     this.scene.add(this.veca.vector);
     this.scene.add(this.vecb.vector);
     this.scene.add(this.vecv.vector);
-    this.axes = new Axes(this.scene,10,10,10);
+    this.axes = new Axes(this,10,10,10);
 
 
+    
 
-    const plane = new Plane(this.scene,[0,0,0],8,8,new THREE.Vector3(1,0,0));
+
+    const plane = new Plane(this.scene,[0,0,0],18,18,new THREE.Vector3(1,0,0));
+    plane.mesh.visible=false;
     const pp = new Parallelepiped(this.scene,this.veca.coord,this.vecb.coord,this.vecv.coord);
 
+    this.eventBroker.on('toggleYZPlane',()=>{plane.mesh.visible=!plane.mesh.visible});
 
     // const loader = new FontLoader();
     // loader.load('/fonts/helvetiker_regular.typeface.json', (font) => {
@@ -129,7 +133,8 @@ export class Universe {
 
 
 
-    this.eventBroker.on('setMathMeshes',()=>{this.setMathMeshes()})
+
+    this.eventBroker.on('setMathMeshes',()=>{this.setMathMeshes()});
 
     this.eventBroker.on('showFig4Triangle',()=>{this.showFig4Triangle()});
     
@@ -147,17 +152,17 @@ export class Universe {
   }
 
   async setMathMeshes(){
-    const mathText = await MathText.Init('\\vec{a}=(0,a_2,a_3) ','green');
-    mathText.mesh.position.set(this.veca.coord.x, this.veca.coord.y, this.veca.coord.z);
-    this.scene.add(mathText.mesh);
+    const mathTexta = await MathText.Init('\\vec{a}=(0,a_2,a_3) ','green');
+    mathTexta.mesh.position.set(this.veca.coord.x, this.veca.coord.y, this.veca.coord.z);
+    this.scene.add(mathTexta.mesh);
 
-    const mathText2 = await MathText.Init('\\vec{b}=(0,0,b_3) ','blue');
-    mathText2.mesh.position.set(this.vecb.coord.x, this.vecb.coord.y, this.vecb.coord.z)
-    this.scene.add(mathText2.mesh);
+    const mathTextb = await MathText.Init('\\vec{b}=(0,0,b_3) ','blue');
+    mathTextb.mesh.position.set(this.vecb.coord.x, this.vecb.coord.y, this.vecb.coord.z)
+    this.scene.add(mathTextb.mesh);
 
-    const mathText3 = await MathText.Init('\\vec{v}=(v_1,v_2,v_3)','red');
-    mathText3.mesh.position.set(this.vecv.coord.x, this.vecv.coord.y, this.vecv.coord.z)
-    this.scene.add(mathText3.mesh);
+    const mathTextv = await MathText.Init('\\vec{v}=(v_1,v_2,v_3)','red');
+    mathTextv.mesh.position.set(this.vecv.coord.x, this.vecv.coord.y, this.vecv.coord.z)
+    this.scene.add(mathTextv.mesh);
 
 
 

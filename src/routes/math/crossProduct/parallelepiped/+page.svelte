@@ -11,7 +11,7 @@
 	import { sectionRoute } from '../store';
 
 	let divFig1: HTMLDivElement;
-	let universeFig1: Fig2;
+	let universeFig1: Fig1;
 
 	let divFig2: HTMLDivElement;
 	let universeFig2: Fig2;
@@ -26,7 +26,9 @@
 		universeFig2.eventBroker.emit('setMathMeshes');
 
 		return () => {
+			universeFig1.eventBroker.removeAllListeners();
 			universeFig2.eventBroker.removeAllListeners();
+			if (divFig1.firstChild) divFig1.removeChild(divFig1.firstChild);
 			if (divFig2.firstChild) divFig2.removeChild(divFig2.firstChild);
 		};
 	});
@@ -77,13 +79,17 @@ and
 
 <p>The general formula for the volume of a parallelepiped is:
 </p>
-<Latex center math={`  volume  = (area)  \\times depth = (base \\times height) \\times depth`}/>
+<Latex center math={`  volume  = (area)  \\times depth`}/>
 
 
-<p>We can get the area by focusing on <Latex math={`\\vec{a} = \\begin{bmatrix} 0 \\\\ a_2 \\\\ a_3 \\end{bmatrix}`} />
+<p>We first focus on getting the  <Latex math={`area`}/> by just looking at <Latex math={`\\vec{a} = \\begin{bmatrix} 0 \\\\ a_2 \\\\ a_3 \\end{bmatrix}`} />
 and <Latex math={`\\vec{b} = \\begin{bmatrix} 0 \\\\ 0 \\\\ b_3 \\end{bmatrix}`} />.</p>
 
-<p>Since both <Latex math={`\\vec{a}`} /> and <Latex math={`\\vec{b}`}/> have 0 for X-axis, they are both on the YZ-plane</p>
+<p>Since both <Latex math={`\\vec{a}`} /> and <Latex math={`\\vec{b}`}/> have <Latex math={`0s`}/> for X-axis (<Latex math={`a_1=0,b_1=0`}/>), 
+	<!-- svelte-ignore a11y-click-events-have-key-events -->
+	<!-- svelte-ignore a11y-no-static-element-interactions -->
+	<!-- svelte-ignore a11y-invalid-attribute -->
+	<a href='javascript:;' on:click={()=>{universeFig2.eventBroker.emit('toggleYZPlane')}}><Latex math={`\\vec{a}`} /> and <Latex math={`\\vec{b}`}/>  are both on the YZ-plane</a></p>
 
 
 
