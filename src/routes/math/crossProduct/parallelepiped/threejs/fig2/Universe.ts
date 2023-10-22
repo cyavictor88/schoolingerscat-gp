@@ -5,12 +5,13 @@ import { mathmesh } from '$lib/mathmesh/mathmesh';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { Vector } from './object/Vector';
 import { Axes } from './object/Axes';
-import type { Font, FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
+import { FontLoader, type Font } from 'three/examples/jsm/loaders/FontLoader.js';
 import { MathText } from './object/MathText';
 import { Polygon2D } from './object/Polygon2D';
 import { Parallelepiped } from './object/Parallelepiped';
 import { Plane } from './object/Plane';
 import TWEEN from '@tweenjs/tween.js';
+import { Line } from './object/Line';
 
 
 export enum Dir {
@@ -27,7 +28,7 @@ export const unitVec = {
 
 export class Universe {
   // export class World extends EventEmitter {
-  camera: THREE.Camera;
+  camera: THREE.OrthographicCamera;
   scene: THREE.Scene;
   renderer: THREE.WebGLRenderer;
   tickingWorld: TickingWorld;
@@ -44,7 +45,11 @@ export class Universe {
   vecv: Vector;
   axes : Axes;
 
+  v1Line: Line;
+
   fig4triangle: Polygon2D | null = null;
+
+  
 
   constructor(refCurrent: HTMLDivElement) {
     
@@ -60,6 +65,7 @@ export class Universe {
 
     const light = new THREE.AmbientLight( 0xffffff ); // soft white light
     this.scene.add( light );
+
 
     // const helper = new THREE.AxesHelper(10);
     // helper.position.set(0, 0, 0);
@@ -98,17 +104,99 @@ export class Universe {
     this.scene.add(this.vecb.vector);
     this.scene.add(this.vecv.vector);
     this.axes = new Axes(this,10,10,10);
+    this.v1Line = new Line([this.vecv.coord.x,0,this.vecv.coord.z],[0,0,this.vecv.coord.z] , 'red',true);
+    this.scene.add(this.v1Line.lineMesh);
+    this.v1Line.lineMesh.visible=false;
 
+
+    const loader = new FontLoader();
+    loader.load('/fonts/helvetiker_regular.typeface.json', (font) => {
+      this.font = font;
+      this.v1Line.setText(font,'V1', new THREE.Vector3(this.vecv.coord.x/2, 0,this.vecv.coord.z)  );
+      this.scene.add(this.v1Line.textMesh!);
+      this.v1Line.textMesh!.visible=false;
+    });
 
     const pp = new Parallelepiped(this.scene,this.veca.coord,this.vecb.coord,this.vecv.coord);
 
+
+    this.eventBroker.on('toggleShowHeight',()=>{
+      plane.mesh.visible = false;
+      this.v1Line.lineMesh.visible=true;
+      this.v1Line.textMesh!.visible=true;
+      const duration = 1000;
+      const cameraPodTween = new TWEEN.Tween(this.camera.position)
+      .to(new THREE.Vector3(0,20,0), duration)
+      .easing(TWEEN.Easing.Quadratic.Out) // You can choose a different easing function
+      .onUpdate(() => {
+        this.camera.lookAt(new THREE.Vector3());
+        this.camera.updateProjectionMatrix();
+        this.v1Line.textMesh!.lookAt(this.camera.position)
+
+      })
+      .start()
+      .onComplete(() => {
+        // Animation is complete
+        this.camera.lookAt(new THREE.Vector3());
+        // this.camera.rotation.set(0,0,0);
+      });
+
+      const zoomProp = {zoom:1}
+      const cameraZoomTween = new TWEEN.Tween(zoomProp)
+      .to({zoom: 0.8},duration)
+      .easing(TWEEN.Easing.Quadratic.Out) // You can choose a different easing function
+      .onUpdate((val) => {
+        this.camera.zoom = val.zoom;
+        this.camera.updateProjectionMatrix();
+      })
+      .start()
+      .onComplete(() => {
+        // Animation is complete
+        console.log('zoom tween complete');
+      });
+    });
+
+
     this.eventBroker.on('toggleYZPlane',()=>{
       plane.mesh.visible = !plane.mesh.visible;
-      this.camera.position.setX(15);
-      this.camera.position.setY(0);
-      this.camera.position.setZ(0);
-      this.camera.lookAt(new THREE.Vector3());
+      this.v1Line.lineMesh.visible=false;
+      this.v1Line.textMesh!.visible=false;
+
+      const duration = 1000;
+      const cameraPodTween = new TWEEN.Tween(this.camera.position)
+      .to(new THREE.Vector3(20,0,0), duration)
+      .easing(TWEEN.Easing.Quadratic.Out) // You can choose a different easing function
+      .onUpdate(() => {
+        this.camera.lookAt(new THREE.Vector3());
+      })
+      .start()
+      .onComplete(() => {
+        // Animation is complete
+        console.log('Animation complete');
+        this.camera.lookAt(new THREE.Vector3());
+        this.camera.zoom = 0.8 * this.camera.zoom;
+        this.camera.updateProjectionMatrix()
+      });
+
+      const zoomProp = {zoom:1}
+      const cameraZoomTween = new TWEEN.Tween(zoomProp)
+      .to({zoom: 0.8},duration)
+      .easing(TWEEN.Easing.Quadratic.Out) // You can choose a different easing function
+      .onUpdate((val) => {
+        this.camera.zoom = val.zoom;
+        this.camera.updateProjectionMatrix();
+      })
+      .start()
+      .onComplete(() => {
+        // Animation is complete
+        console.log('zoom tween complete');
+      });
+
     });
+    (TWEEN as any).tick = ()=>{
+      TWEEN.update();
+    }
+    this.tickingWorld.updatables.push(TWEEN)
 
     // const loader = new FontLoader();
     // loader.load('/fonts/helvetiker_regular.typeface.json', (font) => {

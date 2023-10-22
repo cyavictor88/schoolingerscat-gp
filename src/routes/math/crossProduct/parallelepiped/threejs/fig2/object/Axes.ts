@@ -19,6 +19,10 @@ export class Axes {
   public yTextMesh!: THREE.Mesh;
   public zTextMesh!: THREE.Mesh;
   public font!: Font;
+
+
+
+  
   tick!: (delta:number)=>void;
 
   constructor(universe:Universe, x: number, y: number, z: number) {

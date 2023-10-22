@@ -43,7 +43,7 @@
 </script>
 
 <Title hLevel={1}>Cross Product - Parallelepiped</Title>
-In this section, we will show that the determinant of a 3 x 3 matrix, <RowsVec cols={['v','a','b']} dim={3} />,
+In this section, we will show that the absolute value of the determinant of a 3 x 3 matrix, <RowsVec cols={['v','a','b']} dim={3} />,
 is equal to the parallelepiped volume formed by <Latex math={`\\vec{v} =`} /><ColsVec cols={['v']} dim={3} />
 ,
 <Latex math={`\\vec{a} =`} /><ColsVec cols={['a']} dim={3} />
@@ -53,9 +53,9 @@ and
 
 <!-- 3js convex geometry, or   baby3-react http://localhost:5173/threefiber/crossproduct  src/components/threefiber/crossproduct/views/Step1a.jsx -->
 <p><b>Figure 1</b></p>
-<div bind:this={divFig1}/>
+<div id='fig1' bind:this={divFig1}/>
 
-
+<hr />
 <p><u><b>Step 1:</b></u></p>
 <p>If we are given a set of vectors with constraints such that:</p>
 
@@ -76,12 +76,11 @@ and
 		`}/>, has the property <Latex math={`\\det(M) = v_1 * a_2 * b_3`}/>.	
 </p>
 <div  style='text-align:center'>
-<p><b>Show that the volume of the parallelepiped formed by these 3 vectors
-	is also equal to 	<Latex math={`v_1 * a_2 * b_3`}/>.</b></p>
+<p><b>Show that the volume of the parallelepiped formed by these 3 vectors (Figure 2)
+	is equal to 	<Latex math={`|v_1 * a_2 * b_3|`}/>.</b></p>
 </div>
 
 
-<div bind:this={divFig2}/>
 
 <p><u><b>Step 1 Proof:</b></u></p>
 
@@ -93,11 +92,11 @@ and
 <p>We first focus on finding the  <Latex math={`area`}/> by looking at <Latex math={`\\vec{a} = \\begin{bmatrix} 0 \\\\ a_2 \\\\ a_3 \\end{bmatrix}`} />
 and <Latex math={`\\vec{b} = \\begin{bmatrix} 0 \\\\ 0 \\\\ b_3 \\end{bmatrix}`} />.</p>
 
-<p>Since both <Latex math={`\\vec{a}`} /> and <Latex math={`\\vec{b}`}/> are <Latex math={`0s`}/> for X-axis component, (<Latex math={`a_1=0,b_1=0`}/>), 
+<p>Since both <Latex math={`\\vec{a}`} /> and <Latex math={`\\vec{b}`}/> have <Latex math={`0s`}/> for X-axis component, (<Latex math={`a_1=0,b_1=0`}/>), 
 	<!-- svelte-ignore a11y-click-events-have-key-events -->
 	<!-- svelte-ignore a11y-no-static-element-interactions -->
 	<!-- svelte-ignore a11y-invalid-attribute -->
-	<a href='javascript:;' on:click={()=>{universeFig2.eventBroker.emit('toggleYZPlane')}}><Latex math={`\\vec{a}`} /> and <Latex math={`\\vec{b}`}/>  are both on the YZ-plane</a></p>
+	<a href='#' on:click={()=>{universeFig2.eventBroker.emit('toggleYZPlane')}}><Latex math={`\\vec{a}`} /> and <Latex math={`\\vec{b}`}/>  are both on the YZ-plane</a></p>
 
 
 
@@ -106,18 +105,31 @@ and <Latex math={`\\vec{b} = \\begin{bmatrix} 0 \\\\ 0 \\\\ b_3 \\end{bmatrix}`}
 
 <div style='text-align: center'>
 	<p>
+	<!-- svelte-ignore a11y-invalid-attribute -->
 	<a href='#' on:click={()=>{
 		d3Fig3.eventBroker.emit('toggleShow')
 		}}>Area formed by <Latex math={`\\vec{a}`} /> and <Latex math={`\\vec{b}`}/> 
-	</a> = <Latex math={`a_2 \\times b_3`}/> 
+	</a> = <Latex math={`|a_2 \\times b_3|`}/> 
 </p>
 </div>
 
-<div bind:this={fig3D3}><p>Figure 3</p></div>
-<p></p>
+
+<div style='display: flex; flex-flow: row wrap;'>
+	<div id='fig2' bind:this={divFig2}><p>Figure 2</p></div>
+	<div bind:this={fig3D3}><p>Figure 3</p></div>
+</div>
+
+<p>Now We have the <Latex math={`area`}/>, we just need to find the <Latex math={`height`}/>.</p>
+<p>Since <Latex math={`\\vec{a}`} /> and <Latex math={`\\vec{b}`}/> are on the YZ-plane,
+we can easily see <a href='#' on:click={()=>{universeFig2.eventBroker.emit('toggleShowHeight')}} >
+	<Latex math={'v_1'} /> is the <Latex math={`height`}/></a></p>
+
+
+<p>So overall, the volume of this parallelepiped = <Latex math={`|v_1 * a_2 * b_3|= |\\det(M)| `}/></p>
 
 
 
+<hr />
 
 
 

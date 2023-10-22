@@ -45,7 +45,7 @@ export class Line {
     this.textMesh!.position.set(position.x,position.y,position.z);
   }
 
-  makeTextMesh(text: string, position: THREE.Vector3) {
+  private makeTextMesh(text: string, position: THREE.Vector3) {
     const x = position.x;
     const y = position.y;
     const z = position.z;
