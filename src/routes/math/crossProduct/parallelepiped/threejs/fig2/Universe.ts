@@ -4,15 +4,13 @@ import EventEmitter from 'eventemitter3';
 import { mathmesh } from '$lib/mathmesh/mathmesh';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { Vector } from './object/Vector';
-import { Line } from './object/Line';
 import { Axes } from './object/Axes';
 import type { Font, FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 import { MathText } from './object/MathText';
-import { Theta } from './object/Theta';
 import { Polygon2D } from './object/Polygon2D';
 import { Parallelepiped } from './object/Parallelepiped';
 import { Plane } from './object/Plane';
-
+import TWEEN from '@tweenjs/tween.js';
 
 
 export enum Dir {
@@ -88,6 +86,8 @@ export class Universe {
     //   const cameraPosition = this.camera.position.clone();
     //   console.log('Camera Position:', cameraPosition);
     // });
+    const plane = new Plane(this.scene,[0,0,0],18,18,new THREE.Vector3(1,0,0));
+    plane.mesh.visible=false;
 
     this.veca = new Vector(0,2,3,0x008800);
     this.vecb = new Vector(0,0,5,0x0000ff);
@@ -100,14 +100,15 @@ export class Universe {
     this.axes = new Axes(this,10,10,10);
 
 
-    
-
-
-    const plane = new Plane(this.scene,[0,0,0],18,18,new THREE.Vector3(1,0,0));
-    plane.mesh.visible=false;
     const pp = new Parallelepiped(this.scene,this.veca.coord,this.vecb.coord,this.vecv.coord);
 
-    this.eventBroker.on('toggleYZPlane',()=>{plane.mesh.visible=!plane.mesh.visible});
+    this.eventBroker.on('toggleYZPlane',()=>{
+      plane.mesh.visible = !plane.mesh.visible;
+      this.camera.position.setX(15);
+      this.camera.position.setY(0);
+      this.camera.position.setZ(0);
+      this.camera.lookAt(new THREE.Vector3());
+    });
 
     // const loader = new FontLoader();
     // loader.load('/fonts/helvetiker_regular.typeface.json', (font) => {
@@ -135,7 +136,6 @@ export class Universe {
 
 
     this.eventBroker.on('setMathMeshes',()=>{this.setMathMeshes()});
-
     this.eventBroker.on('showFig4Triangle',()=>{this.showFig4Triangle()});
     
 

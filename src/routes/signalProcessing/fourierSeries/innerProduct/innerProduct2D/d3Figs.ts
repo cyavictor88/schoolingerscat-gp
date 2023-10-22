@@ -38,7 +38,7 @@ function latex(math: string) {
   const mathmlHtml = katex.renderToString(math, {
     throwOnError: false,
     output: "mathml",
-    center: false,
+    // center: false,
   });
   return mathmlHtml;
 }

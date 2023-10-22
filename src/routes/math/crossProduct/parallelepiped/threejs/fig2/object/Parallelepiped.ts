@@ -20,7 +20,7 @@ export class Parallelepiped {
 		this.vecb=vecb;
 		this.vecc=vecc;
 		this.scene = scene;
-		this.materialVol =  new THREE.MeshBasicMaterial( { color: color?color: 0x00ff00 ,opacity: 0.5, transparent: true} );
+		this.materialVol =  new THREE.MeshBasicMaterial( { color: color?color: 'white' ,opacity: 0.5, transparent: true} );
 		
 		this.lineMeshes = this.createEdges();
 
