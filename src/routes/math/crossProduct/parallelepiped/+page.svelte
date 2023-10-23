@@ -11,7 +11,6 @@
 
 	import { sectionRoute } from '../store';
 	import { Fig3 } from './d3/fig3';
-	import { bigBang } from './threejs/multiScene/multiScene';
 
 	let divFig1: HTMLDivElement;
 	let universeFig1: Fig1;
@@ -22,18 +21,17 @@
   let fig3D3: HTMLDivElement;
 	let d3Fig3: Fig3;
 
-	let divMultiScenes: HTMLDivElement;
-	let canvasMultiScenes: HTMLCanvasElement;
+
 
 	// let divFig4: HTMLDivElement;
 	// let universeFig4: Fig4;
 
 
-	$: if(divMultiScenes && canvasMultiScenes){
-		console.log('multi scenes bang')
-		bigBang(divMultiScenes,canvasMultiScenes);
+	// $: if(divMultiScenes && canvasMultiScenes){
+	// 	console.log('multi scenes bang')
+	// 	bigBang(divMultiScenes,canvasMultiScenes);
 
-	}
+	// }
 
 	onMount(() => {
 		universeFig1 = new Fig1(divFig1);
@@ -141,6 +139,7 @@ and <Latex math={`\\vec{b} = \\begin{bmatrix} 0 \\\\ 0 \\\\ b_3 \\end{bmatrix}`}
 
 <p>Now We have the <Latex math={`area`}/>, we just need to find the <Latex math={`height`}/>.</p>
 <p>Since <Latex math={`\\vec{a}`} /> and <Latex math={`\\vec{b}`}/> are on the YZ-plane,
+<!-- svelte-ignore a11y-invalid-attribute -->
 we can easily see <a href='#' on:click={()=>{universeFig2.eventBroker.emit('toggleShowHeight')}} >
 	<Latex math={'v_1'} /> is the <Latex math={`height`}/></a></p>
 
@@ -160,44 +159,4 @@ we can easily see <a href='#' on:click={()=>{universeFig2.eventBroker.emit('togg
 
 <p>Let's show this with 3D figures, Say we have <Latex math={`\\vec{v}, \\vec{a}, \\vec{b}`} /> as shown in Figure 4.a</p>
 
-<canvas id='c' bind:this={canvasMultiScenes} />
-<div id='content'  bind:this={divMultiScenes}>
-</div>
 
-
-<style>
-#content {
-				position: absolute;
-				top: 0; width: 100%;
-				z-index: 1;
-				padding: 3em 0 0 0;
-			}
-
-			#c {
-				position: absolute;
-				left: 0;
-				width: 100%;
-				height: 100%;
-			}
-
-			.list-item {
-				display: inline-block;
-				margin: 1em;
-				padding: 1em;
-				box-shadow: 1px 2px 4px 0px rgba(0,0,0,0.25);
-			}
-
-			.list-item > div:nth-child(1) {
-				width: 200px;
-				height: 200px;
-			}
-
-			.list-item > div:nth-child(2) {
-				color: #888;
-				font-family: sans-serif;
-				font-size: large;
-				width: 200px;
-				margin-top: 0.5em;
-			}
-
-</style>

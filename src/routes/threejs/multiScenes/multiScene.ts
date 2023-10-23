@@ -15,7 +15,7 @@ export function bigBang(divContent: HTMLDivElement, canvas: HTMLCanvasElement) {
       new THREE.CylinderGeometry(0.5, 0.5, 1, 12)
     ];
 
-    for (let i = 0; i < 40; i++) {
+    for (let i = 0; i < 1; i++) {
 
       const scene = new THREE.Scene();
 
@@ -50,7 +50,7 @@ export function bigBang(divContent: HTMLDivElement, canvas: HTMLCanvasElement) {
 
       const material = new THREE.MeshStandardMaterial({
 
-        color: new THREE.Color().setHSL(Math.random(), 1, 0.75, THREE.SRGBColorSpace),
+        color: 'red',//new THREE.Color().setHSL(Math.random(), 1, 0.75, THREE.SRGBColorSpace),
         roughness: 0.5,
         metalness: 0,
         flatShading: true
@@ -59,9 +59,9 @@ export function bigBang(divContent: HTMLDivElement, canvas: HTMLCanvasElement) {
 
       scene.add(new THREE.Mesh(geometry, material));
 
-      scene.add(new THREE.HemisphereLight(0xaaaaaa, 0x444444, 3));
+      scene.add(new THREE.HemisphereLight(0xaaffaa, 0xaa4444, 3));
 
-      const light = new THREE.DirectionalLight(0xffffff, 1.5);
+      const light = new THREE.DirectionalLight(0xff00ff, 1.5);
       light.position.set(1, 1, 1);
       scene.add(light);
 
@@ -71,7 +71,7 @@ export function bigBang(divContent: HTMLDivElement, canvas: HTMLCanvasElement) {
 
 
     renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
-    renderer.setClearColor(0xffffff, 1);
+    renderer.setClearColor(0xaaffff, 1);
     renderer.setPixelRatio(window.devicePixelRatio);
     animate();
 
@@ -101,9 +101,9 @@ export function bigBang(divContent: HTMLDivElement, canvas: HTMLCanvasElement) {
     // console.log('multi scenes reander')
     updateSize();
 
-    canvas.style.transform = `translateY(${window.scrollY}px)`;
+    // canvas.style.transform = `translateY(${window.scrollY}px)`;
 
-    renderer.setClearColor(0xffffff);
+    renderer.setClearColor(0xffffaa);
     renderer.setScissorTest(false);
     renderer.clear();
 
@@ -123,12 +123,12 @@ export function bigBang(divContent: HTMLDivElement, canvas: HTMLCanvasElement) {
       const rect = element.getBoundingClientRect();
 
       // check if it's offscreen. If so skip it
-      if (rect.bottom < 0 || rect.top > renderer.domElement.clientHeight ||
-        rect.right < 0 || rect.left > renderer.domElement.clientWidth) {
+      // if (rect.bottom < 0 || rect.top > renderer.domElement.clientHeight ||
+      //   rect.right < 0 || rect.left > renderer.domElement.clientWidth) {
 
-        return; // it's off screen
+      //   return; // it's off screen
 
-      }
+      // }
 
       // set the viewport
       const width = rect.right - rect.left;
@@ -141,10 +141,10 @@ export function bigBang(divContent: HTMLDivElement, canvas: HTMLCanvasElement) {
 
       const camera = scene.userData.camera;
 
-      //camera.aspect = width / height; // not changing in this example
-      //camera.updateProjectionMatrix();
+      camera.aspect = width / height; // not changing in this example
+      camera.updateProjectionMatrix();
 
-      //scene.userData.controls.update();
+      scene.userData.controls.update();
 
       renderer.render(scene, camera);
 

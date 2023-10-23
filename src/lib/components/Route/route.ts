@@ -33,6 +33,9 @@ export function getSiteRootRoute(isLocal:boolean) : IRoute {
     {label: '3JS', path: '/freeDraw'},
     {label: 'Pixi', path: '/pixi'},
     {label: 'D3', path: '/d3'},
+    {label: '3js', subRoutes:[
+      {label: 'MultiScenes', path:'/threejs/multiScenes'}
+    ]},
     {label: 'Scrollspy', subRoutes: [
       {label: 'Scrollspy1', path: '/hello/scroll'},
       {label: 'Scrollspy2', path: '/hello/scrollspy'},
