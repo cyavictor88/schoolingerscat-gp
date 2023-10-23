@@ -7,9 +7,11 @@
 	import RowsVec from '../common/latex/RowsVec.svelte';
 	import { Universe as Fig1 } from './threejs/fig1/Universe';
 	import { Universe as Fig2 } from './threejs/fig2/Universe';
+	// import { Universe as Fig4 } from './threejs/fig4/Universe';
 
 	import { sectionRoute } from '../store';
 	import { Fig3 } from './d3/fig3';
+	import { bigBang } from './threejs/multiScene/multiScene';
 
 	let divFig1: HTMLDivElement;
 	let universeFig1: Fig1;
@@ -20,6 +22,19 @@
   let fig3D3: HTMLDivElement;
 	let d3Fig3: Fig3;
 
+	let divMultiScenes: HTMLDivElement;
+	let canvasMultiScenes: HTMLCanvasElement;
+
+	// let divFig4: HTMLDivElement;
+	// let universeFig4: Fig4;
+
+
+	$: if(divMultiScenes && canvasMultiScenes){
+		console.log('multi scenes bang')
+		bigBang(divMultiScenes,canvasMultiScenes);
+
+	}
+
 	onMount(() => {
 		universeFig1 = new Fig1(divFig1);
 		universeFig1.start();
@@ -29,15 +44,20 @@
 		universeFig2.start();
 		universeFig2.eventBroker.emit('setMathMeshes');
 
+		// universeFig4 = new Fig4(divFig4);
+		// universeFig4.start();
+		// universeFig4.eventBroker.emit('setMathMeshes');
+
 		d3Fig3 = new Fig3();
     fig3D3.append(d3Fig3.svgNode!);
-
 
 		return () => {
 			universeFig1.eventBroker.removeAllListeners();
 			universeFig2.eventBroker.removeAllListeners();
+			// universeFig4.eventBroker.removeAllListeners();
 			if (divFig1.firstChild) divFig1.removeChild(divFig1.firstChild);
 			if (divFig2.firstChild) divFig2.removeChild(divFig2.firstChild);
+			// if (divFig4.firstChild) divFig4.removeChild(divFig4.firstChild);
 		};
 	});
 </script>
@@ -133,4 +153,51 @@ we can easily see <a href='#' on:click={()=>{universeFig2.eventBroker.emit('togg
 
 
 
-<p>Step x: Show Row Operation <Latex math={'r_m \\rightarrow r_m + c r_n'} /> does not change</p>
+<p><b>
+	Step 2: Show Row Operation <Latex math={'row_m \\rightarrow row_m + c \\times row_n'} /> does not change the determinant of a matrix:
+</b></p>
+
+
+<p>Let's show this with 3D figures, Say we have <Latex math={`\\vec{v}, \\vec{a}, \\vec{b}`} /> as shown in Figure 4.a</p>
+
+<canvas id='c' bind:this={canvasMultiScenes} />
+<div id='content'  bind:this={divMultiScenes}>
+</div>
+
+
+<style>
+#content {
+				position: absolute;
+				top: 0; width: 100%;
+				z-index: 1;
+				padding: 3em 0 0 0;
+			}
+
+			#c {
+				position: absolute;
+				left: 0;
+				width: 100%;
+				height: 100%;
+			}
+
+			.list-item {
+				display: inline-block;
+				margin: 1em;
+				padding: 1em;
+				box-shadow: 1px 2px 4px 0px rgba(0,0,0,0.25);
+			}
+
+			.list-item > div:nth-child(1) {
+				width: 200px;
+				height: 200px;
+			}
+
+			.list-item > div:nth-child(2) {
+				color: #888;
+				font-family: sans-serif;
+				font-size: large;
+				width: 200px;
+				margin-top: 0.5em;
+			}
+
+</style>

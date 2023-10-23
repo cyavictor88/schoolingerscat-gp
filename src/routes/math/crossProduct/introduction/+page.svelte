@@ -25,7 +25,7 @@
 
 <Title hLevel={1}>Cross Product - Introduction</Title>
 
-<p>We all know the definition of Cross Product is:</p>
+<p>The definition of Cross Product is:</p>
 <Latex center math={' \\vec{a} \\times \\vec{b} = \\| a \\| \\| b \\| sin(\\theta) \\hat{n}'} />
 
 <div bind:this={divFig1} />
@@ -73,7 +73,7 @@
 				<RowsVec
 					cols={['v', 'a', 'b']}
 					dim={3}
-				/>, the determinant of this matrix is equal to the volume of the parallelepiped formed by
+				/>, the absolute value of the determinant of this matrix is equal to the volume of the parallelepiped formed by
 				<Latex math={`\\vec{v},\\vec{a},\\vec{b}`} />.
 			</li>
 		</ol>
