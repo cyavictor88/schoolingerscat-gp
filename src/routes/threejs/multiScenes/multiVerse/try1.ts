@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 
-export function bigBang(divContent: HTMLDivElement, canvas: HTMLCanvasElement) {
+export function try1(divContent: HTMLDivElement, canvas: HTMLCanvasElement) {
 
   let renderer: THREE.WebGLRenderer;
   const scenes: THREE.Scene[] = [];
@@ -15,7 +15,7 @@ export function bigBang(divContent: HTMLDivElement, canvas: HTMLCanvasElement) {
       new THREE.CylinderGeometry(0.5, 0.5, 1, 12)
     ];
 
-    for (let i = 0; i < 1; i++) {
+    for (let i = 0; i < 50; i++) {
 
       const scene = new THREE.Scene();
 
@@ -50,7 +50,7 @@ export function bigBang(divContent: HTMLDivElement, canvas: HTMLCanvasElement) {
 
       const material = new THREE.MeshStandardMaterial({
 
-        color: 'red',//new THREE.Color().setHSL(Math.random(), 1, 0.75, THREE.SRGBColorSpace),
+        color: new THREE.Color().setHSL(Math.random(), 1, 0.75, THREE.SRGBColorSpace),
         roughness: 0.5,
         metalness: 0,
         flatShading: true
@@ -110,6 +110,7 @@ export function bigBang(divContent: HTMLDivElement, canvas: HTMLCanvasElement) {
     renderer.setClearColor(0xe0e0e0);
     renderer.setScissorTest(true);
 
+    let vicbutt = 100;
     scenes.forEach(function (scene) {
 
       // so something moves
@@ -121,20 +122,20 @@ export function bigBang(divContent: HTMLDivElement, canvas: HTMLCanvasElement) {
 
       // get its position relative to the page's viewport
       const rect = element.getBoundingClientRect();
-
       // check if it's offscreen. If so skip it
-      // if (rect.bottom < 0 || rect.top > renderer.domElement.clientHeight ||
-      //   rect.right < 0 || rect.left > renderer.domElement.clientWidth) {
+      if (rect.bottom < 0 || rect.top > renderer.domElement.clientHeight ||
+        rect.right < 0 || rect.left > renderer.domElement.clientWidth) {
+          console.log('it off screen')
+        return; // it's off screen  
 
-      //   return; // it's off screen
-
-      // }
+      }
 
       // set the viewport
       const width = rect.right - rect.left;
-      const height = rect.bottom - rect.top;
+      const height = 100;//rect.bottom - rect.top;
       const left = rect.left;
-      const bottom = renderer.domElement.clientHeight - rect.bottom;
+      const bottom = vicbutt;//renderer.domElement.clientHeight - rect.bottom;
+      console.log('dims',left,bottom,width,height)
 
       renderer.setViewport(left, bottom, width, height);
       renderer.setScissor(left, bottom, width, height);
@@ -147,6 +148,7 @@ export function bigBang(divContent: HTMLDivElement, canvas: HTMLCanvasElement) {
       scene.userData.controls.update();
 
       renderer.render(scene, camera);
+      vicbutt+=100;
 
     });
 

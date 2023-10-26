@@ -1,0 +1,60 @@
+<script lang='ts'>
+	import { onMount } from "svelte";
+  import {try1} from './multiVerse/try1';
+
+	let divMultiScenes: HTMLDivElement;
+	let canvasMultiScenes: HTMLCanvasElement;
+
+  // $: if(divMultiScenes && canvasMultiScenes){
+   
+  // }
+  onMount(()=>{
+    try1(divMultiScenes,canvasMultiScenes);
+  })
+</script>
+
+
+
+
+<canvas id='c' bind:this={canvasMultiScenes} />
+<div id='content'  bind:this={divMultiScenes}>
+</div>
+
+
+<style>
+  #content {
+          position: absolute;
+          top: 0; width: 100%;
+          z-index: 1;
+          padding: 3em 0 0 0;
+        }
+  
+        #c {
+          position: absolute;
+          left: 0;
+          width: 100%;
+          height: 100%;
+        }
+  
+        .list-item {
+          display: inline-block;
+          margin: 1em;
+          padding: 1em;
+          box-shadow: 1px 2px 4px 0px rgba(0,0,0,0.25);
+        }
+  
+        .list-item > div:nth-child(1) {
+          width: 200px;
+          height: 200px;
+        }
+  
+        .list-item > div:nth-child(2) {
+          color: #888;
+          font-family: sans-serif;
+          font-size: large;
+          width: 200px;
+          margin-top: 0.5em;
+        }
+  
+  </style>
+  
