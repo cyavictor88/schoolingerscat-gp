@@ -1,10 +1,6 @@
 import * as THREE from 'three';
-// import { TrackballControls } from 'three/addons/controls/TrackballControls.js';
-import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import type { Universe } from './Universe';
 import { TickingVerse } from './TickingVerse';
-
 
 export class Multiverse {
 	universes: Universe[];
