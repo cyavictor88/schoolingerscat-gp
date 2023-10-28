@@ -12,6 +12,7 @@ import { Parallelepiped } from './object/Parallelepiped';
 import { Plane } from './object/Plane';
 import TWEEN from '@tweenjs/tween.js';
 import { Line } from './object/Line';
+import type { SceneHTMLElement } from './TickingVerse';
 
 
 export enum Dir {
@@ -37,6 +38,8 @@ export class Universe {
   font!: Font;
   canvasSize = { w: 500, h: 400 };
 
+  sceneHTMLElement: SceneHTMLElement;
+
 
 
 
@@ -52,7 +55,7 @@ export class Universe {
   
 
   constructor(refCurrent: HTMLDivElement) {
-    
+    this.sceneHTMLElement = refCurrent;
     this.eventBroker = new EventEmitter();
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color('lightblue');

@@ -1,7 +1,7 @@
 
 <script lang='ts'>
 	import { onMount } from "svelte";
-  import {try3} from './multiVerse/try3';
+  import {try3} from './multiverse';
 
 	let boxElem: HTMLSpanElement;
 	let pyramidElem: HTMLSpanElement;
@@ -16,7 +16,7 @@
 </script>
 <div style='position: relative; padding: 4px; border: 3px solid cyan; height: 300px;width:300px;'>
 <canvas id="c" bind:this={canvas} style='border: 3px solid yellow' ></canvas>
-<span data-diagram="box" class="left" bind:this={boxElem} on:click={()=>console.log('hi')}></span>
+<span data-diagram="box" class="left" bind:this={boxElem}></span>
 <span data-diagram="pyramid" class="right" bind:this={pyramidElem}></span>
 
     <!-- <p>
@@ -35,11 +35,6 @@
 <style>
   #c {
   position:absolute;
-  /* left: 0; */
-  /* top: 0; */
-  /* width: 100%; */
-  /* height: 100%; */
-  /* display: block; */
   background-color: green;
   /* z-index:0; */
 }
@@ -56,12 +51,7 @@
   float: right;
   margin-left: .25em;
 }
-p {
-  margin: 1em auto;
-  max-width: 500px;
-  font-size: xx-large;
-  /* position: relative; */
-}
+
 
 span {
   border: 1px black solid;

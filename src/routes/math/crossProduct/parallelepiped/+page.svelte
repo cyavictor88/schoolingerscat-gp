@@ -92,10 +92,10 @@ and
 		v_1 & v_2 & v_3 \\\\ 
 		0 & a_2 & a_3 \\\\ 
 		0 & 0 & b_3 \\end{bmatrix}
-		`}/>, has the property <Latex math={`\\det(M) = v_1 * a_2 * b_3`}/>.	
+		`}/>, has determinant <Latex math={`\\det(M) = v_1 * a_2 * b_3`}/>.	
 </p>
 <div  style='text-align:center'>
-<p><b>Show that the volume of the parallelepiped formed by these 3 vectors (Figure 2)
+<p>If we draw out these vectors as shown in Figure 2, <b> show that the volume of the parallelepiped formed by these 3 vectors
 	is equal to 	<Latex math={`|v_1 * a_2 * b_3|`}/>.</b></p>
 </div>
 
