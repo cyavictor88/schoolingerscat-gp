@@ -21,7 +21,7 @@ interface AnyProperties {
 
 export interface Updatable {
   [key: string]: any;
-  tick:()=> void;
+  tick:(delta:number)=> void;
 }
 
 
@@ -118,7 +118,7 @@ export class TickingVerse {
     // );
     for( const universe of this.universes){
       for (const object of universe.updatables) {
-        (object as any).tick(delta);
+        (object as Updatable).tick(delta);
       }
     }
   }
