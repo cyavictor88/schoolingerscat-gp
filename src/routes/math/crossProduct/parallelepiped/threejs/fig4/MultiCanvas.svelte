@@ -1,8 +1,8 @@
-
 <script lang='ts'>
 	import { onMount } from "svelte";
-  import { Multiverse } from './Multiverse';
   import { Universe } from "./Universe";
+
+  import { Multiverse } from './Multiverse';
 	let spanElem: HTMLSpanElement;
 	let divElem: HTMLDivElement;
 	let canvas: HTMLCanvasElement;
