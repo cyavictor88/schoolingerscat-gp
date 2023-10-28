@@ -11,6 +11,7 @@
 
 	import { sectionRoute } from '../store';
 	import { Fig3 } from './d3/fig3';
+	import Try3 from '../../../threejs/multiScenes/Try3.svelte';
 
 	let divFig1: HTMLDivElement;
 	let universeFig1: Fig1;
@@ -159,4 +160,4 @@ we can easily see <a href='#' on:click={()=>{universeFig2.eventBroker.emit('togg
 
 <p>Let's show this with 3D figures, Say we have <Latex math={`\\vec{v}, \\vec{a}, \\vec{b}`} /> as shown in Figure 4.a</p>
 
-
+<Try3 />

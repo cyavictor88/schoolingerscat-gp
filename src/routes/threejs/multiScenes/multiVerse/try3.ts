@@ -1,22 +1,39 @@
 import * as THREE from 'three';
 // import { TrackballControls } from 'three/addons/controls/TrackballControls.js';
 import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 
 
 interface SceneHTMLElement {
   elem: HTMLElement;
-  fn: any
+  fn: any;
+	rect: DOMRect;
 }
 
 export function try3(canvas: HTMLCanvasElement, boxElem: HTMLSpanElement, pyramidElem:HTMLSpanElement){
 
 	const renderer = new THREE.WebGLRenderer( { antialias: true, canvas, alpha: true } );
-
+	const rect = canvas.getBoundingClientRect();
+	// console.log('canvas rect',rect)
 	const sceneElements :SceneHTMLElement[]= [];
-	function addScene( elem:HTMLElement, fn:any ) {
+	function addScene( elem:HTMLElement, fn:any) {
+		// console.log('rect',rect)
+		const spanEle = elem as HTMLSpanElement;
+		spanEle.offsetHeight
 
-		sceneElements.push( { elem, fn } );
+		const rect :DOMRect = {
+			height: spanEle.offsetHeight,
+			width: spanEle.offsetWidth,
+			left: spanEle.offsetLeft,
+			top: spanEle.offsetTop,
+			right: spanEle.offsetLeft+spanEle.offsetWidth ,
+			bottom:spanEle.offsetTop+spanEle.offsetHeight,
+			x:0,
+			y:0,
+			toJSON: ()=>{},
+		}
+		sceneElements.push( { elem, fn,rect } );
 
 	}
 
@@ -33,9 +50,9 @@ export function try3(canvas: HTMLCanvasElement, boxElem: HTMLSpanElement, pyrami
 		camera.lookAt( 0, 0, 0 );
 		scene.add( camera );
 
-		const controls = new TrackballControls( camera, elem );
-		controls.noZoom = true;
-		controls.noPan = true;
+		const controls = new OrbitControls( camera, elem as HTMLSpanElement );
+		// controls.noZoom = true;
+		// controls.noPan = true;
 
 		{
 
@@ -64,7 +81,7 @@ export function try3(canvas: HTMLCanvasElement, boxElem: HTMLSpanElement, pyrami
 				mesh.rotation.y = time * .1;
 				camera.aspect = rect.width / rect.height;
 				camera.updateProjectionMatrix();
-				controls.handleResize();
+				// controls.handleResize();
 				controls.update();
 				renderer.render( scene, camera );
 
@@ -89,7 +106,7 @@ export function try3(canvas: HTMLCanvasElement, boxElem: HTMLSpanElement, pyrami
 				mesh.rotation.y = time * .1;
 				camera.aspect = rect.width / rect.height;
 				camera.updateProjectionMatrix();
-				controls.handleResize();
+				// controls.handleResize();
 				controls.update();
 				renderer.render( scene, camera );
 
@@ -143,14 +160,16 @@ export function try3(canvas: HTMLCanvasElement, boxElem: HTMLSpanElement, pyrami
 		renderer.clear( true, true );
 		renderer.setScissorTest( true );
 
-		const transform = `translateY(${window.scrollY}px)`;
-		renderer.domElement.style.transform = transform;
+		// const transform = `translateY(${window.scrollY}px)`;
+		// renderer.domElement.style.transform = transform;	
 
-		for ( const { elem, fn } of sceneElements ) {
+		for ( const { elem, fn,rect } of sceneElements ) {
 
 			// get the viewport relative position of this element
-			const rect = elem.getBoundingClientRect();
+			// const rect = elem.getBoundingClientRect();
 			const { left, right, top, bottom, width, height } = rect;
+			// console.log('rect',rect)
+			// console.log('canvas rect',canvas.getBoundingClientRect());
 
 			const isOffscreen =
           bottom < 0 ||
