@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import type { Universe } from './Universe';
 import { TickingVerse } from './TickingVerse';
 
-export class Multiverse {
+class Multiverse {
 	universes: Universe[];
 	renderer: THREE.WebGLRenderer;
 	tickingVerse: TickingVerse;
@@ -15,4 +15,6 @@ export class Multiverse {
 		this.tickingVerse.start();
 	}
 }
+
+export default Multiverse;
 
