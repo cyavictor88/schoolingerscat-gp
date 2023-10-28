@@ -12,6 +12,7 @@ import { Plane } from './object/Plane';
 import TWEEN from '@tweenjs/tween.js';
 import { Line } from './object/Line';
 import type {Updatable } from './TickingVerse';
+import type { IUniverse } from './Multiverse';
 
 
 export enum Dir {
@@ -26,8 +27,9 @@ export const unitVec = {
   z: new THREE.Vector3(0,0,1),
 }
 
-export class Universe {
+export class Universe implements IUniverse {
   // export class World extends EventEmitter {
+  htmlElement: HTMLDivElement | HTMLSpanElement;
   updatables: Updatable[];
   camera: THREE.OrthographicCamera;
   scene: THREE.Scene;
@@ -36,7 +38,6 @@ export class Universe {
   font!: Font;
   canvasSize = { w: 500, h: 400 };
 
-  htmlElement: HTMLDivElement | HTMLSpanElement;
 
 
 

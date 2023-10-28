@@ -1,9 +1,18 @@
 import * as THREE from 'three';
 import type { Universe } from './Universe';
-import { TickingVerse } from './TickingVerse';
+import { TickingVerse, type Updatable } from './TickingVerse';
+import type EventEmitter from 'eventemitter3';
 
-class Multiverse {
-	universes: Universe[];
+export interface IUniverse {
+	htmlElement: HTMLDivElement | HTMLSpanElement;
+  updatables: Updatable[];
+  camera: THREE.OrthographicCamera;
+  scene: THREE.Scene;
+  eventBroker: EventEmitter;
+}
+
+export class Multiverse {
+	universes: IUniverse[];
 	renderer: THREE.WebGLRenderer;
 	tickingVerse: TickingVerse;
 	constructor(canvas: HTMLCanvasElement, universes: Universe[]){
@@ -16,5 +25,4 @@ class Multiverse {
 	}
 }
 
-export default Multiverse;
 

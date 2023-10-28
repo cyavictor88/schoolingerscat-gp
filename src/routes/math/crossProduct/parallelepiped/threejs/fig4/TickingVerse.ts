@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import type { Universe } from './Universe';
+import type EventEmitter from 'eventemitter3';
 
 const clearColor = new THREE.Color( '#000' );
 
@@ -8,6 +9,11 @@ const clock = new THREE.Clock();
 interface AnyProperties {
   [prop: string]: any
 }
+
+
+
+
+
 
 // export type Updatable = AnyProperties & {
 //   tick:()=> void;
