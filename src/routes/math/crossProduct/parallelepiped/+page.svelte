@@ -12,7 +12,7 @@
 	import { sectionRoute } from '../store';
 	import { Fig3 } from './d3/fig3';
 	import Try3 from '../../../threejs/multiScenes/Try3.svelte';
-	import MultiCanvas from './threejs/fig4/MultiCanvas.svelte';
+	import MultiCanvas from './MultiCanvas.svelte';
 
 	let divFig1: HTMLDivElement;
 	let universeFig1: Fig1;

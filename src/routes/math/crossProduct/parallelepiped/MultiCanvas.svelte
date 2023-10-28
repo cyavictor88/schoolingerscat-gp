@@ -1,7 +1,7 @@
 <script lang='ts'>
 	import { onMount } from "svelte";
-  import { Universe } from "./Universe";
-	import { Multiverse } from "./Multiverse";
+  import { Universe } from "./threejs/fig4/Universe";
+	import { Multiverse } from "./threejs/fig4/Multiverse";
 
 	let spanElem: HTMLSpanElement;
 	let divElem: HTMLDivElement;
