@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-import { TickingWorld } from './TickingWorld';
 import EventEmitter from 'eventemitter3';
 import { mathmesh } from '$lib/mathmesh/mathmesh';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
@@ -12,7 +11,7 @@ import { Parallelepiped } from './object/Parallelepiped';
 import { Plane } from './object/Plane';
 import TWEEN from '@tweenjs/tween.js';
 import { Line } from './object/Line';
-import type { SceneHTMLElement } from './TickingVerse';
+import type {Updatable } from './TickingVerse';
 
 
 export enum Dir {
@@ -29,16 +28,15 @@ export const unitVec = {
 
 export class Universe {
   // export class World extends EventEmitter {
+  updatables: Updatable[];
   camera: THREE.OrthographicCamera;
   scene: THREE.Scene;
-  renderer: THREE.WebGLRenderer;
-  tickingWorld: TickingWorld;
   eventBroker: EventEmitter;
   controls: OrbitControls;
   font!: Font;
   canvasSize = { w: 500, h: 400 };
 
-  sceneHTMLElement: SceneHTMLElement;
+  htmlElement: HTMLDivElement | HTMLSpanElement;
 
 
 
@@ -54,8 +52,9 @@ export class Universe {
 
   
 
-  constructor(refCurrent: HTMLDivElement) {
-    this.sceneHTMLElement = refCurrent;
+  constructor(refCurrent: HTMLSpanElement) {
+    this.htmlElement = refCurrent;
+    this.updatables = [];
     this.eventBroker = new EventEmitter();
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color('lightblue');
@@ -76,17 +75,17 @@ export class Universe {
     // ghelper.rotation.x = Math.PI / 2;
     // ghelper.position.set(0, 0, 0);
     // this.scene.add(ghelper);
-    this.renderer = new THREE.WebGLRenderer({
-      antialias: true,
-      // preserveDrawingBuffer: true, //https://discourse.threejs.org/t/how-to-save-rendering-scene-to-img/41858/3
-    });
-    this.renderer.setPixelRatio( window.devicePixelRatio );
-    this.tickingWorld = new TickingWorld(this.camera, this.scene, this.renderer);
-    this.renderer.render(this.scene, this.camera);
-    this.renderer.setSize(this.canvasSize.w, this.canvasSize.h);
-    refCurrent.appendChild(this.renderer.domElement);
+    // this.renderer = new THREE.WebGLRenderer({
+    //   antialias: true,
+    //   // preserveDrawingBuffer: true, //https://discourse.threejs.org/t/how-to-save-rendering-scene-to-img/41858/3
+    // });
+    // this.renderer.setPixelRatio( window.devicePixelRatio );
+    // this.tickingWorld = new TickingWorld(this.camera, this.scene, this.renderer);
+    // this.renderer.render(this.scene, this.camera);
+    // this.renderer.setSize(this.canvasSize.w, this.canvasSize.h);
+    // refCurrent.appendChild(this.renderer.domElement);
     this.eventBroker.on("hello", (data) => { console.log(data) });
-    this.controls = new OrbitControls(this.camera, this.renderer.domElement );
+    this.controls = new OrbitControls(this.camera, this.htmlElement );
 
     this.controls.update();
 
@@ -197,10 +196,11 @@ export class Universe {
       });
 
     });
+    
     (TWEEN as any).tick = ()=>{
       TWEEN.update();
     }
-    this.tickingWorld.updatables.push(TWEEN)
+    this.updatables.push(TWEEN as any);
 
     // const loader = new FontLoader();
     // loader.load('/fonts/helvetiker_regular.typeface.json', (font) => {
@@ -278,6 +278,29 @@ export class Universe {
 
 
   initCamera() {
+    // const aspect = this.canvasSize.w / this.canvasSize.h;
+    // const frustumSize = 20;
+
+
+
+
+
+    // const camera = new THREE.OrthographicCamera();
+    
+    // camera.left = -this.canvasSize.w / 2;
+    // camera.right = this.canvasSize.w / 2;
+    // camera.top = this.canvasSize.h / 2;
+    // camera.bottom = -this.canvasSize.h / 2;
+    // camera.near = -1;
+    // camera.far = 1;
+    // camera.zoom = 1;
+
+
+    
+    // camera.lookAt(new THREE.Vector3(0,0,0))
+    // return camera;
+
+
     const aspect = this.canvasSize.w / this.canvasSize.h;
     const frustumSize = 20;
     const camera = new THREE.OrthographicCamera(frustumSize * aspect / -2, frustumSize * aspect / 2, frustumSize / 2, frustumSize / -2, 0.1, 40);
@@ -285,12 +308,6 @@ export class Universe {
     return camera;
   }
 
-  start() {
-    this.tickingWorld.start();
-  }
 
-  stop() {
-    this.tickingWorld.stop();
-  }
 
 }

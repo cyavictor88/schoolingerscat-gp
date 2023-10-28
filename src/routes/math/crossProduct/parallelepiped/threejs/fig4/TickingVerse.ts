@@ -5,26 +5,27 @@ const clearColor = new THREE.Color( '#000' );
 
 const clock = new THREE.Clock();
 
-
-
-export interface SceneHTMLElement {
-  elem: HTMLElement;
-  // fn: any;
-	rect: DOMRect;
+interface AnyProperties {
+  [prop: string]: any
 }
+
+// export type Updatable = AnyProperties & {
+//   tick:()=> void;
+// }
+
+export interface Updatable {
+  [key: string]: any;
+  tick:()=> void;
+}
+
+
 export class TickingVerse {
-  // camera: THREE.Camera;
-  // scene: THREE.Scene;
   renderer: THREE.WebGLRenderer;
   universes: Universe[];
-  // updatables: any[];
   constructor(renderer: THREE.WebGLRenderer, universes: Universe[]) {
     this.universes = universes;
     this.renderer = renderer;
-    // this.camera = camera;
-    // this.scene = scene;
-    // this.renderer = renderer;
-    // this.updatables = [];
+    this.renderer.setPixelRatio( window.devicePixelRatio );
   }
 
 	resizeRendererToDisplaySize() {
@@ -34,19 +35,16 @@ export class TickingVerse {
 		const height = canvas.clientHeight;
 		const needResize = canvas.width !== width || canvas.height !== height;
 		if ( needResize ) {
-
 			this.renderer.setSize( width, height, false );
-
 		}
-
 		return needResize;
-
 	}
 
   start() {
     this.renderer.setAnimationLoop(() => {
       // tell every animated object to tick forward one frame
-      this.tick();
+        this.tick();
+        this.resizeRendererToDisplaySize(  );
 
         this.renderer.setScissorTest( false );
         this.renderer.setClearColor( clearColor, 0 );
@@ -57,7 +55,17 @@ export class TickingVerse {
         // renderer.domElement.style.transform = transform;	
     
         for ( const universe of this.universes ) {
-    
+          const rect :DOMRect = {
+            height: universe.htmlElement.offsetHeight,
+            width: universe.htmlElement.offsetWidth,
+            left: universe.htmlElement.offsetLeft,
+            top: universe.htmlElement.offsetTop,
+            right: universe.htmlElement.offsetLeft+universe.htmlElement.offsetWidth ,
+            bottom:universe.htmlElement.offsetTop+universe.htmlElement.offsetHeight,
+            x:0,
+            y:0,
+            toJSON: ()=>{},
+          }
           // get the viewport relative position of this element
           // const rect = elem.getBoundingClientRect();
           const { left, right, top, bottom, width, height } = rect;
@@ -77,7 +85,6 @@ export class TickingVerse {
             this.renderer.setViewport( left, positiveYUpBottom, width, height );
     
             // fn( time, rect );
-            this.tick()
             this.renderer.render(universe.scene, universe.camera);
     
           }
@@ -97,13 +104,13 @@ export class TickingVerse {
   tick() {
     // only call the getDelta function once per frame!
     const delta = clock.getDelta();
-
     // console.log(
     //   `The last frame rendered in ${delta * 1000} milliseconds`,
     // );
-
-    for (const object of this.updatables) {
-      (object as any).tick(delta);
+    for( const universe of this.universes){
+      for (const object of universe.updatables) {
+        (object as any).tick(delta);
+      }
     }
   }
 }

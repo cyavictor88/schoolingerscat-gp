@@ -1,23 +1,27 @@
 
 <script lang='ts'>
 	import { onMount } from "svelte";
-  import {try3} from './multiverse';
-
-	let boxElem: HTMLSpanElement;
-	let pyramidElem: HTMLSpanElement;
+  import { Multiverse } from './Multiverse';
+  import { Universe } from "./Universe";
+	let spanElem: HTMLSpanElement;
+	let divElem: HTMLDivElement;
 	let canvas: HTMLCanvasElement;
 
   // $: if(divMultiScenes && canvasMultiScenes){
    
   // }
   onMount(()=>{
-    try3(canvas,boxElem,pyramidElem);
+    const universe = new Universe(divElem);
+    const universe2 = new Universe(spanElem);
+    const multiverse = new Multiverse(canvas,[universe,universe2]);
+    multiverse.start();
   })
 </script>
-<div style='position: relative; padding: 4px; border: 3px solid cyan; height: 300px;width:300px;'>
+<div style='position: relative; padding: 4px; border: 3px solid cyan; height: 400px;width:1000px; display:flex'>
 <canvas id="c" bind:this={canvas} style='border: 3px solid yellow' ></canvas>
-<span data-diagram="box" class="left" bind:this={boxElem}></span>
-<span data-diagram="pyramid" class="right" bind:this={pyramidElem}></span>
+
+<span style="width:500px; height:400px; position:relative;  " bind:this={spanElem}></span>
+<div style='width:500px; height:400px; position:relative;  ' bind:this={divElem}></div>
 
     <!-- <p>
       <span data-diagram="box" class="left" bind:this={boxElem} on:click={()=>console.log('hi')}></span>
@@ -36,6 +40,8 @@
   #c {
   position:absolute;
   background-color: green;
+  width:1000px; 
+  height: 400px; 
   /* z-index:0; */
 }
 *[data-diagram] {
@@ -53,10 +59,10 @@
 }
 
 
-span {
+p {
   border: 1px black solid;
-  /* width:100px; */
-  /* height: 100px; */
+  width:500px; 
+  height: 400px; 
   /* position: absolute; */
   /* z-index:1; */
   position:relative;  

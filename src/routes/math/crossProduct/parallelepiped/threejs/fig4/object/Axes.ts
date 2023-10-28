@@ -4,7 +4,6 @@ import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
 import { Font, FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 import { Vector } from './Vector';
 import { Dir, Universe } from '../Universe';
-import type { TickingWorld } from '../TickingWorld';
 
 export class Axes {
   public xAxisLine: Line;
@@ -50,7 +49,7 @@ export class Axes {
           this.yTextMesh.lookAt(universe.camera.position);
           this.zTextMesh.lookAt(universe.camera.position);
       }
-      universe.tickingWorld.updatables.push(this);
+      universe.updatables.push(this as any);
 
     });
 
