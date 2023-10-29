@@ -53,7 +53,7 @@ export class Universe implements IUniverse {
 
   
 
-  constructor(refCurrent: HTMLSpanElement) {
+  constructor(refCurrent: HTMLSpanElement, v?: number[],a?:number[],b?:number[]) {
     this.htmlElement = refCurrent;
     this.updatables = [];
     this.eventBroker = new EventEmitter();
@@ -99,9 +99,9 @@ export class Universe implements IUniverse {
     const plane = new Plane(this.scene,[0,0,0],18,18,new THREE.Vector3(1,0,0));
     plane.mesh.visible=false;
 
-    this.veca = new Vector(0,2,3,0x008800);
-    this.vecb = new Vector(0,0,5,0x0000ff);
-    this.vecv = new Vector(-4,4,-2,0xff0000);
+    this.veca = a? new Vector(a[0],a[1],a[2],0x008800):  new Vector(0,2,3,0x008800);
+    this.vecb =  b? new Vector(b[0],b[1],b[2],0x0000ff):  new Vector(0,0,5,0x0000ff);
+    this.vecv =  v? new Vector(v[0],v[1],v[2],0xff0000):  new Vector(-4,4,-2,0xff0000);
     // this.vecvrossProduct = new Vector(cp.x,cp.y,cp.z,0xff0000);
 
     this.scene.add(this.veca.vector);
@@ -161,7 +161,7 @@ export class Universe implements IUniverse {
     });
 
 
-    this.eventBroker.on('toggleYZPlane',()=>{
+    this.eventBroker.on('focusPlanVecvVecb',()=>{
       plane.mesh.visible = !plane.mesh.visible;
       this.v1Line.lineMesh.visible=false;
       this.v1Line.textMesh!.visible=false;
@@ -228,7 +228,7 @@ export class Universe implements IUniverse {
 
 
 
-    this.eventBroker.on('setMathMeshes',()=>{this.setMathMeshes()});
+    this.eventBroker.on('setMathMeshes',(vebPrime?: boolean)=>{this.setMathMeshes(vebPrime)});
     this.eventBroker.on('showFig4Triangle',()=>{this.showFig4Triangle()});
     
 
@@ -244,12 +244,13 @@ export class Universe implements IUniverse {
 
   }
 
-  async setMathMeshes(){
-    const mathTexta = await MathText.Init('\\vec{a}=(0,a_2,a_3) ','green');
+  async setMathMeshes(vecbPrime?: boolean){
+    const mathTexta = await MathText.Init('\\vec{a}=(a_1,a_2,a_3) ','green');
     mathTexta.mesh.position.set(this.veca.coord.x, this.veca.coord.y, this.veca.coord.z);
     this.scene.add(mathTexta.mesh);
 
-    const mathTextb = await MathText.Init('\\vec{b}=(0,0,b_3) ','blue');
+    const vecbText = vecbPrime ? `\\vec{b}=(b_1',b_2',b_3')` : '\\vec{b}=(b_1,b_2,b_3)'
+    const mathTextb = await MathText.Init(vecbText,'blue');
     mathTextb.mesh.position.set(this.vecb.coord.x, this.vecb.coord.y, this.vecb.coord.z)
     this.scene.add(mathTextb.mesh);
 

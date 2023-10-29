@@ -12,7 +12,7 @@
 	import { sectionRoute } from '../store';
 	import { Fig3 } from './d3/fig3';
 	import Try3 from '../../../threejs/multiScenes/Try3.svelte';
-	import MultiCanvas from './MultiCanvas.svelte';
+	import MultiCanvas from './threejs/fig4/MultiCanvas.svelte';
 
 	let divFig1: HTMLDivElement;
 	let universeFig1: Fig1;
@@ -155,10 +155,23 @@ we can easily see <a href='#' on:click={()=>{universeFig2.eventBroker.emit('togg
 
 
 <p><b>
-	Step 2: Show Row Operation <Latex math={'row_m \\rightarrow row_m + c \\times row_n'} /> does not change the determinant of a matrix:
+	Step 2: Show Row Operation <Latex math={'row_m \\rightarrow row_m + c \\times row_n'} /> does not change the determinant(volume) of a matrix:
 </b></p>
 
 
-<p>Let's show this with 3D figures, Say we have <Latex math={`\\vec{v}, \\vec{a}, \\vec{b}`} /> as shown in Figure 4.a</p>
+<p>Suppose we have 3 vectors, <Latex math={`\\vec{v}, \\vec{a}, \\vec{b}`} /> as shown in Figure 4.a, and we put them together to form a matrix:</p>
+<Latex center math={`M = 
+	\\begin{bmatrix} 
+	v_1 & v_2 & v_3 \\\\ 
+	a_1 & a_2 & a_3 \\\\ 
+	b_1 & b_2 & b_3 \\end{bmatrix}
+	`}/>
+<p>Now let's see what will happen to the volume of the this matrix(parallelepiped) if I do <Latex math={`row_3 \\rightarrow row_3 + 2 \\times row_1`} />:</p>
 
+<Latex center math={`row_3 \\rightarrow row_3 + 2 \\times row_1`} />
+<Latex center math={`\\Rightarrow M' = \\begin{bmatrix} 
+v_1 & v_2 & v_3 \\\\ 
+a_1 & a_2 & a_3 \\\\ 
+b_1 + 2 v_1 & b_2 +2 v_2& b_3 + 2 v_3 \\end{bmatrix}`} />
+<p>The result is shown in Figure 4.b</p>
 <MultiCanvas />
