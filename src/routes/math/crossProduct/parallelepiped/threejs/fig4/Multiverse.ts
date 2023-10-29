@@ -15,7 +15,7 @@ export class Multiverse {
 	universes: IUniverse[];
 	renderer: THREE.WebGLRenderer;
 	tickingVerse: TickingVerse;
-	constructor(canvas: HTMLCanvasElement, universes: Universe[]){
+	constructor(canvas: HTMLCanvasElement, universes: IUniverse[]){
 		this.renderer = new THREE.WebGLRenderer( { antialias: true, canvas, alpha: true } );
 		this.universes = universes;
 		this.tickingVerse = new TickingVerse(this.renderer,universes);

@@ -28,7 +28,7 @@ export const unitVec = {
   z: new THREE.Vector3(0,0,1),
 }
 
-export class Universe implements IUniverse {
+export class Universe3 implements IUniverse {
   // export class World extends EventEmitter {
   htmlElement: HTMLDivElement | HTMLSpanElement;
   updatables: Updatable[];
@@ -49,10 +49,14 @@ export class Universe implements IUniverse {
   vecbPrime: Vector;
   axes : Axes;
 
-  v1Line: Line;
+  vecaHeightLine: Line;
 
   fig4triangle: Polygon2D | null = null;
   vecv_vecb_plane: Plane;
+
+  vec_b_cross_v : Line;
+
+
   
 
   constructor(refCurrent: HTMLSpanElement, v?: number[],a?:number[],b?:number[], bPrime?:number[]) {
@@ -108,9 +112,17 @@ export class Universe implements IUniverse {
     const vecb = b ?? [0,0,5];
     const vecv = v ?? [-4,4,-2];
     // this.vecvrossProduct = new Vector(cp.x,cp.y,cp.z,0xff0000);
-    this.vecbPrime = bPrime ? new Vector(bPrime[0],bPrime[1],bPrime[2],0x00ffff):  new Vector(-4,4,-2,0xff0000);
+    this.vecbPrime = bPrime ? new Vector(bPrime[0],bPrime[1],bPrime[2],'purple'):  new Vector(-4,4,-2,0xff0000);
 
     const normvb = mj.cross(vecb,vecv);
+
+    const volume = mj.det([veca,vecb, vecv])
+    const height = Math.abs(volume / new THREE.Vector3().fromArray(normvb as number[]).length());
+    const nomvb_proper_height_for_pp = mj.multiply(1/height,normvb);
+
+    this.vec_b_cross_v = new Line(mj.add(nomvb_proper_height_for_pp,vecv) as [number,number,number], vecv as [number,number,number],0x008800,true);
+    this.scene.add(this.vec_b_cross_v.lineMesh);
+
     this.vecv_vecb_plane = new Plane(this.scene,[0,0,0],18,18, new THREE.Vector3().fromArray(normvb as number[]));
     this.vecv_vecb_plane.mesh.visible=false;
 
@@ -120,34 +132,39 @@ export class Universe implements IUniverse {
     if(bPrime)this.scene.add(this.vecbPrime.vector);
     
     this.axes = new Axes(this,10,10,10);
-    this.v1Line = new Line([this.vecv.coord.x,0,this.vecv.coord.z],[0,0,this.vecv.coord.z] , 'red',true);
-    this.scene.add(this.v1Line.lineMesh);
-    this.v1Line.lineMesh.visible=false;
+    this.vecaHeightLine = new Line([this.vecv.coord.x,0,this.vecv.coord.z],this.vecv.coord.toArray() , 'red',true);
+    this.scene.add(this.vecaHeightLine.lineMesh);
+    this.vecaHeightLine.lineMesh.visible=false;
 
 
     const loader = new FontLoader();
     loader.load('/fonts/helvetiker_regular.typeface.json', (font) => {
       this.font = font;
-      this.v1Line.setText(font,'V1', new THREE.Vector3(this.vecv.coord.x/2, 0,this.vecv.coord.z)  );
-      this.scene.add(this.v1Line.textMesh!);
-      this.v1Line.textMesh!.visible=false;
+      this.vecaHeightLine.setText(font,'V1', new THREE.Vector3(this.vecv.coord.x/2, 0,this.vecv.coord.z)  );
+      this.scene.add(this.vecaHeightLine.textMesh!);
+      this.vecaHeightLine.textMesh!.visible=false;
+
+  
+
+
     });
 
     const pp = new Parallelepiped(this.scene,this.veca.coord,this.vecb.coord,this.vecv.coord);
+    const pp2 = new Parallelepiped(this.scene,this.veca.coord,this.vecbPrime.coord,this.vecv.coord);
 
 
     this.eventBroker.on('toggleShowHeight',()=>{
       // plane.mesh.visible = false;
-      this.v1Line.lineMesh.visible=true;
-      this.v1Line.textMesh!.visible=true;
+      this.vecaHeightLine.lineMesh.visible=true;
+      this.vecaHeightLine.textMesh!.visible=true;
       const duration = 1000;
       const cameraPodTween = new TWEEN.Tween(this.camera.position)
-      .to(new THREE.Vector3(0,20,0), duration)
+      .to( new THREE.Vector3().fromArray(this.vecbPrime.coord.toArray()).multiplyScalar(2), duration)
       .easing(TWEEN.Easing.Quadratic.Out) // You can choose a different easing function
       .onUpdate(() => {
         this.camera.lookAt(new THREE.Vector3());
         this.camera.updateProjectionMatrix();
-        this.v1Line.textMesh!.lookAt(this.camera.position)
+        this.vecaHeightLine.textMesh!.lookAt(this.camera.position)
 
       })
       .start()
@@ -157,26 +174,26 @@ export class Universe implements IUniverse {
         // this.camera.rotation.set(0,0,0);
       });
 
-      const zoomProp = {zoom:1}
-      const cameraZoomTween = new TWEEN.Tween(zoomProp)
-      .to({zoom: 0.8},duration)
-      .easing(TWEEN.Easing.Quadratic.Out) // You can choose a different easing function
-      .onUpdate((val) => {
-        this.camera.zoom = val.zoom;
-        this.camera.updateProjectionMatrix();
-      })
-      .start()
-      .onComplete(() => {
-        // Animation is complete
-        console.log('zoom tween complete');
-      });
+      // const zoomProp = {zoom:1}
+      // const cameraZoomTween = new TWEEN.Tween(zoomProp)
+      // .to({zoom: 0.8},duration)
+      // .easing(TWEEN.Easing.Quadratic.Out) // You can choose a different easing function
+      // .onUpdate((val) => {
+      //   this.camera.zoom = val.zoom;
+      //   this.camera.updateProjectionMatrix();
+      // })
+      // .start()
+      // .onComplete(() => {
+      //   // Animation is complete
+      //   console.log('zoom tween complete');
+      // });
     });
 
 
     this.eventBroker.on('focusPlanVecvVecb',()=>{
       // plane.mesh.visible = !plane.mesh.visible;
-      this.v1Line.lineMesh.visible=false;
-      this.v1Line.textMesh!.visible=false;
+      this.vecaHeightLine.lineMesh.visible=false;
+      this.vecaHeightLine.textMesh!.visible=false;
 
       const duration = 1000;
       const cameraPodTween = new TWEEN.Tween(this.camera.position)
@@ -240,7 +257,7 @@ export class Universe implements IUniverse {
 
 
 
-    this.eventBroker.on('setMathMeshes',(vebPrime?: boolean)=>{this.setMathMeshes(vebPrime)});
+    this.eventBroker.on('setMathMeshes',()=>{this.setMathMeshes()});
     this.eventBroker.on('showFig4Triangle',()=>{this.showFig4Triangle()});
     
 
@@ -256,15 +273,20 @@ export class Universe implements IUniverse {
 
   }
 
-  async setMathMeshes(vecbPrime?: boolean){
+  async setMathMeshes(){
     const mathTexta = await MathText.Init('\\vec{a}=(a_1,a_2,a_3) ','green');
     mathTexta.mesh.position.set(this.veca.coord.x, this.veca.coord.y, this.veca.coord.z);
     this.scene.add(mathTexta.mesh);
 
-    const vecbText = vecbPrime ? `\\vec{b}=(b_1',b_2',b_3')` : '\\vec{b}=(b_1,b_2,b_3)'
+    const vecbText = `\\vec{b}=(b_1,b_2,b_3)`;
     const mathTextb = await MathText.Init(vecbText,'blue');
     mathTextb.mesh.position.set(this.vecb.coord.x, this.vecb.coord.y, this.vecb.coord.z)
     this.scene.add(mathTextb.mesh);
+
+    const vecbTextPrime = `\\vec{b}=(b_1',b_2',b_3')`;
+    const mathTextbPrime = await MathText.Init(vecbTextPrime,'purple');
+    mathTextbPrime.mesh.position.set(this.vecbPrime.coord.x, this.vecbPrime.coord.y, this.vecbPrime.coord.z)
+    this.scene.add(mathTextbPrime.mesh);
 
     const mathTextv = await MathText.Init('\\vec{v}=(v_1,v_2,v_3)','red');
     mathTextv.mesh.position.set(this.vecv.coord.x, this.vecv.coord.y, this.vecv.coord.z)

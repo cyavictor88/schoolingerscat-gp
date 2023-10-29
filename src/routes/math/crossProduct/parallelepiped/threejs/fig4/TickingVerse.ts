@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import type { Universe } from './Universe';
 import type EventEmitter from 'eventemitter3';
+import type { IUniverse } from './Multiverse';
 
 const clearColor = new THREE.Color( '#000' );
 
@@ -30,8 +31,8 @@ export interface Updatable {
 
 export class TickingVerse {
   renderer: THREE.WebGLRenderer;
-  universes: Universe[];
-  constructor(renderer: THREE.WebGLRenderer, universes: Universe[]) {
+  universes: IUniverse[];
+  constructor(renderer: THREE.WebGLRenderer, universes: IUniverse[]) {
     this.universes = universes;
     this.renderer = renderer;
     this.renderer.setPixelRatio( window.devicePixelRatio );

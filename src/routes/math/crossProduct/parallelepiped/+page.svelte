@@ -169,9 +169,16 @@ we can easily see <a href='#' on:click={()=>{universeFig2.eventBroker.emit('togg
 <p>Now let's see what will happen to the volume of the this matrix(parallelepiped) if I do <Latex math={`row_3 \\rightarrow row_3 + 2 \\times row_1`} />:</p>
 
 <Latex center math={`row_3 \\rightarrow row_3 + 2 \\times row_1`} />
-<Latex center math={`\\Rightarrow M' = \\begin{bmatrix} 
+<Latex center math={`\\Rightarrow M'
+= \\begin{bmatrix} 
 v_1 & v_2 & v_3 \\\\ 
 a_1 & a_2 & a_3 \\\\ 
-b_1 + 2 v_1 & b_2 +2 v_2& b_3 + 2 v_3 \\end{bmatrix}`} />
+b_1 + 2 v_1 & b_2 +2 v_2& b_3 + 2 v_3 \\end{bmatrix}
+ =
+	\\begin{bmatrix} 
+	v_1 & v_2 & v_3 \\\\ 
+	a_1 & a_2 & a_3 \\\\ 
+	b_1' & b_2' & b_3' \\end{bmatrix}
+`} />
 <p>The result is shown in Figure 4.b</p>
 <MultiCanvas />

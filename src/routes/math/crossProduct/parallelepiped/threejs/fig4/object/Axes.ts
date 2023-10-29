@@ -4,6 +4,7 @@ import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
 import { Font, FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 import { Vector } from './Vector';
 import { Dir, Universe } from '../Universe';
+import type { IUniverse } from '../Multiverse';
 
 export class Axes {
   public xAxisLine: Line;
@@ -24,7 +25,7 @@ export class Axes {
   
   tick!: (delta:number)=>void;
 
-  constructor(universe:Universe, x: number, y: number, z: number) {
+  constructor(universe:IUniverse, x: number, y: number, z: number) {
     this.xAxisLine = new Line([-x - 0.1, 0, 0], [x + 0.1, 0, 0], 'black');
     this.yAxisLine = new Line([0, -y - 0.1, 0], [0, y + 0.1, 0], 'black');
     this.zAxisLine = new Line([0, 0, -z - 0.1], [0, 0, z + 0.1], 'black');
