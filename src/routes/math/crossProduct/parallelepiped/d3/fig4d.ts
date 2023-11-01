@@ -50,7 +50,8 @@ export class Fig4d {
     y: number;
   }>
 
-  toggleGroup : d3.Selection<SVGGElement, undefined, null, undefined>;
+  toggleGroupNewArea : d3.Selection<SVGGElement, undefined, null, undefined>;
+  toggleGroupOldArea : d3.Selection<SVGGElement, undefined, null, undefined>;
 
   constructor(
     veca:Coord,vecb:Coord, vecbPrime:Coord,    d3Base?: D3Base
@@ -101,27 +102,43 @@ export class Fig4d {
     this.drawLine = d3.line<{ x: number, y: number }>()
     .x(d => this.xScale(d.x))
     .y(d => this.yScale(d.y))
+    this.makeLine(veca,'#b3b3cc');
+    this.makeLine(veca,'#b3b3cc',vecb);
+    this.makeSeg(vecbPrime, vecb,'black');
+    this.makeSeg(vecbPrime, {x:veca.x*2,y:veca.y*2},'black');
+    // this.makeLine(veca,'#b3b3cc');
 
-    this.makeVec(veca,'a','Green');
-    this.makeVec(vecb,'b','Blue');
 
+
+    this.makeVec({x:veca.x*2,y:veca.y*2},'2v','#e066ff', `2\\overrightarrow{v}`);
+    this.makeVec(vecbPrime,'2v+b','purple', `\\overrightarrow{b\\prime}`);
+
+    this.makeVec(veca,'v','Red',`\\overrightarrow{v}`);
+    this.makeVec(vecb,'b','Blue',`\\overrightarrow{b}`);
     const fontSize = 20;
    
 
-    this.toggleGroup = this.makeToggleGroup(veca,vecb);
-    this.makeVecaDecomp(veca);
-    this.makeLatex(this.toggleGroup, {x: .3,y: veca.y*0.8},'\\color{green} a_2 ' );
-    this.makeLatex(this.toggleGroup, {x: veca.x*0.8, y: veca.y*1.6},'\\color{green} a_3 ' );
-    this.makeLatex(this.toggleGroup, {x: vecb.x*0.6, y: 0},'\\color{blue} b_3 ' );
-    
+    this.toggleGroupOldArea = this.makeToggleGroup(veca,vecb);
+    this.toggleGroupNewArea = this.makeToggleGroup(veca,vecbPrime);
+    // this.makeVecaDecomp(veca);
   
-    this.eventBroker.addListener('toggleShow',()=>{
-      const showing =  this.toggleGroup.style('display');
+    this.eventBroker.addListener('toggleShowOldArea',()=>{
+      const showing =  this.toggleGroupOldArea.style('display');
       if(showing!=='none'){
-        this.toggleGroup.style('display','none');
+        this.toggleGroupOldArea.style('display','none');
       }
       else{
-        this.toggleGroup.style('display','inline');
+        this.toggleGroupOldArea.style('display','inline');
+      }
+
+    })
+    this.eventBroker.addListener('toggleShowNewArea',()=>{
+      const showing =  this.toggleGroupNewArea.style('display');
+      if(showing!=='none'){
+        this.toggleGroupNewArea.style('display','none');
+      }
+      else{
+        this.toggleGroupNewArea.style('display','inline');
       }
 
     })
@@ -142,7 +159,7 @@ export class Fig4d {
     .attr('stroke', 'grey');
 
 
-    const groupAreaPath = toggleGroup.append('g').attr('class', 'areaPaths')
+    const groupAreaPath = toggleGroup.append('g')//.attr('class', 'areaPaths')
     const areaLines = [ {x:0,y:0},veca,  {x:vecSum[0], y:vecSum[1]},vecb  ];
     groupAreaPath
       .append('path')
@@ -153,7 +170,35 @@ export class Fig4d {
     return toggleGroup
   }
 
-  makeVec(vec:{x:number,y:number},vecName:string,color:string){
+  makeSeg(vec0:Coord,vec1:Coord,color:string){
+    const svg = this.svg;
+    svg
+      .append('path')
+      .attr('d', this.drawLine([vec0, vec1]))
+      .attr('stroke',color)
+      .style("stroke-dasharray", ("3, 3"))
+      .attr('fill', 'none');
+  }
+
+  makeLine(vec:Coord, color:string, offset?:Coord){
+    const svg = this.svg;
+    const vec0 = {x:0,y:0};
+    const vecPos = {x:vec.x*10,y:vec.y*10};
+    const vecNeg = {x:vec.x*-10,y:vec.y*-10};
+    if(offset){
+      vecPos.x += offset.x;
+      vecPos.y += offset.y;
+      vecNeg.x += offset.x;
+      vecNeg.y += offset.y;
+    }
+    svg
+      .append('path')
+      .attr('d', this.drawLine([vecNeg, vecPos]))
+      .attr('stroke',color)
+      .attr('fill', 'none');
+  }
+
+  makeVec(vec:{x:number,y:number},vecName:string,color:string,latex:string){
     const svg = this.svg;
     const vec0 = {x:0,y:0};
     // make arrow
@@ -169,13 +214,17 @@ export class Fig4d {
       .attr('fill', 'none');
 
     // make latex
-    let xPos = (vec.x*1.6)
-    let yPos =(vec.y *1.6)
+    let xPos = (vec.x*1.2)
+    let yPos =(vec.y *1.2)
     if(vecName === 'b'){
       xPos = (vec.x*1.2)
-      yPos =(-0.8)
+      yPos =(-1.2)
     }
-    this.makeLatex(svg, {x:xPos,y:yPos},`\\color{${color}}\\overrightarrow{${vecName}}`)
+    if(vecName === '2v+b') {
+      xPos = (-vec.x*0.)
+      yPos =(vec.y *1.3)
+    }
+    this.makeLatex(svg, {x:xPos,y:yPos},`\\color{${color}}${latex}`)
   }
 
   initArrow(){
@@ -205,22 +254,22 @@ export class Fig4d {
   }
 
 
-  makeVecaDecomp(vec: Coord){
-    const vec0 = this.vec0;
-    const vecDecompLines = [ 
-      [vec0, {x:0,y:vec.y}],
-      [{x:0,y:vec.y}, vec]
-    ];
+  // makeVecaDecomp(vec: Coord){
+  //   const vec0 = this.vec0;
+  //   const vecDecompLines = [ 
+  //     [vec0, {x:0,y:vec.y}],
+  //     [{x:0,y:vec.y}, vec]
+  //   ];
   
-    this.toggleGroup.append('g').selectAll('path')
-      .data(vecDecompLines)
-      .join('path')
-      .style("stroke", "green")
-      .style("fill", "none")
-      .style('opacity','0.5')
-      .attr('stroke-width','2')
-      .attr("d", d => this.drawLine(d as Coord[]));
-  }
+  //   this.toggleGroup.append('g').selectAll('path')
+  //     .data(vecDecompLines)
+  //     .join('path')
+  //     .style("stroke", "green")
+  //     .style("fill", "none")
+  //     .style('opacity','0.5')
+  //     .attr('stroke-width','2')
+  //     .attr("d", d => this.drawLine(d as Coord[]));
+  // }
 
   makeLatex(node:  d3.Selection<SVGGElement, undefined, null, undefined> |d3.Selection<SVGSVGElement, undefined, null, undefined> , pos:Coord, latexStr:string){
     node

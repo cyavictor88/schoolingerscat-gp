@@ -72,11 +72,23 @@ despite the base shapes of the parallelepipeds are different. <a href='#' on:cli
 <p>To show this fact, first we know <Latex  math={'\\vec{v}'}/>, <Latex math={'\\vec{b}'} />, and <Latex  math={`\\vec{b'}`}/> are coplanar,
 	so we can just focus on the 2D plane they formed as shown in Figure 4.d.
 	 You can see that even though <Latex math={`\\vec{b}`} /> is stretched to become <Latex math={`\\vec{b'}`} /> 
-, the height for the *new area and *old area are the same, which implies that they have the same area.
+, the height for the 
+<a href='#' on:click={()=>{
+	d3Fig4d.eventBroker.emit('toggleShowOldArea')
+	}}>old area
+</a> 
+
+and 
+<a href='#' on:click={()=>{
+	d3Fig4d.eventBroker.emit('toggleShowNewArea')
+	}}>new area
+</a> 
+
+are the same, which implies that they have the same area.
 </p>
 
-	<p>Concluding Step 2 Proof, we first how that after a row operation, the shape(base parallelogram) of the parallelepiped is changed,
-		but the height is the same. And then we show that the base parallelogram have the same areas. So with area and height being the same before and after
+	<p>Concluding Step 2 Proof, we first show that after a row operation, the base parallelogram of the parallelepiped is changed, but
+		but the height remains the same. Second, we show that the base parallelograms have the same areas. So with area and height being the same before and after
 		a row operation, the volume of the parallelepiped(determinant of the matrix) also remains the same before and after
 		a row operation.
 	</p>
