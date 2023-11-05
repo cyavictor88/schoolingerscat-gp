@@ -121,7 +121,7 @@ and <Latex math={`\\vec{b} = \\begin{bmatrix} 0 \\\\ 0 \\\\ b_3 \\end{bmatrix}`}
 
 
 
-<p>So looking at the YZ-plane as shown in Figure 3, we can easily get:</p>
+<p>So <a href='#' on:click={()=>{universeFig2.eventBroker.emit('toggleYZPlane')}}>looking at the YZ-plane</a> as shown in Figure 3, we can easily get:</p>
 
 <div style='text-align: center'>
 	<p>
@@ -188,9 +188,15 @@ b_1 + 2 v_1 & b_2 +2 v_2& b_3 + 2 v_3 \\end{bmatrix}
 
 <div style='border: 1px black solid'>
 <p><u><b>Step 3:</b></u></p>
-<p>
-	Combining Step 1 and Step 2: 
-</p>
+<p>Using Step 1, with <Latex math={`M' = 
+	\\begin{bmatrix} 
+	v_1 & v_2 & v_3 \\\\ 
+	0 & a_2' & a_3' \\\\ 
+	0 & 0 & b_3' \\end{bmatrix}
+	`}/>, we know <Latex math={`\\text{Volume}(M')=\\|\\det(M')\\| = | v_1 * a_2 *  b_3|`}/> </p>
+
+
+
 <p>Using Step 2, we know if we can use row operations to reduce a matrix,
 	<Latex math={`M = 
 		\\begin{bmatrix} 
@@ -204,14 +210,14 @@ b_1 + 2 v_1 & b_2 +2 v_2& b_3 + 2 v_3 \\end{bmatrix}
 		v_1 & v_2 & v_3 \\\\ 
 		0 & a_2' & a_3' \\\\ 
 		0 & 0 & b_3' \\end{bmatrix}
-		`}/>, then <Latex math={`\\det(M)=\\det(M')`}/></p>
+		`}/>, then <Latex math={`\\text{Volume}(M)=\\text{Volume} (M')`}/> and <Latex math={`\\|\\det(M)\\|=\\|\\det(M')\\|`}/></p>
 
-<p>Using Step 1, with <Latex math={`M' = 
-	\\begin{bmatrix} 
-	v_1 & v_2 & v_3 \\\\ 
-	0 & a_2' & a_3' \\\\ 
-	0 & 0 & b_3' \\end{bmatrix}
-	`}/>, we know the volume of <Latex math={`M'=\\|det(M')\\| = | v_1 * a_2 *  b_3|`}/> </p>
 
-	<p>Finally, because <Latex math={`\\det(M')=\\det(M)`} />, we can say the volume of <Latex math={`M=\\|det(M)\\|`}/> </p>
+	<p>
+		Combining Step 1 and Step 2: 
+		<Latex math={`\\text{Volume}(M) = \\text{Volume}(M')=\\|\\det(M')\\| = \\|\\det(M)\\| `}/>
+	</p>
+
+
+		
 </div>

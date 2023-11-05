@@ -84,7 +84,7 @@
 				href="#"
 				on:click={() => {
 					universe3.eventBroker.emit('toggleShowHeight');
-				}}>They have the same height</a
+				}}>Thse two parallelepipeds have the same height</a
 			>.
 		</p>
 		<p>
@@ -142,9 +142,9 @@
 	</div>
 	<p>
 		Concluding Step 2 Proof, we first show that after a row operation, the base parallelogram of
-		the parallelepiped is changed, but but the height remains the same. Second, we show that the
+		the parallelepiped is changed, but the height of the parallelepiped remains the same. Second, we show that the
 		base parallelograms have the same areas. So with area and height being the same before and
-		after a row operation, the volume of the parallelepiped(determinant of the matrix) also
+		after a row operation, the volume of the parallelepiped also
 		remains the same before and after a row operation.
 	</p>
 </div>
