@@ -1,33 +1,8 @@
-<script lang="ts">
-	import type { IRoute }  from '$lib/components/Route/route';
-	import { onMount } from 'svelte';
-	import { pageRoute } from './pageRoute';
-	import { getContext } from 'svelte';
-	import type { Writable } from 'svelte/store';
-	import url from '$lib/components/Route/url';
-
-	const innerPageRoute = getContext<Writable<IRoute>>('innerPageRoute');
-
-
-	let topOfPageElement : HTMLDivElement ;
-
-	onMount(() => {
-		innerPageRoute.set(pageRoute);
-	});
-
-	import { SITE_COLOR } from '$lib/theme/colors';
-	import Route from '$lib/components/Route/Route.svelte';
-
-	// when url changes, scroll to the top of the page
-	$: if ($url && typeof $url !== 'string' && topOfPageElement) {
-    console.log($url);
-		topOfPageElement.scrollTo();
-	}
-
+<script lang='ts'>
+  import SectionLayout from "$lib/components/Layout/SectionLayout.svelte";
+  import { pageRoute } from "./pageRoute";
 </script>
 
-<div bind:this={topOfPageElement}></div>
-<slot />
-<hr />
-<Route route={$innerPageRoute} indent={0} bgColor={SITE_COLOR.LayoutFSPageRouteBG} />
-<hr />
+<SectionLayout pageRoute={pageRoute} >
+  <slot />
+</SectionLayout>

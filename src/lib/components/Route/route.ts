@@ -12,19 +12,26 @@ export interface IRoute {
   katexMix?: ILatexMix[];
 }
 
-
-
-
 // https://svelte.dev/repl/347b37e18b5d4a65bbacfd097536db02?version=4.1.2
 export const rootRoute : IRoute = {
   label:'Home',
   path:'/',
   subRoutes: [
-   {label:'Signal Processing', subRoutes:[fourierSeriesRoute]} ,
-   {label:'Math', subRoutes:[crossProductRoute,determinantRoute ]} ,
+   {
+    label:'Signal Processing', 
+    subRoutes: [
+        fourierSeriesRoute
+      ]
+    } ,
+   {
+    label:'Math',
+    subRoutes: [
+      determinantRoute,
+      crossProductRoute 
+    ]
+    } ,
   ] 
 };
-
 
 export function getSiteRootRoute(isLocal:boolean) : IRoute {
   if(!isLocal)

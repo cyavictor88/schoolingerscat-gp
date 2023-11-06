@@ -77,6 +77,7 @@
 		};
 	});
 
+	// force scroll to top on path change
 	let topBox : HTMLDivElement;
 	let prevPathname = 'init path';
 	afterUpdate(()=>{
@@ -113,9 +114,10 @@
 				{cross}
 			</p>
 		</div>
+		<p>Current Subject:</p>
 		<SideBar route={sectionRoute} />
 		{#if $innerPageRoute}
-			<p>Current Topic:</p>
+			<p>Current Section:</p>
 			<SideBar route={$innerPageRoute} routeBgColor={SITE_COLOR.LayoutFSPageRouteBG} />
 		{/if}
 	</div>
@@ -130,9 +132,10 @@
 					sideBarWidth = narrowSideBarWidth;
 				}}>{leftTriangle}</button
 			>
+			<p>Current Subject:</p>
 			<SideBar route={sectionRoute} />
 			{#if $innerPageRoute}
-				<p>Current Topic:</p>
+				<p>Current Section:</p>
 				<SideBar route={$innerPageRoute} routeBgColor={SITE_COLOR.LayoutFSPageRouteBG} />
 			{/if}
 		</div>
