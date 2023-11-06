@@ -1,6 +1,7 @@
 import type { ILatexMix } from "../Latex/latexMix";
 import { sectionRoute as fourierSeriesRoute } from "../../../routes/signalProcessing/fourierSeries/route";
 import { sectionRoute as crossProductRoute } from "../../../routes/math/crossProduct/route";
+import { sectionRoute as determinantRoute } from "../../../routes/math/determinant/route";
 
 export interface IRoute {
   label: string;
@@ -20,7 +21,7 @@ export const rootRoute : IRoute = {
   path:'/',
   subRoutes: [
    {label:'Signal Processing', subRoutes:[fourierSeriesRoute]} ,
-   {label:'Math', subRoutes:[crossProductRoute]} ,
+   {label:'Math', subRoutes:[crossProductRoute,determinantRoute ]} ,
   ] 
 };
 
