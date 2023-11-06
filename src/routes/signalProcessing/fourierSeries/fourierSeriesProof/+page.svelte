@@ -3,13 +3,13 @@
 	import Latex from '$lib/components/Latex/Latex.svelte';
 	import { onMount } from 'svelte';
 	import { getContext } from 'svelte';
-	import { pageRoute } from './pageRoute';
+	// import { pageRoute } from './sectionRoute';
 
 	import type { Writable } from 'svelte/store';
 	import Title from '$lib/components/PageComp/Title.svelte';
 	import HiddenBlock from './HiddenBlock.svelte';
 
-	const innerPageRoute = getContext<Writable<IRoute | null>>('innerPageRoute');
+	// const contextSectionRoute = getContext<Writable<IRoute | null>>('contextSectionRoute');
 	let showSet: Set<number> = new Set<number>();
 	const toggleShow = (idx: number) => {
 		const newSet = new Set<number>(showSet);
@@ -25,9 +25,9 @@
 	};
 	onMount(() => {
 		// showAll();
-		(async () => {
-			innerPageRoute.set(pageRoute);
-		})();
+		// (async () => {
+		// 	contextSectionRoute.set(pageRoute);
+		// })();
 	});
 </script>
 

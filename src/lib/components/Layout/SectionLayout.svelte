@@ -5,14 +5,14 @@
 	import type { Writable } from 'svelte/store';
 	import url from '$lib/components/Route/url';
 
-	const innerPageRoute = getContext<Writable<IRoute>>('innerPageRoute');
+	const contextSectionRoute = getContext<Writable<IRoute|null>>('contextSectionRoute');
 
-  export let pageRoute : IRoute ={ label: ''}; 
+  export let sectionRoute : IRoute | null = null; 
 
 	let topOfPageElement : HTMLDivElement ;
 
 	onMount(() => {
-		innerPageRoute.set(pageRoute);
+		contextSectionRoute.set(sectionRoute);
 	});
 
 	import { SITE_COLOR } from '$lib/theme/colors';
@@ -29,5 +29,5 @@
 <!-- <div bind:this={topOfPageElement}></div> -->
 <slot />
 <hr />
-<Route route={$innerPageRoute} indent={0} bgColor={SITE_COLOR.LayoutFSPageRouteBG} />
+<Route route={$contextSectionRoute} indent={0} bgColor={SITE_COLOR.LayoutFSSectionRouteBG} />
 <hr />

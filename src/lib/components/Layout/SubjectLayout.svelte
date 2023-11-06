@@ -10,9 +10,9 @@
 
 
 
-	// import { sectionRoute } from './route';
+	// import { subjectRoute } from './route';
 	import type { IRoute } from '../Route/route';
-  export let sectionRoute:IRoute = {
+  export let subjectRoute:IRoute = {
 	   label: 'place holder'
    };
 
@@ -40,8 +40,8 @@
 		if (window.outerWidth < 800) sideBarWidth = narrowSideBarWidth;
 		else sideBarWidth = wideSideBarWidth;
 	}
-	const innerPageRoute = writable(null);
-	setContext('innerPageRoute', innerPageRoute);
+	const contextSectionRoute = writable(null);
+	setContext('contextSectionRoute', contextSectionRoute);
 
 	let mobileShowSide = false;
 	let centerFullSide = true;
@@ -115,10 +115,10 @@
 			</p>
 		</div>
 		<p>Current Subject:</p>
-		<SideBar route={sectionRoute} />
-		{#if $innerPageRoute}
+		<SideBar route={subjectRoute} />
+		{#if $contextSectionRoute}
 			<p>Current Section:</p>
-			<SideBar route={$innerPageRoute} routeBgColor={SITE_COLOR.LayoutFSPageRouteBG} />
+			<SideBar route={$contextSectionRoute} routeBgColor={SITE_COLOR.LayoutFSSectionRouteBG} />
 		{/if}
 	</div>
 {/if}
@@ -133,10 +133,10 @@
 				}}>{leftTriangle}</button
 			>
 			<p>Current Subject:</p>
-			<SideBar route={sectionRoute} />
-			{#if $innerPageRoute}
+			<SideBar route={subjectRoute} />
+			{#if $contextSectionRoute}
 				<p>Current Section:</p>
-				<SideBar route={$innerPageRoute} routeBgColor={SITE_COLOR.LayoutFSPageRouteBG} />
+				<SideBar route={$contextSectionRoute} routeBgColor={SITE_COLOR.LayoutFSSectionRouteBG} />
 			{/if}
 		</div>
 	{:else if window.outerWidth < 800}

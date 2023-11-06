@@ -1,7 +1,7 @@
 import type { ILatexMix } from "../Latex/latexMix";
-import { sectionRoute as fourierSeriesRoute } from "../../../routes/signalProcessing/fourierSeries/route";
-import { sectionRoute as crossProductRoute } from "../../../routes/math/crossProduct/route";
-import { sectionRoute as determinantRoute } from "../../../routes/math/determinant/route";
+import { subjectRoute as fourierSeriesRoute } from "../../../routes/signalProcessing/fourierSeries/subjectRoute";
+import { subjectRoute as crossProductRoute } from "../../../routes/math/crossProduct/subjectRoute";
+import { subjectRoute as determinantRoute } from "../../../routes/math/determinant/subjectRoute";
 
 export interface IRoute {
   label: string;

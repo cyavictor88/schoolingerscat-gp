@@ -9,9 +9,9 @@
   let clicked: boolean = false;
 
   let scrollY = 0;
-	// const innerPageRoute = getContext<Writable<IRoute>>('innerPageRoute');
+	// const contextSectionRoute = getContext<Writable<IRoute>>('contextSectionRoute');
 	onMount(() => {
-		// innerPageRoute.set(pageRoute);
+		// contextSectionRoute.set(pageRoute);
     const intersectingStatus = wrapper.querySelectorAll('section');
 
 

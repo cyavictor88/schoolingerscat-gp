@@ -1,20 +1,20 @@
 <script lang="ts">
 	import type { IRoute } from '$lib/components/Route/route';
 	import { onMount } from 'svelte';
-	import { pageRoute } from './pageRoute';
+	// import { pageRoute } from './sectionRoute';
 	import { getContext } from 'svelte';
 	import type { Writable } from 'svelte/store';
 	import Title from '$lib/components/PageComp/Title.svelte';
 	import Latex from '$lib/components/Latex/Latex.svelte';
 	import Scrollspy from '$lib/components/Scrollspy/Scrollspy.svelte';
 
-	const innerPageRoute = getContext<Writable<IRoute>>('innerPageRoute');
+	// const contextSectionRoute = getContext<Writable<IRoute>>('contextSectionRoute');
 
-	onMount(() => {
-		(async () => {
-			innerPageRoute.set(pageRoute);
-		})();
-	});
+	// onMount(() => {
+	// 	(async () => {
+	// 		contextSectionRoute.set(pageRoute);
+	// 	})();
+	// });
 
 	import InnerProduct2D from './innerProduct2D/+page.svelte';
 	import InnerProduct3D from './innerProduct3D/+page.svelte';
@@ -42,7 +42,7 @@
 	, and end with explaining inner product of functions.
 </p>
 
-<!-- <Route route={$innerPageRoute} indent={0} bgColor={SITE_COLOR.CompRouteDefaultBG} /> -->
+<!-- <Route route={$contextSectionRoute} indent={0} bgColor={SITE_COLOR.CompRouteDefaultBG} /> -->
 
 
 {#if false}

@@ -10,7 +10,7 @@
 	if(browser){
 		route = getSiteRootRoute(window.location.hostname === 'localhost' || location.hostname.includes("127.0.0.1"));
 	}
-	let routeBgColor: string = SITE_COLOR.IndexPageRouteBG;
+	let routeBgColor: string = SITE_COLOR.IndexSectionRouteBG;
 	$: if (route) route.open = true;
 
 	import { Universe } from '$lib/components/Home/Universe';

@@ -9,7 +9,6 @@
 	import { Universe as Fig2 } from './threejs/fig2/Universe';
 	// import { Universe as Fig4 } from './threejs/fig4/Universe';
 
-	import { sectionRoute } from '../store';
 	import { Fig3 } from './d3/fig3';
 	import Try3 from '../../../threejs/multiScenes/Try3.svelte';
 	import MultiCanvas from './threejs/fig4/MultiCanvas.svelte';

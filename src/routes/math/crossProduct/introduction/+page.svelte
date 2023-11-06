@@ -5,8 +5,7 @@
 	import Latex from '$lib/components/Latex/Latex.svelte';
 	import ColsVec from '../common/latex/ColsVec.svelte';
 	import RowsVec from '../common/latex/RowsVec.svelte';
-
-	import { sectionRoute } from '../store';
+	import { storeSubjectRoute } from '../store';
 	import { Universe as Fig1 } from './threejs/fig1/Universe';
 	let divFig1: HTMLDivElement;
 	let universeFig1: Fig1;
@@ -60,7 +59,7 @@
 
 <ol>
 	<li>
-		<strong><a href={getHref('parallelepiped', $sectionRoute)}>Parallelepiped</a>:</strong>
+		<strong><a href={getHref('parallelepiped', $storeSubjectRoute)}>Parallelepiped</a>:</strong>
 		<ol>
 			<li>
 				We first show that when we put together three vectors,
@@ -80,7 +79,7 @@
 	<hr />
 
 	<li>
-		<strong><a href={getHref('linear functional', $sectionRoute)}>Linear Functional</a>:</strong>
+		<strong><a href={getHref('linear functional', $storeSubjectRoute)}>Linear Functional</a>:</strong>
 		<ol>
 			<li>
 				Next we show that if we fix <Latex math={`\\vec{a} =`} /><ColsVec cols={['a']} dim={3} />
@@ -101,7 +100,7 @@
 	<hr />
 
 	<li>
-		<strong><a href={getHref('cross product proof', $sectionRoute)}>Cross Product Proof</a>:</strong>
+		<strong><a href={getHref('cross product proof', $storeSubjectRoute)}>Cross Product Proof</a>:</strong>
 		<ol>
 			<li>
 				Next we prove that <Latex math={`\\vec{p} = \\vec{a} \\times  \\vec{b} `} /> by showing that

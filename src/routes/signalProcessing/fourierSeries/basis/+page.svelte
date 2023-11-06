@@ -1,18 +1,18 @@
 <script lang="ts">
 	import type { IRoute } from '$lib/components/Route/route';
 	import { onMount } from 'svelte';
-	import { pageRoute } from './pageRoute';
+	// import { pageRoute } from './sectionRoute';
 	import { getContext } from 'svelte';
 	import type { Writable } from 'svelte/store';
 	import Title from '$lib/components/PageComp/Title.svelte';
 
-	const innerPageRoute = getContext<Writable<IRoute>>('innerPageRoute');
+	const contextSectionRoute = getContext<Writable<IRoute>>('contextSectionRoute');
 
-	onMount(() => {
-		(async () => {
-			innerPageRoute.set(pageRoute);
-		})();
-	});
+	// onMount(() => {
+	// 	(async () => {
+	// 		contextSectionRoute.set(pageRoute);
+	// 	})();
+	// });
 
 
 

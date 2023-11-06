@@ -1,6 +1,6 @@
 import type { IRoute } from "$lib/components/Route/route";
 
-export const sectionRoute : IRoute = {
+export const subjectRoute : IRoute = {
   label: 'Determinant',
   subRoutes: [
     { label: 'Introduction', path: '/math/Determinant/introduction'},

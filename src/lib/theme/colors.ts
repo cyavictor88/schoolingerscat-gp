@@ -1,5 +1,5 @@
 export enum SITE_COLOR {
-  IndexPageRouteBG = '#D3D3D3',
+  IndexSectionRouteBG = '#D3D3D3',
   SiteLayoutContentBG = '#decfcf',
   CompTopNavDirectory = '#FFD700',
   CompTopNavBG = '#8B4513',
@@ -14,7 +14,7 @@ export enum SITE_COLOR {
   LayoutFSContentBG = '#e7d8c9',
   LayoutFSBorderBottom = '#8B4513',
   LayoutFSMobileRouteBG = '#6c584c',
-  LayoutFSPageRouteBG = '#ddb892',
+  LayoutFSSectionRouteBG = '#ddb892',
   TitleBG = '#00000011',
 
 

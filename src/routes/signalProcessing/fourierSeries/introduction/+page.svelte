@@ -1,18 +1,15 @@
 <script lang="ts">
 	import type { IRoute } from '$lib/components/Route/route';
 	import { onMount } from 'svelte';
-	import { pageRoute } from './pageRoute';
 	import { getContext } from 'svelte';
 	import type { Writable } from 'svelte/store';
 	import Latex from '$lib/components/Latex/Latex.svelte';
 	import { makeChart as chart1 } from './chart/chart1';
 	import { makeChart as chart2 } from './chart/chart2';
 	import Title from '$lib/components/PageComp/Title.svelte';
-	const innerPageRoute = getContext<Writable<IRoute>>('innerPageRoute');
 	let exampleFunctionCanvas1: HTMLCanvasElement;
 	let exampleFunctionCanvas2: HTMLCanvasElement;
 	onMount(() => {
-		innerPageRoute.set(pageRoute);
 		chart1(exampleFunctionCanvas1);
 		chart2(exampleFunctionCanvas2);
 	});

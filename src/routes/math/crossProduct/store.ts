@@ -1,4 +1,4 @@
 import { writable } from 'svelte/store'
-import { sectionRoute as myRoute } from './route'
+import { subjectRoute as myRoute } from './subjectRoute'
 
-export const sectionRoute = writable(myRoute);
+export const storeSubjectRoute = writable(myRoute);

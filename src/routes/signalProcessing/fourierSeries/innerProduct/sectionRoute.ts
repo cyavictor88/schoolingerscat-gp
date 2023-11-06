@@ -3,7 +3,7 @@ import type { IRoute } from "$lib/components/Route/route";
 
 const baseRoute = '/signalProcessing/fourierSeries/innerProduct'
 
-export const pageRoute : IRoute = {
+export const sectionRoute : IRoute = {
   label: 'Inner Product',
   subRoutes: [
     { label: 'Inner Product in R^2', path: baseRoute+'/innerProduct2D',katexMix:[{str:'Inner Product in'},{math:'\\mathbb{R}^2'}]},

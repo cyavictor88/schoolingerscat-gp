@@ -4,7 +4,6 @@
 	import Title from '$lib/components/PageComp/Title.svelte';
 	import Latex from '$lib/components/Latex/Latex.svelte';
 	import ColsVec from '../common/latex/ColsVec.svelte';
-	import { sectionRoute } from '../store';
 	onMount(() => {
 
 	});

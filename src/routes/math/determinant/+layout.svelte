@@ -1,8 +1,8 @@
 <script lang='ts'>
   import SubjectLayout from "$lib/components/Layout/SubjectLayout.svelte";
-  import { sectionRoute } from "./route";
+  import { subjectRoute } from "./subjectRoute";
 </script>
 
-<SubjectLayout sectionRoute={sectionRoute} >
+<SubjectLayout subjectRoute={subjectRoute} >
   <slot />
 </SubjectLayout>

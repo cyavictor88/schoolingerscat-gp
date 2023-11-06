@@ -6,7 +6,7 @@ const baseRoute = '/signalProcessing/fourierSeries/basis'
 
 
 
-export const pageRoute : IRoute = {
+export const sectionRoute : IRoute = {
   label: 'Basis',
   subRoutes: [
     { label: 'Orthogonal Basis', path: baseRoute+'/orthogonalBasis'},
