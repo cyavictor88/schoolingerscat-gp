@@ -120,6 +120,7 @@ and <Latex math={`\\vec{b} = \\begin{bmatrix} 0 \\\\ 0 \\\\ b_3 \\end{bmatrix}`}
 
 
 
+<!-- svelte-ignore a11y-invalid-attribute -->
 <p>So <a href='#' on:click={()=>{universeFig2.eventBroker.emit('toggleYZPlane')}}>looking at the YZ-plane</a> as shown in Figure 3, we can easily get:</p>
 
 <div style='text-align: center'>
