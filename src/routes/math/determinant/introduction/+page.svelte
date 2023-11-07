@@ -6,7 +6,7 @@
 
 </script>
 
-<Title hLevel={1}>Determinant:</Title>
+<Title hLevel={1}>Determinant - Introduction</Title>
 
 <p>
   I always have trouble grasping the concept of determinant of a matrix. 
