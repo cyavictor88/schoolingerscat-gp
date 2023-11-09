@@ -17,7 +17,13 @@
 	/>-dimensional space to another point in <Latex math={'m'} />-dimensional space.
 </p>
 
-<p>Ok, let's express the above statement in mathematical terms:</p>
+<p>Ok, so how do we express the above statement in mathematical terms?</p>
+
+
+<p>Before giving out the answer, let's first look a little closer on matrix multiplication:</p>
+
+
+
 <li>
 	A point in <Latex math={'n'} />-dimensional space can be written as a column vector <Latex
 		math={`
@@ -56,4 +62,7 @@
 />
 
 </li>
-<p>Let see some examples:</p>
+
+
+
+
