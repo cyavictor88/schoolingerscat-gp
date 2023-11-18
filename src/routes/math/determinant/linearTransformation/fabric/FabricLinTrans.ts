@@ -12,7 +12,7 @@ export class FabricLinTrans {
     const blueEllipse = new fabric.Ellipse({
       left: 50,
       top: 25,
-      fill: 'blue',
+      fill: 'rgba(0,0,255,0.4)',
       rx: 25,
       ry: 50,
     });
@@ -20,28 +20,82 @@ export class FabricLinTrans {
     const redEllipse = new fabric.Ellipse({
       left: 200,
       top: 25,
-      fill: 'red',
+      fill: 'rgba(255,0,0,0.4)',
       rx: 25,
       ry: 50,
     });
 
-    const arrow = new fabric.Path('M 50 150 L 250 150', {
-      fill: '',
-      stroke: 'black',
-      strokeWidth: 2,
-      selectable: false,
+    const TxDot = new fabric.Circle({
+      left:221,
+      top:68,
+      fill:'black',
+      radius: 2
     });
 
-    // Add LaTeX math text on top of the arrow
-    const latexText = new fabric.Text('T(x)', {
+    const xDot = new fabric.Circle({
+      left:70,
+      top:68,
+      fill:'black',
+      radius: 2
+    })
+
+    const triangle = new fabric.Triangle({
+      width: 10, 
+      height: 15, 
+      fill: 'black', 
+      left: 220, 
+      top: 65,
+      angle: 90
+  });
+
+  const line = new fabric.Line([50, 100, 190, 100], {
+      left: 75,
+      top: 70,
+      stroke: 'black'
+  });
+
+    const T = new fabric.Text('T', {
       left: 140,
-      top: 130,
+      top: 50,
       fontSize: 16,
       fontFamily: 'Arial',
       selectable: false,
     });
 
-    this.canvas.add(blueEllipse, redEllipse, arrow, latexText);
+    const V = new fabric.Text('V', {
+      left: 70,
+      top: 10,
+      fontSize: 16,
+      fontFamily: 'Arial',
+      selectable: false,
+    });
+
+    const W = new fabric.Text('W', {
+      left: 218,
+      top: 10,
+      fontSize: 16,
+      fontFamily: 'Arial',
+      selectable: false,
+    });
+
+    const x = new fabric.Text('x', {
+      left: 62,
+      top: 63,
+      fontSize: 12,
+      fontFamily: 'Arial',
+      selectable: false,
+    });
+
+    const Tx = new fabric.Text('T(x)', {
+      left: 225,
+      top: 63,
+      fontSize: 12,
+      fontFamily: 'Arial',
+      selectable: false,
+    });
+
+
+    this.canvas.add(blueEllipse, redEllipse, triangle, line, T,x,Tx,TxDot,xDot,V,W);
   }
 
   clearCanvas() {
