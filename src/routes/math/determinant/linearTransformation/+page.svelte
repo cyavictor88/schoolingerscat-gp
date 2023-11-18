@@ -2,28 +2,47 @@
 	import Title from '$lib/components/PageComp/Title.svelte';
 	import Latex from '$lib/components/Latex/Latex.svelte';
 	import ColsVec from '../../crossProduct/common/latex/ColsVec.svelte';
+  import { onMount } from 'svelte';
+  import { FabricLinTrans } from './fabric/FabricLinTrans';
+  let fabricInstance: FabricLinTrans | null = null;
+  let fabricCanvas: HTMLCanvasElement;
+  onMount(() => {
+    fabricInstance = new FabricLinTrans(fabricCanvas);
+
+    return ()=>{
+      fabricInstance?.clearCanvas();
+    }
+  });
+
+
 </script>
 
-<Title hLevel={1}>Determinant - Linear Transformation</Title>
+<style>
+  canvas {
+    border: 1px black solid; 
+  }
+</style>
 
+<Title hLevel={1}>Determinant - Linear Transformation</Title>
 <p>
-	In this section, we will go over what is a linear transformation and how it can be represented as
+	In this section, we will go over what linear transformation is and how it can be represented as
 	a matrix.
 </p>
+<hr/>
 
 <p>
-	Linear Transformation is basically a function that maps(transforms) a point in <Latex
-		math={'n'}
-	/>-dimensional space to another point in <Latex math={'m'} />-dimensional space.
+	<b>Linear Transformation</b> is a function that maps(transforms) a point from a <Latex
+		math={'v'}
+	/>-dimensional vector space to another point in a <Latex math={'w'} />-dimensional vector space.
 </p>
-
+<p>It can be written as: <Latex math={`T: V \\rightarrow W`}/></p>
+<p>The picture below shows graphical representation of linear transformation in action.</p>
+<canvas bind:this={fabricCanvas} />
 <p>Ok, so how do we express the above statement in mathematical terms?</p>
 
 
-<p>Before giving out the answer, let's first look a little closer on matrix multiplication:</p>
-
-
-
+<p>The answer is <b>matrix multiplication,</b></p>
+<p>Let's break it down:</p>
 <li>
 	A point in <Latex math={'n'} />-dimensional space can be written as a column vector <Latex
 		math={`
