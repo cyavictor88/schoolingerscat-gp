@@ -4,7 +4,8 @@
 	import ColsVec from '../../crossProduct/common/latex/ColsVec.svelte';
   import { onMount } from 'svelte';
   import { FabricLinTrans } from './fabric/FabricLinTrans';
-  let fabricInstance: FabricLinTrans | null = null;
+	import SpaceShuttle  from './d3/SpaceShuttle.svelte';
+  let fabricInstance: FabricLinTrans;
   let fabricCanvas: HTMLCanvasElement;
   onMount(() => {
     fabricInstance = new FabricLinTrans(fabricCanvas);
@@ -35,10 +36,10 @@
 		math={'v'}
 	/>-dimensional vector space to another point in a <Latex math={'w'} />-dimensional vector space.
 </p>
-<p>It can be written as: <Latex math={`T: V \\rightarrow W`}/></p>
-<p>The picture below shows graphical representation of linear transformation in action.</p>
+<p>It can be written as: <Latex math={`A: V \\rightarrow W`}/></p>
+<p>The picture below shows graphical representation of linear transformation.</p>
 <canvas bind:this={fabricCanvas} />
-<p>Ok, so how do we express the above statement in mathematical terms?</p>
+<p>Ok, so how do we express a linear transformation in mathematical terms?</p>
 
 
 <p>The answer is <b>matrix multiplication,</b></p>
@@ -82,6 +83,12 @@
 
 </li>
 
+<p>Looking at all these symbols can be a little overwhelming, let's use an example to clarify things:</p>
 
+<br />
 
+<b>Space Shuttle:</b>
 
+<p>Let say we have a space shuttle looking like the image below. </p>
+
+<SpaceShuttle />
