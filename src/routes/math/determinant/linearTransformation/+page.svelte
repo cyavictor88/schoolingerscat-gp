@@ -36,7 +36,7 @@
 		math={'v'}
 	/>-dimensional vector space to another point in a <Latex math={'w'} />-dimensional vector space.
 </p>
-<p>It can be written as: <Latex math={`A: V \\rightarrow W`}/></p>
+<p>It can be written as: <Latex math={`T: V \\rightarrow W`}/></p>
 <p>The picture below shows graphical representation of linear transformation.</p>
 <canvas bind:this={fabricCanvas} />
 <p>Ok, so how do we express a linear transformation in mathematical terms?</p>
@@ -45,45 +45,51 @@
 <p>The answer is <b>matrix multiplication,</b></p>
 <p>Let's break it down:</p>
 <li>
-	A point in <Latex math={'n'} />-dimensional space can be written as a column vector <Latex
+	A point in <Latex math={'v'} />-dimensional space can be written as a column vector <Latex
 		math={`
-  \\vec{p_n} = \\begin{bmatrix} p_1  \\\\ \\vdots \\\\ p_n  \\end{bmatrix}`}
+  \\vec{p} = \\begin{bmatrix} p_1  \\\\ \\vdots \\\\ p_v  \\end{bmatrix}`}
 	/>
 </li>
 <li>
-	A function that transforms a point in <Latex math={'n'} />-dimensional space to another point in <Latex math={'m'} />-dimensional space
-  can be written as a <Latex math={'m \\times n'} />  matrix :
+	A point in <Latex math={'w'} />-dimensional space can be written as a column vector <Latex
+		math={`
+  \\vec{q} = \\begin{bmatrix} q_1  \\\\ \\vdots \\\\ q_w  \\end{bmatrix}`}
+	/>
+</li>
+<li>
+	A function that transforms a point in <Latex math={'v'} />-dimensional space to another point in <Latex math={'w'} />-dimensional space
+  can be written as a <Latex math={'w \\times v'} />  matrix :
    <Latex center
 		math={`
-   A =  
-   \\begin{bmatrix} a_{11} & a_{12} & ... & a_{1n} \\\\
-                     a_{21} & a_{22} & ... & a_{2n} \\\\
+   M =  
+   \\begin{bmatrix} m_{11} & m_{12} & ... & m_{1v} \\\\
+                     m_{21} & m_{22} & ... & m_{2v} \\\\
                    \\vdots & \\vdots & \\ddots & \\vdots \\\\ 
-                    a_{m1} & a_{m2} & ... & a_{mn}  \\end{bmatrix}`}
+                    m_{w1} & m_{w2} & ... & m_{wv}  \\end{bmatrix}`}
 	/>
 </li>
 
 <li>
-  So transforming a point <Latex math={'\\vec{p_n}'} /> to point <Latex math={'\\vec{q_m}'} /> using the function  <Latex math={'M'} /> can be written as:
+  So mapping a point <Latex math={'\\vec{p}'} /> to point <Latex math={'\\vec{q}'} /> using the matrix  <Latex math={'M'} /> can be written as:
   <Latex center
   math={`
   
-  \\vec{q_m} = A\\vec{p_n}=  
+  \\vec{q} = A\\vec{p}=  
  \\begin{bmatrix}
-                   a_{11} & a_{12} & ... & a_{1n} \\\\
-                   a_{21} & a_{22} & ... & a_{2n} \\\\
+                   m_{11} & m_{12} & ... & m_{1v} \\\\
+                   m_{21} & m_{22} & ... & m_{2v} \\\\
                   \\vdots & \\vdots & \\ddots & \\vdots \\\\ 
-                  a_{m1} & a_{m2} & ... & a_{mn}  
+                  m_{w1} & m_{w2} & ... & m_{wv}  
   \\end{bmatrix}
-  \\begin{bmatrix} p_1   \\\\ \\vdots \\\\ p_n  \\end{bmatrix}
+  \\begin{bmatrix} p_1   \\\\ \\vdots \\\\ p_v  \\end{bmatrix}
     =
-    \\begin{bmatrix} q_1   \\\\ \\vdots \\\\ q_m  \\end{bmatrix}       
+    \\begin{bmatrix} q_1   \\\\ \\vdots \\\\ q_w  \\end{bmatrix}       
                   `}
 />
 
 </li>
 
-<p>Looking at all these symbols can be a little overwhelming, let's use an example to clarify things:</p>
+<p>Looking at all these symbols can be a little overwhelming, let's use a space shuttle example to clarify things:</p>
 
 <br />
 

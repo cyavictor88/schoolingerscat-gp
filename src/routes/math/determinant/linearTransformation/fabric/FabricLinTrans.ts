@@ -54,7 +54,7 @@ export class FabricLinTrans {
       stroke: 'black'
   });
 
-    const T = new fabric.Text('A', {
+    const T = new fabric.Text('T', {
       left: 140,
       top: 50,
       fontSize: 16,
@@ -86,7 +86,7 @@ export class FabricLinTrans {
       selectable: false,
     });
 
-    const Tx = new fabric.Text('A(p)', {
+    const Tx = new fabric.Text('T(p)', {
       left: 225,
       top: 63,
       fontSize: 12,
