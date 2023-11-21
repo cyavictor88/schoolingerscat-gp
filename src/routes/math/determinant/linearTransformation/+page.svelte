@@ -95,6 +95,6 @@
 
 <b>Space Shuttle:</b>
 
-<p>Let say we have a space shuttle looking like the image below. </p>
+<p>{'👤'}Let say we have a space shuttle looking like the image below. </p>
 
 <SpaceShuttle />
