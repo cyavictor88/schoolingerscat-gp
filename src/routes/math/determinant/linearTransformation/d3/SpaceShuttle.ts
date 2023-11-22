@@ -27,8 +27,8 @@ interface Microcontroller {
       text: string;
       font: number;
     };
-    // texts: 
-    //   {x: number, y:number, latex: string}[]
+    texts: 
+      {x: number, y:number, latex: string}[]
     
 }
 
@@ -40,7 +40,7 @@ interface AdjustmentPanel {
     height:number;
   };
   buttons:
-    {latex: string; x:number; y:number; r:number}[]
+    {latex: string; x:number; y:number; }[]
 }
 
 interface Engine {
@@ -73,6 +73,7 @@ export class SpaceShuttle {
   vec0 = {x:0,y:0};
   row: number = 4;
   col: number = 2;
+  numInputCols: number = 1;
 
 
   svg: d3.Selection<SVGSVGElement, undefined, null, undefined>;
@@ -100,7 +101,7 @@ export class SpaceShuttle {
 
     const computerHeight = 300
     const computerWidth = 150
-    let startMCX = 20;
+    const startMCX = 20;
     Array.from({length: this.row}, (_, i) =>i).forEach(i=>{
       const mcHeight = Math.round((computerHeight/(this.row))); 
       const boxHeight = Math.round(mcHeight/3);
@@ -109,10 +110,31 @@ export class SpaceShuttle {
       const titleText = 'micro-controller'+(i+1);
       const font = 12;
       const title= {x: startMCX, y: mcHeight*(i+1) - boxHeight *2, font, text:titleText}
-      const mc : Microcontroller = { box,title};
+
+      const latexes = Array.from({length: this.col}, (_, j) =>j).map( j => 'm_{'+(i+1)+''+(j+1)+'}')
+      const numInterval = this.col*2+1;
+      const textInterval = boxWidth / numInterval;
+      const textsXs = Array.from({length: this.col}, (_, j) =>2*j +1).map( odd => startMCX + (odd) *textInterval)
+      const textsYs = Array.from({length: this.col}, (_, j) =>j).map(j=> Math.round(box.y + boxHeight/2))
+      const texts =  Array.from({length: this.col}, (_, j) =>j).map(j=>{return  {latex:latexes[j],x:textsXs[j],y:textsYs[j]} })
+      const mc : Microcontroller = { box,title,texts};
       this.microcontrollers.push(mc);
     });
 
+    const adjustmentPanelBoxWidth = 30;
+    const buttonHeight = 20;
+    Array.from({length: this.numInputCols}, (_, c) =>c).forEach(c=>{ 
+      const adjustmentPanelBox = {x: startMCX+computerWidth+c*adjustmentPanelBoxWidth, y:Math.round(computerHeight/2) - buttonHeight/2*this.col, width:adjustmentPanelBoxWidth, height: buttonHeight*this.col }
+      this.adjustmentPanels.push({box:adjustmentPanelBox,buttons:[]});
+      Array.from({length: this.col}, (_, i) =>i).forEach(i=>{ 
+        const buttonX = adjustmentPanelBox.x + adjustmentPanelBox.width/3
+        const numInterval = this.col*2+1;
+        const textInterval = adjustmentPanelBox.height / numInterval;
+        const buttonY = adjustmentPanelBox.y + textInterval * (2*i +1)
+        const latex = 'a_{'+(c+1)+''+(i+1)+'}';
+        this.adjustmentPanels[c].buttons.push({latex,x:buttonX,y:buttonY});
+      })
+    })
 
     // Create SVG
     const svg = d3.create("svg")
@@ -124,6 +146,15 @@ export class SpaceShuttle {
     this.svgNode = svg.node();
     const fontSize = 12;
 
+    const textMainframeComputer = svg.append("text")
+      .attr("x", this.xScale(4))
+      .attr("y", this.yScale(10))
+      .style("font-size", fontSize + "px")
+      .attr("dy", this.yScale.invert(fontSize * 0.5))
+      .style('fill', 'black')
+      .attr("text-anchor", "start")
+      .text('Mainframe Computer');
+
     const mainframeComputer = svg.append('rect')
     .attr('x', this.xScale(0))
     .attr('y', this.yScale(0))
@@ -133,8 +164,30 @@ export class SpaceShuttle {
     .style('opacity','0.5')
     .attr('fill', '#69a3b2');
 
+    this.makeMicrocontrollers();
+    this.makeAdjustmentPanel();
 
-    const group_microcontrollers = svg.append('g').attr('class','microcontrollers');
+
+
+
+
+  }
+
+  makeAdjustmentPanel(){
+
+    const group = this.svg.append('g').attr('class','adjustmentPanel');
+    group.selectAll('rect').data(this.adjustmentPanels).join('rect')
+    .attr('x',(d,i)=>{return this.xScale(d.box.x)})
+    .attr('y',(d,i)=>{return this.yScale(d.box.y)})
+    .attr('width',(d,i)=>{return this.yScale(d.box.width)})
+    .attr('height',(d,i)=>{return this.yScale(d.box.height)})
+    .style('fill','blue')
+    .style('opacity','0.5')
+  }
+
+
+  makeMicrocontrollers(){
+    const group_microcontrollers = this.svg.append('g').attr('class','microcontrollers');
 
     group_microcontrollers.selectAll('rect').data(this.microcontrollers).join('rect')
     .attr('x',(d,i)=>{return this.xScale(d.box.x)})
@@ -154,30 +207,21 @@ export class SpaceShuttle {
     .attr("text-anchor", "start")
     .text((d,i)=>{return d.title.text})
 
-
-    const textYaxis = svg.append("text")
-      .attr("x", this.xScale(4))
-      .attr("y", this.yScale(10))
-      .style("font-size", fontSize + "px")
-      .attr("dy", this.yScale.invert(fontSize * 0.5))
-      .style('fill', 'black')
-      .attr("text-anchor", "start")
-      .text('Mainframe Computer');
-
-
-
-  svg
-  .append("svg:foreignObject")
-  .attr("width", 1)
-  .attr("height", 1)
-  .attr("overflow", 'visible')
-  .style("font-size", '15px')
-  .attr("x", this.xScale(200))
-  .attr("y", this.yScale(0))
-  .append("xhtml:div")
-  .html(latex('m_{ij}'))
+    for (let r = 0; r < this.row; r++) {
+      const group_microcontrollers_latex = group_microcontrollers.append('g').attr('class','microcontrollers_latexs');
+      const group_microcontrollers_latex_svg = group_microcontrollers_latex.append('svg')
+      group_microcontrollers_latex_svg.selectAll('foreignObject')
+      .data(this.microcontrollers[r].texts).join('foreignObject')
+      .attr("width", 1)
+      .attr("height", 1)
+      .attr("overflow", 'visible')
+      .style("font-size", '15px')
+      .attr("x", (d,i)=>{return this.xScale(d.x)})
+      .attr("y", (d,i)=>{return this.yScale(d.y)})
+      .append("xhtml:div")
+      .html((d,i)=>{return latex(d.latex)})
+    }
 
   }
-
 
 }
