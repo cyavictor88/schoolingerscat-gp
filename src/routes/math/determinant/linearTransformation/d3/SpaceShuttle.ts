@@ -40,7 +40,8 @@ interface AdjustmentPanel {
     height:number;
   };
   buttons:
-    {latex: string; x:number; y:number; }[]
+    {latex: string; x:number; y:number; }[];
+  title: string;   
 }
 
 interface Engine {
@@ -62,7 +63,7 @@ interface Engine {
 export class SpaceShuttle {
   human: string = '👤';
   eventBroker: EventEmitter  = new EventEmitter();
-  width: number = 500;
+  width: number = 600;
   height: number = 320;
   marginTop: number = 20;
   marginRight: number = 20;
@@ -73,7 +74,7 @@ export class SpaceShuttle {
   vec0 = {x:0,y:0};
   row: number = 4;
   col: number = 2;
-  numInputCols: number = 1;
+  numInputCols: number = 2;
 
 
   svg: d3.Selection<SVGSVGElement, undefined, null, undefined>;
@@ -82,7 +83,7 @@ export class SpaceShuttle {
   xScale: d3.ScaleLinear<number, number, never> ;
   yScale: d3.ScaleLinear<number, number, never> ;
 
-  adjustmentPanels: AdjustmentPanel[]=[];
+  adjustmentPanels: AdjustmentPanel[] = [];
   engines: Engine[]=[];
   microcontrollers: Microcontroller[] = [];
 
@@ -105,7 +106,7 @@ export class SpaceShuttle {
     Array.from({length: this.row}, (_, i) =>i).forEach(i=>{
       const mcHeight = Math.round((computerHeight/(this.row))); 
       const boxHeight = Math.round(mcHeight/3);
-      const boxWidth = Math.round(computerWidth * 0.8);
+      const boxWidth = Math.round(computerWidth - 2*startMCX);
       const box = {x:startMCX, y:mcHeight*(i+1)- boxHeight *2 ,width:boxWidth,height:boxHeight};
       const titleText = 'micro-controller'+(i+1);
       const font = 12;
@@ -121,11 +122,11 @@ export class SpaceShuttle {
       this.microcontrollers.push(mc);
     });
 
-    const adjustmentPanelBoxWidth = 30;
+    const adjustmentPanelBoxWidth = 40;
     const buttonHeight = 20;
     Array.from({length: this.numInputCols}, (_, c) =>c).forEach(c=>{ 
-      const adjustmentPanelBox = {x: startMCX+computerWidth+c*adjustmentPanelBoxWidth, y:Math.round(computerHeight/2) - buttonHeight/2*this.col, width:adjustmentPanelBoxWidth, height: buttonHeight*this.col }
-      this.adjustmentPanels.push({box:adjustmentPanelBox,buttons:[]});
+      const adjustmentPanelBox = {x: startMCX + computerWidth + c * this.xScale(adjustmentPanelBoxWidth) , y:Math.round(computerHeight/2) - buttonHeight/2*this.col, width:adjustmentPanelBoxWidth, height: buttonHeight*this.col }
+      this.adjustmentPanels.push({box:adjustmentPanelBox,buttons:[],title:'Adjustment\nPanel '+(c+1)});
       Array.from({length: this.col}, (_, i) =>i).forEach(i=>{ 
         const buttonX = adjustmentPanelBox.x + adjustmentPanelBox.width/3
         const numInterval = this.col*2+1;
@@ -164,7 +165,7 @@ export class SpaceShuttle {
     .style('opacity','0.5')
     .attr('fill', '#69a3b2');
 
-    this.makeMicrocontrollers();
+    this.makeMicrocontrollers(startMCX);
     this.makeAdjustmentPanel();
 
 
@@ -182,23 +183,73 @@ export class SpaceShuttle {
     .attr('width',(d,i)=>{return this.yScale(d.box.width)})
     .attr('height',(d,i)=>{return this.yScale(d.box.height)})
     .style('fill','blue')
+    .attr('stroke', 'black')
     .style('opacity','0.5')
+
+    const texts = group.selectAll('text').data(this.adjustmentPanels).join('text')
+    .attr('x',(d,i)=>{return this.xScale(d.box.x)})
+    .attr('y',(d,i)=>{return this.yScale(d.box.y)})
+    .style("font-size",(d,i)=>{return  '10px'})
+    // .attr("dy", (d,i)=>{return this.yScale.invert(d.title.font * 0.5)}) 
+    .style('fill', 'black')
+    .attr("text-anchor", "start")
+    // .text((d,i)=>{return 'Adjustment\nPanel '+i})
+
+    const xScale = this.xScale;
+    const yScale = this.yScale;
+    texts.each(function(d) {
+      const lines = d.title.split("\n");
+
+      d3.select(this).append("tspan")
+        .text(lines[0])
+        .attr("x", xScale(d.box.x))
+        .attr("dy", -16);
+
+      d3.select(this).append("tspan")
+        .text(lines[1])
+        .attr("x", xScale(d.box.x))
+        .attr("dy",12);
+    });
+    for (let c = 0; c < this.numInputCols; c++) {
+      const group_latex = group.append('g').attr('class','adjustmentPanel_latexs');
+      const svg_latex = group_latex.append('svg')
+      svg_latex.selectAll('foreignObject')
+        .data(this.adjustmentPanels[c].buttons).join('foreignObject')
+        .attr("width", 1)
+        .attr("height", 1)
+        .attr("overflow", 'visible')
+        .style("font-size", '15px')
+        .attr("x", (d,i)=>{return this.xScale(d.x)})
+        .attr("y", (d,i)=>{return this.yScale(d.y)})
+        .append("xhtml:div")
+        .html((d,i)=>{return latex(d.latex)})
+    }
+
   }
 
 
-  makeMicrocontrollers(){
-    const group_microcontrollers = this.svg.append('g').attr('class','microcontrollers');
+  makeMicrocontrollers(startMCX:number){
+    const group = this.svg.append('g').attr('class','microcontrollers');
 
-    group_microcontrollers.selectAll('rect').data(this.microcontrollers).join('rect')
+    group.selectAll('rect').data(this.microcontrollers).join('rect')
     .attr('x',(d,i)=>{return this.xScale(d.box.x)})
     .attr('y',(d,i)=>{return this.yScale(d.box.y)})
-    .attr('width',(d,i)=>{return this.yScale(d.box.width)})
+    .attr('width',(d,i)=>{return this.xScale(d.box.width)})
     .attr('height',(d,i)=>{return this.yScale(d.box.height)})
     .style('fill','grey')
     .style('opacity','0.5')
+    .style('stroke','black')
 
 
-    group_microcontrollers.selectAll('text').data(this.microcontrollers).join('text')
+    const drawLine = d3.line<{ x: number, y: number }>()
+    .x(d => this.xScale(d.x))
+    .y(d => this.yScale(d.y))
+
+    group.selectAll('path').data(this.microcontrollers).join('path')
+    .attr('d',(d,i)=>{return drawLine([  {x: d.box.x+d.box.width+startMCX, y: d.box.y+d.box.height}, {x:d.box.x+d.box.width+startMCX+10,y:d.box.y+d.box.height}     ])})
+    .style('stroke','black')
+
+    group.selectAll('text').data(this.microcontrollers).join('text')
     .attr('x',(d,i)=>{return this.xScale(d.title.x)})
     .attr('y',(d,i)=>{return this.yScale(d.title.y)})
     .style("font-size",(d,i)=>{return d.title.font + 'px'})
@@ -208,9 +259,9 @@ export class SpaceShuttle {
     .text((d,i)=>{return d.title.text})
 
     for (let r = 0; r < this.row; r++) {
-      const group_microcontrollers_latex = group_microcontrollers.append('g').attr('class','microcontrollers_latexs');
-      const group_microcontrollers_latex_svg = group_microcontrollers_latex.append('svg')
-      group_microcontrollers_latex_svg.selectAll('foreignObject')
+      const group_latex = group.append('g').attr('class','microcontrollers_latexs');
+      const svg_latex = group_latex.append('svg')
+      svg_latex.selectAll('foreignObject')
       .data(this.microcontrollers[r].texts).join('foreignObject')
       .attr("width", 1)
       .attr("height", 1)
