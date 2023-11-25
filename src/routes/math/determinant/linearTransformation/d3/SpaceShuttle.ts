@@ -76,6 +76,8 @@ export class SpaceShuttle {
   col: number = 2;
   numInputCols: number = 2;
 
+  computerHeight = 300;
+  computerWidth = 150;
 
   svg: d3.Selection<SVGSVGElement, undefined, null, undefined>;
   svgNode!: SVGSVGElement | null;
@@ -86,8 +88,9 @@ export class SpaceShuttle {
   adjustmentPanels: AdjustmentPanel[] = [];
   engines: Engine[]=[];
   microcontrollers: Microcontroller[] = [];
-
-
+  drawLine = d3.line<{ x: number, y: number }>()
+    .x(d => this.xScale(d.x))
+    .y(d => this.yScale(d.y))
   constructor(){
 
     // Declare the x (horizontal position) scale.
@@ -100,8 +103,10 @@ export class SpaceShuttle {
       .domain(this.yDomain)
       .range([ this.marginBottom, this.height - this.marginTop]);
 
-    const computerHeight = 300
-    const computerWidth = 150
+    const computerHeight = this.computerHeight;
+    const computerWidth = this.computerWidth;
+
+    // microcontrllers
     const startMCX = 20;
     Array.from({length: this.row}, (_, i) =>i).forEach(i=>{
       const mcHeight = Math.round((computerHeight/(this.row))); 
@@ -122,6 +127,7 @@ export class SpaceShuttle {
       this.microcontrollers.push(mc);
     });
 
+    // adjustment boxes
     const adjustmentPanelBoxWidth = 40;
     const buttonHeight = 20;
     Array.from({length: this.numInputCols}, (_, c) =>c).forEach(c=>{ 
@@ -137,6 +143,11 @@ export class SpaceShuttle {
       })
     })
 
+    // engines
+    const enginePadding = 10;
+    const engineStartX = enginePadding + startMCX + computerWidth + this.adjustmentPanels.length * this.xScale(adjustmentPanelBoxWidth)
+
+
     // Create SVG
     const svg = d3.create("svg")
       .attr("width", this.width)
@@ -145,34 +156,35 @@ export class SpaceShuttle {
 
     this.svg = svg;
     this.svgNode = svg.node();
-    const fontSize = 12;
 
-    const textMainframeComputer = svg.append("text")
-      .attr("x", this.xScale(4))
-      .attr("y", this.yScale(10))
-      .style("font-size", fontSize + "px")
-      .attr("dy", this.yScale.invert(fontSize * 0.5))
-      .style('fill', 'black')
-      .attr("text-anchor", "start")
-      .text('Mainframe Computer');
-
-    const mainframeComputer = svg.append('rect')
-    .attr('x', this.xScale(0))
-    .attr('y', this.yScale(0))
-    .attr('width', this.xScale(computerWidth))
-    .attr('height', this.yScale(computerHeight))
-    .attr('stroke', 'black')
-    .style('opacity','0.5')
-    .attr('fill', '#69a3b2');
-
+    this.makeMainframeComputer();
     this.makeMicrocontrollers(startMCX);
     this.makeAdjustmentPanel();
 
 
 
 
+    svg.append('path')
+    .attr('d',(d,i)=>{return this.drawLine([  {x: engineStartX, y: 40}, {x:engineStartX+30,y:40}     ])})
+    .style('stroke','black')
+
 
   }
+
+  makeEngines(startX: number){
+    const group = this.svg.append('g').attr('class','wires');
+    group.selectAll('path').data(this.adjustmentPanels).join('path')
+    .attr('x',(d,i)=>{return this.xScale(d.box.x)})
+    .attr('y',(d,i)=>{return this.yScale(d.box.y)})
+    .attr('width',(d,i)=>{return this.yScale(d.box.width)})
+    .attr('height',(d,i)=>{return this.yScale(d.box.height)})
+    .style('fill','blue')
+    .attr('stroke', 'black')
+    .style('opacity','0.5')
+
+  }
+
+
 
   makeAdjustmentPanel(){
 
@@ -241,12 +253,10 @@ export class SpaceShuttle {
     .style('stroke','black')
 
 
-    const drawLine = d3.line<{ x: number, y: number }>()
-    .x(d => this.xScale(d.x))
-    .y(d => this.yScale(d.y))
+
 
     group.selectAll('path').data(this.microcontrollers).join('path')
-    .attr('d',(d,i)=>{return drawLine([  {x: d.box.x+d.box.width+startMCX, y: d.box.y+d.box.height}, {x:d.box.x+d.box.width+startMCX+10,y:d.box.y+d.box.height}     ])})
+    .attr('d',(d,i)=>{return this.drawLine([  {x: d.box.x+d.box.width+startMCX, y: d.box.y+d.box.height}, {x:d.box.x+d.box.width+startMCX+10,y:d.box.y+d.box.height}     ])})
     .style('stroke','black')
 
     group.selectAll('text').data(this.microcontrollers).join('text')
@@ -273,6 +283,28 @@ export class SpaceShuttle {
       .html((d,i)=>{return latex(d.latex)})
     }
 
+  }
+
+    makeMainframeComputer(){
+    const fontSize = 12;
+
+    const textMainframeComputer = this.svg.append("text")
+      .attr("x", this.xScale(4))
+      .attr("y", this.yScale(10))
+      .style("font-size", fontSize + "px")
+      .attr("dy", this.yScale.invert(fontSize * 0.5))
+      .style('fill', 'black')
+      .attr("text-anchor", "start")
+      .text('Mainframe Computer');
+
+    const mainframeComputer = this.svg.append('rect')
+    .attr('x', this.xScale(0))
+    .attr('y', this.yScale(0))
+    .attr('width', this.xScale(this.computerWidth))
+    .attr('height', this.yScale(this.computerHeight))
+    .attr('stroke', 'black')
+    .style('opacity','0.5')
+    .attr('fill', '#69a3b2');
   }
 
 }
