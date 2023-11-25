@@ -54,7 +54,7 @@ interface Engine {
       x:number,y:number,latex:string
     }
   };
-  engine: {
+  exhaust: {
     x:number;
     y:number;
   }
@@ -63,7 +63,7 @@ interface Engine {
 export class SpaceShuttle {
   human: string = '👤';
   eventBroker: EventEmitter  = new EventEmitter();
-  width: number = 600;
+  width: number = 700;
   height: number = 320;
   marginTop: number = 20;
   marginRight: number = 20;
@@ -74,8 +74,8 @@ export class SpaceShuttle {
   vec0 = {x:0,y:0};
   row: number = 4;
   col: number = 2;
-  numInputCols: number = 2;
-
+  numInputCols: number = 1;
+  fireText = '🔥';
   computerHeight = 300;
   computerWidth = 150;
 
@@ -138,15 +138,49 @@ export class SpaceShuttle {
         const numInterval = this.col*2+1;
         const textInterval = adjustmentPanelBox.height / numInterval;
         const buttonY = adjustmentPanelBox.y + textInterval * (2*i +1)
-        const latex = 'a_{'+(c+1)+''+(i+1)+'}';
+        const latex =  this.numInputCols > 1 ? 'a_{'+(c+1)+''+(i+1)+'}' : 'a_{'+(i+1)+'}' ;
         this.adjustmentPanels[c].buttons.push({latex,x:buttonX,y:buttonY});
       })
     })
 
     // engines
-    const enginePadding = 10;
+    const engineTriangleWidth = 30;
+    const enginePadding = 30;
+    const engineWidth = this.microcontrollers[0].box.width + 30;
     const engineStartX = enginePadding + startMCX + computerWidth + this.adjustmentPanels.length * this.xScale(adjustmentPanelBoxWidth)
-
+    Array.from({length: this.numInputCols}, (_, c) =>c).forEach(c=>{
+      Array.from({length: this.row}, (_,r)=>r).forEach(r=>{
+        const tmpEngineStartX = enginePadding + startMCX + computerWidth + this.adjustmentPanels.length * this.xScale(adjustmentPanelBoxWidth) + c*(engineTriangleWidth + this.microcontrollers[r].box.width + enginePadding);
+        const y = this.microcontrollers[r].box.y + this.microcontrollers[r].box.height;
+        const textY = y - this.microcontrollers[r].box.height;
+        const getLatex = ()=>{
+          let text = ''
+          const inputs = this.adjustmentPanels[0];
+          this.adjustmentPanels[c].buttons.forEach((butt,i)=>{
+            text+=  this.numInputCols > 1 ? 'm_{'+(r+1)+''+(i+1)+'}'+ 'a_{'+(c+1)+''+(i+1)+'}+' :'m_{'+(r+1)+''+(i+1)+'}'+ 'a_{'+(i+1)+'}+' 
+          })
+          text = text.slice(0,-1) ;
+          text +=  this.numInputCols > 1 ? '=p_{'+(r+1)+''+(c+1)+'}' : '=p_{'+(r+1)+'}'
+          return text;
+        }
+        const wire = {
+          line: {
+            start:{x:tmpEngineStartX, y:  y},
+            end: {x:tmpEngineStartX+engineWidth, y:  y}
+          },
+          text: {
+            x: tmpEngineStartX,
+            y:  textY,
+            latex: getLatex()
+          }
+        };
+        const exhaust = {
+          x : tmpEngineStartX+this.microcontrollers[r].box.width,
+          y: y,
+        }
+        this.engines.push({exhaust,wire})
+      });
+    });
 
     // Create SVG
     const svg = d3.create("svg")
@@ -160,27 +194,67 @@ export class SpaceShuttle {
     this.makeMainframeComputer();
     this.makeMicrocontrollers(startMCX);
     this.makeAdjustmentPanel();
+    this.makeEngines();
 
 
 
 
-    svg.append('path')
-    .attr('d',(d,i)=>{return this.drawLine([  {x: engineStartX, y: 40}, {x:engineStartX+30,y:40}     ])})
-    .style('stroke','black')
+
+    // svg.append('path')
+    // .attr('d',(d,i)=>{return this.drawLine([  {x: engineStartX, y: 40}, {x:engineStartX+30,y:40}     ])})
+    // .style('stroke','black')
 
 
   }
 
-  makeEngines(startX: number){
-    const group = this.svg.append('g').attr('class','wires');
-    group.selectAll('path').data(this.adjustmentPanels).join('path')
-    .attr('x',(d,i)=>{return this.xScale(d.box.x)})
-    .attr('y',(d,i)=>{return this.yScale(d.box.y)})
-    .attr('width',(d,i)=>{return this.yScale(d.box.width)})
-    .attr('height',(d,i)=>{return this.yScale(d.box.height)})
-    .style('fill','blue')
-    .attr('stroke', 'black')
-    .style('opacity','0.5')
+
+  makeEngines(){
+    const group = this.svg.append('g').attr('class','engines');
+
+
+    // const textMainframeComputer = this.svg.append("text")
+    // .attr("x", this.xScale(4))
+    // .attr("y", this.yScale(10))
+    // .style("font-size", fontSize + "px")
+    // .attr("dy", this.yScale.invert(fontSize * 0.5))
+    // .style('fill', 'black')
+    // .attr("text-anchor", "start")
+    // .text('Mainframe Computer');
+
+
+    group.selectAll('text').data(this.engines).join('text')
+    .attr("x", (d)=>this.xScale(d.exhaust.x))
+    .attr("y", (d)=>this.yScale(d.exhaust.y))
+    .style("font-size","18px")
+    .attr("dx", this.xScale.invert(18 * 0.5))
+    .attr("dy", this.yScale.invert(18 *(-.5)))
+    .text((d)=>this.fireText)
+    .attr('transform',(d)=>`rotate(90,${this.xScale(d.exhaust.x)},${this.yScale(d.exhaust.y)})`);
+
+
+
+    group.selectAll('path').data(this.engines).join('path')
+    .attr('d',(d,i)=>{
+      return this.drawLine([
+        {x: d.wire.line.start.x , y:d.wire.line.start.y},
+        {x: d.wire.line.end.x , y:d.wire.line.end.y},
+      ])
+    })
+    .style('stroke','black');
+
+    const group_latex = group.append('g').attr('class','engine_latexs');
+    const svg_latex = group_latex.append('svg')
+    svg_latex.selectAll('foreignObject')
+      .data(this.engines).join('foreignObject')
+      .attr("width", 1)
+      .attr("height", 1)
+      .attr("overflow", 'visible')
+      .style("font-size", '12px')
+      .attr("x", (d,i)=>{return this.xScale(d.wire.text.x)})
+      .attr("y", (d,i)=>{return this.yScale(d.wire.text.y)})
+      .append("xhtml:div")
+      .html((d,i)=>{return latex(d.wire.text.latex)})
+    
 
   }
 
