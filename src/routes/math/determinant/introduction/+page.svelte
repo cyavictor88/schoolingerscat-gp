@@ -10,7 +10,7 @@
 
 <p>
   I always have trouble grasping the concept of determinant of a matrix. 
-  After some soul searching, now I a have much better understanding of determinant in the following context:
+  After some soul searching, I think determinant can be better understood in the following context:
 </p>
 <fieldset>
 <p>

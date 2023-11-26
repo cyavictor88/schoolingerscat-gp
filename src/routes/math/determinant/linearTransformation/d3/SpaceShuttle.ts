@@ -69,13 +69,14 @@ export class SpaceShuttle {
   marginRight: number = 20;
   marginBottom: number = 20;
   marginLeft: number = 20;
-  xDomain: number[] = [0, this.width];
-  yDomain: number[] = [0, this.height];
+  xDomain: number[] ;
+  yDomain: number[] ;
   vec0 = {x:0,y:0};
   row: number = 4;
   col: number = 2;
-  numInputCols: number = 1;
+  numInputCols: number;
   fireText = '🔥';
+  exhaust = '◀';
   computerHeight = 300;
   computerWidth = 150;
 
@@ -91,7 +92,17 @@ export class SpaceShuttle {
   drawLine = d3.line<{ x: number, y: number }>()
     .x(d => this.xScale(d.x))
     .y(d => this.yScale(d.y))
-  constructor(){
+  constructor(numInputCols: null|number){
+    if(numInputCols) {
+      this.numInputCols = numInputCols
+    }
+    else {
+      this.width = 500;
+      this.numInputCols = 1
+    }
+    this.xDomain= [0, this.width];
+    this.yDomain= [0, this.height];
+
 
     // Declare the x (horizontal position) scale.
     this.xScale = d3.scaleLinear()
@@ -132,27 +143,27 @@ export class SpaceShuttle {
     const buttonHeight = 20;
     Array.from({length: this.numInputCols}, (_, c) =>c).forEach(c=>{ 
       const adjustmentPanelBox = {x: startMCX + computerWidth + c * this.xScale(adjustmentPanelBoxWidth) , y:Math.round(computerHeight/2) - buttonHeight/2*this.col, width:adjustmentPanelBoxWidth, height: buttonHeight*this.col }
-      this.adjustmentPanels.push({box:adjustmentPanelBox,buttons:[],title:'Adjustment\nPanel '+(c+1)});
+      this.adjustmentPanels.push({box:adjustmentPanelBox,buttons:[],title:'Adjustment\nPanel '+(c+1)+' '+this.human});
       Array.from({length: this.col}, (_, i) =>i).forEach(i=>{ 
         const buttonX = adjustmentPanelBox.x + adjustmentPanelBox.width/3
         const numInterval = this.col*2+1;
         const textInterval = adjustmentPanelBox.height / numInterval;
         const buttonY = adjustmentPanelBox.y + textInterval * (2*i +1)
-        const latex =  this.numInputCols > 1 ? 'a_{'+(c+1)+''+(i+1)+'}' : 'a_{'+(i+1)+'}' ;
+        const latex =  this.numInputCols > 1 ? 'a_{'+(i+1)+''+(c+1)+'}' : 'a_{'+(i+1)+'}' ;
         this.adjustmentPanels[c].buttons.push({latex,x:buttonX,y:buttonY});
       })
     })
 
     // engines
-    const engineTriangleWidth = 30;
+    const engineTriangleWidth = 40;
     const enginePadding = 30;
-    const engineWidth = this.microcontrollers[0].box.width + 30;
+    const engineWidth = 10;//this.microcontrollers[0].box.width + 35;
     const engineStartX = enginePadding + startMCX + computerWidth + this.adjustmentPanels.length * this.xScale(adjustmentPanelBoxWidth)
     Array.from({length: this.numInputCols}, (_, c) =>c).forEach(c=>{
       Array.from({length: this.row}, (_,r)=>r).forEach(r=>{
         const tmpEngineStartX = enginePadding + startMCX + computerWidth + this.adjustmentPanels.length * this.xScale(adjustmentPanelBoxWidth) + c*(engineTriangleWidth + this.microcontrollers[r].box.width + enginePadding);
         const y = this.microcontrollers[r].box.y + this.microcontrollers[r].box.height;
-        const textY = y - this.microcontrollers[r].box.height;
+        const textY = y - 1.2 *this.microcontrollers[r].box.height;
         const getLatex = ()=>{
           let text = ''
           const inputs = this.adjustmentPanels[0];
@@ -160,7 +171,8 @@ export class SpaceShuttle {
             text+=  this.numInputCols > 1 ? 'm_{'+(r+1)+''+(i+1)+'}'+ 'a_{'+(c+1)+''+(i+1)+'}+' :'m_{'+(r+1)+''+(i+1)+'}'+ 'a_{'+(i+1)+'}+' 
           })
           text = text.slice(0,-1) ;
-          text +=  this.numInputCols > 1 ? '=p_{'+(r+1)+''+(c+1)+'}' : '=p_{'+(r+1)+'}'
+          const header = this.numInputCols > 1 ? 'p_{'+(r+1)+''+(c+1)+'}=' : 'p_{'+(r+1)+'}=';
+          text = header + text;//this.numInputCols > 1 ? '=p_{'+(r+1)+''+(c+1)+'}' : '=p_{'+(r+1)+'}';
           return text;
         }
         const wire = {
@@ -175,7 +187,7 @@ export class SpaceShuttle {
           }
         };
         const exhaust = {
-          x : tmpEngineStartX+this.microcontrollers[r].box.width,
+          x : wire.line.start.x + 10,//tmpEngineStartX+engineWidth,
           y: y,
         }
         this.engines.push({exhaust,wire})
@@ -211,25 +223,24 @@ export class SpaceShuttle {
   makeEngines(){
     const group = this.svg.append('g').attr('class','engines');
 
-
-    // const textMainframeComputer = this.svg.append("text")
-    // .attr("x", this.xScale(4))
-    // .attr("y", this.yScale(10))
-    // .style("font-size", fontSize + "px")
-    // .attr("dy", this.yScale.invert(fontSize * 0.5))
-    // .style('fill', 'black')
-    // .attr("text-anchor", "start")
-    // .text('Mainframe Computer');
-
-
-    group.selectAll('text').data(this.engines).join('text')
+    const group_fire= group.append('g').attr('class','engine_fire');
+    group_fire.selectAll('text').data(this.engines).join('text')
     .attr("x", (d)=>this.xScale(d.exhaust.x))
     .attr("y", (d)=>this.yScale(d.exhaust.y))
     .style("font-size","18px")
     .attr("dx", this.xScale.invert(18 * 0.5))
-    .attr("dy", this.yScale.invert(18 *(-.5)))
+    .attr("dy", this.yScale.invert(18 *(0.6)))
     .text((d)=>this.fireText)
     .attr('transform',(d)=>`rotate(90,${this.xScale(d.exhaust.x)},${this.yScale(d.exhaust.y)})`);
+
+    const exhaust= group.append('g').attr('class','engine_exhaust');
+    exhaust.selectAll('text').data(this.engines).join('text')
+    .attr("x", (d)=>this.xScale(d.exhaust.x))
+    .attr("y", (d)=>this.yScale(d.exhaust.y))
+    .style("font-size","18px")
+    .attr("dx", this.xScale.invert(18 * (1)))
+    .attr("dy", this.yScale.invert(18 *(1.4)))
+    .text((d)=>this.exhaust)
 
 
 
