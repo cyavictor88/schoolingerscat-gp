@@ -163,3 +163,6 @@ P = MA=
   <Latex math={'\\begin{bmatrix} a_{12}   \\\\  a_{22}  \\end{bmatrix}'}/> to
   <Latex math={'\\begin{bmatrix} p_{12}   \\\\  p_{22} \\\\ p_{32} \\\\ p_{42}  \\end{bmatrix}'}/>
 </p>
+
+<p>Takeaway: </p>
+<p>A linear transformation map that maps a <Latex math={'v'} />-dimensional input vector to a <Latex math={'w'} />-dimensional output vector can be written as a <Latex math={'w \\times v'} /> matrix</p>
