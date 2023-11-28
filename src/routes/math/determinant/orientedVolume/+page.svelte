@@ -2,8 +2,18 @@
 
 	import Title from "$lib/components/PageComp/Title.svelte";
   import Latex from "$lib/components/Latex/Latex.svelte";
+	import Example2D from "./d3/Example2D.svelte";
 
 </script>
+
+<style>
+  li {
+    list-style-position: inside;
+    text-indent: -1em;
+    padding-left: 1em;
+  }
+
+</style>
 <Title hLevel={1}>Determinant - Oriented Volume</Title>
 
 <p>Given a square matrix size <Latex math={'n'} />: </p>
@@ -21,7 +31,7 @@ math={`
 />
 
 <p>its corresponding hyper-parallelepiped is formed by the set of vectors: </p>
-<Latex center math={`\\left(
+<Latex center math={`( v_1,v_2,...,v_n )=\\left(
   \\begin{bmatrix}
                     m_{11}  \\\\
                     m_{21} \\\\
@@ -53,12 +63,40 @@ math={`
 
 
 <p>Examples:</p>
+<li>2D:
+  <br/>
+  <span>
+    <Latex math={`M_2 =  \\begin{bmatrix}
+                    1 & -4 \\\\
+                    3 & 2 \\\\
+  
+    \\end{bmatrix} `} />, 
+<Latex math={`v_1 =  \\begin{bmatrix}
+                    1 \\\\
+                    3  \\\\
+   \\end{bmatrix} `} />, 
 
-<li>2D:</li>
+   <Latex math={`v_2 =  \\begin{bmatrix}
+                    -4 \\\\
+                    2  \\\\
+   \\end{bmatrix} `} />, 
+  </span>
+  <br />
+  <Example2D />
+</li>
 
 
-<li>3D:</li>
-
+<li>3D:
+  <br/>
+  <span>
+  <Latex math={`M_2 =  \\begin{bmatrix}
+                   m_{11} & m_{12} & m_{13} \\\\
+                   m_{21} & m_{22} & m_{23} \\\\
+                   m_{31} & m_{32} & m_{33} \\\\
+ 
+  \\end{bmatrix} `} /></span>
+  
+</li>
 <p>for a square matrix, its oriented volume is the volume of the
    hyper-parallelepiped formed by the matrix multiply by the sign of how the volume is oriented.</p>
 <p>So basically oriented means positive or negative.</p>
