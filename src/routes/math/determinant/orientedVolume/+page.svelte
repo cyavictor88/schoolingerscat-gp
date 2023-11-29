@@ -67,22 +67,22 @@ math={`
   <br/>
   <span>
     <Latex math={`M_2 =  \\begin{bmatrix}
-                    1 & -4 \\\\
-                    3 & 2 \\\\
+                    4 & -3 \\\\
+                    1 & 2 \\\\
   
     \\end{bmatrix} `} />, 
-<Latex math={`v_1 =  \\begin{bmatrix}
-                    1 \\\\
-                    3  \\\\
+<Latex math={`\\color{red}v_1 =  \\begin{bmatrix}
+                    4 \\\\
+                    1  \\\\
    \\end{bmatrix} `} />, 
 
-   <Latex math={`v_2 =  \\begin{bmatrix}
-                    -4 \\\\
+   <Latex math={`\\color{blue}v_2 =  \\begin{bmatrix}
+                    -3 \\\\
                     2  \\\\
    \\end{bmatrix} `} />, 
   </span>
   <br />
-  <Example2D />
+  <Example2D vectors={[ [4,1] ,[-3,2]]}/>
 </li>
 
 
