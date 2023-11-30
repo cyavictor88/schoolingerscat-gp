@@ -64,10 +64,6 @@ export class Example2D {
     this.makeShape();
     this.defArrow();
     this.makeVectors();
-
-
-
-
   }
 
   makeShape(){
@@ -80,7 +76,7 @@ export class Example2D {
     if(convexVerts)
     this.svg.append("polygon")
     .attr("points", convexVerts.join(" "))
-    .attr("fill", "lightgreen")
+    .attr("fill", "white")
     .attr("opacity","0.5")
 
   }

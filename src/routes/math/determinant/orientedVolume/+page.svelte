@@ -3,6 +3,7 @@
 	import Title from "$lib/components/PageComp/Title.svelte";
   import Latex from "$lib/components/Latex/Latex.svelte";
 	import Example2D from "./d3/Example2D.svelte";
+	import Example3D from "./threejs/example3D/Example3D.svelte";
 
 </script>
 
@@ -30,7 +31,7 @@ math={`
                 `}
 />
 
-<p>its corresponding hyper-parallelepiped is formed by the set of vectors: </p>
+<p>this matrix has a corresponding hyper-parallelepiped is formed by the set of vectors: </p>
 <Latex center math={`( v_1,v_2,...,v_n )=\\left(
   \\begin{bmatrix}
                     m_{11}  \\\\
@@ -61,16 +62,19 @@ math={`
  />
 
 
+<hr/>
+<hr/>
 
-<p>Examples:</p>
-<li>2D:
+<p><b>Examples:</b></p>
+<li><b>2D:</b>
+  <br/>
   <br/>
   <span>
     <Latex math={`M_2 =  \\begin{bmatrix}
                     4 & -3 \\\\
                     1 & 2 \\\\
   
-    \\end{bmatrix} `} />, 
+    \\end{bmatrix} \\Rightarrow`} /> 
 <Latex math={`\\color{red}v_1 =  \\begin{bmatrix}
                     4 \\\\
                     1  \\\\
@@ -79,24 +83,61 @@ math={`
    <Latex math={`\\color{blue}v_2 =  \\begin{bmatrix}
                     -3 \\\\
                     2  \\\\
-   \\end{bmatrix} `} />, 
+   \\end{bmatrix} `} />, the white shade is the hyper-parallelepiped form by this <Latex math={`M_2`}/>.
   </span>
   <br />
   <Example2D vectors={[ [4,1] ,[-3,2]]}/>
 </li>
 
+<hr/>
 
-<li>3D:
+<li><b>3D:</b>
+  <br />
   <br/>
   <span>
-  <Latex math={`M_2 =  \\begin{bmatrix}
-                   m_{11} & m_{12} & m_{13} \\\\
-                   m_{21} & m_{22} & m_{23} \\\\
-                   m_{31} & m_{32} & m_{33} \\\\
+  <Latex math={`M_3 =  \\begin{bmatrix}
+                   -4 & 4 & -1 \\\\
+                   4 & 3 & 2 \\\\
+                   5 & 5 & 3 \\\\
  
-  \\end{bmatrix} `} /></span>
-  
+  \\end{bmatrix}\\Rightarrow `} />
+<Latex math={`\\color{red}v_1 =  \\begin{bmatrix}
+-4 \\\\
+4  \\\\
+5  \\\\
+\\end{bmatrix} `} />, 
+
+<Latex math={`\\color{blue}v_2 =  \\begin{bmatrix}
+4 \\\\
+3  \\\\
+5  \\\\
+\\end{bmatrix} `} />,   
+
+<Latex math={`\\color{green}v_3 =  \\begin{bmatrix}
+-1 \\\\
+2  \\\\
+3  \\\\
+\\end{bmatrix} `} />, the white shade is the hyper-parallelepiped form by this <Latex math={`M_3`}/>.
+</span>
+  <br/>
+  <Example3D />
 </li>
+<p>So now we know each square matrix has a corresponding hyper-parallelepiped, which has a volume.</p>
+
+<hr/>
+<hr/>
+
+<p>Now we will explain what 'Oriented' means in Oriented Volume:</p>
+
+<p>The orientation of the volume is just a positive or negative sign that indicates the orientation of how the hyper-parallelepiped is formed: 
+</p>
+<p style='text-indent:30px'>If it goes along with the Right-Hand Rule, then <Latex math={`\\text{orientation}=1`} />,
+   else <Latex math={`\\text{orientation}=-1`}/>.
+  <Latex center math={`\\text{oriented volume} = \\text{orientation} \\times \\text{volume of the hyper-parallelepiped} `}/>
+</p>
+
+<b>Right-Hand Rule:</b>
+
 <p>for a square matrix, its oriented volume is the volume of the
    hyper-parallelepiped formed by the matrix multiply by the sign of how the volume is oriented.</p>
 <p>So basically oriented means positive or negative.</p>
