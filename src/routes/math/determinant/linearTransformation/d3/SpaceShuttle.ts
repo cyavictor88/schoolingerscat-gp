@@ -227,8 +227,8 @@ export class SpaceShuttle {
     group_fire.selectAll('text').data(this.engines).join('text')
     .attr("x", (d)=>this.xScale(d.exhaust.x))
     .attr("y", (d)=>this.yScale(d.exhaust.y))
-    .style("font-size","18px")
-    .attr("dx", this.xScale.invert(18 * 0.5))
+    .style("font-size","16px")
+    .attr("dx", this.xScale.invert(18 * 0.6))
     .attr("dy", this.yScale.invert(18 *(0.6)))
     .text((d)=>this.fireText)
     .attr('transform',(d)=>`rotate(90,${this.xScale(d.exhaust.x)},${this.yScale(d.exhaust.y)})`);
@@ -239,7 +239,7 @@ export class SpaceShuttle {
     .attr("y", (d)=>this.yScale(d.exhaust.y))
     .style("font-size","18px")
     .attr("dx", this.xScale.invert(18 * (1)))
-    .attr("dy", this.yScale.invert(18 *(1.4)))
+    .attr("dy", this.yScale.invert(18 *(1.37)))
     .text((d)=>this.exhaust)
 
 

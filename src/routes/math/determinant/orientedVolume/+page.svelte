@@ -4,6 +4,7 @@
   import Latex from "$lib/components/Latex/Latex.svelte";
 	import Example2D from "./d3/Example2D.svelte";
 	import Example3D from "./threejs/example3D/Example3D.svelte";
+	import RightHand from "./threejs/rightHand/RightHand.svelte";
 
 </script>
 
@@ -17,7 +18,11 @@
 </style>
 <Title hLevel={1}>Determinant - Oriented Volume</Title>
 
-<p>Given a square matrix size <Latex math={'n'} />: </p>
+
+<p>Some definition first, a <strong>full rank</strong> square <Latex math={'n \\times n'} /> matrix has <Latex math={'n'} /> linear independent columns</p>
+<hr/>
+
+<p>Given a full rank square matrix size <Latex math={'n'} />: </p>
 <Latex center
 math={`
  M =  
@@ -31,7 +36,7 @@ math={`
                 `}
 />
 
-<p>this matrix has a corresponding hyper-parallelepiped is formed by the set of vectors: </p>
+<p>this matrix has a corresponding hyper-parallelepiped formed by the set of vectors: </p>
 <Latex center math={`( v_1,v_2,...,v_n )=\\left(
   \\begin{bmatrix}
                     m_{11}  \\\\
@@ -122,25 +127,51 @@ math={`
   <br/>
   <Example3D />
 </li>
-<p>So now we know each square matrix has a corresponding hyper-parallelepiped, which has a volume.</p>
+<p>So now we know every full rank square matrix has a corresponding hyper-parallelepiped, which has a volume.</p>
+<hr/>
+<b>Case of Non Full Rank Matrix:</b>
 
+<Latex math={`M_3 =  \\begin{bmatrix}
+-4 & 4 & 0 \\\\
+4 & 3 & 7 \\\\
+5 & 5 & 0 \\\\
+
+\\end{bmatrix}\\Rightarrow `} />
+<Latex math={`\\color{red}v_1 =  \\begin{bmatrix}
+-4 \\\\
+4  \\\\
+5  \\\\
+\\end{bmatrix} `} />, 
+
+<Latex math={`\\color{blue}v_2 =  \\begin{bmatrix}
+4 \\\\
+3  \\\\
+5  \\\\
+\\end{bmatrix} `} />,   
+
+<Latex math={`\\color{green}v_3 =  \\begin{bmatrix}
+0 \\\\
+7  \\\\
+0  \\\\
+\\end{bmatrix} `} />,  where <Latex math={'\\color{green}{v_3} \\color{black}=\\color{red}{v_1}\\color{black}{+}\\color{blue}{v_2}'} />
+<Example3D vecc={[0,7,0]}/>
+
+<p>If you drag around the figure, you can see that the suppose 3D hyper-parallelepiped is squashed to a 2D plane.</p>
 <hr/>
 <hr/>
 
+
+<b>Orientation:</b>
 <p>Now we will explain what 'Oriented' means in Oriented Volume:</p>
 
 <p>The orientation of the volume is just a positive or negative sign that indicates the orientation of how the hyper-parallelepiped is formed: 
 </p>
 <p style='text-indent:30px'>If it goes along with the Right-Hand Rule, then <Latex math={`\\text{orientation}=1`} />,
    else <Latex math={`\\text{orientation}=-1`}/>.
-  <Latex center math={`\\text{oriented volume} = \\text{orientation} \\times \\text{volume of the hyper-parallelepiped} `}/>
+  <Latex center math={`\\Rightarrow \\text{oriented volume} = \\text{orientation} \\times \\text{volume of the hyper-parallelepiped} `}/>
 </p>
-
+<hr/>
 <b>Right-Hand Rule:</b>
+<RightHand vecc={[0,7,0]}/>
 
-<p>for a square matrix, its oriented volume is the volume of the
-   hyper-parallelepiped formed by the matrix multiply by the sign of how the volume is oriented.</p>
-<p>So basically oriented means positive or negative.</p>
 
-<p>The orientation is determined by the Right-Hand Rule.</p>
-<p>Let's start with <Latex math={'2 \\times 2'} /> matrix:</p>
