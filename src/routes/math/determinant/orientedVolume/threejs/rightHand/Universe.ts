@@ -261,13 +261,25 @@ export class Universe {
 
     const gltfLoader = new GLTFLoader();
 
-    const loadedData = await gltfLoader.loadAsync('/glbs/parrot.glb');
+    const loadedData = await gltfLoader.loadAsync('/glbs/handWithNail.glb');
     console.log(loadedData)
     const model = loadedData.scene.children[0];
     model.position.set(0, 0, 2.5);
     model.visible=true;
+
+
+    const clip = loadedData.animations[0];
+
+    const mixer = new THREE.AnimationMixer(model);
+    const action = mixer.clipAction(clip);
+    action.play();
+
+    (model as any).tick = (delta:number) => mixer.update(delta)
+
+
     this.scene.add(model);
-    // const theta = await Theta.Init(this.veca.coord,this.vecb.coord);
+    this.tickingWorld.updatables.push(model);
+        // const theta = await Theta.Init(this.veca.coord,this.vecb.coord);
     // this.scene.add(theta.curveMesh);
     // this.scene.add(theta.textMesh.mesh);
 
