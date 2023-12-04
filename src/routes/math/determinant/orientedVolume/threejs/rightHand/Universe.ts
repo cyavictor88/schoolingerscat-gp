@@ -64,6 +64,11 @@ export class Universe {
     // mainLight.position.set(0, 5, 0);
     // this.scene.add(mainLight);
 
+
+    // const light = new THREE.HemisphereLight( 0xffffbb, 0x080820, 1 );
+    // const helper = new THREE.HemisphereLightHelper( light, 5 );
+    // scene.add( helper );
+
     const light = new THREE.AmbientLight( 0xffffff ); // soft white light
     this.scene.add( light );
 
@@ -261,7 +266,7 @@ export class Universe {
 
     const gltfLoader = new GLTFLoader();
 
-    const loadedData = await gltfLoader.loadAsync('/glbs/handWithNail.glb');
+    const loadedData = await gltfLoader.loadAsync('/glbs/rightHand2.glb');
     console.log(loadedData)
     const model = loadedData.scene.children[0];
     model.position.set(0, 0, 2.5);
