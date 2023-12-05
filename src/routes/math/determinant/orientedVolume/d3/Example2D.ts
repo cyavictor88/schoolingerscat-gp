@@ -34,7 +34,7 @@ export class Example2D {
   drawLine : d3.Line<PointVec>;
 
   vectors: PointVec[];
-  constructor(vectors:number[][]) {
+  constructor(vectors:number[][],showOrientation?:boolean) {
     this.vectors = vectors.map(v=>{return {x:v[0],y:v[1]}});
     // Create SVG
     const svg = d3.create("svg")
@@ -64,6 +64,31 @@ export class Example2D {
     this.makeShape();
     this.defArrow();
     this.makeVectors();
+    if(showOrientation)this.makeOrientationCurve();
+  }
+
+  makeOrientationCurve(){
+
+
+    const sum ={x:this.vectors[0].x+this.vectors[1].x, y:(this.vectors[0].y+this.vectors[1].y)};
+    const curves = [[this.vectors[0], sum,   this.vectors[1]]]
+    const curveFunc = d3.line<PointVec>()
+    .x((d) => this.xScale(d.x*0.5))
+    .y((d) => this.yScale(d.y*0.5))
+    .curve(d3.curveCatmullRom.alpha(0.5));
+
+    const arrowBlack = this.svg.select('#arrow').clone(true)
+    arrowBlack.attr('fill', 'black')
+    arrowBlack.attr('id', 'arrowBlack')
+
+    this.svg.append("path")
+    .data(curves)
+    .attr("d", curveFunc)
+    .attr('stroke', 'black')
+    .attr('stroke-dasharray',"5,5")
+    .attr('marker-end', 'url(#arrowBlack)')
+    .attr('fill', 'none');
+  
   }
 
   makeShape(){

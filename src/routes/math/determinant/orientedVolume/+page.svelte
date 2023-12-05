@@ -164,14 +164,48 @@ math={`
 <b>Orientation:</b>
 <p>Now we will explain what 'Oriented' means in Oriented Volume:</p>
 
-<p>The orientation of the volume is just a positive or negative sign that indicates the orientation of how the hyper-parallelepiped is formed: 
+<p>The orientation of the volume is just a positive or negative sign that indicates the direction on how the hyper-parallelepiped is formed: 
 </p>
 <p style='text-indent:30px'>If it goes along with the Right-Hand Rule, then <Latex math={`\\text{orientation}=1`} />,
-   else <Latex math={`\\text{orientation}=-1`}/>.
+   or else <Latex math={`\\text{orientation}=-1`}/>.
   <Latex center math={`\\Rightarrow \\text{oriented volume} = \\text{orientation} \\times \\text{volume of the hyper-parallelepiped} `}/>
 </p>
 <hr/>
 <b>Right-Hand Rule:</b>
+<br />
+<br />
+<b>2D:</b>
+<p>For a 2D square matrix   <Latex math={`M_2 =  \\begin{bmatrix}
+  \\color{red}v_1 &
+ \\color{blue} v_2 \\\\
+
+\\end{bmatrix}`} />.
+ if the <Latex math={`v_1`}/> goes to <Latex math={'v_2'}/> in counter-clockwise fashion(same direction as curling your right hand fingers into a fist), then its orientation is positive, or else is negative.
+
+</p>
+<p>Example:</p>
+<span>
+  <Latex math={`M_2 =  \\begin{bmatrix}
+                  4 & -3 \\\\
+                  1 & 2 \\\\
+
+  \\end{bmatrix} \\Rightarrow`} /> 
+<Latex math={`\\color{red}v_1 =  \\begin{bmatrix}
+                  4 \\\\
+                  1  \\\\
+ \\end{bmatrix} `} />, 
+
+ <Latex math={`\\color{blue}v_2 =  \\begin{bmatrix}
+                  -3 \\\\
+                  2  \\\\
+ \\end{bmatrix} `} />, here we see <Latex math={'\\color{red}v_1'} /> goes to <Latex math={'\\color{blue}v_2'} /> in counter-clockwise, so its orientation is 1.
+</span>
+<Example2D showOrientation vectors={[ [4,1] ,[-3,2]]}/>
+
+
+<br />
+<br />
+<b>2D:</b>
 <RightHand vecc={[0,7,0]}/>
 
 
