@@ -10,14 +10,18 @@
 
 <p>
   I always have trouble grasping the concept of determinant of a matrix. 
-  After some soul searching, I think determinant can be better understood in the following context:
+  After some soul searching, I think determinant can be better understood as follow:
 </p>
+
+<Latex center math={'\\det(M) = \\text{ oriented volume of } (M)'}/> 
+
+<p>with a little more context:</p>
+
 <fieldset>
 <p>
   In a vector space of dimension <Latex math={'n'}/>, given a linear transformation as matrix <Latex math={'M'}/> and a hyper-parallelepiped as matrix <Latex math={'G'}/> with volume <Latex math={'v_g'}/> 
-  , if we apply <Latex math={'M'}/> on  <Latex math={'G'}/>, the oriented volume of this transformed hyper-parallelepiped is equal to <Latex math={'\\det(M) * v_g'}/>,
-
-or in mathematical terms:</p>
+  :<!-- , if we apply <Latex math={'M'}/> on  <Latex math={'G'}/>, the oriented volume of this transformed hyper-parallelepiped is equal to <Latex math={'\\det(M) * v_g'}/> or in mathematical terms:</p> -->
+</p>
 
 <Latex center math={'\\text{ oriented volume of } (MG) =  \\det(M) * v_g'}/> 
 
@@ -31,6 +35,6 @@ or in mathematical terms:</p>
 </fieldset>
 
 <p>
-  In the following sections, we will go over what is linear transformation, oriented volume, and how to calculate determinant and prove its properties.
+  In the following sections, I will explain everything in the box above, going over what is linear transformation, oriented volume, and how to calculate determinant and prove its properties.
 </p>
 

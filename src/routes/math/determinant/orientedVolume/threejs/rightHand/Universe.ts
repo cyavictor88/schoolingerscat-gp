@@ -270,6 +270,7 @@ export class Universe {
     console.log(loadedData)
     const model = loadedData.scene.children[0];
     model.position.set(0, 0, 2.5);
+    model.scale.set(0.1,0.1,0.1);
     model.visible=true;
 
 

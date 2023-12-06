@@ -19,10 +19,10 @@
 <Title hLevel={1}>Determinant - Oriented Volume</Title>
 
 
-<p>Some definition first, a <strong>full rank</strong> square <Latex math={'n \\times n'} /> matrix has <Latex math={'n'} /> linear independent columns</p>
+<p>Some definition first: a <strong>full rank</strong> square <Latex math={'n \\times n'} /> matrix has <Latex math={'n'} /> linear independent columns</p>
 <hr/>
 
-<p>Given a full rank square matrix size <Latex math={'n'} />: </p>
+<p>Now given a full rank square matrix size <Latex math={'n'} />: </p>
 <Latex center
 math={`
  M =  
@@ -183,7 +183,8 @@ math={`
  if the <Latex math={`v_1`}/> goes to <Latex math={'v_2'}/> in counter-clockwise fashion(same direction as curling your right hand fingers into a fist), then its orientation is positive, or else is negative.
 
 </p>
-<p>Example:</p>
+<p>
+  <u>Example 1:</u>
 <span>
   <Latex math={`M_2 =  \\begin{bmatrix}
                   4 & -3 \\\\
@@ -200,12 +201,32 @@ math={`
                   2  \\\\
  \\end{bmatrix} `} />, here we see <Latex math={'\\color{red}v_1'} /> goes to <Latex math={'\\color{blue}v_2'} /> in counter-clockwise, so its orientation is 1.
 </span>
+</p>
 <Example2D showOrientation vectors={[ [4,1] ,[-3,2]]}/>
+<p>
+  <u>Example 2:</u>
+<span>
+  <Latex math={`M_2 =  \\begin{bmatrix}
+                  -3 & 4 \\\\
+                  2 & 1 \\\\
 
+  \\end{bmatrix} \\Rightarrow`} /> 
+<Latex math={`\\color{red}v_1 =  \\begin{bmatrix}
+                  -3 \\\\
+                  2  \\\\
+ \\end{bmatrix} `} />, 
+
+ <Latex math={`\\color{blue}v_2 =  \\begin{bmatrix}
+                  4 \\\\
+                  1  \\\\
+ \\end{bmatrix} `} />, here we see <Latex math={'\\color{red}v_1'} /> goes to <Latex math={'\\color{blue}v_2'} /> in clockwise, so its orientation is -1.
+</span>
+</p>
+<Example2D showOrientation vectors={[ [-3,2],[4,1]]}/>
 
 <br />
 <br />
-<b>2D:</b>
+<b>3D:</b>
 <RightHand vecc={[0,7,0]}/>
 
 

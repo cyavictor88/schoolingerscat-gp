@@ -239,7 +239,7 @@ export class SpaceShuttle {
     .attr("y", (d)=>this.yScale(d.exhaust.y))
     .style("font-size","18px")
     .attr("dx", this.xScale.invert(18 * (1)))
-    .attr("dy", this.yScale.invert(18 *(1.37)))
+    .attr("dy", this.yScale.invert(18 *(1.45)))
     .text((d)=>this.exhaust)
 
 
