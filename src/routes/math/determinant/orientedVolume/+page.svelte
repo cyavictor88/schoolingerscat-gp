@@ -224,6 +224,25 @@ math={`
 </p>
 <Example2D showOrientation vectors={[ [-3,2],[4,1]]}/>
 
+<p>You might ask why use the right hand rule, well I think is because if you look at identity matrix
+    <Latex math={`M_2 =  \\begin{bmatrix}
+                  1 & 0 \\\\
+                  0 & 1 \\\\
+
+  \\end{bmatrix} \\Rightarrow`} /> 
+<Latex math={`\\color{red}v_1 =  \\begin{bmatrix}
+                  1 \\\\
+                  0  \\\\
+ \\end{bmatrix} `} />, 
+
+ <Latex math={`\\color{blue}v_2 =  \\begin{bmatrix}
+                  0 \\\\
+                  1  \\\\
+ \\end{bmatrix} `} />
+  , which is basically the x and y axis. The rotation from x axis to y axis is counter-clockwise, so it is set to be the reference.
+</p>
+<Example2D showOrientation vectors={[ [1,0],[0,1]]} zoomIn/>
+
 <br />
 <br />
 <b>3D:</b>

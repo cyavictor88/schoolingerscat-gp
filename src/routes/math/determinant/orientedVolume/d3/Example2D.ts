@@ -34,7 +34,11 @@ export class Example2D {
   drawLine : d3.Line<PointVec>;
 
   vectors: PointVec[];
-  constructor(vectors:number[][],showOrientation?:boolean) {
+  constructor(vectors:number[][],showOrientation:boolean,zoomIn:boolean) {
+    if(zoomIn){
+      this.xDomain=[-2,2];
+      this.yDomain=[-2,2];
+    }
     this.vectors = vectors.map(v=>{return {x:v[0],y:v[1]}});
     // Create SVG
     const svg = d3.create("svg")
