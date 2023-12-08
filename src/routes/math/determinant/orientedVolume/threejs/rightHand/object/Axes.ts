@@ -20,12 +20,13 @@ export class Axes {
   public zTextMesh!: THREE.Mesh;
   public font!: Font;
 
-
+  tickSize : number = 1;
 
   
   tick!: (delta:number)=>void;
 
-  constructor(universe:Universe, x: number, y: number, z: number) {
+  constructor(universe:Universe, x: number, y: number, z: number, tickSize: number) {
+    this.tickSize = tickSize;
     this.xAxisLine = new Line([-x - 0.1, 0, 0], [x + 0.1, 0, 0], 'black');
     this.yAxisLine = new Line([0, -y - 0.1, 0], [0, y + 0.1, 0], 'black');
     this.zAxisLine = new Line([0, 0, -z - 0.1], [0, 0, z + 0.1], 'black');
@@ -73,7 +74,10 @@ export class Axes {
     const material5 = new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.DoubleSide });
     const numTicks = Array.from({ length: 2 * len + 1 }, (_, idx) => { return idx - len });
     const ticks: THREE.Mesh[] = [];
-    numTicks.forEach(coor => {
+    for ( const normCoor of numTicks){
+      if(normCoor%this.tickSize!==0)continue;
+      const coor = normCoor * this.tickSize;
+    // numTicks.forEach(coor => {
       let mesh;
       if(coor%5!==0)
         mesh = new THREE.Mesh(geometry, material);
@@ -95,7 +99,7 @@ export class Axes {
       }
       ticks.push(mesh);
       scene.add(mesh);
-    });
+    };
     return ticks;
   }
 

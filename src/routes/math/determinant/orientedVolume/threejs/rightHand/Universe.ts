@@ -50,15 +50,29 @@ export class Universe {
   v1Line: Line;
 
   fig4triangle: Polygon2D | null = null;
+  zoomIn: boolean = false;
+  scale: number =1;
 
   
 
-  constructor(refCurrent: HTMLDivElement, veca:[number,number,number],vecb:[number,number,number],vecc:[number,number,number]) {
+  constructor(refCurrent: HTMLDivElement, veca:[number,number,number],vecb:[number,number,number],vecc:[number,number,number],zoomIn:boolean) {
+    this.zoomIn = zoomIn;
+    if(this.zoomIn) this.scale = 5;
     this.eventBroker = new EventEmitter();
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color('lightblue');
     this.camera = this.initCamera();
-    this.camera.position.set( 5.44, 18., 22 );
+    if(!zoomIn){
+      this.camera.position.set( 5.44, 18., 22 );
+      this.camera.position.set(0, 18.,0 );
+      this.camera.zoom=2.06;
+      this.camera.updateProjectionMatrix()
+    } else {
+      this.camera.position.set( 5.44, 18., 22 );
+      this.camera.position.set(5, 5,5 );
+      this.camera.zoom=2.06;
+      this.camera.updateProjectionMatrix()
+    }
 
     // const mainLight = new THREE.PointLight('green', 2, 50);
     // mainLight.position.set(0, 5, 0);
@@ -96,7 +110,8 @@ export class Universe {
 
     // this.controls.addEventListener('change', () => {
     //   const cameraPosition = this.camera.position.clone();
-    //   console.log('Camera Position:', cameraPosition);
+      
+    //   console.log('Camera Position:', cameraPosition,this.camera.zoom);
     // });
     const plane = new Plane(this.scene,[0,0,0],18,18,new THREE.Vector3(1,0,0));
     plane.mesh.visible=false;
@@ -104,16 +119,23 @@ export class Universe {
     // this.veca = new Vector(-1,2,3,0x008800);
     // this.vecb = new Vector(4,3,5,0x0000ff);
     // this.vecv = new Vector(-4,4,-5,0xff0000);
-    this.veca = new Vector(...veca,0xff0000);
-    this.vecb = new Vector(...vecb,0x0000ff);
-    this.vecv = new Vector(...vecc,0x008800);
+    if(!zoomIn){
+      this.veca = new Vector(...veca,0xff0000);
+      this.vecb = new Vector(...vecb,0x0000ff);
+      this.vecv = new Vector(...vecc,0x008800);
+    } else {
+      this.veca = new Vector( veca[0]*this.scale, veca[1]*this.scale,veca[2]*this.scale,0xff0000);
+      this.vecb = new Vector(vecb[0]*this.scale, vecb[1]*this.scale,vecb[2]*this.scale,0x0000ff);
+      this.vecv = new Vector(vecc[0]*this.scale, vecc[1]*this.scale,vecc[2]*this.scale,0x008800);
+    }
+
 
     // this.vecvrossProduct = new Vector(cp.x,cp.y,cp.z,0xff0000);
 
     this.scene.add(this.veca.vector);
     this.scene.add(this.vecb.vector);
     this.scene.add(this.vecv.vector);
-    this.axes = new Axes(this,10,10,10);
+    this.axes = this.zoomIn? new Axes(this,10,10,10,this.scale):new Axes(this,10,10,10,1);
     this.v1Line = new Line([this.vecv.coord.x,0,this.vecv.coord.z],[0,0,this.vecv.coord.z] , 'red',true);
     this.scene.add(this.v1Line.lineMesh);
     this.v1Line.lineMesh.visible=false;
@@ -236,6 +258,7 @@ export class Universe {
 
 
     this.eventBroker.on('setMathMeshes',()=>{this.setMathMeshes()});
+    this.eventBroker.on('setRightHand',()=>{this.setRightHand()});
     this.eventBroker.on('showFig4Triangle',()=>{this.showFig4Triangle()});
     
 
@@ -251,26 +274,34 @@ export class Universe {
 
   }
 
-  async setMathMeshes(){
-    const mathTexta = await MathText.Init(`\\vec{v_1}=(${this.veca.coord.x},${this.veca.coord.y},${this.veca.coord.z}) `,'red');
-    mathTexta.mesh.position.set(this.veca.coord.x, this.veca.coord.y, this.veca.coord.z);
-    this.scene.add(mathTexta.mesh);
-
-    const mathTextb = await MathText.Init(`\\vec{v_2}=(${this.vecb.coord.x},${this.vecb.coord.y},${this.vecb.coord.z}) `,'blue');
-    mathTextb.mesh.position.set(this.vecb.coord.x, this.vecb.coord.y, this.vecb.coord.z)
-    this.scene.add(mathTextb.mesh);
-
-    const mathTextv = await MathText.Init(`\\vec{v_3}=(${this.vecv.coord.x},${this.vecv.coord.y},${this.vecv.coord.z})`,'green');
-    mathTextv.mesh.position.set(this.vecv.coord.x, this.vecv.coord.y, this.vecv.coord.z)
-    this.scene.add(mathTextv.mesh);
-
+  async setRightHand(){
     const gltfLoader = new GLTFLoader();
 
     const loadedData = await gltfLoader.loadAsync('/glbs/rightHand2.glb');
     console.log(loadedData)
     const model = loadedData.scene.children[0];
-    model.position.set(0, 0, 2.5);
+    model.position.set(0, 0, 0);
+    const [veca,vecb] = [new THREE.Vector3(),new THREE.Vector3()];
+    veca.copy(this.veca.coord);
+    vecb.copy(this.vecb.coord);
+    const cross = new THREE.Vector3().crossVectors(veca,vecb);
+    // const quat0 =  new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(1,0,0), veca.normalize());
+    // const quat1 =  new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(1,0,0), cross.normalize());
+    const quat = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(1,0,0), cross.normalize());
+    if(this.zoomIn){
+      const quat2 = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1,0,0), -Math.PI/2);
+      // const quat2 = new THREE.Quaternion().setFromAxisAngle(cross.normalize(), Math.acos(new THREE.Vector3(0,1,0).dot(this.veca.coord)/this.veca.coord.length()) );
+      // const quat2 = new THREE.Quaternion().setFromUnitVectors(cross.normalize(),veca);
+      quat.multiply(quat2);
+    }
+    model.applyQuaternion(quat);
+    
+    if(!this.zoomIn){
     model.scale.set(0.1,0.1,0.1);
+    } else {
+    model.scale.set(0.1,0.1,0.1);
+
+    }
     model.visible=true;
 
 
@@ -281,10 +312,28 @@ export class Universe {
     action.play();
 
     (model as any).tick = (delta:number) => mixer.update(delta)
-
+    
 
     this.scene.add(model);
     this.tickingWorld.updatables.push(model);
+  }
+
+  async setMathMeshes(){
+    const scale = this.scale;
+    const mathTexta = await MathText.Init(`\\vec{v_1}=(${this.veca.coord.x/scale},${this.veca.coord.y/scale},${this.veca.coord.z/scale}) `,'red');
+    mathTexta.mesh.position.set(this.veca.coord.x, this.veca.coord.y, this.veca.coord.z);
+    this.scene.add(mathTexta.mesh);
+
+    const mathTextb = await MathText.Init(`\\vec{v_2}=(${this.vecb.coord.x/scale},${this.vecb.coord.y/scale},${this.vecb.coord.z/scale}) `,'blue');
+    mathTextb.mesh.position.set(this.vecb.coord.x, this.vecb.coord.y, this.vecb.coord.z)
+    this.scene.add(mathTextb.mesh);
+
+    const mathTextv = await MathText.Init(`\\vec{v_3}=(${this.vecv.coord.x/scale},${this.vecv.coord.y/scale},${this.vecv.coord.z/scale})`,'green');
+    mathTextv.mesh.position.set(this.vecv.coord.x, this.vecv.coord.y, this.vecv.coord.z)
+    this.scene.add(mathTextv.mesh);
+
+
+
         // const theta = await Theta.Init(this.veca.coord,this.vecb.coord);
     // this.scene.add(theta.curveMesh);
     // this.scene.add(theta.textMesh.mesh);
@@ -306,9 +355,11 @@ export class Universe {
 
   initCamera() {
     const aspect = this.canvasSize.w / this.canvasSize.h;
-    const frustumSize = 20;
+    
+    const frustumSize = 40;
     const camera = new THREE.OrthographicCamera(frustumSize * aspect / -2, frustumSize * aspect / 2, frustumSize / 2, frustumSize / -2, 0.1, 40);
     camera.lookAt(new THREE.Vector3(0,0,0))
+
     return camera;
   }
 
