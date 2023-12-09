@@ -387,8 +387,8 @@
 		<Latex
 			math={`M_3 =  \\begin{bmatrix}
                    -4 & 4 & -1 \\\\
-                   4 & 3 & 2 \\\\
-                   -5 & 5 & -3 \\\\
+                   4 & 3 & 5 \\\\
+                   -5 & 5 & -6 \\\\
  
   \\end{bmatrix}\\Rightarrow `}
 		/>
@@ -411,14 +411,14 @@
 		<Latex
 			math={`\\color{green}v_3 =  \\begin{bmatrix}
 -1 \\\\
-2  \\\\
--3  \\\\
+5  \\\\
+-6  \\\\
 \\end{bmatrix} `}
 		/>, looking at the right hand in the figure, as the fingers curl from <Latex math={'\\color{red}v_1'} /> to <Latex math={'\\color{blue}v_2'} /> 
 , the thumb is pointing in the general direction of <Latex math={`\\color{green}v_3`} />, so its orientation is +1.
 	</span>
 </p>
-<RightHand  vecc={[-1,2,-3]}/>
+<RightHand  vecc={[-1,5,-6]}/>
 
 
 <p>
@@ -457,10 +457,14 @@
 \\end{bmatrix} `}
 />
 	, which is basically the x, y, and z axis. So if you curl your right fingers from x to y axis, your thumb will
-  be pointing at z axis. 
+  be pointing at z axis. So This is the standard orientation.
 </p>
 <RightHand veca={[1,0,0]} vecb={[0,1,0]} vecc={[0,0,1]} zoomIn/>
 
+
+<hr />
+
+<p>In the next section, we will go over how to calculate the oriented volume(Determinant) of a matrix</p> 
 
 
 <style>

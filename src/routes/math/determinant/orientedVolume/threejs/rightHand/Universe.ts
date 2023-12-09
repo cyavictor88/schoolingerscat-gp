@@ -23,9 +23,9 @@ export enum Dir {
 }
 
 export const unitVec = {
-  x: new THREE.Vector3(1,0,0),
-  y: new THREE.Vector3(0,1,0),
-  z: new THREE.Vector3(0,0,1),
+  x: new THREE.Vector3(1, 0, 0),
+  y: new THREE.Vector3(0, 1, 0),
+  z: new THREE.Vector3(0, 0, 1),
 }
 
 export class Universe {
@@ -42,35 +42,37 @@ export class Universe {
 
 
 
-  veca : Vector;
-  vecb : Vector;
+  veca: Vector;
+  vecb: Vector;
   vecv: Vector;
-  axes : Axes;
+  axes: Axes;
 
   v1Line: Line;
 
   fig4triangle: Polygon2D | null = null;
   zoomIn: boolean = false;
-  scale: number =1;
+  scale: number = 1;
 
-  
+  timePass = 0;
 
-  constructor(refCurrent: HTMLDivElement, veca:[number,number,number],vecb:[number,number,number],vecc:[number,number,number],zoomIn:boolean) {
+
+
+  constructor(refCurrent: HTMLDivElement, veca: [number, number, number], vecb: [number, number, number], vecc: [number, number, number], zoomIn: boolean) {
     this.zoomIn = zoomIn;
-    if(this.zoomIn) this.scale = 5;
+    if (this.zoomIn) this.scale = 5;
     this.eventBroker = new EventEmitter();
     this.scene = new THREE.Scene();
     this.scene.background = new THREE.Color('lightblue');
     this.camera = this.initCamera();
-    if(!zoomIn){
-      this.camera.position.set( 5.44, 18., 22 );
-      this.camera.position.set(0, 18.,0 );
-      this.camera.zoom=2.06;
+    if (!zoomIn) {
+      this.camera.position.set(5.44, 18., 22);
+      this.camera.position.set(0, 18., 0);
+      this.camera.zoom = 2.06;
       this.camera.updateProjectionMatrix()
     } else {
-      this.camera.position.set( 5.44, 18., 22 );
-      this.camera.position.set(5, 5,5 );
-      this.camera.zoom=2.06;
+      this.camera.position.set(5.44, 18., 22);
+      this.camera.position.set(5, 5, 5);
+      this.camera.zoom = 2.06;
       this.camera.updateProjectionMatrix()
     }
 
@@ -83,8 +85,8 @@ export class Universe {
     // const helper = new THREE.HemisphereLightHelper( light, 5 );
     // scene.add( helper );
 
-    const light = new THREE.AmbientLight( 0xffffff ); // soft white light
-    this.scene.add( light );
+    const light = new THREE.AmbientLight(0xffffff); // soft white light
+    this.scene.add(light);
 
 
     // const helper = new THREE.AxesHelper(10);
@@ -102,7 +104,7 @@ export class Universe {
     this.renderer.setSize(this.canvasSize.w, this.canvasSize.h);
     refCurrent.appendChild(this.renderer.domElement);
     this.eventBroker.on("hello", (data) => { console.log(data) });
-    this.controls = new OrbitControls(this.camera, this.renderer.domElement );
+    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
 
     this.controls.update();
 
@@ -110,23 +112,23 @@ export class Universe {
 
     // this.controls.addEventListener('change', () => {
     //   const cameraPosition = this.camera.position.clone();
-      
+
     //   console.log('Camera Position:', cameraPosition,this.camera.zoom);
     // });
-    const plane = new Plane(this.scene,[0,0,0],18,18,new THREE.Vector3(1,0,0));
-    plane.mesh.visible=false;
+    const plane = new Plane(this.scene, [0, 0, 0], 18, 18, new THREE.Vector3(1, 0, 0));
+    plane.mesh.visible = false;
 
     // this.veca = new Vector(-1,2,3,0x008800);
     // this.vecb = new Vector(4,3,5,0x0000ff);
     // this.vecv = new Vector(-4,4,-5,0xff0000);
-    if(!zoomIn){
-      this.veca = new Vector(...veca,0xff0000);
-      this.vecb = new Vector(...vecb,0x0000ff);
-      this.vecv = new Vector(...vecc,0x008800);
+    if (!zoomIn) {
+      this.veca = new Vector(...veca, 0xff0000);
+      this.vecb = new Vector(...vecb, 0x0000ff);
+      this.vecv = new Vector(...vecc, 0x008800);
     } else {
-      this.veca = new Vector( veca[0]*this.scale, veca[1]*this.scale,veca[2]*this.scale,0xff0000);
-      this.vecb = new Vector(vecb[0]*this.scale, vecb[1]*this.scale,vecb[2]*this.scale,0x0000ff);
-      this.vecv = new Vector(vecc[0]*this.scale, vecc[1]*this.scale,vecc[2]*this.scale,0x008800);
+      this.veca = new Vector(veca[0] * this.scale, veca[1] * this.scale, veca[2] * this.scale, 0xff0000);
+      this.vecb = new Vector(vecb[0] * this.scale, vecb[1] * this.scale, vecb[2] * this.scale, 0x0000ff);
+      this.vecv = new Vector(vecc[0] * this.scale, vecc[1] * this.scale, vecc[2] * this.scale, 0x008800);
     }
 
 
@@ -135,99 +137,99 @@ export class Universe {
     this.scene.add(this.veca.vector);
     this.scene.add(this.vecb.vector);
     this.scene.add(this.vecv.vector);
-    this.axes = this.zoomIn? new Axes(this,10,10,10,this.scale):new Axes(this,10,10,10,1);
-    this.v1Line = new Line([this.vecv.coord.x,0,this.vecv.coord.z],[0,0,this.vecv.coord.z] , 'red',true);
+    this.axes = this.zoomIn ? new Axes(this, 10, 10, 10, this.scale) : new Axes(this, 10, 10, 10, 1);
+    this.v1Line = new Line([this.vecv.coord.x, 0, this.vecv.coord.z], [0, 0, this.vecv.coord.z], 'red', true);
     this.scene.add(this.v1Line.lineMesh);
-    this.v1Line.lineMesh.visible=false;
+    this.v1Line.lineMesh.visible = false;
 
 
     const loader = new FontLoader();
     loader.load('/fonts/helvetiker_regular.typeface.json', (font) => {
       this.font = font;
-      this.v1Line.setText(font,'V1', new THREE.Vector3(this.vecv.coord.x/2, 0,this.vecv.coord.z)  );
+      this.v1Line.setText(font, 'V1', new THREE.Vector3(this.vecv.coord.x / 2, 0, this.vecv.coord.z));
       this.scene.add(this.v1Line.textMesh!);
-      this.v1Line.textMesh!.visible=false;
+      this.v1Line.textMesh!.visible = false;
     });
 
 
 
-    const pp = new Parallelepiped(this.scene,this.veca.coord,this.vecb.coord,this.vecv.coord);
+    const pp = new Parallelepiped(this.scene, this.veca.coord, this.vecb.coord, this.vecv.coord);
 
 
-    this.eventBroker.on('toggleShowHeight',()=>{
+    this.eventBroker.on('toggleShowHeight', () => {
       plane.mesh.visible = false;
-      this.v1Line.lineMesh.visible=true;
-      this.v1Line.textMesh!.visible=true;
+      this.v1Line.lineMesh.visible = true;
+      this.v1Line.textMesh!.visible = true;
       const duration = 1000;
       const cameraPodTween = new TWEEN.Tween(this.camera.position)
-      .to(new THREE.Vector3(0,20,0), duration)
-      .easing(TWEEN.Easing.Quadratic.Out) // You can choose a different easing function
-      .onUpdate(() => {
-        this.camera.lookAt(new THREE.Vector3());
-        this.camera.updateProjectionMatrix();
-        this.v1Line.textMesh!.lookAt(this.camera.position)
+        .to(new THREE.Vector3(0, 20, 0), duration)
+        .easing(TWEEN.Easing.Quadratic.Out) // You can choose a different easing function
+        .onUpdate(() => {
+          this.camera.lookAt(new THREE.Vector3());
+          this.camera.updateProjectionMatrix();
+          this.v1Line.textMesh!.lookAt(this.camera.position)
 
-      })
-      .start()
-      .onComplete(() => {
-        // Animation is complete
-        this.camera.lookAt(new THREE.Vector3());
-        // this.camera.rotation.set(0,0,0);
-      });
+        })
+        .start()
+        .onComplete(() => {
+          // Animation is complete
+          this.camera.lookAt(new THREE.Vector3());
+          // this.camera.rotation.set(0,0,0);
+        });
 
-      const zoomProp = {zoom:1}
+      const zoomProp = { zoom: 1 }
       const cameraZoomTween = new TWEEN.Tween(zoomProp)
-      .to({zoom: 0.8},duration)
-      .easing(TWEEN.Easing.Quadratic.Out) // You can choose a different easing function
-      .onUpdate((val) => {
-        this.camera.zoom = val.zoom;
-        this.camera.updateProjectionMatrix();
-      })
-      .start()
-      .onComplete(() => {
-        // Animation is complete
-        console.log('zoom tween complete');
-      });
+        .to({ zoom: 0.8 }, duration)
+        .easing(TWEEN.Easing.Quadratic.Out) // You can choose a different easing function
+        .onUpdate((val) => {
+          this.camera.zoom = val.zoom;
+          this.camera.updateProjectionMatrix();
+        })
+        .start()
+        .onComplete(() => {
+          // Animation is complete
+          console.log('zoom tween complete');
+        });
     });
 
 
-    this.eventBroker.on('toggleYZPlane',()=>{
+    this.eventBroker.on('toggleYZPlane', () => {
       plane.mesh.visible = !plane.mesh.visible;
-      this.v1Line.lineMesh.visible=false;
-      this.v1Line.textMesh!.visible=false;
+      this.v1Line.lineMesh.visible = false;
+      this.v1Line.textMesh!.visible = false;
 
       const duration = 1000;
       const cameraPodTween = new TWEEN.Tween(this.camera.position)
-      .to(new THREE.Vector3(20,0,0), duration)
-      .easing(TWEEN.Easing.Quadratic.Out) // You can choose a different easing function
-      .onUpdate(() => {
-        this.camera.lookAt(new THREE.Vector3());
-      })
-      .start()
-      .onComplete(() => {
-        // Animation is complete
-        console.log('Animation complete');
-        this.camera.lookAt(new THREE.Vector3());
-        this.camera.zoom = 0.8 * this.camera.zoom;
-        this.camera.updateProjectionMatrix()
-      });
+        .to(new THREE.Vector3(20, 0, 0), duration)
+        .easing(TWEEN.Easing.Quadratic.Out) // You can choose a different easing function
+        .onUpdate(() => {
+          this.camera.lookAt(new THREE.Vector3());
+        })
+        .start()
+        .onComplete(() => {
+          // Animation is complete
+          console.log('Animation complete');
+          this.camera.lookAt(new THREE.Vector3());
+          this.camera.zoom = 0.8 * this.camera.zoom;
+          this.camera.updateProjectionMatrix()
+        });
 
-      const zoomProp = {zoom:1}
+      const zoomProp = { zoom: 1 }
       const cameraZoomTween = new TWEEN.Tween(zoomProp)
-      .to({zoom: 0.8},duration)
-      .easing(TWEEN.Easing.Quadratic.Out) // You can choose a different easing function
-      .onUpdate((val) => {
-        this.camera.zoom = val.zoom;
-        this.camera.updateProjectionMatrix();
-      })
-      .start()
-      .onComplete(() => {
-        // Animation is complete
-        console.log('zoom tween complete');
-      });
+        .to({ zoom: 0.8 }, duration)
+        .easing(TWEEN.Easing.Quadratic.Out) // You can choose a different easing function
+        .onUpdate((val) => {
+          this.camera.zoom = val.zoom;
+          this.camera.updateProjectionMatrix();
+        })
+        .start()
+        .onComplete(() => {
+          // Animation is complete
+          console.log('zoom tween complete');
+        });
 
     });
-    (TWEEN as any).tick = ()=>{
+    (TWEEN as any).tick = () => {
       TWEEN.update();
     }
     this.tickingWorld.updatables.push(TWEEN)
@@ -257,16 +259,16 @@ export class Universe {
 
 
 
-    this.eventBroker.on('setMathMeshes',()=>{this.setMathMeshes()});
-    this.eventBroker.on('setRightHand',()=>{this.setRightHand()});
-    this.eventBroker.on('showFig4Triangle',()=>{this.showFig4Triangle()});
-    
+    this.eventBroker.on('setMathMeshes', () => { this.setMathMeshes() });
+    this.eventBroker.on('setRightHand', () => { this.setRightHand() });
+    this.eventBroker.on('showFig4Triangle', () => { this.showFig4Triangle() });
+
 
   }
 
-  showFig4Triangle(){
-    if(!this.fig4triangle){
-      this.fig4triangle = new Polygon2D([this.veca.coord,this.vecb.coord,new THREE.Vector3()],'lightgrey')
+  showFig4Triangle() {
+    if (!this.fig4triangle) {
+      this.fig4triangle = new Polygon2D([this.veca.coord, this.vecb.coord, new THREE.Vector3()], 'lightgrey')
       this.scene.add(this.fig4triangle.mesh);
     } else {
       this.fig4triangle.mesh.visible = !this.fig4triangle.mesh.visible;
@@ -274,35 +276,28 @@ export class Universe {
 
   }
 
-  async setRightHand(){
+  async setRightHand() {
     const gltfLoader = new GLTFLoader();
 
     const loadedData = await gltfLoader.loadAsync('/glbs/rightHand2.glb');
     console.log(loadedData)
     const model = loadedData.scene.children[0];
     model.position.set(0, 0, 0);
-    const [veca,vecb] = [new THREE.Vector3(),new THREE.Vector3()];
+    const [veca, vecb] = [new THREE.Vector3(), new THREE.Vector3()];
     veca.copy(this.veca.coord);
     vecb.copy(this.vecb.coord);
-    const cross = new THREE.Vector3().crossVectors(veca,vecb);
-    // const quat0 =  new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(1,0,0), veca.normalize());
-    // const quat1 =  new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(1,0,0), cross.normalize());
-    const quat = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(1,0,0), cross.normalize());
-    if(this.zoomIn){
-      const quat2 = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1,0,0), -Math.PI/2);
-      // const quat2 = new THREE.Quaternion().setFromAxisAngle(cross.normalize(), Math.acos(new THREE.Vector3(0,1,0).dot(this.veca.coord)/this.veca.coord.length()) );
-      // const quat2 = new THREE.Quaternion().setFromUnitVectors(cross.normalize(),veca);
-      quat.multiply(quat2);
-    }
+    const cross = new THREE.Vector3().crossVectors(veca, vecb);
+    const quat = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(1, 0, 0), cross.normalize());
+    const quat1 = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), -Math.acos(new THREE.Vector3(0, 1, 0).dot(veca.normalize())));
+    quat.multiply(quat1);
     model.applyQuaternion(quat);
-    
-    if(!this.zoomIn){
-    model.scale.set(0.1,0.1,0.1);
-    } else {
-    model.scale.set(0.1,0.1,0.1);
 
+    if (!this.zoomIn) {
+      model.scale.set(0.1, 0.1, 0.1);
+    } else {
+      model.scale.set(0.1, 0.1, 0.1);
     }
-    model.visible=true;
+    model.visible = true;
 
 
     const clip = loadedData.animations[0];
@@ -311,30 +306,33 @@ export class Universe {
     const action = mixer.clipAction(clip);
     action.play();
 
-    (model as any).tick = (delta:number) => mixer.update(delta)
-    
+
+    (model as any).tick = (delta: number) => {
+      mixer.update(delta)
+    }
+
 
     this.scene.add(model);
     this.tickingWorld.updatables.push(model);
   }
 
-  async setMathMeshes(){
+  async setMathMeshes() {
     const scale = this.scale;
-    const mathTexta = await MathText.Init(`\\vec{v_1}=(${this.veca.coord.x/scale},${this.veca.coord.y/scale},${this.veca.coord.z/scale}) `,'red');
+    const mathTexta = await MathText.Init(`\\vec{v_1}=(${this.veca.coord.x / scale},${this.veca.coord.y / scale},${this.veca.coord.z / scale}) `, 'red');
     mathTexta.mesh.position.set(this.veca.coord.x, this.veca.coord.y, this.veca.coord.z);
     this.scene.add(mathTexta.mesh);
 
-    const mathTextb = await MathText.Init(`\\vec{v_2}=(${this.vecb.coord.x/scale},${this.vecb.coord.y/scale},${this.vecb.coord.z/scale}) `,'blue');
+    const mathTextb = await MathText.Init(`\\vec{v_2}=(${this.vecb.coord.x / scale},${this.vecb.coord.y / scale},${this.vecb.coord.z / scale}) `, 'blue');
     mathTextb.mesh.position.set(this.vecb.coord.x, this.vecb.coord.y, this.vecb.coord.z)
     this.scene.add(mathTextb.mesh);
 
-    const mathTextv = await MathText.Init(`\\vec{v_3}=(${this.vecv.coord.x/scale},${this.vecv.coord.y/scale},${this.vecv.coord.z/scale})`,'green');
+    const mathTextv = await MathText.Init(`\\vec{v_3}=(${this.vecv.coord.x / scale},${this.vecv.coord.y / scale},${this.vecv.coord.z / scale})`, 'green');
     mathTextv.mesh.position.set(this.vecv.coord.x, this.vecv.coord.y, this.vecv.coord.z)
     this.scene.add(mathTextv.mesh);
 
 
 
-        // const theta = await Theta.Init(this.veca.coord,this.vecb.coord);
+    // const theta = await Theta.Init(this.veca.coord,this.vecb.coord);
     // this.scene.add(theta.curveMesh);
     // this.scene.add(theta.textMesh.mesh);
 
@@ -345,7 +343,7 @@ export class Universe {
     const mm = await mathmesh("\\int_{a}^{b}x^2 \\,dx \\frac{3}{4} \\vec{a}");
     const geometry = new THREE.BufferGeometry()
     geometry.setAttribute('position', new THREE.BufferAttribute(mm.vertices, 3));
-    const material = new THREE.MeshBasicMaterial({ color: 0xff00ff, side:THREE.DoubleSide });
+    const material = new THREE.MeshBasicMaterial({ color: 0xff00ff, side: THREE.DoubleSide });
     const mesh = new THREE.Mesh(geometry, material);
 
     this.scene.add(mesh);
@@ -355,10 +353,10 @@ export class Universe {
 
   initCamera() {
     const aspect = this.canvasSize.w / this.canvasSize.h;
-    
+
     const frustumSize = 40;
     const camera = new THREE.OrthographicCamera(frustumSize * aspect / -2, frustumSize * aspect / 2, frustumSize / 2, frustumSize / -2, 0.1, 40);
-    camera.lookAt(new THREE.Vector3(0,0,0))
+    camera.lookAt(new THREE.Vector3(0, 0, 0))
 
     return camera;
   }
