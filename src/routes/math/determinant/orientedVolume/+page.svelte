@@ -3,9 +3,11 @@
 	import Latex from '$lib/components/Latex/Latex.svelte';
 	import Example2D from './d3/Example2D.svelte';
 	import Example3D from './threejs/example3D/Example3D.svelte';
+	import InteractiveD3 from './d3/interactive/InteractiveD3.svelte';
 	import RightHand from './threejs/rightHand/RightHand.svelte';
 </script>
 
+<InteractiveD3 />
 <Title hLevel={1}>Determinant - Oriented Volume</Title>
 
 <p>
