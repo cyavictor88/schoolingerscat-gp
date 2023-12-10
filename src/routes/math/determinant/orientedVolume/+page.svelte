@@ -7,7 +7,6 @@
 	import RightHand from './threejs/rightHand/RightHand.svelte';
 </script>
 
-<InteractiveD3 />
 <Title hLevel={1}>Determinant - Oriented Volume</Title>
 
 <p>
@@ -325,6 +324,11 @@
 	]}
 	zoomIn
 />
+<p><u>Interactive 2D Example:</u></p>
+<div style='padding: 4px; border: 1px solid black; width: 400px;'>
+	<InteractiveD3 />
+
+</div>
 
 <br />
 <br />
