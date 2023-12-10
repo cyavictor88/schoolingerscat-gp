@@ -34,9 +34,13 @@ export class InteractiveD3 {
   snap2Grid: boolean = false;
 
   vectors: PointVec[];
+  oriVectors: number[][];
   // circles: PointVec[];
+  dragCircles!: SVGCircleElement[];
+
 
   constructor(vectors:number[][],showOrientation:boolean,zoomIn:boolean) {
+    this.oriVectors=vectors;
     if(zoomIn){
       this.xDomain=[-2,2];
       this.yDomain=[-2,2];
@@ -70,12 +74,104 @@ export class InteractiveD3 {
     this.makeShape();
     this.defArrow();
     this.makeVectors();
+    this.makeDragCircles();
     if(showOrientation)this.makeOrientationCurve();
 
     this.eventBroker.addListener('toggleSnap2Grid',()=>{
       // this.snap2Grid=!this.snap2Grid;
       console.log(this.snap2Grid)
     });
+
+
+
+
+
+
+  }
+
+  makeDragCircles(){
+    const data = this.vectors.map(p=> {return {x: this.xScale(p.x),y:this.yScale(p.y)}});
+    const group = this.svg.append('g').attr('class','dragCircles');
+    const updateCircles = ()=>{
+      if(this.snap2Grid)
+      data.forEach(p=>{
+        const gridX = this.xScale(Math.round(this.xScale.invert(p.x)));
+        const gridY = this.yScale(Math.round(this.yScale.invert(p.y)));
+        p.x = gridX;
+        p.y = gridY;
+      });
+      group
+      .selectAll('circle')
+      .data(data)
+      .join('circle')
+      .attr('cx', (d)=> { return (d.x); })
+      .attr('cy', (d)=> { return (d.y); })
+      .attr('r',(d)=> 5)
+      .attr('fill',(d,i)=>i === 0 ?'red':'blue')
+      .attr('fill-opacity',0.4)
+      .on('mouseover', function (d, i) {
+        d3.select(this).transition()
+        .duration(499)
+        .attr('r', (d)=>7);
+      })
+      .on('mouseout', function (d, i) {
+        d3.select(this).transition()
+        .duration(499)
+        .attr('r', (d)=>5);
+      })
+    }
+    const handleDrag = (event: d3.D3DragEvent<SVGCircleElement, any, any>) => {
+      const update = () => {
+        updateCircles();
+        // this.eventBroker.emit('newCirclesLocation',this.dragCircles!.map(ci=>{return {x:ci.cx.baseVal.value,y:ci.cy.baseVal.value}}))
+        this.eventBroker.emit('newCirclesLocation',data.map(p=>{
+          return {
+            x:this.xScale.invert(p.x),
+            y:this.yScale.invert(p.y)
+        }}))
+      }
+      event.subject.x = event.x;
+      event.subject.y = event.y;
+      update();
+      // this.dragCircles.forEach(c=>console.log('circles',c))
+    }
+    const drag = d3.drag().on('drag', handleDrag);
+    const initDrag = ()=>{
+      updateCircles();
+      group.selectAll('circle').call(drag as any);
+    }
+
+    initDrag();
+    this.dragCircles = group.selectAll('circle').nodes() as SVGCircleElement[];
+
+    this.eventBroker.addListener('toggleSnap2Grid',()=>{
+      if(this.snap2Grid){
+        data.forEach(p=>{
+          const gridX = this.xScale(Math.round(this.xScale.invert(p.x)));
+          const gridY = this.yScale(Math.round(this.yScale.invert(p.y)));
+          p.x = gridX;
+          p.y = gridY;
+        })
+        group
+        .selectAll('circle')
+        .data(data)
+        .join('circle')
+        .attr('cx', (d)=> { return (d.x); })
+        .attr('cy', (d)=> { return (d.y); })
+        .attr('r',(d)=> 5)
+        .attr('fill',(d,i)=>i === 0 ?'red':'blue')
+        .attr('fill-opacity',0.4);
+        this.dragCircles = group.selectAll('circle').nodes() as SVGCircleElement[];
+        this.eventBroker.emit('newCirclesLocation',data.map(p=>{
+          return {
+            x:this.xScale.invert(p.x),
+            y:this.yScale.invert(p.y)
+          }
+        }))
+      }
+    })
+
+
   }
 
   makeOrientationCurve(){
@@ -91,28 +187,77 @@ export class InteractiveD3 {
     arrowBlack.attr('fill', 'black')
     arrowBlack.attr('id', 'arrowBlack')
 
-    this.svg.append("path")
+
+    const group = this.svg.append('g').attr('class','orientationCurve');
+    group
+    .selectAll('path')
     .data(curves)
+    .join('path')
+    // .data(curves)
     .attr("d", curveFunc)
     .attr('stroke', 'black')
     .attr('stroke-dasharray',"5,5")
     .attr('marker-end', 'url(#arrowBlack)')
     .attr('fill', 'none');
+
+
+  
+    this.eventBroker.addListener('newCirclesLocation', (newPointVecs: PointVec[])=>{
+      const vectors = newPointVecs.map(p=>p);
+      const sum ={x:vectors[0].x+vectors[1].x, y:(vectors[0].y+vectors[1].y)};
+      const curves = [[vectors[0], sum,   vectors[1]]]
+      group
+      .selectAll('path')
+      .data(curves)
+      .join('path')
+      .attr("d", curveFunc)
+      .attr('stroke', 'black')
+      .attr('stroke-dasharray',"5,5")
+      .attr('marker-end', 'url(#arrowBlack)')
+      .attr('fill', 'none');
+    })
   
   }
 
   makeShape(){
+    const group = this.svg.append('g').attr('class','shape');
+
     const vertices : [number,number][]= [[this.xScale(0),this.yScale(0)]];
     this.vectors.forEach(vec=>{
       vertices.push( [this.xScale(vec.x), this.yScale(vec.y)])
     })
     vertices.push([this.xScale(this.vectors[0].x+this.vectors[1].x),this.yScale(this.vectors[0].y+this.vectors[1].y)])
     const convexVerts = d3.polygonHull(vertices)
-    if(convexVerts)
-    this.svg.append("polygon")
-    .attr("points", convexVerts.join(" "))
-    .attr("fill", "white")
-    .attr("opacity","0.5")
+    if(convexVerts){
+      // this.svg.append("polygon")
+      group.selectAll('polygon')
+      .data([convexVerts])
+      .join('polygon')
+      .attr("points", (d)=> d.join(" "))
+      .attr("fill", "white")
+      .attr("opacity","0.5")
+    }
+
+    this.eventBroker.addListener('newCirclesLocation', (newPointVecs: PointVec[])=>{
+      const vertices : [number,number][]= [[this.xScale(0),this.yScale(0)]];
+      newPointVecs.forEach(vec=>{
+        vertices.push( [this.xScale(vec.x), this.yScale(vec.y)])
+      })
+      vertices.push([this.xScale(newPointVecs[0].x+newPointVecs[1].x),this.yScale(newPointVecs[0].y+newPointVecs[1].y)])
+      const convexVerts = d3.polygonHull(vertices)
+
+      if(convexVerts){
+        // this.svg.append("polygon")
+        group.selectAll('polygon')
+        .data([convexVerts])
+        .join('polygon')
+        .attr("points", (d)=> d.join(" "))
+        .attr("fill", "white")
+        .attr("opacity","0.5")
+      }
+    })
+  
+
 
   }
   defArrow(){
@@ -139,31 +284,54 @@ export class InteractiveD3 {
   }
 
   makeVectors(){
+    const group = this.svg.append('g').attr('class','vecs'); 
+    const group2 = this.svg.append('g').attr('class','vec2');
+    
+    // const groups = [group1,group2];
 
     const vec0 = {x:0,y:0};
     const vec1 = this.vectors[0]!;
     const vec2 = this.vectors[1]!;
+
     const arrowRed = this.svg.select('#arrow').clone(true)
     arrowRed.attr('fill', 'red')
     arrowRed.attr('id', 'arrowRed')
-  
-    this.svg
-      .append('path')
-      .attr('d', this.drawLine([vec0, vec1]))
-      .attr('stroke', 'red')
-      .attr('marker-end', 'url(#arrowRed)')
+
+    const arrowBlue = this.svg.select('#arrow').clone(true)
+    arrowBlue.attr('fill', 'blue')
+    arrowBlue.attr('id', 'arrowBlue')
+
+    // this.svg
+      // .append('path')
+      group.selectAll('path')
+      .data([  [vec0,vec1],[vec0,vec2]])
+      .join('path')
+      .attr('d', (d)=>this.drawLine(d))
+      .attr('stroke',(d,i)=>i===0? 'red':'blue')
+      .attr('marker-end',(d,i)=>i===0? 'url(#arrowRed)':'url(#arrowBlue)')
       .attr('fill', 'none');
 
-      const arrowBlue = this.svg.select('#arrow').clone(true)
-      arrowBlue.attr('fill', 'blue')
-      arrowBlue.attr('id', 'arrowBlue')
-    
-      this.svg
-        .append('path')
-        .attr('d', this.drawLine([vec0, vec2]))
-        .attr('stroke', 'blue')
-        .attr('marker-end', 'url(#arrowBlue)')
-        .attr('fill', 'none');
+    this.eventBroker.addListener('newCirclesLocation', (newPointVecs: PointVec[])=>{
+      const vec0 = {x:0,y:0};
+      const vec1 = newPointVecs[0]!;
+      const vec2 = newPointVecs[1]!;
+      this.vectors[0]=vec1;
+      this.vectors[1]=vec2;
+      group.selectAll('path')
+      .data([  [vec0,vec1],[vec0,vec2]])
+      .join('path')
+      .attr('d', (d)=>this.drawLine(d))
+      .attr('stroke',(d,i)=>i===0? 'red':'blue')
+      .attr('marker-end',(d,i)=>i===0? 'url(#arrowRed)':'url(#arrowBlue)')
+      .attr('fill', 'none');
+    })
+  
+    // this.svg
+    //   .append('path')
+    //   .attr('d', this.drawLine([vec0, vec2]))
+    //   .attr('stroke', 'blue')
+    //   .attr('marker-end', 'url(#arrowBlue)')
+    //   .attr('fill', 'none');
 
   }
   makeGrid(){
