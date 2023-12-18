@@ -1,6 +1,7 @@
 import * as d3 from 'd3';
 import katex from "katex";
 import EventEmitter from 'eventemitter3';
+import * as mj from 'mathjs';
 
 function latex(math: string) {
   const mathmlHtml = katex.renderToString(math, {
@@ -195,7 +196,7 @@ export class InteractiveD3 {
     .join('path')
     // .data(curves)
     .attr("d", curveFunc)
-    .attr('stroke', 'black')
+    .attr('stroke', 'green')
     .attr('stroke-dasharray',"5,5")
     .attr('marker-end', 'url(#arrowBlack)')
     .attr('fill', 'none');
@@ -203,6 +204,13 @@ export class InteractiveD3 {
 
   
     this.eventBroker.addListener('newCirclesLocation', (newPointVecs: PointVec[])=>{
+      const det = mj.det([[newPointVecs[0].x,newPointVecs[0].y],[newPointVecs[1].x,newPointVecs[1].y]]);
+      let color = 'black';
+      if(det>1){
+        color = 'green';
+      } else if (det<1) {
+        color = 'brown';
+      }
       const vectors = newPointVecs.map(p=>p);
       const sum ={x:vectors[0].x+vectors[1].x, y:(vectors[0].y+vectors[1].y)};
       const curves = [[vectors[0], sum,   vectors[1]]]
@@ -211,7 +219,7 @@ export class InteractiveD3 {
       .data(curves)
       .join('path')
       .attr("d", curveFunc)
-      .attr('stroke', 'black')
+      .attr('stroke',  color)
       .attr('stroke-dasharray',"5,5")
       .attr('marker-end', 'url(#arrowBlack)')
       .attr('fill', 'none');

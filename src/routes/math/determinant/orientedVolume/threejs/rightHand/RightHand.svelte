@@ -9,6 +9,8 @@
   export let vecb:[number,number,number] = [4,3,5];
   export let vecc:[number,number,number] = [-1,2,3];
 	export let zoomIn: boolean = false;
+	let fps = 0;
+
     // this.veca = new Vector(-1,2,3,0x008800);
     // this.vecb = new Vector(4,3,5,0x0000ff);
     // this.vecv = new Vector(-4,4,-5,0xff0000);
@@ -17,11 +19,14 @@
 		universe.start();
 		universe.eventBroker.emit('setMathMeshes');
 		universe.eventBroker.emit('setRightHand');
+		universe.eventBroker.addListener('fps',(data)=>{fps=data})
 		return () => {
 			universe.eventBroker.removeAllListeners();
 			if (divUniverse.firstChild) divUniverse.removeChild(divUniverse.firstChild);
 		};
 	});
+
 </script>
 
+<p>{fps}</p>
 <div bind:this={divUniverse} />

@@ -55,6 +55,8 @@ export class Universe {
 
   timePass = 0;
 
+  fps = 0;
+
 
 
   constructor(refCurrent: HTMLDivElement, veca: [number, number, number], vecb: [number, number, number], vecc: [number, number, number], zoomIn: boolean) {
@@ -308,7 +310,11 @@ export class Universe {
 
 
     (model as any).tick = (delta: number) => {
-      mixer.update(delta)
+      this.fps = 1/(delta);
+      this.eventBroker.emit('fps',this.fps.toFixed())
+      if(this.fps>120) mixer.update(delta*10)
+      else mixer.update(delta)
+
     }
 
 
