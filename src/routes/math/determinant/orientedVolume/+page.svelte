@@ -5,6 +5,7 @@
 	import Example3D from './threejs/example3D/Example3D.svelte';
 	import InteractiveD3 from './d3/interactive/InteractiveD3.svelte';
 	import RightHand from './threejs/rightHand/RightHand.svelte';
+	import InteractiveRightHand from './threejs/interactiveRightHand/InteractiveRightHand.svelte';
 </script>
 
 <Title hLevel={1}>Determinant - Oriented Volume</Title>
@@ -469,7 +470,11 @@
 
 
 <hr />
+<p><u>Interactive 3D Example:</u></p>
+<div style='padding: 4px; border: 1px solid black; width: 400px;'>
+	<InteractiveRightHand />
 
+</div>
 <p>In the next section, we will go over how to calculate the oriented volume(Determinant) of a matrix</p> 
 
 

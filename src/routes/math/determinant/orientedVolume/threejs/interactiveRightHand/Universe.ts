@@ -311,6 +311,7 @@ export class Universe {
 
     (model as any).tick = (delta: number) => {
       this.fps = 1/(delta);
+      this.eventBroker.emit('fps',this.fps.toFixed())
       if(this.fps>120) mixer.update(delta*10)
       else mixer.update(delta)
 
