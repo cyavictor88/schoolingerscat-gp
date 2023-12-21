@@ -9,6 +9,7 @@ export class Parallelepiped {
 	vecb: THREE.Vector3;
 	vecc: THREE.Vector3;
 	lineMeshes: THREE.Line[];
+	pointMeshes: THREE.Points;
 
 	scene: THREE.Scene;
 	constructor(scene:THREE.Scene,veca:THREE.Vector3,vecb:THREE.Vector3,vecc:THREE.Vector3,color?:string|number){
@@ -46,13 +47,27 @@ export class Parallelepiped {
 		const pointsGeometry = new THREE.BufferGeometry().setFromPoints( vertices );
 
 		const points = new THREE.Points( pointsGeometry, pointsMaterial );
-
+		this.pointMeshes = points;
 		this.scene.add(points)
 
 
 		this.geometryVol = new ConvexGeometry(vertices);
 		this.meshVol = new THREE.Mesh(this.geometryVol,this.materialVol);
 		this.scene.add(this.meshVol)
+
+	}
+	dispose(){
+		(this.meshVol.material as THREE.Material).dispose();
+		(this.meshVol.geometry).dispose();
+		this.scene.remove(this.meshVol);
+		(this.pointMeshes.material as THREE.Material).dispose();
+		(this.pointMeshes.geometry).dispose();
+		this.scene.remove(this.pointMeshes);
+		this.lineMeshes.forEach(lm=>{
+			(lm.material as THREE.Material).dispose();
+			lm.geometry.dispose();
+			this.scene.remove(lm);
+		});
 
 	}
   // const geometry = new ConvexGeometry( points );
