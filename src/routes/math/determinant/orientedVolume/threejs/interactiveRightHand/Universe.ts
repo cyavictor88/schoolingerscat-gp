@@ -11,6 +11,13 @@ import { Plane } from './object/Plane';
 import { Line } from './object/Line';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 
+export enum VecEnum {
+  V1,
+  V2,
+  V3,
+}
+
+
 export enum Dir {
   X,
   Y,
@@ -35,15 +42,22 @@ export class Universe {
 
   veca: Vector;
   vecb: Vector;
-  vecv: Vector;
+  vecc: Vector;
   axes: Axes;
+
+  mathMeshVeca?: MathText;
+  mathMeshVecb?: MathText;
+  mathMeshVecc?: MathText;
 
   zoomIn: boolean = false;
   scale: number = 1;
+  model?: THREE.Object3D;
 
   timePass = 0;
 
   fps = 0;
+
+  pp!: Parallelepiped;
 
   constructor(refCurrent: HTMLDivElement, veca: [number, number, number], vecb: [number, number, number], vecc: [number, number, number], zoomIn: boolean) {
     this.zoomIn = zoomIn;
@@ -54,7 +68,7 @@ export class Universe {
     this.camera = this.initCamera();
     if (!zoomIn) {
       this.camera.position.set(5.44, 18., 22);
-      this.camera.position.set(0, 18., 0);
+      this.camera.position.set(18, 18., 18);
       this.camera.zoom = 2.06;
       this.camera.updateProjectionMatrix()
     } else {
@@ -92,27 +106,56 @@ export class Universe {
     if (!zoomIn) {
       this.veca = new Vector(...veca, 0xff0000);
       this.vecb = new Vector(...vecb, 0x0000ff);
-      this.vecv = new Vector(...vecc, 0x008800);
+      this.vecc = new Vector(...vecc, 0x008800);
     } else {
       this.veca = new Vector(veca[0] * this.scale, veca[1] * this.scale, veca[2] * this.scale, 0xff0000);
       this.vecb = new Vector(vecb[0] * this.scale, vecb[1] * this.scale, vecb[2] * this.scale, 0x0000ff);
-      this.vecv = new Vector(vecc[0] * this.scale, vecc[1] * this.scale, vecc[2] * this.scale, 0x008800);
+      this.vecc = new Vector(vecc[0] * this.scale, vecc[1] * this.scale, vecc[2] * this.scale, 0x008800);
     }
 
 
-    // this.vecvrossProduct = new Vector(cp.x,cp.y,cp.z,0xff0000);
+    // this.veccrossProduct = new Vector(cp.x,cp.y,cp.z,0xff0000);
 
     this.scene.add(this.veca.vector);
     this.scene.add(this.vecb.vector);
-    this.scene.add(this.vecv.vector);
+    this.scene.add(this.vecc.vector);
     this.axes = this.zoomIn ? new Axes(this, 10, 10, 10, this.scale) : new Axes(this, 10, 10, 10, 1);
 
-    const pp = new Parallelepiped(this.scene, this.veca.coord, this.vecb.coord, this.vecv.coord);
+    this.pp = new Parallelepiped(this.scene, this.veca.coord, this.vecb.coord, this.vecc.coord);
 
     this.eventBroker.on('setMathMeshes', () => { this.setMathMeshes() });
     this.eventBroker.on('setRightHand', () => { this.setRightHand() });
   }
 
+
+  changeVec(vecEnum: VecEnum, vec:[number,number,number]){
+    this.pp.dispose();
+    switch(vecEnum){
+      case VecEnum.V1:
+        this.veca.changeCoord(vec[0],vec[1],vec[2]);
+        this.mathMeshVeca?.mesh.position.set(this.veca.coord.x, this.veca.coord.y, this.veca.coord.z);
+        break;
+      case VecEnum.V2:
+        this.vecb.changeCoord(vec[0],vec[1],vec[2]);
+        this.mathMeshVecb?.mesh.position.set(this.vecb.coord.x, this.vecb.coord.y, this.vecb.coord.z);
+        break;
+      case VecEnum.V3:
+        this.vecc.changeCoord(vec[0],vec[1],vec[2]);
+        this.mathMeshVecc?.mesh.position.set(this.vecc.coord.x, this.vecc.coord.y, this.vecc.coord.z);
+        break;
+    }
+    this.pp = new Parallelepiped(this.scene, this.veca.coord, this.vecb.coord, this.vecc.coord);
+    if(!this.model) return;
+    this.model.setRotationFromQuaternion(new THREE.Quaternion());
+    const [veca, vecb] = [new THREE.Vector3(), new THREE.Vector3()];
+    veca.copy(this.veca.coord);
+    vecb.copy(this.vecb.coord);
+    const cross = new THREE.Vector3().crossVectors(veca, vecb);
+    const quat = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(1, 0, 0), cross.normalize());
+    const quat1 = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), -Math.acos(new THREE.Vector3(0, 1, 0).dot(veca.normalize())));
+    quat.multiply(quat1);
+    this.model.applyQuaternion(quat);
+  }
 
 
   async setRightHand() {
@@ -130,6 +173,7 @@ export class Universe {
     const quat1 = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), -Math.acos(new THREE.Vector3(0, 1, 0).dot(veca.normalize())));
     quat.multiply(quat1);
     model.applyQuaternion(quat);
+    this.model = model;
 
     if (!this.zoomIn) {
       model.scale.set(0.1, 0.1, 0.1);
@@ -161,17 +205,22 @@ export class Universe {
 
   async setMathMeshes() {
     const scale = this.scale;
-    const mathTexta = await MathText.Init(`\\vec{v_1}=(${this.veca.coord.x / scale},${this.veca.coord.y / scale},${this.veca.coord.z / scale}) `, 'red');
+    const mathTexta = await MathText.Init(`\\vec{v_1} `, 'red');
     mathTexta.mesh.position.set(this.veca.coord.x, this.veca.coord.y, this.veca.coord.z);
     this.scene.add(mathTexta.mesh);
+    this.mathMeshVeca = mathTexta;
 
-    const mathTextb = await MathText.Init(`\\vec{v_2}=(${this.vecb.coord.x / scale},${this.vecb.coord.y / scale},${this.vecb.coord.z / scale}) `, 'blue');
+    const mathTextb = await MathText.Init(`\\vec{v_2} `, 'blue');
     mathTextb.mesh.position.set(this.vecb.coord.x, this.vecb.coord.y, this.vecb.coord.z)
     this.scene.add(mathTextb.mesh);
+    this.mathMeshVecb = mathTextb;
 
-    const mathTextv = await MathText.Init(`\\vec{v_3}=(${this.vecv.coord.x / scale},${this.vecv.coord.y / scale},${this.vecv.coord.z / scale})`, 'green');
-    mathTextv.mesh.position.set(this.vecv.coord.x, this.vecv.coord.y, this.vecv.coord.z)
+
+    const mathTextv = await MathText.Init(`\\vec{v_3}`, 'green');
+    mathTextv.mesh.position.set(this.vecc.coord.x, this.vecc.coord.y, this.vecc.coord.z)
     this.scene.add(mathTextv.mesh);
+    this.mathMeshVecc = mathTextv;
+
   }
 
 

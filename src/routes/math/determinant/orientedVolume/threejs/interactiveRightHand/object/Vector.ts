@@ -71,9 +71,19 @@ export class Vector {
   }
 
 
-  setHelper(){
-
+  changeCoord(x:number,y:number,z:number){
+    this.coord.set(x,y,z);
+		const posLine = this.lineMesh.geometry.getAttribute( 'position' );
+		posLine.setXYZ(0,0,0,0);
+		posLine.setXYZ(1,x,y,z);
+		posLine.needsUpdate = true; 
+		const vec = new THREE.Vector3().fromArray([x,y,z]);
+		const conLen = 0.5
+    const arrowPosLen = vec.length() - conLen/2;
+		// universeFig6.vec.arrowMesh.position.set(1,1,1);
+		const arrowPos = vec.normalize().multiplyScalar(arrowPosLen).toArray()
+		this.arrowMesh.position.set(  ...arrowPos);
+		const direction = new THREE.Vector3().fromArray([x,y,z]).normalize();
+		this.arrowMesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), direction);
   }
-
-
 }

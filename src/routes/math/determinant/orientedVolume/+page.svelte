@@ -469,12 +469,10 @@
 <RightHand veca={[1,0,0]} vecb={[0,1,0]} vecc={[0,0,1]} zoomIn/>
 
 
-<hr />
 <p><u>Interactive 3D Example:</u></p>
-<div style='padding: 4px; border: 1px solid black; width: 400px;'>
-	<InteractiveRightHand />
+<InteractiveRightHand />
+<hr />
 
-</div>
 <p>In the next section, we will go over how to calculate the oriented volume(Determinant) of a matrix</p> 
 
 
