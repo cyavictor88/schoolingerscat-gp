@@ -10,6 +10,7 @@ import { Parallelepiped } from './object/Parallelepiped';
 import { Plane } from './object/Plane';
 import { Line } from './object/Line';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
+import * as mj from 'mathjs';
 
 export enum VecEnum {
   V1,
@@ -51,7 +52,9 @@ export class Universe {
 
   zoomIn: boolean = false;
   scale: number = 1;
-  model?: THREE.Object3D;
+  // model?: THREE.Object3D;
+  rightHandPos?: THREE.Object3D;
+  rightHandNeg?: THREE.Object3D;
 
   timePass = 0;
 
@@ -145,26 +148,12 @@ export class Universe {
         break;
     }
     this.pp = new Parallelepiped(this.scene, this.veca.coord, this.vecb.coord, this.vecc.coord);
-    if(!this.model) return;
-    this.model.setRotationFromQuaternion(new THREE.Quaternion());
-    const [veca, vecb] = [new THREE.Vector3(), new THREE.Vector3()];
-    veca.copy(this.veca.coord);
-    vecb.copy(this.vecb.coord);
-    const cross = new THREE.Vector3().crossVectors(veca, vecb);
-    const quat = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(1, 0, 0), cross.normalize());
-    const quat1 = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), -Math.acos(new THREE.Vector3(0, 1, 0).dot(veca.normalize())));
-    quat.multiply(quat1);
-    this.model.applyQuaternion(quat);
-  }
-
-
-  async setRightHand() {
-    const gltfLoader = new GLTFLoader();
-
-    const loadedData = await gltfLoader.loadAsync('/glbs/rightHand2.glb');
-    // console.log(loadedData)
-    const model = loadedData.scene.children[0];
-    model.position.set(0, 0, 0);
+    if(!this.rightHandNeg || !this.rightHandPos) return;
+    this.rightHandNeg.visible = false;
+    this.rightHandPos.visible = false;
+    const det = mj.det([this.veca.coord.toArray(),this.vecb.coord.toArray(),this.vecc.coord.toArray()]);
+    const model = det >=0 ? this.rightHandPos : this.rightHandNeg;
+    model.setRotationFromQuaternion(new THREE.Quaternion());
     const [veca, vecb] = [new THREE.Vector3(), new THREE.Vector3()];
     veca.copy(this.veca.coord);
     vecb.copy(this.vecb.coord);
@@ -173,34 +162,60 @@ export class Universe {
     const quat1 = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), -Math.acos(new THREE.Vector3(0, 1, 0).dot(veca.normalize())));
     quat.multiply(quat1);
     model.applyQuaternion(quat);
-    this.model = model;
+    this.rightHandNeg.visible = det < 0 ? true : false;
+    this.rightHandPos.visible = !this.rightHandNeg.visible;
+  }
 
-    if (!this.zoomIn) {
+  async setRightHand() {
+    const gltfLoader = new GLTFLoader();
+
+    const setupRightHand = async(positive: boolean) => {
+      const loadString = positive? 'Positive':'Negative';
+      const loadedData = await gltfLoader.loadAsync(`/glbs/rightHand${loadString}.glb`);
+      const model = loadedData.scene.children[0];
+      const [veca, vecb] = [new THREE.Vector3(), new THREE.Vector3()];
+      veca.copy(this.veca.coord);
+      vecb.copy(this.vecb.coord);
+      const cross = new THREE.Vector3().crossVectors(veca, vecb);
+      const quat = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(1, 0, 0), cross.normalize());
+      const quat1 = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), -Math.acos(new THREE.Vector3(0, 1, 0).dot(veca.normalize())));
+      quat.multiply(quat1);
+      model.applyQuaternion(quat);
+
+
       model.scale.set(0.1, 0.1, 0.1);
-    } else {
-      model.scale.set(0.1, 0.1, 0.1);
+      const clip = loadedData.animations[0];
+  
+      const mixer = new THREE.AnimationMixer(model);
+      const action = mixer.clipAction(clip);
+      action.play();
+
+
+      (model as any).tick = (delta: number) => {
+        this.fps = 1/(delta);
+        this.eventBroker.emit('fps',this.fps.toFixed())
+        if(this.fps>120) mixer.update(delta*10)
+        else mixer.update(delta)
+  
+      }
+      this.scene.add(model);
+      this.tickingWorld.updatables.push(model);
+
+      return model;
     }
-    model.visible = true;
+    const positive = true;
+    const det = mj.det([this.veca.coord.toArray(),this.vecb.coord.toArray(),this.vecc.coord.toArray()]);
+    setupRightHand(positive).then(model=>{
+      this.rightHandPos=model
+      model.visible = det > 0 ? true: false;
+      
+    });
+    setupRightHand(!positive).then(model=>{
+      this.rightHandNeg=model;
+      model.visible = det > 0 ? false: true;
+    });
 
 
-    const clip = loadedData.animations[0];
-
-    const mixer = new THREE.AnimationMixer(model);
-    const action = mixer.clipAction(clip);
-    action.play();
-
-
-    (model as any).tick = (delta: number) => {
-      this.fps = 1/(delta);
-      this.eventBroker.emit('fps',this.fps.toFixed())
-      if(this.fps>120) mixer.update(delta*10)
-      else mixer.update(delta)
-
-    }
-
-
-    this.scene.add(model);
-    this.tickingWorld.updatables.push(model);
   }
 
   async setMathMeshes() {

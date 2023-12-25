@@ -33,7 +33,7 @@
 	let det = 0;
 	$: {
 		det = mj.det([veca,vecb,vecc]);
-		orientation = det === 0 ? '0' : det > 0 ? "+1" : '-1';
+		orientation = det === 0 ? '0' : det > 0 ? "\\color{red}+1" : '-1';
 	}
 
 	$: {universe?.changeVec(VecEnum.V1,veca);}

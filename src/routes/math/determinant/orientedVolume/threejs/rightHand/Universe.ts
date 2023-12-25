@@ -13,6 +13,7 @@ import { Plane } from './object/Plane';
 import TWEEN from '@tweenjs/tween.js';
 import { Line } from './object/Line';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
+import * as mj from 'mathjs';
 
 
 
@@ -280,8 +281,9 @@ export class Universe {
 
   async setRightHand() {
     const gltfLoader = new GLTFLoader();
-
-    const loadedData = await gltfLoader.loadAsync('/glbs/rightHand2.glb');
+    const det = mj.det([this.veca.coord.toArray(),this.vecb.coord.toArray(),this.vecv.coord.toArray()]);
+    const loadStr = det > 0 ? 'Positive':'Negative';
+    const loadedData = await gltfLoader.loadAsync(`/glbs/rightHand${loadStr}.glb`);
     // console.log(loadedData)
     const model = loadedData.scene.children[0];
     model.position.set(0, 0, 0);
