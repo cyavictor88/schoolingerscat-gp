@@ -162,8 +162,7 @@ export class Universe {
     const quat1 = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), -Math.acos(new THREE.Vector3(0, 1, 0).dot(veca.normalize())));
     quat.multiply(quat1);
     model.applyQuaternion(quat);
-    this.rightHandNeg.visible = det < 0 ? true : false;
-    this.rightHandPos.visible = !this.rightHandNeg.visible;
+    model.visible = true;
   }
 
   async setRightHand() {
@@ -207,12 +206,12 @@ export class Universe {
     const det = mj.det([this.veca.coord.toArray(),this.vecb.coord.toArray(),this.vecc.coord.toArray()]);
     setupRightHand(positive).then(model=>{
       this.rightHandPos=model
-      model.visible = det > 0 ? true: false;
+      model.visible = det >= 0;
       
     });
     setupRightHand(!positive).then(model=>{
       this.rightHandNeg=model;
-      model.visible = det > 0 ? false: true;
+      model.visible = det < 0;
     });
 
 

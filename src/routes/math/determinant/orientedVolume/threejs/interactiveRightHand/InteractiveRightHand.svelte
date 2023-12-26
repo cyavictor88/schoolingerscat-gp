@@ -28,17 +28,22 @@
 			if (divUniverse.firstChild) divUniverse.removeChild(divUniverse.firstChild);
 		};
 	});
-
+	function validVec(vec:number[]){
+		if((vec[0])===null)return false;
+		if((vec[1])===null)return false;
+		if((vec[2])===null)return false;
+		return true;
+	}
 	let orientation = '0';
 	let det = 0;
-	$: {
+	$: if(validVec(veca) && validVec(vecb) && validVec(vecc)){
 		det = mj.det([veca,vecb,vecc]);
 		orientation = det === 0 ? '0' : det > 0 ? "\\color{red}+1" : '-1';
 	}
 
-	$: {universe?.changeVec(VecEnum.V1,veca);}
-	$: {universe?.changeVec(VecEnum.V2,vecb);}
-	$: {universe?.changeVec(VecEnum.V3,vecc);}
+	$: if(validVec(veca)){universe?.changeVec(VecEnum.V1,veca);}
+	$: if(validVec(vecb)){universe?.changeVec(VecEnum.V2,vecb);}
+	$: if(validVec(vecc)){universe?.changeVec(VecEnum.V3,vecc);}
 
 </script>
 <div style='border: 1px black solid;'>
