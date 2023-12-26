@@ -86,7 +86,7 @@ export class FabricLinTrans {
       selectable: false,
     });
 
-    const Tx = new fabric.Text('T(a)', {
+    const Tx = new fabric.Text(' p=T(a)', {
       left: 225,
       top: 63,
       fontSize: 12,
