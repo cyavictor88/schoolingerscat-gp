@@ -127,23 +127,23 @@
       {#if !swapRow}
 			<p style="width:200px">
 				<Latex
-					math={`\\color{red} \\vec{a}=[${v1.x.toFixed(2)},${v1.y.toFixed(2)}]`}
+					math={`\\color{red} \\vec{a}=[${v1.x.toFixed(2)},${v1.y.toFixed(2)}]}`}
 				/>
 			</p>
 			<p>
 				<Latex
-					math={`\\color{blue} \\vec{b}=[${v2.x.toFixed(2)},${v2.y.toFixed(2)}]`}
+					math={`\\color{blue} \\vec{b}=[${v2.x.toFixed(2)},${v2.y.toFixed(2)}]}`}
 				/>
 			</p>
       {:else}
 			<p>
 				<Latex
-					math={`\\color{blue} \\vec{b}=[${v1.x.toFixed(2)},${v1.y.toFixed(2)}]`}
+					math={`\\color{blue} \\vec{b}=[${v1.x.toFixed(2)},${v1.y.toFixed(2)}]}`}
 				/>
 			</p>
       <p style="width:200px">
 				<Latex
-					math={`\\color{red} \\vec{a}=[${v2.x.toFixed(2)},${v2.y.toFixed(2)}]`}
+					math={`\\color{red} \\vec{a}=[${v2.x.toFixed(2)},${v2.y.toFixed(2)}]}`}
 				/>
 			</p>
       {/if}

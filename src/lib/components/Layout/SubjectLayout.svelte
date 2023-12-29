@@ -1,15 +1,13 @@
 <script lang="ts">
-	import { writable } from 'svelte/store';
-	import { setContext } from 'svelte';
+	import { writable, type Writable } from 'svelte/store';
+	import { getContext, setContext } from 'svelte';
 	import { fade, fly } from 'svelte/transition';
 	import { topBarHeight } from '$lib/store';
 	import { beforeUpdate, afterUpdate, onMount } from 'svelte';
 	import { SITE_COLOR } from '$lib/theme/colors';
 	import url from '$lib/components/Route/url';
 	import SideBar from '$lib/components/SideBar/SideBar.svelte';
-
-
-
+	import { navigating } from '$app/stores';
 	// import { subjectRoute } from './route';
 	import type { IRoute } from '../Route/route';
   export let subjectRoute:IRoute = {
@@ -30,9 +28,11 @@
 
 	onMount(() => {
 		changeSizeBarWidth();
+		window.addEventListener('click', closeIfMouseNotOver);
 		window.addEventListener('resize', changeSizeBarWidth);
 		return () => {
 			window.removeEventListener('resize', changeSizeBarWidth);
+			window.removeEventListener('click', closeIfMouseNotOver);
 		};
 	});
 
@@ -68,14 +68,11 @@
 		mouseIsOverDropdown = isOver;
 	}
 
-
-
-	onMount(() => {
-		window.addEventListener('click', closeIfMouseNotOver);
-		return () => {
-			window.removeEventListener('click', closeIfMouseNotOver);
-		};
-	});
+	// for resetting section route in case where a page got no section route
+	$: if($navigating) {
+		const contextSectionRoute = getContext<Writable<IRoute|null>>('contextSectionRoute');
+		contextSectionRoute.set(null);
+	};
 
 	// force scroll to top on path change
 	let topBox : HTMLDivElement;
@@ -88,6 +85,7 @@
 			topBox.scrollIntoView();
 		}
 	})
+
 
 </script>
 <div bind:this={topBox}></div>

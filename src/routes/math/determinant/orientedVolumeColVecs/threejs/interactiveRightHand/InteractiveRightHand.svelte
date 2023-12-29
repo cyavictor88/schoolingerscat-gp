@@ -76,7 +76,7 @@
 			</form>
 			<div style='display: flex; flex-flow: column nowrap; gap:2px;'>
 				<Latex math={`orientation=${orientation}`}/>
-				<Latex math={`determinant=${ det > 0 ? "\\color{red}" : ''}${det}`}/>
+				<Latex math={`determinant=${det}`}/>
 			</div>
 			<!--
 			<div style='display: flex; flex-flow: row nowrap; gap:20px;'>

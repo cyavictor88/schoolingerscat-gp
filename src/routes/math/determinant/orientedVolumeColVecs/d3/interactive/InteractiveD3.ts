@@ -201,9 +201,11 @@ export class InteractiveD3 {
     .attr("d", curveFunc)
     .attr('stroke', 'red')
     .attr('stroke-dasharray',"5,5")
-    .attr('marker-end', 'url(#arrowRed)')
+    .attr('marker-end', 'url(#arrowBlack)')
     .attr('fill', 'none');
 
+
+  
     this.eventBroker.addListener('newCirclesLocation', (newPointVecs: PointVec[])=>{
       const det = mj.det([[newPointVecs[0].x,newPointVecs[0].y],[newPointVecs[1].x,newPointVecs[1].y]]);
       const vectors = newPointVecs.map(p=>p);

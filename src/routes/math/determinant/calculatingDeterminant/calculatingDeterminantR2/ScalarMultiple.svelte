@@ -7,17 +7,17 @@
 
 <Toggle>
 	<div style='padding: 4px; border: 1px black solid'>
-		<p>
-			I want to show that swapping row only changes the orientation of the parallelepiped:
-		</p>
+
     <p>
-      If <Latex math={`M'`} /> is formed by swapping two rows in <Latex math={'M'} />, then
-      <Latex math={`det(M')=-det(M)`} />
+      If <Latex math={`M'`} /> is formed by multiplying one row by <Latex math={'c'} />, then
+      <Latex math={`det(M')=c \\times det(M)`} />
     </p>
     <p>
-      This result is pretty obvious for <Latex math={'\\mathbb{R^2}'} />, I will just show it using the interactive demo below. From the demo, you can see that when you swap rows,
-      the orientation(clockwise/counter-clockwise) is simply flipped. And the volume of the parallelepiped(area) is the same.
+      Given that the volume of the parallelepiped(area) is: <Latex math={`Area = base \\times height `} />, 
+      when you multiply one row in <Latex math={'M'} /> by <Latex math={'c'} />,
+      you are just multiplying the <Latex math={'base'} /> by <Latex math={'c'} />.
+      So the resulting area is  <Latex math={`New Area = c \\times base \\times height `} />.
     </p>
-    <InteractiveD3 rowOp={RowOp.ScalrMult} />
+    <InteractiveD3 rowOp={RowOp.Mult} />
 	</div>
 </Toggle>

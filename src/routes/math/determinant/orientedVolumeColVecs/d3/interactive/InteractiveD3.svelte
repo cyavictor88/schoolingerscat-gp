@@ -32,8 +32,8 @@
   {#if d3Obj}
     <div>
       <!-- <p>{v0}</p> -->
-      <p style='width:200px'><Latex math={`\\color{red} \\vec{v_1}=[${v1.x.toFixed(2)},${v1.y.toFixed(2)}]`}/></p>
-      <p><Latex math={`\\color{blue} \\vec{v_2}=[${v2.x.toFixed(2)},${v2.y.toFixed(2)}]`}/></p>
+      <p style='width:200px'><Latex math={`\\color{red} \\vec{v_1}=[${v1.x.toFixed(2)},${v1.y.toFixed(2)}]^{\\mathsf{T}}`}/></p>
+      <p><Latex math={`\\color{blue} \\vec{v_2}=[${v2.x.toFixed(2)},${v2.y.toFixed(2)}]^{\\mathsf{T}}`}/></p>
       
       
       <p><Latex math={`\\text{orientation}=${ det === 0 ? '0' : det > 0 ? '\\color{red}+1':'\\color{black}-1'}`}/> </p>

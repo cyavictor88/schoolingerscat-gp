@@ -152,7 +152,6 @@ export class Universe {
     this.rightHandNeg.visible = false;
     this.rightHandPos.visible = false;
     const det = mj.det([this.veca.coord.toArray(),this.vecb.coord.toArray(),this.vecc.coord.toArray()]);
-    if(det===0) return;
     const model = det >=0 ? this.rightHandPos : this.rightHandNeg;
     model.setRotationFromQuaternion(new THREE.Quaternion());
     const [veca, vecb] = [new THREE.Vector3(), new THREE.Vector3()];

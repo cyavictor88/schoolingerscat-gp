@@ -2,8 +2,6 @@
 	import Title from "$lib/components/PageComp/Title.svelte";
   import Latex from "$lib/components/Latex/Latex.svelte";
 
-
-
 </script>
 
 <Title hLevel={1}>Determinant - Introduction</Title>

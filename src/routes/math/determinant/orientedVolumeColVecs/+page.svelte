@@ -6,7 +6,6 @@
 	import InteractiveD3 from './d3/interactive/InteractiveD3.svelte';
 	import RightHand from './threejs/rightHand/RightHand.svelte';
 	import InteractiveRightHand from './threejs/interactiveRightHand/InteractiveRightHand.svelte';
-
 </script>
 
 <Title hLevel={1}>Determinant - Oriented Volume</Title>
@@ -20,36 +19,43 @@
 	math={`
  M =  
  \\begin{bmatrix}
-                  \\color{red} m_{11} &  \\color{red}m_{12} &  \\color{red}... &  \\color{red}m_{1n} \\\\
-									\\color{blue} m_{21} & \\color{blue}m_{22} & \\color{blue}... & \\color{blue} m_{2n} \\\\
+                   m_{11} & m_{12} & ... & m_{1n} \\\\
+                   m_{21} & m_{22} & ... & m_{2n} \\\\
                   \\vdots & \\vdots & \\ddots & \\vdots \\\\ 
-									\\color{green} m_{n1} & \\color{green}m_{n2} & \\color{green}... & \\color{green}m_{nn}  
+                  m_{n1} & m_{n2} & ... & m_{nn}  
   \\end{bmatrix}
+                
                 `}
 />
 
-<p>this matrix has a corresponding hyper-parallelepiped formed by the set of row vectors:</p>
+<p>this matrix has a corresponding hyper-parallelepiped formed by the set of vectors:</p>
 <Latex
 	center
-	math={`( \\color{red}v_1\\color{black},\\color{blue}v_2\\color{black},...,\\color{green}v_n \\color{black})=\\left(
+	math={`( v_1,v_2,...,v_n )=\\left(
   \\begin{bmatrix}
-	\\color{red}  m_{11}  \\\\
-	\\color{red}  m_{12} \\\\
-	\\color{red}      \\vdots  \\\\ 
-	\\color{red}    m_{1n}  
-   \\end{bmatrix} ^T
+                    m_{11}  \\\\
+                    m_{21} \\\\
+                   \\vdots  \\\\ 
+                   m_{n1}  
+   \\end{bmatrix} 
    ,  \\begin{bmatrix}
-	 \\color{blue}       m_{21}  \\\\
-	 \\color{blue}            m_{22} \\\\
-	 \\color{blue}          \\vdots  \\\\ 
-	 \\color{blue}           m_{2n}  
-   \\end{bmatrix} ^T ,...,
-   \\begin{bmatrix} 
-	 \\color{green}                m_{n1}  \\\\
-	 \\color{green}              m_{n2} \\\\
-	 \\color{green}              \\vdots  \\\\ 
-	 \\color{green}             m_{nn}  
-   \\end{bmatrix} ^T
+                    m_{12}  \\\\
+                    m_{22} \\\\
+                   \\vdots  \\\\ 
+                   m_{n2}  
+   \\end{bmatrix} 
+   ,  \\begin{bmatrix}
+                    m_{13}  \\\\
+                    m_{23} \\\\
+                   \\vdots  \\\\ 
+                   m_{n3}  
+   \\end{bmatrix} ,...,
+   \\begin{bmatrix}
+                    m_{1n}  \\\\
+                    m_{2n} \\\\
+                   \\vdots  \\\\ 
+                   m_{nn}  
+   \\end{bmatrix} 
                  
                 \\right) `}
 />
@@ -65,8 +71,8 @@
 	<span>
 		<Latex
 			math={`M_2 =  \\begin{bmatrix}
-                    4 & 1 \\\\
-                    -3 & 2 \\\\
+                    4 & -3 \\\\
+                    1 & 2 \\\\
   
     \\end{bmatrix} \\Rightarrow`}
 		/>
@@ -74,14 +80,14 @@
 			math={`\\color{red}v_1 =  \\begin{bmatrix}
                     4 \\\\
                     1  \\\\
-   \\end{bmatrix}^T `}
+   \\end{bmatrix} `}
 		/>,
 
 		<Latex
 			math={`\\color{blue}v_2 =  \\begin{bmatrix}
                     -3 \\\\
                     2  \\\\
-   \\end{bmatrix} ^T`}
+   \\end{bmatrix} `}
 		/>, the white shade is the hyper-parallelepiped form by this <Latex math={`M_2`} />.
 	</span>
 	<br />
@@ -102,9 +108,9 @@
 	<span>
 		<Latex
 			math={`M_3 =  \\begin{bmatrix}
-                   -4 & 4 & -5 \\\\
-                   4 & 3 & 5 \\\\
-                   -1 & 2 & 3 \\\\
+                   -4 & 4 & -1 \\\\
+                   4 & 3 & 2 \\\\
+                   -5 & 5 & 3 \\\\
  
   \\end{bmatrix}\\Rightarrow `}
 		/>
@@ -113,7 +119,7 @@
 -4 \\\\
 4  \\\\
 -5  \\\\
-\\end{bmatrix}^T `}
+\\end{bmatrix} `}
 		/>,
 
 		<Latex
@@ -121,7 +127,7 @@
 4 \\\\
 3  \\\\
 5  \\\\
-\\end{bmatrix}^T `}
+\\end{bmatrix} `}
 		/>,
 
 		<Latex
@@ -129,7 +135,7 @@
 -1 \\\\
 2  \\\\
 3  \\\\
-\\end{bmatrix}^T `}
+\\end{bmatrix} `}
 		/>, the white shade is the hyper-parallelepiped form by this <Latex math={`M_3`} />.
 	</span>
 	<br />
@@ -144,9 +150,9 @@
 
 <Latex
 	math={`M_3 =  \\begin{bmatrix}
--4 & 4 & -5 \\\\
-4 & 3 & 5 \\\\
-0 & 7 & 0 \\\\
+-4 & 4 & 0 \\\\
+4 & 3 & 7 \\\\
+-5 & 5 & 0 \\\\
 
 \\end{bmatrix}\\Rightarrow `}
 />
@@ -155,7 +161,7 @@
 -4 \\\\
 4  \\\\
 -5  \\\\
-\\end{bmatrix}^T `}
+\\end{bmatrix} `}
 />,
 
 <Latex
@@ -163,7 +169,7 @@
 4 \\\\
 3  \\\\
 5  \\\\
-\\end{bmatrix}^T `}
+\\end{bmatrix} `}
 />,
 
 <Latex
@@ -171,7 +177,7 @@
 0 \\\\
 7  \\\\
 0  \\\\
-\\end{bmatrix}^T `}
+\\end{bmatrix} `}
 />, where <Latex
 	math={'\\color{green}{v_3} \\color{black}=\\color{red}{v_1}\\color{black}{+}\\color{blue}{v_2}'}
 />
@@ -208,7 +214,7 @@
 <p>
 	For a 2D square matrix <Latex
 		math={`M_2 =  \\begin{bmatrix}
-  \\color{red}v_1 \\\\
+  \\color{red}v_1 &
  \\color{blue} v_2 \\\\
 
 \\end{bmatrix}`}
@@ -221,8 +227,8 @@
 	<span>
 		<Latex
 			math={`M_2 =  \\begin{bmatrix}
-                  4 & 1 \\\\
-                  -3 & 2 \\\\
+                  4 & -3 \\\\
+                  1 & 2 \\\\
 
   \\end{bmatrix} \\Rightarrow`}
 		/>
@@ -230,14 +236,14 @@
 			math={`\\color{red}v_1 =  \\begin{bmatrix}
                   4 \\\\
                   1  \\\\
- \\end{bmatrix}^T `}
+ \\end{bmatrix} `}
 		/>,
 
 		<Latex
 			math={`\\color{blue}v_2 =  \\begin{bmatrix}
                   -3 \\\\
                   2  \\\\
- \\end{bmatrix}^T `}
+ \\end{bmatrix} `}
 		/>, here we see <Latex math={'\\color{red}v_1'} /> goes to <Latex math={'\\color{blue}v_2'} /> in
 		counter-clockwise, so its orientation is 1.
 	</span>
@@ -254,8 +260,8 @@
 	<span>
 		<Latex
 			math={`M_2 =  \\begin{bmatrix}
-                  -3 & 2 \\\\
-                  4 & 1 \\\\
+                  -3 & 4 \\\\
+                  2 & 1 \\\\
 
   \\end{bmatrix} \\Rightarrow`}
 		/>
@@ -263,14 +269,14 @@
 			math={`\\color{red}v_1 =  \\begin{bmatrix}
                   -3 \\\\
                   2  \\\\
- \\end{bmatrix}^T `}
+ \\end{bmatrix} `}
 		/>,
 
 		<Latex
 			math={`\\color{blue}v_2 =  \\begin{bmatrix}
                   4 \\\\
                   1  \\\\
- \\end{bmatrix}^T `}
+ \\end{bmatrix} `}
 		/>, here we see <Latex math={'\\color{red}v_1'} /> goes to <Latex math={'\\color{blue}v_2'} /> in
 		clockwise, so its orientation is -1.
 	</span>
@@ -296,14 +302,14 @@
 		math={`\\color{red}v_1 =  \\begin{bmatrix}
                   1 \\\\
                   0  \\\\
- \\end{bmatrix}^T `}
+ \\end{bmatrix} `}
 	/>,
 
 	<Latex
 		math={`\\color{blue}v_2 =  \\begin{bmatrix}
                   0 \\\\
                   1  \\\\
- \\end{bmatrix}^T `}
+ \\end{bmatrix} `}
 	/>
 	, which is basically the x and y axis. The rotation from x axis to y axis is counter-clockwise, so
 	it is set to be the positive orientation.
@@ -328,8 +334,8 @@
 <p>
 	For a 3D square matrix <Latex
 		math={`M_3 =  \\begin{bmatrix}
-  \\color{red}v_1 \\\\
- \\color{blue} v_2 \\\\ 
+  \\color{red}v_1 &
+ \\color{blue} v_2 & 
  \\color{green} v_3 \\\\
 
 \\end{bmatrix}`}
@@ -345,9 +351,9 @@
 	<span>
 		<Latex
 			math={`M_3 =  \\begin{bmatrix}
-                   -4 & 4 & -5 \\\\
-                   4 & 3 & 5 \\\\
-                   -1 & 2 & 3 \\\\
+                   -4 & 4 & -1 \\\\
+                   4 & 3 & 2 \\\\
+                   -5 & 5 & 3 \\\\
  
   \\end{bmatrix}\\Rightarrow `}
 		/>
@@ -356,7 +362,7 @@
 -4 \\\\
 4  \\\\
 -5  \\\\
-\\end{bmatrix}^T `}
+\\end{bmatrix} `}
 		/>,
 
 		<Latex
@@ -364,7 +370,7 @@
 4 \\\\
 3  \\\\
 5  \\\\
-\\end{bmatrix}^T `}
+\\end{bmatrix} `}
 		/>,
 
 		<Latex
@@ -372,7 +378,7 @@
 -1 \\\\
 2  \\\\
 3  \\\\
-\\end{bmatrix}^T `}
+\\end{bmatrix} `}
 		/>, looking at the right hand in the figure, as the fingers curl from <Latex math={'\\color{red}v_1'} /> to <Latex math={'\\color{blue}v_2'} /> 
 , the thumb is pointing in the opposite direction of <Latex math={`\\color{green}v_3`} />, so its orientation is -1.
 	</span>
@@ -384,9 +390,9 @@
 	<span>
 		<Latex
 			math={`M_3 =  \\begin{bmatrix}
-                   -4 & 4 & -5 \\\\
+                   -4 & 4 & -1 \\\\
                    4 & 3 & 5 \\\\
-                   -1 & 5 & -6 \\\\
+                   -5 & 5 & -6 \\\\
  
   \\end{bmatrix}\\Rightarrow `}
 		/>
@@ -395,7 +401,7 @@
 -4 \\\\
 4  \\\\
 -5  \\\\
-\\end{bmatrix}^T `}
+\\end{bmatrix} `}
 		/>,
 
 		<Latex
@@ -403,7 +409,7 @@
 4 \\\\
 3  \\\\
 5  \\\\
-\\end{bmatrix}^T `}
+\\end{bmatrix} `}
 		/>,
 
 		<Latex
@@ -411,7 +417,7 @@
 -1 \\\\
 5  \\\\
 -6  \\\\
-\\end{bmatrix}^T `}
+\\end{bmatrix} `}
 		/>, looking at the right hand in the figure, as the fingers curl from <Latex math={'\\color{red}v_1'} /> to <Latex math={'\\color{blue}v_2'} /> 
 , the thumb is pointing in the general direction of <Latex math={`\\color{green}v_3`} />, so its orientation is +1.
 	</span>
@@ -434,7 +440,7 @@
                   1 \\\\
                   0  \\\\
                   0  \\\\
- \\end{bmatrix}^T `}
+ \\end{bmatrix} `}
 	/>,
 
 	<Latex
@@ -443,7 +449,7 @@
                   1  \\\\
                   0 \\\\
 
- \\end{bmatrix}^T `}
+ \\end{bmatrix} `}
 	/>
 
   <Latex
@@ -452,7 +458,7 @@
                 0  \\\\
                 1 \\\\
 
-\\end{bmatrix}^T `}
+\\end{bmatrix} `}
 />
 	, which is basically the x, y, and z axis. So if you curl your right fingers from x to y axis, your thumb will
   be pointing at z axis. So This is the standard orientation(+1).

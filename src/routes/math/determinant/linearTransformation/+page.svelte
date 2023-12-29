@@ -73,15 +73,15 @@
 
 </li>
 
-<p>Let's use a space shuttle example to clarify things:</p>
+<p>Let's use a space shuttle example to better visualize <Latex math={'\\vec{a}'} />, <Latex math={'\\vec{p}'} />, and the matrix  <Latex math={'M'} />  :</p>
 
 <br />
 
 <b>Example Space Shuttle:</b>
 
 <p>In this space shuttle:</p>
-<li>There are <Latex math={'v'} /> adjustment inputs: <Latex math={'a_1,...,a_v'} />  </li>
-<li>There are <Latex math={'w'} /> engines. Each engine output power is:  <Latex math={'p_1,...,p_w'} /> </li>
+<li>Input: there are <Latex math={'v'} /> adjustment inputs: <Latex math={'a_1,...,a_v'} />  </li>
+<li>Output: there are <Latex math={'w'} /> engines. Each engine output power is:  <Latex math={'p_1,...,p_w'} /> </li>
 <li>Each engine is controlled by a dedicated micro-controller.  <Latex math={''} /></li>
 <li>Each micro-controller contains <Latex math={'v'} /> coefficients.  <Latex math={''} /></li>
 <li>The power of a engine is determined by its micro-controller's coefficients and the adjustment input:  <Latex math={'p_i = \\sum_{j=1}^{v}{m_{ij}a_{j}}'} /></li>
@@ -93,8 +93,8 @@
 
 <p>The above space engine control system can be matched with linear transformation, matrix and vector space:</p>
 
-<li>The range of  adjustment inputs represent the <Latex math={'v'}/>-dimensional vector space <Latex math={'V'}/></li>
-<li>The range of the engine output powers represents the <Latex math={'w'}/>-dimensional vector space <Latex math={'W'}/></li>
+<li>The range of  adjustment inputs represent the <Latex math={'v'}/>-dimensional input vector space <Latex math={'V'}/></li>
+<li>The range of the engine output powers represents the <Latex math={'w'}/>-dimensional output vector space <Latex math={'W'}/></li>
 <li>The Mainframe computer represents the linear transformation <Latex math={'T'}/></li>
 <li>vector <Latex math={'\\vec{a}'}/> represents a particular adjustment input  <Latex math={'[a_1,a_2]^{\\text{T}}'}/>
 <li>vector <Latex math={'T(\\vec{a}) = \\vec{p}'}/> represents the corresponding engine out powers  <Latex math={'[p_1,p_2,p_3,p_4]^{\\text{T}}'}/>
@@ -103,7 +103,10 @@
 <li>The Mainframe Computer( linear transformation T) can be represented as a matrix:</li>
 <Latex center
 math={`
-T := M =  
+T := M =  \\begin{bmatrix}  \\text{micro-controller}_1  \\\\
+                  \\text{micro-controller}_2  \\\\
+                  \\text{micro-controller}_3  \\\\
+                 \\text{micro-controller}_4 \\end{bmatrix} =
 \\begin{bmatrix} m_{11} & m_{12}  \\\\
                  m_{21} & m_{22}  \\\\
                  m_{31} & m_{32}  \\\\
@@ -114,7 +117,10 @@ T := M =
 <Latex center
 math={`
 
-\\vec{p} = M\\vec{a}=  
+\\vec{p} = M\\vec{a}=    \\begin{bmatrix}  \\text{micro-controller}_1  \\\\
+                  \\text{micro-controller}_2  \\\\
+                  \\text{micro-controller}_3  \\\\
+                 \\text{micro-controller}_4 \\end{bmatrix} \\begin{bmatrix} a_1   \\\\  a_2  \\end{bmatrix} =
 \\begin{bmatrix} m_{11} & m_{12}  \\\\
                  m_{21} & m_{22}  \\\\
                  m_{31} & m_{32}  \\\\

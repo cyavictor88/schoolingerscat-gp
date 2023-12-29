@@ -2,6 +2,7 @@
 	import Title from '$lib/components/PageComp/Title.svelte';
   import Latex from '$lib/components/Latex/Latex.svelte';
 	import RowSwap from './RowSwap.svelte';
+	import ScalarMultiple from './ScalarMultiple.svelte';
 
 </script>
 <Title hLevel={2} >Calculating Determinant in <Latex math={'\\mathbb{R^2}'}/> </Title>
@@ -54,6 +55,7 @@ math={`M_2^T =  \\begin{bmatrix}
     <li>
       <b>Scalar Multiplication:</b>
       <p>Multiply a row with a constant<Latex math={' c \\in \\mathbb{R}'}/> </p>
+      <ScalarMultiple />
     </li>
     <li>
       <b>Row Sum:</b>
