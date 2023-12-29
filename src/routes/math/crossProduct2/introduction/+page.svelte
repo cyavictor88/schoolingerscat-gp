@@ -59,10 +59,20 @@
 
 <ol>
 	<li>
-		<strong><a href={getHref('determinant', $storeSubjectRoute)}>Determinant</a>:</strong>
+		<strong><a href={getHref('parallelepiped', $storeSubjectRoute)}>Parallelepiped</a>:</strong>
 		<ol>
 			<li>
-				We first need to understand that determinant is the oriented volume of a given full-rank matrix.
+				We first show that when we put together three vectors,
+				<Latex math={`\\vec{v} =`} /><ColsVec cols={['v']} dim={3} />
+				,
+				<Latex math={`\\vec{a} =`} /><ColsVec cols={['a']} dim={3} />
+				and
+				<Latex math={`\\vec{b} =`} /><ColsVec cols={['b']} dim={3} />, to create a 3 x 3 matrix = 
+				<RowsVec
+					cols={['v', 'a', 'b']}
+					dim={3}
+				/>, the absolute value of the determinant of this matrix is equal to the volume of the parallelepiped formed by
+				<Latex math={`\\vec{v},\\vec{a},\\vec{b}`} />.
 			</li>
 		</ol>
 	</li>
@@ -72,12 +82,12 @@
 		<strong><a href={getHref('linear functional', $storeSubjectRoute)}>Linear Functional</a>:</strong>
 		<ol>
 			<li>
-				Next we show that if we fix <Latex math={`\\vec{a} `} />
+				Next we show that if we fix <Latex math={`\\vec{a} =`} /><ColsVec cols={['a']} dim={3} />
 				and
-				<Latex math={`\\vec{b} `} /> as constants, and make <Latex
-					math={`\\vec{v} `}
-				/> as a variable vector. we then can create a linear functional
-				<Latex math={'\\phi'} /> such that <Latex math={'\\phi ( \\vec{v} )= \\det'} />
+				<Latex math={`\\vec{b} =`} /><ColsVec cols={['b']} dim={3} /> as constants, and make <Latex
+					math={`\\vec{v} =`}
+				/><ColsVec cols={['v']} dim={3} /> as a variable vector. we then can create a linear functional
+				<Latex math={'\\phi'} /> where <Latex math={'\\phi ( \\vec{v} )= \\det'} />
 				<RowsVec cols={['v', 'a', 'b']} dim={3} />.
 			</li>
 			<li>

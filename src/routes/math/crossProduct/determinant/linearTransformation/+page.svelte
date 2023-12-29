@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Title from '$lib/components/PageComp/Title.svelte';
 	import Latex from '$lib/components/Latex/Latex.svelte';
-	import ColsVec from '../../crossProduct2/common/latex/ColsVec.svelte';
+	import ColsVec from '../../../crossProduct2/common/latex/ColsVec.svelte';
   import { onMount } from 'svelte';
   import FabricLinTrans from './fabric/FabricLinTrans.svelte';
 	import SpaceShuttle  from './d3/SpaceShuttle.svelte';

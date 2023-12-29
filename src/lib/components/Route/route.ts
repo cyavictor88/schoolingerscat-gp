@@ -1,5 +1,6 @@
 import type { ILatexMix } from "../Latex/latexMix";
 import { subjectRoute as fourierSeriesRoute } from "../../../routes/signalProcessing/fourierSeries/subjectRoute";
+import { subjectRoute as crossProductRoute2 } from "../../../routes/math/crossProduct2/subjectRoute";
 import { subjectRoute as crossProductRoute } from "../../../routes/math/crossProduct/subjectRoute";
 import { subjectRoute as determinantRoute } from "../../../routes/math/determinant/subjectRoute";
 
@@ -27,7 +28,8 @@ export const rootRoute : IRoute = {
     label:'Math',
     subRoutes: [
       determinantRoute,
-      crossProductRoute 
+      crossProductRoute, 
+      crossProductRoute2, 
     ]
     } ,
   ] 

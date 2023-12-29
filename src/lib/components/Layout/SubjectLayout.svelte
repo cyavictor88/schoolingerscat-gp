@@ -30,6 +30,7 @@
 		changeSizeBarWidth();
 		window.addEventListener('click', closeIfMouseNotOver);
 		window.addEventListener('resize', changeSizeBarWidth);
+
 		return () => {
 			window.removeEventListener('resize', changeSizeBarWidth);
 			window.removeEventListener('click', closeIfMouseNotOver);
@@ -71,7 +72,12 @@
 	// for resetting section route in case where a page got no section route
 	$: if($navigating) {
 		const contextSectionRoute = getContext<Writable<IRoute|null>>('contextSectionRoute');
-		contextSectionRoute.set(null);
+		let hideSectionRoute = true;
+		$contextSectionRoute?.subRoutes?.forEach((route)=>{
+			if($navigating && route.path===$navigating.to?.route.id) hideSectionRoute = false;
+		})
+		if($contextSectionRoute?.label.toLowerCase() === $navigating.to?.route.id?.split('/').reverse()[0]) hideSectionRoute = false;
+		if(hideSectionRoute) contextSectionRoute.set(null);
 	};
 
 	// force scroll to top on path change
@@ -85,6 +91,7 @@
 			topBox.scrollIntoView();
 		}
 	})
+
 
 
 </script>
