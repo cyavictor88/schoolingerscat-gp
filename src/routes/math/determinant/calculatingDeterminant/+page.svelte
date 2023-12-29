@@ -24,17 +24,18 @@
 
 <Title hLevel={1}>Calculating Determinant</Title>
 <p>
-  In this section, using elementary row operations, I will show how to calculate determinant for matrix of <Latex math={'\\mathbb{R^2}'}/>, <Latex math={'\\mathbb{R^3}'}/> and <Latex math={'\\mathbb{R^n}'}/>.
+  In this section, I will show how to calculate the determinant of a full rank matrix by first explain how row operations affect the determinant(oriented volume) of a matrix, 
+	and then show how you can easily calculate the determinant of a matrix by using row operations to reduce the target matrix to a triangular matrix.
 </p>
 <b><u>Elementary Row Operation:</u></b>
 <ol>
   <li>
     <b>Row Swap:</b>
-    <p>Switch any two rows</p>
+    <p>Swap any two rows</p>
   </li>
   <li>
     <b>Scalar Multiplication:</b>
-    <p>Multiply a row with a constant<Latex math={'\\in \\mathbb{R}'}/> </p>
+    <p>Multiply a row with a constant<Latex math={' c \\in \\mathbb{R}'}/> </p>
   </li>
   <li>
     <b>Row Sum:</b>

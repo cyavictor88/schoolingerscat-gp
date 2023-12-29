@@ -2,6 +2,12 @@ import * as d3 from 'd3';
 import katex from "katex";
 import EventEmitter from 'eventemitter3';
 import * as mj from 'mathjs';
+export enum RowOp {
+  Swap,
+  ScalrMult,
+  Add,
+  All
+}
 
 function latex(math: string) {
   const mathmlHtml = katex.renderToString(math, {
@@ -38,6 +44,7 @@ export class InteractiveD3 {
   oriVectors: number[][];
   // circles: PointVec[];
   dragCircles!: SVGCircleElement[];
+  swapRow: Boolean = false;
 
 
   constructor(vectors:number[][],showOrientation:boolean,zoomIn:boolean) {
@@ -84,16 +91,26 @@ export class InteractiveD3 {
     });
 
 
+    this.eventBroker.addListener('swapRow',()=>{
+      this.swapRow = !this.swapRow;
+      const newVec1 = this.vectors[1];
+      const newVec2 = this.vectors[0];
+      this.eventBroker.emit('newCirclesLocation',[newVec1, newVec2]);
+      this.vectors = [newVec1, newVec2];
+      this.makeShape();
+      this.makeVectors();
+      this.makeDragCircles();
+      if(showOrientation)this.makeOrientationCurve();
 
-
-
+    })
 
   }
 
   makeDragCircles(){
     const data = this.vectors.map(p=> {return {x: this.xScale(p.x),y:this.yScale(p.y)}});
+    d3.selectAll(".dragCircles").remove();
     const group = this.svg.append('g').attr('class','dragCircles');
-    const updateCircles = ()=>{
+    const updateCircles = (data:PointVec[])=>{
       if(this.snap2Grid)
       data.forEach(p=>{
         const gridX = this.xScale(Math.round(this.xScale.invert(p.x)));
@@ -108,27 +125,26 @@ export class InteractiveD3 {
       .attr('cx', (d)=> { return (d.x); })
       .attr('cy', (d)=> { return (d.y); })
       .attr('r',(d)=> 5)
-      .attr('fill',(d,i)=>i === 0 ?'red':'blue')
+      .attr('fill',(d,i)=>this.getColor(i,['red','blue']))
       .attr('fill-opacity',0.4)
       .on('mouseover', function (d, i) {
         d3.select(this).transition()
         .duration(499)
         .attr('r', (d)=>7);
         d3.select(this).style("cursor", "pointer"); 
-
       })
       .on('mouseout', function (d, i) {
         d3.select(this).transition()
         .duration(499)
         .attr('r', (d)=>5);
         d3.select(this).style("cursor", "default"); 
-
       })
     }
 
+
     const handleDrag = (event: d3.D3DragEvent<SVGCircleElement, any, any>) => {
       const update = () => {
-        updateCircles();
+        updateCircles(data);
         // this.eventBroker.emit('newCirclesLocation',this.dragCircles!.map(ci=>{return {x:ci.cx.baseVal.value,y:ci.cy.baseVal.value}}))
         this.eventBroker.emit('newCirclesLocation',data.map(p=>{
           return {
@@ -143,7 +159,7 @@ export class InteractiveD3 {
     }
     const drag = d3.drag().on('drag', handleDrag);
     const initDrag = ()=>{
-      updateCircles();
+      updateCircles(data);
       group.selectAll('circle').call(drag as any);
     }
 
@@ -165,7 +181,7 @@ export class InteractiveD3 {
         .attr('cx', (d)=> { return (d.x); })
         .attr('cy', (d)=> { return (d.y); })
         .attr('r',(d)=> 5)
-        .attr('fill',(d,i)=>i === 0 ?'red':'blue')
+        .attr('fill',(d,i)=>this.getColor(i,['red','blue']))
         .attr('fill-opacity',0.4);
         this.dragCircles = group.selectAll('circle').nodes() as SVGCircleElement[];
         this.eventBroker.emit('newCirclesLocation',data.map(p=>{
@@ -183,17 +199,16 @@ export class InteractiveD3 {
   makeOrientationCurve(){
 
     const sum ={x:this.vectors[0].x+this.vectors[1].x, y:(this.vectors[0].y+this.vectors[1].y)};
-    const curves = [[this.vectors[0], sum,   this.vectors[1]]]
+    const curves = [[this.vectors[0], sum,   this.vectors[1]]];
     const curveFunc = d3.line<PointVec>()
     .x((d) => this.xScale(d.x*0.5))
     .y((d) => this.yScale(d.y*0.5))
     .curve(d3.curveCatmullRom.alpha(0.5));
 
-    const arrowBlack = this.svg.select('#arrow').clone(true)
-    arrowBlack.attr('fill', 'black')
-    arrowBlack.attr('id', 'arrowBlack')
 
+    const det = mj.det([[this.vectors[0].x,this.vectors[0].y],[this.vectors[1].x,this.vectors[1].y]]);
 
+    d3.selectAll('.orientationCurve').remove();
     const group = this.svg.append('g').attr('class','orientationCurve');
     group
     .selectAll('path')
@@ -201,21 +216,15 @@ export class InteractiveD3 {
     .join('path')
     // .data(curves)
     .attr("d", curveFunc)
-    .attr('stroke', 'red')
+    .attr('stroke',  det < 0 ?'black':'red')
     .attr('stroke-dasharray',"5,5")
-    .attr('marker-end', 'url(#arrowBlack)')
+    .attr('marker-end',  det < 0 ? 'url(#arrowBlack)' : 'url(#arrowRed)')
     .attr('fill', 'none');
 
 
   
     this.eventBroker.addListener('newCirclesLocation', (newPointVecs: PointVec[])=>{
       const det = mj.det([[newPointVecs[0].x,newPointVecs[0].y],[newPointVecs[1].x,newPointVecs[1].y]]);
-      let color = 'black';
-      if(det>1){
-        color = 'red';
-      } else if (det<1) {
-        color = 'black';
-      }
       const vectors = newPointVecs.map(p=>p);
       const sum ={x:vectors[0].x+vectors[1].x, y:(vectors[0].y+vectors[1].y)};
       const curves = [[vectors[0], sum,   vectors[1]]]
@@ -224,15 +233,16 @@ export class InteractiveD3 {
       .data(curves)
       .join('path')
       .attr("d", curveFunc)
-      .attr('stroke',  color)
+      .attr('stroke',   det < 0 ?'black':'red')
       .attr('stroke-dasharray',"5,5")
-      .attr('marker-end', 'url(#arrowBlack)')
+      .attr('marker-end', det < 0 ? 'url(#arrowBlack)' : 'url(#arrowRed)')
       .attr('fill', 'none');
     })
   
   }
 
   makeShape(){
+    d3.selectAll(".shape").remove();
     const group = this.svg.append('g').attr('class','shape');
 
     const vertices : [number,number][]= [[this.xScale(0),this.yScale(0)]];
@@ -294,17 +304,7 @@ export class InteractiveD3 {
     .attr('orient', 'auto-start-reverse')
     .append('path')
     .attr('d', arrowLine(arrowPoints))
-  }
 
-  makeVectors(){
-    const group = this.svg.append('g').attr('class','vecs'); 
-    const group2 = this.svg.append('g').attr('class','vec2');
-    
-    // const groups = [group1,group2];
-
-    const vec0 = {x:0,y:0};
-    const vec1 = this.vectors[0]!;
-    const vec2 = this.vectors[1]!;
 
     const arrowRed = this.svg.select('#arrow').clone(true)
     arrowRed.attr('fill', 'red')
@@ -314,14 +314,37 @@ export class InteractiveD3 {
     arrowBlue.attr('fill', 'blue')
     arrowBlue.attr('id', 'arrowBlue')
 
+
+    const arrowBlack = this.svg.select('#arrow').clone(true)
+    arrowBlack.attr('fill', 'black')
+    arrowBlack.attr('id', 'arrowBlack')
+  }
+
+
+  getColor(idx:number, colors:string[]){
+    if(this.swapRow) colors.reverse();
+    return colors[idx];
+  }
+
+  makeVectors(){
+    d3.selectAll(".vecs").remove();
+
+    const group = this.svg.append('g').attr('class','vecs'); 
+    
+    // const groups = [group1,group2];
+
+    const vec0 = {x:0,y:0};
+    const vec1 =  this.vectors[0]! ;
+    const vec2 =  this.vectors[1]! ;
+
     // this.svg
       // .append('path')
       group.selectAll('path')
       .data([  [vec0,vec1],[vec0,vec2]])
       .join('path')
       .attr('d', (d)=>this.drawLine(d))
-      .attr('stroke',(d,i)=>i===0? 'red':'blue')
-      .attr('marker-end',(d,i)=>i===0? 'url(#arrowRed)':'url(#arrowBlue)')
+      .attr('stroke',(d,i)=>this.getColor(i,['red','blue']))
+      .attr('marker-end',(d,i)=>this.getColor(i,['url(#arrowRed)','url(#arrowBlue)']))
       .attr('fill', 'none');
 
     this.eventBroker.addListener('newCirclesLocation', (newPointVecs: PointVec[])=>{
@@ -334,8 +357,8 @@ export class InteractiveD3 {
       .data([  [vec0,vec1],[vec0,vec2]])
       .join('path')
       .attr('d', (d)=>this.drawLine(d))
-      .attr('stroke',(d,i)=>i===0? 'red':'blue')
-      .attr('marker-end',(d,i)=>i===0? 'url(#arrowRed)':'url(#arrowBlue)')
+      .attr('stroke',(d,i)=>this.getColor(i,['red','blue']))
+      .attr('marker-end',(d,i)=>this.getColor(i,['url(#arrowRed)','url(#arrowBlue)']))
       .attr('fill', 'none');
     })
   

@@ -464,7 +464,7 @@
 \\end{bmatrix} `}
 />
 	, which is basically the x, y, and z axis. So if you curl your right fingers from x to y axis, your thumb will
-  be pointing at z axis. So This is the standard orientation.
+  be pointing at z axis. So This is the standard orientation(+1).
 </p>
 <RightHand veca={[1,0,0]} vecb={[0,1,0]} vecc={[0,0,1]} zoomIn/>
 
