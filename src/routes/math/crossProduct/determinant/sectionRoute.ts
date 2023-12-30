@@ -4,9 +4,10 @@ const baseRoute = '/math/crossProduct/determinant'
 export const sectionRoute : IRoute = {
   label: 'Determinant',
   subRoutes: [
-    { label: 'Linear Transformation', path: baseRoute + '/linearTransformation'},
+    // { label: 'Linear Transformation', path: baseRoute + '/linearTransformation'},
     { label: 'Oriented Volume', path: baseRoute + '/orientedVolume'},
-    { label: 'Calculating Determinant in R^2', path: baseRoute+'/calculatingDeterminant/r2',katexMix:[{str:'Calculating Determinant in'},{math:'\\mathbb{R}^2'}]},
-    { label: 'Calculating Determinant in R^3', path: baseRoute+'/calculatingDeterminant/r3',katexMix:[{str:'Calculating Determinant in'},{math:'\\mathbb{R}^3'}]},
+    { label: 'Calculating Determinant', path: baseRoute+'/calculatingDeterminant'},
+    { label: 'Row Ops Effect in R^2', path: baseRoute+'/calculatingDeterminant/r2',katexMix:[{str:'Row Ops Effect in'},{math:'\\mathbb{R}^2'}]},
+    { label: 'Row Ops Effect in R^3', path: baseRoute+'/calculatingDeterminant/r3',katexMix:[{str:'Row Ops Effect in'},{math:'\\mathbb{R}^3'}]},
   ]
 }

@@ -88,10 +88,10 @@ export class Universe {
     //   console.log('Camera Position:', cameraPosition);
     // });
 
-    this.veca = new Vector(3,-2,3,0x008800);
+    this.veca = new Vector(3,-2,3,0xff0000);
     this.vecb = new Vector(2,1,-2,0x0000ff);
     const cp = new THREE.Vector3().crossVectors(this.veca.coord,this.vecb.coord);
-    this.vecCrossProduct = new Vector(cp.x,cp.y,cp.z,0xff0000);
+    this.vecCrossProduct = new Vector(cp.x,cp.y,cp.z,0xffff00);
     const n = cp.normalize();
     this.vecn = new Vector(n.x,n.y,n.z,0xff8000);
 
@@ -145,7 +145,7 @@ export class Universe {
   }
 
   async setMathMeshes(){
-    const mathText = await MathText.Init('\\vec{a} \\\\ (a_x,a_y,a_z)','green');
+    const mathText = await MathText.Init('\\vec{a} \\\\ (a_x,a_y,a_z)','red');
     mathText.mesh.position.set(this.veca.coord.x, this.veca.coord.y, this.veca.coord.z);
     this.scene.add(mathText.mesh);
 
@@ -153,7 +153,7 @@ export class Universe {
     mathText2.mesh.position.set(this.vecb.coord.x, this.vecb.coord.y, this.vecb.coord.z)
     this.scene.add(mathText2.mesh);
 
-    const mathText3 = await MathText.Init('\\vec{a} \\times \\vec{b}','red');
+    const mathText3 = await MathText.Init('\\vec{a} \\times \\vec{b}','yellow');
     mathText3.mesh.position.set(this.vecCrossProduct.coord.x, this.vecCrossProduct.coord.y, this.vecCrossProduct.coord.z)
     this.scene.add(mathText3.mesh);
 

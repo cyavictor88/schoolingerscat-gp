@@ -22,8 +22,6 @@
 	import InnerProductRn from './innerProductRn/+page.svelte';
 	import Route from '$lib/components/Route/Route.svelte';
 
-
-
 	// $: if(window) {
 	// 	console.log(window.location.hash)
 	// }
@@ -43,7 +41,6 @@
 </p>
 
 <!-- <Route route={$contextSectionRoute} indent={0} bgColor={SITE_COLOR.CompRouteDefaultBG} /> -->
-
 
 {#if false}
 <Scrollspy>

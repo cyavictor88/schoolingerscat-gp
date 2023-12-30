@@ -24,13 +24,14 @@
 	const narrowSideBarWidth = 30;
 	let sideBarWidth = wideSideBarWidth;
 	let sideBarDivWidth : number;
+	let topBox : HTMLDivElement;
 
 
 	onMount(() => {
 		changeSizeBarWidth();
 		window.addEventListener('click', closeIfMouseNotOver);
 		window.addEventListener('resize', changeSizeBarWidth);
-
+		console.log('on mount subject layout')
 		return () => {
 			window.removeEventListener('resize', changeSizeBarWidth);
 			window.removeEventListener('click', closeIfMouseNotOver);
@@ -69,30 +70,31 @@
 		mouseIsOverDropdown = isOver;
 	}
 
-	// for resetting section route in case where a page got no section route
-	$: if($navigating) {
-		const contextSectionRoute = getContext<Writable<IRoute|null>>('contextSectionRoute');
-		let hideSectionRoute = true;
-		$contextSectionRoute?.subRoutes?.forEach((route)=>{
-			if($navigating && route.path===$navigating.to?.route.id) hideSectionRoute = false;
-		})
-		if($contextSectionRoute?.label.toLowerCase() === $navigating.to?.route.id?.split('/').reverse()[0]) hideSectionRoute = false;
-		if(hideSectionRoute) contextSectionRoute.set(null);
-	};
+
 
 	// force scroll to top on path change
-	let topBox : HTMLDivElement;
 	let prevPathname = 'init path';
 	afterUpdate(()=>{
 		const curPathname = $url ? ($url as URL).pathname : 'no path'
 		if (curPathname !==prevPathname ) {
-			console.log('path change from', prevPathname ,'to', curPathname);
+			// console.log('path change from', prevPathname ,'to', curPathname);
 			prevPathname = curPathname;
 			topBox.scrollIntoView();
 		}
 	})
 
-
+	// for resetting section route in case where a page got no section route
+	$: if($navigating) {
+		const contextSectionRoute = getContext<Writable<IRoute|null>>('contextSectionRoute');
+		let hideSectionRoute = true;
+		$contextSectionRoute?.subRoutes?.forEach((route)=>{
+			if(route.path === $navigating!.to?.route.id) hideSectionRoute = false;
+		})
+		const sectionRouteLabel = $contextSectionRoute?.label.toLowerCase().split(' ').join('');
+		const navigateTo = $navigating.to?.route.id?.split('/').reverse()[0].toLowerCase();
+		if( sectionRouteLabel === navigateTo) hideSectionRoute = false;
+		if(hideSectionRoute) contextSectionRoute.set(null);
+	};
 
 </script>
 <div bind:this={topBox}></div>

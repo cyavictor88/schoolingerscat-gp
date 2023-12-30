@@ -7,7 +7,6 @@
   onMount(()=>{
     d3Obj = new SpaceShuttle(numEngineSet);
     d3Div.append(d3Obj.svgNode!);
-
   })
 </script>
 

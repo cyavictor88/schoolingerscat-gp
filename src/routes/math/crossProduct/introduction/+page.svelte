@@ -25,7 +25,7 @@
 <Title hLevel={1}>Cross Product - Introduction</Title>
 
 <p>The definition of Cross Product is:</p>
-<Latex center math={'\\color{red} \\vec{a} \\times \\vec{b} \\color{black}=  \\color{forestgreen} \\| a \\|  \\color{blue} \\| b \\| \\color{black} sin(\\theta) \\color{orange} \\hat{n}'} />
+<Latex center math={'\\color{yellow} \\vec{a} \\times \\vec{b} \\color{black}=  \\color{red} \\| a \\|  \\color{blue} \\| b \\| \\color{black} sin(\\theta) \\color{orange} \\hat{n}'} />
 
 <div bind:this={divFig1} />
 
@@ -47,7 +47,7 @@
 />
 
 <p>
-	But I never understood why, firstly, <Latex math={`\\vec{i}, \\vec{j},\\vec{k}`} /> are unit vectors, how do they fit inside a matrix? Even if it is just some notations for convenience, ok, fine. But why doing this
+	But the above formula raised a few questions for me. First, <Latex math={`\\vec{i}, \\vec{j},\\vec{k}`} /> are unit vectors, how do they fit inside a matrix? Even if it is just some notations for convenience, ok, fine. But why doing this
 	calculation give you the cross product vector that is perpendicular to the plane formed by <Latex
 		math={`\\vec{a}`}
 	/>,<Latex math={`\\vec{b}`} /> and has magnitude equals to the area formed by <Latex
@@ -77,7 +77,7 @@
 				<Latex math={`\\vec{b} `} /> as constants, and make <Latex
 					math={`\\vec{v} `}
 				/> as a variable vector. we then can create a linear functional
-				<Latex math={'\\phi'} /> such that <Latex math={'\\phi ( \\vec{v} )= \\det'} />
+				<Latex math={'\\phi'} /> such that: <br/><Latex math={'\\phi ( \\vec{v} )= \\det'} />
 				<RowsVec cols={['v', 'a', 'b']} dim={3} />.
 			</li>
 			<li>

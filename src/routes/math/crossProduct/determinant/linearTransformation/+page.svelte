@@ -2,13 +2,16 @@
 	import Title from '$lib/components/PageComp/Title.svelte';
 	import Latex from '$lib/components/Latex/Latex.svelte';
 	import ColsVec from '../../../crossProduct2/common/latex/ColsVec.svelte';
-  import { onMount } from 'svelte';
   import FabricLinTrans from './fabric/FabricLinTrans.svelte';
 	import SpaceShuttle  from './d3/SpaceShuttle.svelte';
+  import { onMount } from 'svelte';
+	import { SITE_COLOR } from '$lib/theme/colors';
 
 </script>
 
-<Title hLevel={1}>Determinant - Linear Transformation</Title>
+<Title hLevel={2} backgroundColor={SITE_COLOR.TitleBG}>
+  Linear Transformation
+</Title>
 <p>
 	In this section, we will go over what linear transformation is and how it can be represented as
 	a matrix.

@@ -4,15 +4,15 @@
 
 </script>
 
-<Title hLevel={1}>Determinant - Introduction</Title>
+<Title hLevel={1}>Determinant</Title>
 
 <p>
-  I always have trouble grasping the concept of determinant of a matrix. 
+  I always have trouble grasping the concept of determinant of a matrix <Latex math={'M'}/>. 
   After some soul searching, I think determinant can be better understood as follow:
 </p>
 
 <Latex center math={'\\det(M) = \\text{ oriented volume of } (M)'}/> 
-
+{#if false}
 <p>with a little more context:</p>
 
 <fieldset>
@@ -25,7 +25,7 @@
 
 <p>And if we use the unit hyper-cube <Latex math={'I_n'}/> as the hyper-parallelepiped, then we will get:</p>
 
-<Latex center math={'\\text{ oriented volume of } (MI_n) =  \\text{ volume of } (M) = \\det(M) * 1'}/> 
+<Latex center math={'\\text{ oriented volume of } (MI_n) =  \\text{ oriented volume of } (M) = \\det(M) * 1'}/> 
 <Latex center math={'\\Rightarrow  \\det(M) = \\text{ oriented volume of } (M)'}/> 
 
 <p>What this mean is if we treat the linear transformation matrix <Latex math={'M'}/> as a hyper-parallelepiped, the determinant of <Latex math={'M'}/> is the oriented volume of that hyper-parallelepiped <Latex math={'M'}/></p>
@@ -36,3 +36,4 @@
   In the following sections, I will explain everything in the box above, going over what is linear transformation, oriented volume, and how to calculate determinant and prove its properties.
 </p>
 
+{/if}

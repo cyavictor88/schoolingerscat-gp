@@ -11,7 +11,7 @@
 	import LatexMix from '../Latex/LatexMix.svelte';
 	export let route: IRoute | null = null;
 	export let indent = 0;
-	export let toggleMenu: any = () => {console.log('doing nothing')};
+	export let toggleMenu: any = () => {};
 	export let bgColor: string = SITE_COLOR.CompRouteDefaultBG;
 	function toggleOpenSubRoute() {
 		if (route) {
