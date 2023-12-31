@@ -7,7 +7,7 @@ export const sectionRoute : IRoute = {
     // { label: 'Linear Transformation', path: baseRoute + '/linearTransformation'},
     { label: 'Oriented Volume', path: baseRoute + '/orientedVolume'},
     { label: 'Calculating Determinant', path: baseRoute+'/calculatingDeterminant'},
-    { label: 'Row Ops Effect in R^2', path: baseRoute+'/calculatingDeterminant/r2',katexMix:[{str:'Row Ops Effect in'},{math:'\\mathbb{R}^2'}]},
-    { label: 'Row Ops Effect in R^3', path: baseRoute+'/calculatingDeterminant/r3',katexMix:[{str:'Row Ops Effect in'},{math:'\\mathbb{R}^3'}]},
+    { label: 'Row Ops in R^2', path: baseRoute+'/calculatingDeterminant/r2',katexMix:[{str:'Row Ops in'},{math:'\\mathbb{R}^2'}]},
+    { label: 'Row Ops in R^3', path: baseRoute+'/calculatingDeterminant/r3',katexMix:[{str:'Row Ops in'},{math:'\\mathbb{R}^3'}]},
   ]
 }

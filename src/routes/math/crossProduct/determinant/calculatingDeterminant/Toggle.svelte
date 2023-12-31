@@ -5,7 +5,7 @@
 
 <label>
 	<input type="checkbox" bind:checked={visible} />
-  {!visible? 'show' : 'close'}
+  {!visible? 'expand' : 'close'}
 </label>
 
 {#if visible}

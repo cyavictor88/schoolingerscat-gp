@@ -8,7 +8,8 @@
 	import Title from '$lib/components/PageComp/Title.svelte';
 	import Latex from '$lib/components/Latex/Latex.svelte';
 	import { SITE_COLOR } from '$lib/theme/colors';
-
+  import { page } from '$app/stores';
+  import RowOpMatrix from './RowOpMatrix.svelte';
 </script>
 
 <Title hLevel={2} backgroundColor={SITE_COLOR.TitleBG}>
@@ -36,35 +37,29 @@
   Fact 1: Any full-ranks matrix can obtained by applying chains of elementary row operations to the Identity Matrix.
 </p>
 <p>
-  Using Fact 1, we explain how to calculate determinant with the following steps:
+  Using Fact 1, we show how to calculate determinant with the following steps:
 </p>
 <ol>
   <li>
-    Show row operation can be represented as a matrix <Latex math={'E'} />
+    Show row operation can be represented as a matrix <Latex math={'E'} />.
     <br/>
     <Toggle>
-      <p>haro</p>
+      <RowOpMatrix />
     </Toggle>
   </li>
   <li>
     Show how applying row operation on a matrix <Latex math={'M'} /> affects its determinant. 
-    And we will show <Latex math={'det(EM)=det(E)det(M)'}/> see <a href='#'>Row Ops Effect</a>.
+    And thus showing <Latex math={'det(EM)=det(E)det(M)'}/>.
+    <br />
+    <Toggle>
+
+      <p>For matrix of <Latex math={'\\mathbb{R^2}'} />, see <a href={$page.route.id+'/r2'}>Row Ops in <Latex math={'\\mathbb{R^2}'} /></a>
+      <p>For matrix of <Latex math={'\\mathbb{R^3}'} />, see <a href={$page.route.id+'/r3'}>Row Ops in <Latex math={'\\mathbb{R^3}'} /></a>
+    </Toggle>
   </li>
   <li>
-    With Fact 1, we know  <Latex math={'M = E_n E_{n-1} ... E_1'} />. together with the result of With Step 2,
-    we can get <Latex math={'det(M) = det(E_n E_{n-1} ... E_1) = det(E_n)det(E_{n-1}) ... det(E_1)'} />
-  </li>
-  <!-- <li>
-    <b>Linear Transformation:</b> We show how linear transformation can be expressed as a matrix.
-  </li>
-  <li>
-    <b>Row Ops as Matrix:</b> We show how to express elementary row operation as a matrix.
-  </li> -->
-  <li>
-    <b>Row Ops in <Latex math={'\\mathbb{R^2}'}/>: </b>We show how elementary row operations affect the determinant of a matrix in <Latex math={'\\mathbb{R^2}'}/>.
-  </li>
-  <li>
-    <b>Row Ops in <Latex math={'\\mathbb{R^3}'}/>: </b>We show how elementary row operations affect the determinant of a matrix in <Latex math={'\\mathbb{R^3}'}/>.
+    With Fact 1 and Step 1, we know  <Latex math={'M = E_n E_{n-1} ... E_1'} />. Together with the result of With Step 2,
+    we can calculate <Latex math={'det(M)'} /> as: <br /> <Latex math={'det(M) = det(E_n E_{n-1} ... E_1) = det(E_n)det(E_{n-1}) ... det(E_1)'} />.
   </li>
 </ol>
 
