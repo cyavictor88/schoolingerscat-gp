@@ -4,6 +4,7 @@
 	// import { pageRoute } from './sectionRoute';
 	import { getContext } from 'svelte';
 	import type { Writable } from 'svelte/store';
+  import Toggle from './Toggle.svelte'
 	import Title from '$lib/components/PageComp/Title.svelte';
 	import Latex from '$lib/components/Latex/Latex.svelte';
 	import { SITE_COLOR } from '$lib/theme/colors';
@@ -35,21 +36,23 @@
   Fact 1: Any full-ranks matrix can obtained by applying chains of elementary row operations to the Identity Matrix.
 </p>
 <p>
-  Using Fact 1, we explain the how to calculate determinant with the following steps:
+  Using Fact 1, we explain how to calculate determinant with the following steps:
 </p>
 <ol>
   <li>
     Show row operation can be represented as a matrix <Latex math={'E'} />
+    <br/>
+    <Toggle>
+      <p>haro</p>
+    </Toggle>
   </li>
   <li>
-    Understand how a row operation applied on a matrix <Latex math={'M'} /> affects its determinant.
-    <br /> In other words we want to show how to get <Latex math={'det(E)'}/>
-    and show that <Latex math={'det(EM)=det(E)det(M)'} />.   
+    Show how applying row operation on a matrix <Latex math={'M'} /> affects its determinant. 
+    And we will show <Latex math={'det(EM)=det(E)det(M)'}/> see <a href='#'>Row Ops Effect</a>.
   </li>
-
   <li>
-    Using Fact 1 and Step 1., we know  <Latex math={'M = E_n E_{n-1} ... E_1'} />,
-    so can get <Latex math={'det(M) = det(E_n E_{n-1} ... E_1) = det(E_n)det(E_{n-1}) ... det(E_1)'} />
+    With Fact 1, we know  <Latex math={'M = E_n E_{n-1} ... E_1'} />. together with the result of With Step 2,
+    we can get <Latex math={'det(M) = det(E_n E_{n-1} ... E_1) = det(E_n)det(E_{n-1}) ... det(E_1)'} />
   </li>
   <!-- <li>
     <b>Linear Transformation:</b> We show how linear transformation can be expressed as a matrix.
