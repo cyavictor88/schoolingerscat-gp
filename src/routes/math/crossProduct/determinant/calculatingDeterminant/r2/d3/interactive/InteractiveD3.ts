@@ -3,8 +3,8 @@ import katex from "katex";
 import EventEmitter from 'eventemitter3';
 import * as mj from 'mathjs';
 export enum RowOp {
-  Swap,
   Mult,
+  Swap,
   Add,
   All
 }
@@ -49,9 +49,13 @@ export class InteractiveD3 {
   mult: number[] = [1,1];
 
   vectorsCache : PointVec[] | null = null;
-  // rowOp: RowOp!;
+  rowOp!: RowOp;
 
-  constructor(vectors:number[][],showOrientation:boolean,zoomIn:boolean, rowOp?: RowOp) {
+
+
+  constructor(vectors:number[][],showOrientation:boolean,zoomIn:boolean, rowOp: RowOp) {
+    console.log('rowOp',rowOp)
+    this.rowOp = rowOp;
     this.oriVectors=vectors;
     if(zoomIn){
       this.xDomain=[-2,2];
@@ -87,6 +91,9 @@ export class InteractiveD3 {
     this.defArrow();
     this.makeVectors();
     this.makeDragCircles();
+    if(this.rowOp  === RowOp.Mult){
+      this.makeBases();
+    }
     if(showOrientation)this.makeOrientationCurve();
 
     this.eventBroker.addListener('toggleSnap2Grid',()=>{
@@ -107,6 +114,20 @@ export class InteractiveD3 {
       if(showOrientation)this.makeOrientationCurve();
 
     })
+    this.eventBroker.addListener('reset',()=>{
+      this.vectors = this.oriVectors.map(v=>{return {x:v[0],y:v[1]}});
+
+      this.vectorsCache = {...this.vectors}; 
+      this.eventBroker.emit('newCirclesLocation',[...this.vectors]);
+      this.makeShape();
+      this.makeVectors();
+      this.makeDragCircles();
+      if(this.rowOp  === RowOp.Mult){
+        this.makeBases();
+      }
+      if(showOrientation)this.makeOrientationCurve();
+
+    });
     this.eventBroker.addListener('mult',(c1:number,c2:number)=>{
 
       let newVec1 = {x:this.vectors[0].x*this.mult[0]*c1,y:this.vectors[0].y*this.mult[0]*c1};
@@ -124,17 +145,39 @@ export class InteractiveD3 {
       if(c2) this.mult[1]=1/c2;
       else this.mult[1]=1;
 
-      this.vectorsCache = {...this.vectors}; 
+      this.vectorsCache = [...this.vectors]; 
       this.eventBroker.emit('newCirclesLocation',[newVec1, newVec2]);
       this.vectors = [newVec1, newVec2];
       this.makeShape();
       this.makeVectors();
       this.makeDragCircles();
+      if(this.rowOp  === RowOp.Mult){
+        this.makeBases();
+      }
       if(showOrientation)this.makeOrientationCurve();
 
 
     })
 
+  }
+
+  makeBases(){
+
+    const ms = this.vectors.map((vec)=>vec.y/vec.x);
+    const negX = this.xDomain[0]-1;
+    const posX = this.xDomain[1]+1;
+    const line1 = [{x:negX,y:ms[0]*negX},{x:posX,y:ms[0]*posX}];
+    const line2 = [{x:negX,y:ms[1]*negX},{x:posX,y:ms[1]*posX}];
+
+    this.svg.selectAll(".bases").remove();
+    const group = this.svg.append('g').attr('class','bases');
+    group.selectAll('path')
+    .data([line1,line2])
+    .join('path')
+    .attr('d', (d)=>this.drawLine(d))
+    .attr('stroke',(d,i)=>this.getColor(i,['red','blue']))
+    .attr('fill', 'none')
+    .attr("opacity","0.5")
   }
 
   makeDragCircles(){
@@ -183,6 +226,9 @@ export class InteractiveD3 {
             y:this.yScale.invert(p.y)
         }}))
       }
+      if(this.rowOp===RowOp.Mult){
+        this.makeBases();
+      }
       event.subject.x = event.x;
       event.subject.y = event.y;
       update();
@@ -197,7 +243,7 @@ export class InteractiveD3 {
     initDrag();
     this.dragCircles = group.selectAll('circle').nodes() as SVGCircleElement[];
 
-    this.eventBroker.addListener('toggleSnap2Grid',()=>{
+    const eventListen = this.eventBroker.addListener('toggleSnap2Grid',()=>{
       if(this.snap2Grid){
         data.forEach(p=>{
           const gridX = this.xScale(Math.round(this.xScale.invert(p.x)));
@@ -223,7 +269,6 @@ export class InteractiveD3 {
         }))
       }
     })
-
 
   }
 

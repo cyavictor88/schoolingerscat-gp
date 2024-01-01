@@ -27,7 +27,9 @@
 	let area = '';
 
 	onMount(() => {
-		d3Obj = new InteractiveD3(vectors, showOrientation, zoomIn);
+
+		d3Obj = new InteractiveD3(vectors, showOrientation, zoomIn, rowOp);
+
 		d3Div.append(d3Obj.svgNode!);
 		d3Obj.eventBroker.addListener('newCirclesLocation', (newVecs) => {
 			v1 = {...newVecs[0]};
@@ -113,6 +115,11 @@
 						bind:value={c2}
 						disabled={false}/>
 				</label>
+				<button on:click={()=>{
+					d3Obj?.eventBroker.emit('reset');
+					c1 = 1;
+					c2 = 1;
+				}}>Reset Vectors</button>
 			{/if}
 
 		</div>
