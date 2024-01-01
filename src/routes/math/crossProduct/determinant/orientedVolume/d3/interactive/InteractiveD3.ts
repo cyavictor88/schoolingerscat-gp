@@ -21,14 +21,14 @@ export class InteractiveD3 {
   svg: d3.Selection<SVGSVGElement, undefined, null, undefined>;
   svgNode!: SVGSVGElement | null;
   eventBroker: EventEmitter = new EventEmitter();
-  width: number = 200;
-  height: number = 200;
+  width: number =300;
+  height: number =300;
   marginTop: number = 20;
   marginRight: number = 20;
   marginBottom: number = 20;
   marginLeft: number = 20;
-  xDomain = [-5, 5];
-  yDomain = [-5, 5];
+  xDomain = [-10, 10];
+  yDomain = [-10, 10];
   xScale: d3.ScaleLinear<number, number, never>;
   yScale: d3.ScaleLinear<number, number, never>;
   drawLine : d3.Line<PointVec>;

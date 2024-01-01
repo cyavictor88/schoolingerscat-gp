@@ -36,9 +36,11 @@
 	}
 	let orientation = '0';
 	let det = 0;
+	let vol = '0';
 	$: if(validVec(veca) && validVec(vecb) && validVec(vecc)){
 		det = mj.det([veca,vecb,vecc]);
 		orientation = det === 0 ? '0' : det > 0 ? "\\color{red}+1" : '-1';
+		vol = det === 0 ? '0' : det > 0 ? "\\color{red}"+det.toFixed(2) : '\\color{black}'+(-1*det).toFixed(2);
 	}
 
 	$: if(validVec(veca)){universe?.changeVec(VecEnum.V1,veca);}
@@ -76,7 +78,10 @@
 			</form>
 			<div style='display: flex; flex-flow: column nowrap; gap:2px;'>
 				<Latex math={`orientation=${orientation}`}/>
-				<Latex math={`determinant=${ det > 0 ? "\\color{red}" : ''}${det}`}/>
+				<Latex math={`volume=${vol}`}/>
+				<Latex math={`\\Rightarrow determinant`} />
+				<Latex math={`\\;\\;=orientation \\times volume `}/>
+				<Latex math={`\\;\\;=${ det > 0 ? "\\color{red}" : ''}${det}`}/>
 			</div>
 			<!--
 			<div style='display: flex; flex-flow: row nowrap; gap:20px;'>

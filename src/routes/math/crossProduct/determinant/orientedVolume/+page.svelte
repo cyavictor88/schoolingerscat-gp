@@ -317,7 +317,7 @@
 	zoomIn
 />
 <p><u>Interactive 2D Example:</u></p>
-<div style='padding: 4px; border: 1px solid black; width: 400px;'>
+<div style='padding: 4px; border: 1px solid black; width: 500px;'>
 	<InteractiveD3 />
 
 </div>

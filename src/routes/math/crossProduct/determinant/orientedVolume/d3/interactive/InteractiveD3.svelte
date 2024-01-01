@@ -10,6 +10,8 @@
   export let vectors : number[][] = [[3.2,1.4],[-3.3,1.6]];
   export let showOrientation : boolean = true;
   export let zoomIn : boolean = false;
+	let detString = '';
+	let area = '';
 
   let v1 = {x:vectors[0][0],y:vectors[0][1]};
   let v2 = {x:vectors[1][0],y:vectors[1][1]};
@@ -24,8 +26,15 @@
   let det = mj.det([vectors[0],vectors[1]]);
   $:{
      det = mj.det([[v1.x,v1.y],[v2.x,v2.y]])
+      detString = det.toFixed(2);
+      while (detString.length <= 4) {
+        detString = '0' + detString;
+      }
+      area = Math.abs(det).toFixed(2);
+      while (area.length <= 4) {
+        area = '0' + area;
+      }
   }
-  
 </script>
 
 <div style='display:flex; flex-flow: row nowrap'> 
@@ -38,6 +47,14 @@
       
       <p><Latex math={`\\text{orientation}=${ det === 0 ? '0' : det > 0 ? '\\color{red}+1':'\\color{black}-1'}`}/> </p>
       <p style={det === 0 ? 'color:black' : det >0 ? 'color: red' : 'color: black'}>{ det === 0 ? 'no volume/orientation ' : det > 0 ? '(counter-clockwise)':'(clockwise)'}</p>
+			<p>Volume(Area) = {area}</p>
+      <p><u>Determinant <br /> = orientation * area</u></p>
+      <p>
+				Determinant = <span
+					style={det === 0 ? 'color:black' : det > 0 ? 'color: red' : 'color: black'}
+					>{detString}</span
+				>
+			</p>
       <label><input type="checkbox" bind:checked={d3Obj.snap2Grid} on:change={()=>{d3Obj?.eventBroker.emit('toggleSnap2Grid')}} disabled={false}>Snap to Grid</label>
     </div>
   {/if}
