@@ -3,6 +3,7 @@
   import Latex from '$lib/components/Latex/Latex.svelte';
 	import RowSwap from './RowSwap.svelte';
 	import ScalarMultiple from './ScalarMultiple.svelte';
+	import RowSum from './RowSum.svelte';
 
 </script>
 <Title hLevel={2} >Calculating Determinant in <Latex math={'\\mathbb{R^2}'}/> </Title>
@@ -37,6 +38,7 @@
     <li>
       <b>Row Sum:</b>
       <p>Add a multiple of one row to another row</p>
+      <RowSum />
     </li>
   
   

@@ -176,5 +176,5 @@ P = MA=
 <p>Takeaway: </p>
 <ul>
   <li>A linear transformation that maps a <Latex math={'v'} />-dimensional input vector to a <Latex math={'w'} />-dimensional output vector can be written as a <Latex math={'w \\times v'} /> matrix.</li>
-  <li>In a matrix <Latex math={'M'} />, its entry <Latex math={'m_{ij}'} /> is the coefficient for the <Latex math={'j^{th}'}/> input that is part of the partial sum of <Latex math={'i^{th}'}/> output</li>
+  <li>In a matrix <Latex math={'M'} />, its entry <Latex math={'m_{ij}'} /> is the coefficient for the <Latex math={'j^{th}'}/> input that is <Latex math={'j^{th}'}/> term of the partial sum <Latex math={'i^{th}'}/> output.</li>
 </ul>
