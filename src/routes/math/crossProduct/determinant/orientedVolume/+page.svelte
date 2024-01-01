@@ -82,7 +82,7 @@
                     -3 \\\\
                     2  \\\\
    \\end{bmatrix} ^T`}
-		/>, the white shade is the hyper-parallelepiped form by this <Latex math={`M_2`} />.
+		/>, the white shade is the parallelepiped form by this <Latex math={`M_2`} />.
 	</span>
 	<br />
 	<Example2D
@@ -130,13 +130,13 @@
 2  \\\\
 3  \\\\
 \\end{bmatrix}^T `}
-		/>, the white shade is the hyper-parallelepiped form by this <Latex math={`M_3`} />.
+		/>, the white shade is the parallelepiped form by this <Latex math={`M_3`} />.
 	</span>
 	<br />
 	<Example3D />
 </li>
 <p>
-	So now we know every full rank square matrix has a corresponding hyper-parallelepiped, which has a
+	So now we know every full rank square matrix has a corresponding parallelepiped, which has a
 	volume.
 </p>
 <hr />
@@ -178,7 +178,7 @@
 <Example3D vecc={[0, 7, 0]} />
 
 <p>
-	If you drag around the figure, you can see that the suppose 3D hyper-parallelepiped is squashed to
+	If you drag around the figure, you can see that the suppose 3D parallelepiped is squashed to
 	a 2D plane.
 </p>
 <hr />
@@ -189,7 +189,7 @@
 
 <p>
 	The orientation of the volume is just a positive or negative sign that indicates the direction on
-	how the hyper-parallelepiped is formed:
+	how the parallelepiped is formed:
 </p>
 <p style="text-indent:30px">
 	If it goes along with the Right-Hand Rule, then <Latex math={`\\text{orientation}=1`} />, or else <Latex
@@ -197,7 +197,7 @@
 	/>.
 	<Latex
 		center
-		math={`\\Rightarrow \\text{oriented volume} = \\text{orientation} \\times \\text{volume of the hyper-parallelepiped} `}
+		math={`\\Rightarrow \\text{oriented volume} = \\text{orientation} \\times \\text{volume of the parallelepiped} `}
 	/>
 </p>
 <hr />

@@ -22,35 +22,30 @@
 	let c1 :number | null = 1;
 	let c2 :number | null = 1;
 	let swapRow = false;
+	let det = mj.det([vectors[0], vectors[1]]);
+	let detString = '';
+	let area = '';
+
 	onMount(() => {
 		d3Obj = new InteractiveD3(vectors, showOrientation, zoomIn);
 		d3Div.append(d3Obj.svgNode!);
 		d3Obj.eventBroker.addListener('newCirclesLocation', (newVecs) => {
-			v1 = newVecs[0];
-			v2 = newVecs[1];
+			v1 = {...newVecs[0]};
+			v2 = {...newVecs[1]};
+			det = mj.det([
+				[v1.x, v1.y],
+				[v2.x, v2.y]
+			]);
+			detString = det.toFixed(2);
+			while (detString.length <= 4) {
+				detString = '0' + detString;
+			}
+			area = Math.abs(det).toFixed(2);
+			while (area.length <= 4) {
+				area = '0' + area;
+			}
 		});
 	});
-	let det = mj.det([vectors[0], vectors[1]]);
-	$: {
-		det = mj.det([
-			[v1.x, v1.y],
-			[v2.x, v2.y]
-		]);
-	}
-	let area = '';
-	$: {
-		area = Math.abs(det).toFixed(2);
-		while (area.length <= 4) {
-			area = '0' + area;
-		}
-	}
-	let detString = '';
-	$: {
-		detString = det.toFixed(2);
-		while (detString.length <= 4) {
-			detString = '0' + detString;
-		}
-	}
 
 	$: {
 		if( c1 !== null && c2 !== null && d3Obj){

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Title from '$lib/components/PageComp/Title.svelte';
 	import Latex from '$lib/components/Latex/Latex.svelte';
-	import ColsVec from '../../../crossProduct2/common/latex/ColsVec.svelte';
+	import ColsVec from '../../../../crossProduct2/common/latex/ColsVec.svelte';
   import FabricLinTrans from './fabric/FabricLinTrans.svelte';
 	import SpaceShuttle  from './d3/SpaceShuttle.svelte';
   import { onMount } from 'svelte';
@@ -174,4 +174,7 @@ P = MA=
 </p>
 
 <p>Takeaway: </p>
-<p>A linear transformation map that maps a <Latex math={'v'} />-dimensional input vector to a <Latex math={'w'} />-dimensional output vector can be written as a <Latex math={'w \\times v'} /> matrix</p>
+<ul>
+  <li>A linear transformation that maps a <Latex math={'v'} />-dimensional input vector to a <Latex math={'w'} />-dimensional output vector can be written as a <Latex math={'w \\times v'} /> matrix.</li>
+  <li>In a matrix <Latex math={'M'} />, its entry <Latex math={'m_{ij}'} /> is the coefficient for the <Latex math={'j^{th}'}/> input that is part of the partial sum of <Latex math={'i^{th}'}/> output</li>
+</ul>

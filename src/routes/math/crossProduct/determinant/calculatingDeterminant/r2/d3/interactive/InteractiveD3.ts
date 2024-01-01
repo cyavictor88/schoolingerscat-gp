@@ -46,8 +46,12 @@ export class InteractiveD3 {
   dragCircles!: SVGCircleElement[];
   swapRow: Boolean = false;
 
+  mult: number[] = [1,1];
 
-  constructor(vectors:number[][],showOrientation:boolean,zoomIn:boolean) {
+  vectorsCache : PointVec[] | null = null;
+  // rowOp: RowOp!;
+
+  constructor(vectors:number[][],showOrientation:boolean,zoomIn:boolean, rowOp?: RowOp) {
     this.oriVectors=vectors;
     if(zoomIn){
       this.xDomain=[-2,2];
@@ -104,14 +108,30 @@ export class InteractiveD3 {
 
     })
     this.eventBroker.addListener('mult',(c1:number,c2:number)=>{
-      const newVec1 = {x:this.vectors[0].x*c1,y:this.vectors[0].y*c1};
-      const newVec2 = {x:this.vectors[1].x*c2,y:this.vectors[1].y*c2};
+
+      let newVec1 = {x:this.vectors[0].x*this.mult[0]*c1,y:this.vectors[0].y*this.mult[0]*c1};
+      let newVec2 = {x:this.vectors[1].x*this.mult[1]*c2,y:this.vectors[1].y*this.mult[1]*c2};
+
+      if(newVec1.x ===0 && newVec1.y===0 && this.vectorsCache){
+        newVec1 = {x:c1 * this.vectorsCache[0].x , y:c1 * this.vectorsCache[0].y}
+      }
+      if(newVec2.x ===0 && newVec2.y===0 && this.vectorsCache){
+        newVec2 = {x:c2 * this.vectorsCache[1].x , y:c2 * this.vectorsCache[1].y}
+      }
+
+      if(c1) this.mult[0]=1/c1;
+      else this.mult[0]=1;
+      if(c2) this.mult[1]=1/c2;
+      else this.mult[1]=1;
+
+      this.vectorsCache = {...this.vectors}; 
       this.eventBroker.emit('newCirclesLocation',[newVec1, newVec2]);
       this.vectors = [newVec1, newVec2];
       this.makeShape();
       this.makeVectors();
       this.makeDragCircles();
       if(showOrientation)this.makeOrientationCurve();
+
 
     })
 

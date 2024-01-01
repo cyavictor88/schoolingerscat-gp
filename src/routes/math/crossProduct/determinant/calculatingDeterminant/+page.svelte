@@ -44,6 +44,7 @@
     Show row operation can be represented as a matrix <Latex math={'E'} />.
     <br/>
     <Toggle>
+      <p>If you want to some refresh on linear transformation and matrix, see <a href={$page.route.id+'/linearTransformation'}>Linear Transformation</a> </p>
       <RowOpMatrix />
     </Toggle>
   </li>
@@ -59,7 +60,7 @@
   </li>
   <li>
     With Fact 1 and Step 1, we know  <Latex math={'M = E_n E_{n-1} ... E_1'} />. Together with the result of With Step 2,
-    we can calculate <Latex math={'det(M)'} /> as: <br /> <Latex math={'det(M) = det(E_n E_{n-1} ... E_1) = det(E_n)det(E_{n-1}) ... det(E_1)'} />.
+    we can calculate <Latex math={'det(M)'} /> as: <br /> <Latex center math={'det(M) = det(E_n E_{n-1} ... E_1) = det(E_n)det(E_{n-1}) ... det(E_1)'} />.
   </li>
 </ol>
 
