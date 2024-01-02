@@ -11,8 +11,7 @@ import { Parallelepiped } from './object/Parallelepiped';
 import { Plane } from './object/Plane';
 import TWEEN from '@tweenjs/tween.js';
 import { Line } from './object/Line';
-import type {Updatable } from './TickingVerse';
-import type { IUniverse } from './Multiverse';
+import type { IUniverse,Updatable } from './Multiverse';
 import * as mj from 'mathjs';
 
 

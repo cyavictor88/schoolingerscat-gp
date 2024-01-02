@@ -7,6 +7,7 @@
 	import * as mj from 'mathjs';
 	import Latex from '$lib/components/Latex/Latex.svelte';
 	import { RowSumArea as FigRowSumArea } from '../d3/RowSumArea';
+	import ToggleHide from '../ToggleHide.svelte';
 	// import { Universe4 } from './Universe4';
 	let grandDiv: HTMLDivElement;
 	let canvasHeight: number = 0;
@@ -16,7 +17,7 @@
 	let universe3Div: HTMLDivElement | HTMLSpanElement;
 	// let universe4Div: HTMLDivElement|HTMLSpanElement;
 	let universe3: Universe3;
-	// let universe4:Universe4;
+	let universe1:Universe;
 	let canvas: HTMLCanvasElement;
 
 	let d3FigRowSumArea: FigRowSumArea;
@@ -29,13 +30,13 @@
 
 		const rowop = mj.add(mj.multiply(2, vecv), vecb) as number[];
 
-		const universe = new Universe(universe1Div, vecv, veca, vecb);
+		universe1 = new Universe(universe1Div, vecv, veca, vecb);
 		const universe2 = new Universe2(universe2Div, vecv, veca, rowop as number[]);
 		universe3 = new Universe3(universe3Div, vecv, veca, vecb, rowop as number[]);
 		universe3.vecv_vecb_plane.mesh.visible = true;
 		// universe4 = new Universe4(universe4Div, vecv,  vecb, rowop as number[]);
-		const multiverse = new Multiverse(canvas, [universe, universe2, universe3]);
-		universe.eventBroker.emit('setMathMeshes');
+		const multiverse = new Multiverse(canvas, [universe1, universe2, universe3]);
+		universe1.eventBroker.emit('setMathMeshes');
 		universe2.eventBroker.emit('setMathMeshes');
 		universe3.eventBroker.emit('setMathMeshes');
 		// universe4.eventBroker.emit('setMathMeshes');
@@ -50,15 +51,27 @@
 		canvasHeight = grandDiv.clientHeight;
 
 	});
+
+	let visi = true;
+	$:{
+		console.log('visi',visi);
+		const vecv = [2, 3, -1];
+		const veca = [-4, -1, -1];
+		const vecb = [-3, -1, 3];
+		// if(visi)
+		// universe1 = new Universe(universe1Div, vecv, veca, vecb);
+
+	}
 </script>
 
 <div bind:this={grandDiv}
 	style="position: relative; width:1004px; display:flex; flex-flow: row wrap; border: 1px solid blue"
 >
 	<canvas id="c" bind:this={canvas} style='height: {canvasHeight}px;'/>
-	<span style="width:500px; height:400px; position:relative;" bind:this={universe1Div}
-		>Figure 4.a: <Latex math={'M'} /></span
-	>
+	
+	<ToggleHide bind:visible={visi}><span style="width:500px; height:400px; position:relative;" bind:this={universe1Div}
+	>Figure 4.a: <Latex math={'M'} /></span
+	></ToggleHide>
 	<span style="width:500px; height:400px; position:relative;" bind:this={universe2Div}
 		>Figure 4.b: <Latex math={`M'`} /></span
 	>
