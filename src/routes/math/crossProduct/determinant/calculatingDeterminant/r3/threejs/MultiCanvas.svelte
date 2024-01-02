@@ -22,6 +22,8 @@
 
 	let d3FigRowSumArea: FigRowSumArea;
 	let figRowSumAreaD3: HTMLDivElement;
+	let visibleUni1 = true;
+	let multiverse: Multiverse;
 	onMount(() => {
 
 		const vecv = [2, 3, -1];
@@ -35,7 +37,7 @@
 		universe3 = new Universe3(universe3Div, vecv, veca, vecb, rowop as number[]);
 		universe3.vecv_vecb_plane.mesh.visible = true;
 		// universe4 = new Universe4(universe4Div, vecv,  vecb, rowop as number[]);
-		const multiverse = new Multiverse(canvas, [universe1, universe2, universe3]);
+		multiverse = new Multiverse(canvas, [universe1, universe2, universe3], visibleUni1 );
 		universe1.eventBroker.emit('setMathMeshes');
 		universe2.eventBroker.emit('setMathMeshes');
 		universe3.eventBroker.emit('setMathMeshes');
@@ -52,13 +54,10 @@
 
 	});
 
-	let visi = true;
-	$:{
-		console.log('visi',visi);
-		const vecv = [2, 3, -1];
-		const veca = [-4, -1, -1];
-		const vecb = [-3, -1, 3];
-		// if(visi)
+	$:if(multiverse){
+		console.log('visi',visibleUni1);
+		multiverse.visibleUni1=visibleUni1
+
 		// universe1 = new Universe(universe1Div, vecv, veca, vecb);
 
 	}
@@ -68,10 +67,16 @@
 	style="position: relative; width:1004px; display:flex; flex-flow: row wrap; border: 1px solid blue"
 >
 	<canvas id="c" bind:this={canvas} style='height: {canvasHeight}px;'/>
-	
-	<ToggleHide bind:visible={visi}><span style="width:500px; height:400px; position:relative;" bind:this={universe1Div}
-	>Figure 4.a: <Latex math={'M'} /></span
-	></ToggleHide>
+	<label>
+		<input style="position:relative" type="checkbox" bind:checked={visibleUni1} />
+		{!visibleUni1? 'expand' : 'close'}
+	</label>
+	<ToggleHide bind:visible={visibleUni1}>
+	<span style="width:500px; height:400px; position:absolute;" bind:this={universe1Div}
+	>	Figure 4.a: <Latex math={'M'} /></span
+	>
+</ToggleHide>
+
 	<span style="width:500px; height:400px; position:relative;" bind:this={universe2Div}
 		>Figure 4.b: <Latex math={`M'`} /></span
 	>

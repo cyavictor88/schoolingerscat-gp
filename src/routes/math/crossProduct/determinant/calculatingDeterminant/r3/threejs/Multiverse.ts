@@ -20,7 +20,9 @@ export interface IUniverse {
 export class Multiverse {
 	universes: IUniverse[];
 	renderer: THREE.WebGLRenderer;
-	constructor(canvas: HTMLCanvasElement, universes: IUniverse[]){
+	visibleUni1: boolean;
+	constructor(canvas: HTMLCanvasElement, universes: IUniverse[], visibleUni1: boolean){
+		this.visibleUni1 = visibleUni1;
 		this.renderer = new THREE.WebGLRenderer( { antialias: true, canvas, alpha: true } );
 		this.universes = universes;
 	}
@@ -50,7 +52,8 @@ export class Multiverse {
         // const transform = `translateY(${window.scrollY}px)`;
         // renderer.domElement.style.transform = transform;	
     
-        for ( const universe of this.universes ) {
+        for ( const [uni,idx] of this.universes.map((uni,idx)=>([uni,idx])) ) {
+					const universe = uni as IUniverse;
           const rect :DOMRect = {
             height: universe.htmlElement.offsetHeight,
             width: universe.htmlElement.offsetWidth,
@@ -66,6 +69,7 @@ export class Multiverse {
           // const rect = elem.getBoundingClientRect();
           const { left, right, top, bottom, width, height } = rect;
 
+
 					// console.log('universe rect', rect)
           // console.log('rect',rect)
           // console.log('canvas rect',canvas.getBoundingClientRect());
@@ -77,13 +81,19 @@ export class Multiverse {
               left > this.renderer.domElement.clientWidth;
     
           if ( ! isOffscreen ) {
-    
-            const positiveYUpBottom = this.renderer.domElement.clientHeight - bottom;
-            this.renderer.setScissor( left, positiveYUpBottom, width, height );
-            this.renderer.setViewport( left, positiveYUpBottom, width, height );
-    
-            // fn( time, rect );
-            this.renderer.render(universe.scene, universe.camera);
+						const positiveYUpBottom = this.renderer.domElement.clientHeight - bottom;
+						this.renderer.setScissor( left, positiveYUpBottom, width, height );
+						this.renderer.setViewport( left, positiveYUpBottom, width, height );
+						if(!this.visibleUni1 && idx===0){
+							this.renderer.setScissor( left, positiveYUpBottom, 0, 0 );
+							this.renderer.setViewport( left, positiveYUpBottom, 0, 0 );
+						} else {
+
+						this.renderer.render(universe.scene, universe.camera);
+
+							// fn( time, rect );
+						}
+
     
           }
     
