@@ -54,13 +54,23 @@
     <br />
     <Toggle>
 
-      <p>For matrix of <Latex math={'\\mathbb{R^2}'} />, see <a href={$page.route.id+'/r2'}>Row Ops in <Latex math={'\\mathbb{R^2}'} /></a>
-      <p>For matrix of <Latex math={'\\mathbb{R^3}'} />, see <a href={$page.route.id+'/r3'}>Row Ops in <Latex math={'\\mathbb{R^3}'} /></a>
+      <p>For matrix in <Latex math={'\\mathbb{R^2}'} />, see <a href={$page.route.id+'/r2'}>Row Ops in <Latex math={'\\mathbb{R^2}'} /></a>
+      <p>For matrix in <Latex math={'\\mathbb{R^3}'} />, see <a href={$page.route.id+'/r3'}>Row Ops in <Latex math={'\\mathbb{R^3}'} /></a>
     </Toggle>
   </li>
   <li>
-    With Fact 1 and Step 1, we know  <Latex math={'M = E_n E_{n-1} ... E_1'} />. Together with the result of With Step 2,
-    we can calculate <Latex math={'det(M)'} /> as: <br /> <Latex center math={'det(M) = det(E_n E_{n-1} ... E_1) = det(E_n)det(E_{n-1}) ... det(E_1)'} />.
+    With Fact 1 and Step 1, we know  <Latex math={'M = E_n E_{n-1} ... E_1'} />.
+    Given a <Latex math={'M'} />, we can find row operations matrices to get to Identity matrix :
+    <Latex center math={`F_n...F_2F_1M = I` } />
+    And by applying the inverse of those row operation matrices, we can decompose <Latex math={'M'}/> into a series of row operations.
+    <Latex center math={`F_{n-1}...F_1F_2M = F_n^{-1}I` } />
+    <Latex center math={`F_{n-2}...F_1F_2M = F_{n-1}^{-1}F_n^{-1}I` } />
+    <Latex center math={`\\vdots` } />
+    <Latex center math={`M = F_1^{-1}F_2^{-1}...F_n^{-1}I` } />
+    <p>So now we can get our <Latex math={'E'} />s: </p>
+    <Latex center math={`\\rightarrow E_1 = F_n^{-1}, E_2 = F_{n-1}^{-1} ,...,E_n =F_1^{-1}` } />
+
+    Using Step 2, we then can calculate <Latex math={'det(M)'} /> as: <br /> <Latex center math={'det(M) = det(E_n E_{n-1} ... E_1) = det(E_n)det(E_{n-1}) ... det(E_1)'} />.
   </li>
 </ol>
 
