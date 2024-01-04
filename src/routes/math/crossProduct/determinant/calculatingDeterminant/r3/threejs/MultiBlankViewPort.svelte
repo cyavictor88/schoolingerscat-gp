@@ -1,83 +1,57 @@
 <script lang='ts'>
 	import { onMount, afterUpdate } from "svelte";
-	import Toggle from "./Toggle.svelte";
+  import ToggleViewPort from "./ToggleViewPort.svelte";
 	import { Multiverse } from './Multiverse';
 	import { Universe as Universe1 } from './Universe';
+	import { Universe2 } from './Universe2';
+	import * as mj from 'mathjs';
 
-  import Div3js from "./Div3js.svelte";
-
-
-	// let universe1: Universe1 | null = null;
 	let canvas: HTMLCanvasElement;
 
-
-	let grandDiv: HTMLDivElement;
-	let grandDivH: number = 0;
-
-  let offsetHeight = 0;
-  let offsetWidth=0;
-  let offsetLeft=0;
-  let offsetTop=0;
-  let canvasH = 0;
-
   let uni1Div: HTMLDivElement;
-  let uni1OffsetTop = 0;
-  afterUpdate(() => {
-    uni1OffsetTop = uni1Div.offsetTop;
-  });
+  let uni2Div: HTMLDivElement;
+  let shows = [true, true];
+
   onMount(()=>{
-    grandDivH = grandDiv.clientHeight;
+    // grandDivH = grandDiv.clientHeight;
     const vecv = [2, 3, -1];
 		const veca = [-4, -1, -1];
 		const vecb = [-3, -1, 3];
+		const rowop = mj.add(mj.multiply(2, vecv), vecb) as number[];
+
 		const universe = new Universe1(uni1Div, vecv, veca, vecb);
-		const multiverse = new Multiverse(canvas, [universe],true);
+		const universe2 = new Universe2(uni2Div, vecv, veca, vecb, rowop as number[]);
+		const multiverse = new Multiverse(canvas, [universe,universe2], shows);
 		universe.eventBroker.emit('setMathMeshes');
+		universe2.eventBroker.emit('setMathMeshes');
+
 		multiverse.start();
 
   })
-  $: {
-    console.log('grandDivH',grandDivH)
-  }
-
-  $:{
-    console.log('uni1Div',uni1Div)
-  }
-	let visible = true;
 
 </script>
 
-<p>offsetHeight{offsetHeight},offsetWidth{offsetWidth},uni1OffsetTop{uni1OffsetTop},gdh,{grandDivH},ch,{canvasH}</p>
-{#if uni1Div}
-<p>uni1Div: offsetHeight{uni1Div.clientHeight},offsetWidth{uni1Div.offsetWidth},top{uni1Div.offsetTop},left{uni1Div.offsetLeft}</p>
-{/if}
-<div bind:this={grandDiv} bind:clientHeight={grandDivH}
-	style="position: relative; width:1004px; display:flex; flex-flow: row wrap; border: 1px solid blue"
->
-<canvas bind:offsetHeight={canvasH} bind:this={canvas}/>
-<div style="position: relative;">
-  <Toggle >
-    <div  bind:offsetHeight={offsetHeight} bind:offsetWidth={offsetWidth}>{offsetHeight},{offsetWidth}</div>
-    <p>hihi</p>
-    <p>hihi</p>
-    <p>hihi</p>
-  </Toggle>
-	<input type="checkbox" bind:checked={visible}/>
+<!-- need this div so the canvas is contained -->
+<div style="position: relative;  border: 1px solid blue" >
+  <canvas bind:this={canvas}/>
+  <!-- nned this div so html elements are on top of canvas( so can click on toggles)-->
+  <div style="position: relative;  display:flex; flex-flow: column wrap;">
+    <ToggleViewPort bind:visible={shows[0]}>
+      <div slot='text'>
+        universe1
+      </div>
+      <div slot='viewport' bind:this={uni1Div} style={`width:200px;height:200px;${shows[0]? 'display:block' : 'display:none'}`}/>
+    </ToggleViewPort>
 
-  <div bind:this={uni1Div} style={visible?"width:200px;height:200px;":'width:1px;height:1px'}>
-
+    <ToggleViewPort bind:visible={shows[1]}>
+      <div slot='text'>
+        universe2
+      </div>
+      <div slot='viewport' bind:this={uni2Div} style={`width:200px;height:200px;${shows[1]? 'display:block' : 'display:none'}`}/>
+    </ToggleViewPort>
   </div>
-
-  <Toggle>
-    <div>
-
-      hello
-    </div>
-  </Toggle>
-
 </div>
 
-</div>	
 <style>
 canvas {
   border: 4px solid yellow;

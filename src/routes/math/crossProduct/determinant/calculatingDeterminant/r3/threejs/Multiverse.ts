@@ -20,11 +20,11 @@ export interface IUniverse {
 export class Multiverse {
 	universes: IUniverse[];
 	renderer: THREE.WebGLRenderer;
-	visibleUni1: boolean;
-	constructor(canvas: HTMLCanvasElement, universes: IUniverse[], visibleUni1: boolean){
-		this.visibleUni1 = visibleUni1;
+  shows: boolean[];
+	constructor(canvas: HTMLCanvasElement, universes: IUniverse[], shows: boolean[]){
 		this.renderer = new THREE.WebGLRenderer( { antialias: true, canvas, alpha: true } );
 		this.universes = universes;
+    this.shows = shows;
 	}
 	resizeRendererToDisplaySize() {
 
@@ -53,6 +53,9 @@ export class Multiverse {
         // renderer.domElement.style.transform = transform;	
     
         for ( const [uni,idx] of this.universes.map((uni,idx)=>([uni,idx])) ) {
+          if(!this.shows[idx as number]) {       
+            continue;
+          }
 					const universe = uni as IUniverse;
           const rect :DOMRect = {
             height: universe.htmlElement.offsetHeight,
@@ -84,17 +87,7 @@ export class Multiverse {
 						const positiveYUpBottom = this.renderer.domElement.clientHeight - bottom;
 						this.renderer.setScissor( left, positiveYUpBottom, width, height );
 						this.renderer.setViewport( left, positiveYUpBottom, width, height );
-						if(!this.visibleUni1 && idx===0){
-							this.renderer.setScissor( left, positiveYUpBottom, 0, 0 );
-							this.renderer.setViewport( left, positiveYUpBottom, 0, 0 );
-						} else {
-
 						this.renderer.render(universe.scene, universe.camera);
-
-							// fn( time, rect );
-						}
-
-    
           }
     
         }

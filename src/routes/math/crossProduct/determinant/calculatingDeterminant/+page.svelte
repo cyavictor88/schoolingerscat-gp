@@ -59,18 +59,21 @@
     </Toggle>
   </li>
   <li>
-    With Fact 1 and Step 1, we know  <Latex math={'M = E_n E_{n-1} ... E_1'} />.
-    Given a <Latex math={'M'} />, we can find row operations matrices to get to Identity matrix :
+    With Fact 1 and Step 1, we know  <Latex math={'M = E_n E_{n-1} ... E_1'} />.<br />
+    So given a <Latex math={'M'} />, how do we find <Latex math={'det(M)'}/>?<br/> 
+    <b>a.</b> We first apply row reduction to find row operations matrices (<Latex math={`F_1,F_2,...F_n`}/>) such that :
     <Latex center math={`F_n...F_2F_1M = I` } />
-    And by applying the inverse of those row operation matrices, we can decompose <Latex math={'M'}/> into a series of row operations.
-    <Latex center math={`F_{n-1}...F_1F_2M = F_n^{-1}I` } />
-    <Latex center math={`F_{n-2}...F_1F_2M = F_{n-1}^{-1}F_n^{-1}I` } />
+    <b>b.</b> Next, by applying the inverse of those row operation matrices, we can decompose <Latex math={'M'}/> into a series of row operations:
+    <Latex center math={`\\rightarrow F_{n-1}...F_1F_2M = F_n^{-1}I` } />
+    <Latex center math={`\\rightarrow F_{n-2}...F_1F_2M = F_{n-1}^{-1}F_n^{-1}I` } />
     <Latex center math={`\\vdots` } />
-    <Latex center math={`M = F_1^{-1}F_2^{-1}...F_n^{-1}I` } />
-    <p>So now we can get our <Latex math={'E'} />s: </p>
-    <Latex center math={`\\rightarrow E_1 = F_n^{-1}, E_2 = F_{n-1}^{-1} ,...,E_n =F_1^{-1}` } />
+    <Latex center math={`\\Rightarrow M = F_1^{-1}F_2^{-1}...F_n^{-1}I` } />
+    <p><b>c.</b> Then we can define the <Latex math={'E'} /> matrices as: </p>
+    <Latex center math={`\\Rightarrow E_1 = F_n^{-1}, E_2 = F_{n-1}^{-1} ,...,E_n =F_1^{-1}` } />
+    <p>such that:</p>
+    <Latex center math={`M = E_n E_{n-1} ... E_1 ` } />
 
-    Using Step 2, we then can calculate <Latex math={'det(M)'} /> as: <br /> <Latex center math={'det(M) = det(E_n E_{n-1} ... E_1) = det(E_n)det(E_{n-1}) ... det(E_1)'} />.
+    <b>d.</b> Using Step 2, We then can calculate <Latex math={'det(M)'} /> as: <br /> <Latex center math={'det(M) = det(E_n E_{n-1} ... E_1) = det(E_n)det(E_{n-1}) ... det(E_1)'} />
   </li>
 </ol>
 

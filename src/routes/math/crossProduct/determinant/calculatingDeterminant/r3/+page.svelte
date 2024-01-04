@@ -3,6 +3,8 @@
   import Latex from '$lib/components/Latex/Latex.svelte';
 	import MultiCanvas from './threejs/MultiCanvas.svelte';
   import MultiBlankViewPort from './threejs/MultiBlankViewPort.svelte';
+	import Toggle from './threejs/Toggle.svelte';
+
 	// import RowSwap from './RowSwap.svelte';
 	// import ScalarMultiple from './ScalarMultiple.svelte';
 	// import RowSum from './RowSum.svelte';
@@ -43,7 +45,9 @@
       <p>Add a multiple of one row to another row</p>
       <!-- <RowSum /> -->
     </li>
-    <MultiBlankViewPort />
+    <Toggle>
+      <MultiBlankViewPort />
+    </Toggle>
   
   
   </ol>
