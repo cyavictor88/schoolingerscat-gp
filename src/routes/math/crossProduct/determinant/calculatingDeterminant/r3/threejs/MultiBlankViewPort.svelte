@@ -1,18 +1,19 @@
 <script lang='ts'>
 	import { onMount, afterUpdate } from "svelte";
-	import Toggle from "../../Toggle.svelte";
+	import Toggle from "./Toggle.svelte";
 	import { Multiverse } from './Multiverse';
 	import { Universe as Universe1 } from './Universe';
 
+  import Div3js from "./Div3js.svelte";
+
+
+	// let universe1: Universe1 | null = null;
+	let canvas: HTMLCanvasElement;
+
+
 	let grandDiv: HTMLDivElement;
 	let grandDivH: number = 0;
-  onMount(()=>{
-    grandDivH = grandDiv.clientHeight;
 
-  })
-  $: {
-    console.log('grandDivH',grandDivH)
-  }
   let offsetHeight = 0;
   let offsetWidth=0;
   let offsetLeft=0;
@@ -24,6 +25,26 @@
   afterUpdate(() => {
     uni1OffsetTop = uni1Div.offsetTop;
   });
+  onMount(()=>{
+    grandDivH = grandDiv.clientHeight;
+    const vecv = [2, 3, -1];
+		const veca = [-4, -1, -1];
+		const vecb = [-3, -1, 3];
+		const universe = new Universe1(uni1Div, vecv, veca, vecb);
+		const multiverse = new Multiverse(canvas, [universe],true);
+		universe.eventBroker.emit('setMathMeshes');
+		multiverse.start();
+
+  })
+  $: {
+    console.log('grandDivH',grandDivH)
+  }
+
+  $:{
+    console.log('uni1Div',uni1Div)
+  }
+	let visible = true;
+
 </script>
 
 <p>offsetHeight{offsetHeight},offsetWidth{offsetWidth},uni1OffsetTop{uni1OffsetTop},gdh,{grandDivH},ch,{canvasH}</p>
@@ -33,21 +54,26 @@
 <div bind:this={grandDiv} bind:clientHeight={grandDivH}
 	style="position: relative; width:1004px; display:flex; flex-flow: row wrap; border: 1px solid blue"
 >
-<canvas bind:offsetHeight={canvasH} />
+<canvas bind:offsetHeight={canvasH} bind:this={canvas}/>
 <div style="position: relative;">
-  <Toggle>
+  <Toggle >
     <div  bind:offsetHeight={offsetHeight} bind:offsetWidth={offsetWidth}>{offsetHeight},{offsetWidth}</div>
     <p>hihi</p>
     <p>hihi</p>
     <p>hihi</p>
   </Toggle>
-  <div bind:this={uni1Div}>
-    <Toggle >
-      <div>
-        hello
-      </div>
-    </Toggle>
+	<input type="checkbox" bind:checked={visible}/>
+
+  <div bind:this={uni1Div} style={visible?"width:200px;height:200px;":'width:1px;height:1px'}>
+
   </div>
+
+  <Toggle>
+    <div>
+
+      hello
+    </div>
+  </Toggle>
 
 </div>
 

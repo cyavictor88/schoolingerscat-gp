@@ -6,8 +6,7 @@
 	import { Multiverse } from './Multiverse';
 	import * as mj from 'mathjs';
 	import Latex from '$lib/components/Latex/Latex.svelte';
-	import { RowSumArea as FigRowSumArea } from '../d3/RowSumArea';
-	import ToggleHide from '../ToggleHide.svelte';
+	import { RowSumArea } from '../d3/RowSumArea';
 	// import { Universe4 } from './Universe4';
 	let grandDiv: HTMLDivElement;
 	let canvasHeight: number = 0;
@@ -17,13 +16,11 @@
 	let universe3Div: HTMLDivElement | HTMLSpanElement;
 	// let universe4Div: HTMLDivElement|HTMLSpanElement;
 	let universe3: Universe3;
-	let universe1:Universe;
+	// let universe4:Universe4;
 	let canvas: HTMLCanvasElement;
 
-	let d3FigRowSumArea: FigRowSumArea;
-	let figRowSumAreaD3: HTMLDivElement;
-	let visibleUni1 = true;
-	let multiverse: Multiverse;
+	let d3Fig4d: RowSumArea;
+	let fig4dD3: HTMLDivElement;
 	onMount(() => {
 
 		const vecv = [2, 3, -1];
@@ -32,51 +29,36 @@
 
 		const rowop = mj.add(mj.multiply(2, vecv), vecb) as number[];
 
-		universe1 = new Universe(universe1Div, vecv, veca, vecb);
+		const universe = new Universe(universe1Div, vecv, veca, vecb);
 		const universe2 = new Universe2(universe2Div, vecv, veca, rowop as number[]);
 		universe3 = new Universe3(universe3Div, vecv, veca, vecb, rowop as number[]);
 		universe3.vecv_vecb_plane.mesh.visible = true;
 		// universe4 = new Universe4(universe4Div, vecv,  vecb, rowop as number[]);
-		multiverse = new Multiverse(canvas, [universe1, universe2, universe3], visibleUni1 );
-		universe1.eventBroker.emit('setMathMeshes');
+		const multiverse = new Multiverse(canvas, [universe, universe2, universe3],true);
+		universe.eventBroker.emit('setMathMeshes');
 		universe2.eventBroker.emit('setMathMeshes');
 		universe3.eventBroker.emit('setMathMeshes');
 		// universe4.eventBroker.emit('setMathMeshes');
 		multiverse.start();
-		d3FigRowSumArea = new FigRowSumArea(
+		d3Fig4d = new RowSumArea(
 			{ x: vecv[0], y: vecv[1] },
 			{ x: vecb[0], y: vecb[1] },
 			{ x: rowop[0], y: rowop[1] }
 		);
-		figRowSumAreaD3.append(d3FigRowSumArea.svgNode!);
+		fig4dD3.append(d3Fig4d.svgNode!);
 
 		canvasHeight = grandDiv.clientHeight;
 
 	});
-
-	$:if(multiverse){
-		console.log('visi',visibleUni1);
-		multiverse.visibleUni1=visibleUni1
-
-		// universe1 = new Universe(universe1Div, vecv, veca, vecb);
-
-	}
 </script>
 
 <div bind:this={grandDiv}
 	style="position: relative; width:1004px; display:flex; flex-flow: row wrap; border: 1px solid blue"
 >
 	<canvas id="c" bind:this={canvas} style='height: {canvasHeight}px;'/>
-	<label>
-		<input style="position:relative" type="checkbox" bind:checked={visibleUni1} />
-		{!visibleUni1? 'expand' : 'close'}
-	</label>
-	<ToggleHide bind:visible={visibleUni1}>
-	<span style="width:500px; height:400px; position:absolute;" bind:this={universe1Div}
-	>	Figure 4.a: <Latex math={'M'} /></span
+	<span style="width:500px; height:400px; position:relative;" bind:this={universe1Div}
+		>Figure 4.a: <Latex math={'M'} /></span
 	>
-</ToggleHide>
-
 	<span style="width:500px; height:400px; position:relative;" bind:this={universe2Div}
 		>Figure 4.b: <Latex math={`M'`} /></span
 	>
@@ -129,7 +111,7 @@
 			<a
 				href="#"
 				on:click={() => {
-					d3FigRowSumArea.eventBroker.emit('toggleShowOldArea');
+					d3Fig4d.eventBroker.emit('toggleShowOldArea');
 				}}
 				>old area
 			</a>
@@ -138,7 +120,7 @@
 			<a
 				href="#"
 				on:click={() => {
-					d3FigRowSumArea.eventBroker.emit('toggleShowNewArea');
+					d3Fig4d.eventBroker.emit('toggleShowNewArea');
 				}}
 				>new area
 			</a>
@@ -154,7 +136,7 @@
 	<!-- <span style="width:500px; height:400px; position:relative;" bind:this={universe4Div} >Figure 4.d</span> -->
 	<div
 		style="width:500px; height:400px; position:relative; display:flex; flex-flow: column nowrap;"
-		bind:this={figRowSumAreaD3}
+		bind:this={fig4dD3}
 	>
 		Figure 4.d
 	</div>
