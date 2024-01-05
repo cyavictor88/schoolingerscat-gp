@@ -8,48 +8,7 @@
   <p><b>Examples:</b></p>
 
   <ul>
-    <li>
-      <b>Row Swap:</b><br />
-      <p>Say we want to create a matrix that can swap row 2 and row 3 (<Latex math={'r_2 \\leftrightarrow r_3'}/>),</p>
-      <p>We can just swap row 2 and row 3 of the Identity matrix:</p>
-      <Latex math={`E=
-      \\begin{bmatrix}
-      1 & 0 & 0 \\\\
-      0 & 1 & 0 \\\\
-      0 & 0 & 1 \\\\
-      \\end{bmatrix}_{r_2 \\leftrightarrow r_3} = 
-      \\begin{bmatrix}
-      1 & 0 & 0 \\\\
-      0 & 0 & 1 \\\\
-      0 & 1 & 0 \\\\
-      \\end{bmatrix}`}/>
-      <p><Latex math={`E`} /> in action:</p>
-       <Latex math={`E 
-       \\begin{bmatrix}
-       a & b & c \\\\
-       d & e & f \\\\
-       g & h & i \\\\
-       \\end{bmatrix} = 
-       \\begin{bmatrix}
-      1 & 0 & 0 \\\\
-      0 & 0 & 1 \\\\
-      0 & 1 & 0 \\\\
-      \\end{bmatrix}
-      \\begin{bmatrix}
-       a & b & c \\\\
-       d & e & f \\\\
-       g & h & i \\\\
-       \\end{bmatrix} =
-       \\begin{bmatrix}
-       a & b & c \\\\
-       g & h & i \\\\
-       d & e & f \\\\
-       \\end{bmatrix}
-       `} />
-       <br />
-       <br />
 
-    </li>
     <li>
       <b>Scalar Multiplication:</b><br />
       <p>Say we want to create a matrix that can multiply row 2 by 9 (<Latex math={'r_2 \\rightarrow 9r_2'}/>),</p>
@@ -127,6 +86,48 @@
        a+3d & b+3e & c+3f \\\\
        d & e & f \\\\
        g & h & i \\\\
+       \\end{bmatrix}
+       `} />
+       <br />
+       <br />
+
+    </li>
+    <li>
+      <b>Row Swap:</b><br />
+      <p>Say we want to create a matrix that can swap row 2 and row 3 (<Latex math={'r_2 \\leftrightarrow r_3'}/>),</p>
+      <p>We can just swap row 2 and row 3 of the Identity matrix:</p>
+      <Latex math={`E=
+      \\begin{bmatrix}
+      1 & 0 & 0 \\\\
+      0 & 1 & 0 \\\\
+      0 & 0 & 1 \\\\
+      \\end{bmatrix}_{r_2 \\leftrightarrow r_3} = 
+      \\begin{bmatrix}
+      1 & 0 & 0 \\\\
+      0 & 0 & 1 \\\\
+      0 & 1 & 0 \\\\
+      \\end{bmatrix}`}/>
+      <p><Latex math={`E`} /> in action:</p>
+       <Latex math={`E 
+       \\begin{bmatrix}
+       a & b & c \\\\
+       d & e & f \\\\
+       g & h & i \\\\
+       \\end{bmatrix} = 
+       \\begin{bmatrix}
+      1 & 0 & 0 \\\\
+      0 & 0 & 1 \\\\
+      0 & 1 & 0 \\\\
+      \\end{bmatrix}
+      \\begin{bmatrix}
+       a & b & c \\\\
+       d & e & f \\\\
+       g & h & i \\\\
+       \\end{bmatrix} =
+       \\begin{bmatrix}
+       a & b & c \\\\
+       g & h & i \\\\
+       d & e & f \\\\
        \\end{bmatrix}
        `} />
        <br />

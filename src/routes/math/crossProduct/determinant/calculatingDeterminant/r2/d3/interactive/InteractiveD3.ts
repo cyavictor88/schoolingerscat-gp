@@ -56,7 +56,7 @@ export class InteractiveD3 {
   constructor(vectors:number[][],showOrientation:boolean,zoomIn:boolean, rowOp: RowOp) {
     console.log('rowOp',rowOp)
     this.rowOp = rowOp;
-    this.oriVectors=vectors;
+    this.oriVectors = vectors.map(v=>v.map(x=>x));
     if(zoomIn){
       this.xDomain=[-2,2];
       this.yDomain=[-2,2];

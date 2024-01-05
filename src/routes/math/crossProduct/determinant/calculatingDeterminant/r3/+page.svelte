@@ -1,9 +1,9 @@
 <script lang='ts'>
 	import Title from '$lib/components/PageComp/Title.svelte';
   import Latex from '$lib/components/Latex/Latex.svelte';
-	import MultiCanvas from './threejs/MultiCanvas.svelte';
   import MultiBlankViewPort from './threejs/MultiBlankViewPort.svelte';
-	import Toggle from './threejs/Toggle.svelte';
+	import Toggle from '../Toggle.svelte';
+  import RowSwap from './RowSwap.svelte';
 
 	// import RowSwap from './RowSwap.svelte';
 	// import ScalarMultiple from './ScalarMultiple.svelte';
@@ -30,11 +30,7 @@
   <hr />
   <b><u>Elementary Row Operation:</u></b>
   <ol>
-    <li>
-      <b>Row Swap:</b>
-      <p>Swap any two rows</p>
-      <!-- <RowSwap /> -->
-    </li>
+
     <li>
       <b>Scalar Multiplication:</b>
       <p>Multiply a row with a constant<Latex math={' c \\in \\mathbb{R}'}/> </p>
@@ -48,6 +44,10 @@
     <Toggle>
       <MultiBlankViewPort />
     </Toggle>
-  
+    <li>
+      <b>Row Swap:</b>
+      <p>Swap any two rows</p>
+      <RowSwap />
+    </li>
   
   </ol>

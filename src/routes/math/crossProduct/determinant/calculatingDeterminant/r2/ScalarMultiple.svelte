@@ -3,6 +3,7 @@
   import Latex from '$lib/components/Latex/Latex.svelte';
 	import { RowOp } from './d3/interactive/InteractiveD3';
 	import InteractiveD3 from './d3/interactive/InteractiveD3.svelte';
+  let reset = new Date();
 </script>
 
 <Toggle>

@@ -25,11 +25,7 @@
   <hr />
   <b><u>Elementary Row Operation:</u></b>
   <ol>
-    <li>
-      <b>Row Swap:</b>
-      <p>Swap any two rows</p>
-      <RowSwap />
-    </li>
+
     <li>
       <b>Scalar Multiplication:</b>
       <p>Multiply a row with a constant<Latex math={' c \\in \\mathbb{R}'}/> </p>
@@ -39,6 +35,11 @@
       <b>Row Sum:</b>
       <p>Add a multiple of one row to another row</p>
       <RowSum />
+    </li>
+    <li>
+      <b>Row Swap:</b>
+      <p>Swap any two rows</p>
+      <RowSwap />
     </li>
   
   

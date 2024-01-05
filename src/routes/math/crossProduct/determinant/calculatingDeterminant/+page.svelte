@@ -19,10 +19,7 @@
 <fieldset> 
   <b><u>Elementary Row Operation:</u></b>
   <ol>
-    <li>
-      <b>Row Swap:</b>
-      <p>Swap any two rows</p>
-    </li>
+
     <li>
       <b>Scalar Multiplication:</b>
       <p>Multiply a row with a constant<Latex math={' c \\in \\mathbb{R}'}/> </p>
@@ -30,6 +27,10 @@
     <li>
       <b>Row Sum:</b>
       <p>Add a multiple of one row to another row</p>
+    </li>
+    <li>
+      <b>Row Swap:</b>
+      <p>Swap any two rows</p>
     </li>
   </ol>
 </fieldset> 

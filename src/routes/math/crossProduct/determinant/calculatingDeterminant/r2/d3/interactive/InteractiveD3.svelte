@@ -54,6 +54,18 @@
 			d3Obj.eventBroker.emit('mult',c1,c2);
 		}
 	}
+
+	function doubleReset(){
+		const reset=()=>{
+			c1 = 1;
+			c2 = 1;
+			d3Obj?.eventBroker.emit('reset');
+		}
+		reset();
+		setTimeout(()=>{
+			reset();
+		},100)
+	}
 </script>
 
 <div style="display:flex; flex-flow: row nowrap; gap:10px;">
@@ -115,11 +127,7 @@
 						bind:value={c2}
 						disabled={false}/>
 				</label>
-				<button on:click={()=>{
-					d3Obj?.eventBroker.emit('reset');
-					c1 = 1;
-					c2 = 1;
-				}}>Reset Vectors</button>
+				<button on:click={doubleReset}>Reset Vectors</button>
 			{/if}
 
 		</div>

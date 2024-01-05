@@ -1,10 +1,6 @@
 <script lang='ts'>
 	import { slide } from 'svelte/transition';
-	let visible = true;
-
-  $: {
-    console.log('visible',visible)
-  }
+	export let visible = true;
 </script>
 
 <label>
@@ -14,7 +10,10 @@
 
 {#if visible}
 	<div transition:slide={{duration:500}}>
-		<slot />
+		<slot name='text'/>
   </div>
 {/if}
+<slot name='viewport'/>
 <p></p>
+
+
