@@ -31,6 +31,7 @@ export class Plane {
     planeMesh.applyQuaternion(quat);
     this.mesh = planeMesh;
     scene!.add( planeMesh );
+    this.mesh.position.set(-4,8,8)
   }
 
 }

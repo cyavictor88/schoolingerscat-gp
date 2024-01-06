@@ -123,7 +123,7 @@ export class Universe3 implements IUniverse {
     this.vec_b_cross_v = new Line(mj.add(nomvb_proper_height_for_pp,vecv) as [number,number,number], vecv as [number,number,number],0x008800,true);
     this.scene.add(this.vec_b_cross_v.lineMesh);
 
-    this.vecv_vecb_plane = new Plane(this.scene,[0,0,0],18,18, new THREE.Vector3().fromArray(normvb as number[]));
+    this.vecv_vecb_plane = new Plane(this.scene,[0,0,0],23.5,23.5, new THREE.Vector3().fromArray(normvb as number[]));
     this.vecv_vecb_plane.mesh.visible=false;
 
     this.scene.add(this.veca.vector);

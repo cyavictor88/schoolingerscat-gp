@@ -94,7 +94,7 @@
 	>
 	<div style="width:1000px;">
 		<p>Let's prove those two parallelepipeds have the same volume, or in other words <Latex math={`det(M)=det(M')`} /></p>
-		<p><u><b>Step 2 Proof:</b></u></p>
+		<p><u><b>Proof:</b></u></p>
 
 		<p>
 			In Figure 2.c, we place the two parallelepipeds together and the yellow plane is formed by <Latex
@@ -172,7 +172,7 @@
 		Figure 2.d
 	</div>
 	<p>
-		Concluding Step 2 Proof, we first show that after a row operation, the base parallelogram of
+		In conclusion, we first show that after a row operation, the base parallelogram of
 		the parallelepiped is changed, but the height of the parallelepiped remains the same. Second, we show that the
 		base parallelograms have the same areas. So with area and height being the same before and
 		after a row operation, the volume of the parallelepiped also
