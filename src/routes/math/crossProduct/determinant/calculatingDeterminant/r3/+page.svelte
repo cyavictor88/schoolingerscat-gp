@@ -5,6 +5,7 @@
 	import Toggle from '../Toggle.svelte';
   import RowSwap from './RowSwap.svelte';
 	import ScalarMultiple from './ScalarMultiple.svelte';
+	import RowSum from './RowSum.svelte';
 	// import RowSum from './RowSum.svelte';
 
 </script>
@@ -39,9 +40,7 @@
       <p>Add a multiple of one row to another row</p>
       <!-- <RowSum /> -->
     </li>
-    <Toggle>
-      <MultiBlankViewPort />
-    </Toggle>
+      <RowSum />
     <li>
       <b>Row Swap:</b>
       <p>Swap any two rows</p>
