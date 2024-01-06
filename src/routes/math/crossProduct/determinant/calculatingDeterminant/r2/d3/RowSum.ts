@@ -115,7 +115,7 @@ export class RowSum {
     this.makeVec(veca,'a','Red',`\\overrightarrow{a}`);
     this.makeVec(vecb,'b','Blue',`\\overrightarrow{b}`);
     const fontSize = 20;
-   
+    this.makeHeight(veca,vecb)
 
     this.toggleGroupOldArea = this.makeToggleGroup(veca,vecb);
     this.toggleGroupNewArea = this.makeToggleGroup(veca,vecbPrime);
@@ -142,7 +142,22 @@ export class RowSum {
 
     })
   }
+  makeHeight(veca: Coord, vecb:Coord){
+    const magA = Math.sqrt(veca.x*veca.x + veca.y*veca.y);
+    const magB = Math.sqrt(vecb.x*vecb.x + vecb.y*vecb.y);
+    const dot =  mj.dot([veca.x,veca.y], [vecb.x,vecb.y]);
+    const scale = Math.abs(dot/(magA*magA));
+    const scaledA = {x:veca.x*scale,y:veca.y*scale};
+    const heightVec = {x:scaledA.x +vecb.x, y:scaledA.y + vecb.y};
+    const svg = this.svg;
+    svg
+      .append('path')
+      .attr('d', this.drawLine([this.vec0, heightVec]))
+      .attr('stroke','grey')
+      .attr('fill', 'none');
+      console.log(heightVec,'heightVec')
 
+  }
   makeToggleGroup(veca: Coord,vecb:Coord){
 
     const vecSum = mj.add([veca.x, veca.y],[vecb.x,vecb.y]); 

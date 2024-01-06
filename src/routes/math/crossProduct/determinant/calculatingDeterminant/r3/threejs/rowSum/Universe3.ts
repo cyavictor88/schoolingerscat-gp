@@ -14,6 +14,7 @@ import { Line } from './object/Line';
 import type {Updatable } from './TickingVerse';
 import type { IUniverse } from './Multiverse';
 import * as mj from 'mathjs';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
 
 export enum Dir {
@@ -41,6 +42,7 @@ export class Universe3 implements IUniverse {
 
 
 
+  fps = 0;
 
 
   veca : Vector;
@@ -58,7 +60,7 @@ export class Universe3 implements IUniverse {
 
 
   
-
+  rightHand: THREE.Object3D<THREE.Event> | null = null;
   constructor(refCurrent: HTMLSpanElement, v?: number[],a?:number[],b?:number[], bPrime?:number[]) {
     this.htmlElement = refCurrent;
     this.updatables = [];
@@ -123,8 +125,18 @@ export class Universe3 implements IUniverse {
     this.vec_b_cross_v = new Line(mj.add(nomvb_proper_height_for_pp,vecv) as [number,number,number], vecv as [number,number,number],0x008800,true);
     this.scene.add(this.vec_b_cross_v.lineMesh);
 
-    this.vecv_vecb_plane = new Plane(this.scene,[0,0,0],23.5,23.5, new THREE.Vector3().fromArray(normvb as number[]));
+    const vecbMag = this.vecb.coord.length();
+    const vecvMag = this.vecv.coord.length();
+    const sin =  Math.sqrt(1-  (  mj.dot(vecb,vecv)/ (vecbMag*vecvMag)   )**2)
+    const planeHeight = sin * vecbMag;
+
+    this.vecv_vecb_plane = new Plane(this.scene,[0,0,0],100,planeHeight, new THREE.Vector3().fromArray(normvb as number[]));
     this.vecv_vecb_plane.mesh.visible=false;
+    const properPos = vecb.map((p,idx)=>{
+      return p/2+vecv[idx]/2;
+    })
+    this.vecv_vecb_plane.mesh.position.set(...properPos as [number,number,number])
+
 
     this.scene.add(this.veca.vector);
     this.scene.add(this.vecb.vector);
@@ -259,6 +271,10 @@ export class Universe3 implements IUniverse {
 
     this.eventBroker.on('setMathMeshes',()=>{this.setMathMeshes()});
     this.eventBroker.on('showFig4Triangle',()=>{this.showFig4Triangle()});
+    this.eventBroker.on('setRightHand', () => { this.setRightHand() });
+    this.eventBroker.on('toggleRightHand', () => {
+      if(this.rightHand) this.rightHand.visible=!this.rightHand.visible;
+    });
     
 
   }
@@ -271,6 +287,49 @@ export class Universe3 implements IUniverse {
       this.fig4triangle.mesh.visible = !this.fig4triangle.mesh.visible;
     }
 
+  }
+
+
+
+  async setRightHand() {
+    const gltfLoader = new GLTFLoader();
+    const det = mj.det([this.vecv.coord.toArray(),this.veca.coord.toArray(),this.vecb.coord.toArray()]);
+    const loadStr = det > 0 ? 'Positive':'Negative';
+    const loadedData = await gltfLoader.loadAsync(`/glbs/rightHand${loadStr}.glb`);
+    // console.log(loadedData)
+    const model = loadedData.scene.children[0];
+    this.rightHand = model;
+    model.position.set(0, 0, 0);
+    const [vecFrom, vecTo] = [new THREE.Vector3(), new THREE.Vector3()];
+    vecFrom.copy(this.vecv.coord);
+    vecTo.copy(this.veca.coord);
+    const cross = new THREE.Vector3().crossVectors(vecFrom, vecTo);
+    const quat = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(1, 0, 0), cross.normalize());
+    const quat1 = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), -Math.acos(new THREE.Vector3(0, 1, 0).dot(vecFrom.normalize())));
+    quat.multiply(quat1);
+    model.applyQuaternion(quat);
+
+    model.scale.set(0.1, 0.1, 0.1);
+    model.visible = false;
+
+
+    const clip = loadedData.animations[0];
+
+    const mixer = new THREE.AnimationMixer(model);
+    const action = mixer.clipAction(clip);
+    action.play();
+
+
+    (model as any).tick = (delta: number) => {
+      this.fps = 1/(delta);
+      if(this.fps>120) mixer.update(delta*10)
+      else mixer.update(delta)
+
+    }
+
+
+    this.scene.add(model);
+    this.updatables.push(model as any);
   }
 
   async setMathMeshes(){

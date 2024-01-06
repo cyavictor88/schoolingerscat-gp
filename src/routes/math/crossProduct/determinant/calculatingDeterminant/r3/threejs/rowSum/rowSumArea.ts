@@ -101,12 +101,15 @@ export class RowSumArea {
 
     this.drawLine = d3.line<{ x: number, y: number }>()
     .x(d => this.xScale(d.x))
-    .y(d => this.yScale(d.y))
+    .y(d => this.yScale(d.y));
+    this.makeShade(veca,vecb);
+
     this.makeLine(veca,'#b3b3cc');
     this.makeLine(veca,'#b3b3cc',vecb);
     this.makeSeg(vecbPrime, vecb,'black');
     this.makeSeg(vecbPrime, {x:veca.x*2,y:veca.y*2},'black');
     // this.makeLine(veca,'#b3b3cc');
+    this.makeHeight(veca,vecb);
 
 
 
@@ -143,7 +146,22 @@ export class RowSumArea {
 
     })
   }
+  makeHeight(veca: Coord, vecb:Coord){
+    const magA = Math.sqrt(veca.x*veca.x + veca.y*veca.y);
+    const magB = Math.sqrt(vecb.x*vecb.x + vecb.y*vecb.y);
+    const dot =  mj.dot([veca.x,veca.y], [vecb.x,vecb.y]);
+    const scale = Math.abs(dot/(magA*magA));
+    const scaledA = {x:veca.x*scale,y:veca.y*scale};
+    const heightVec = {x:scaledA.x +vecb.x, y:scaledA.y + vecb.y};
+    const svg = this.svg;
+    svg
+      .append('path')
+      .attr('d', this.drawLine([this.vec0, heightVec]))
+      .attr('stroke','grey')
+      .attr('fill', 'none');
+      console.log(heightVec,'heightVec')
 
+  }
   makeToggleGroup(veca: Coord,vecb:Coord){
 
     const vecSum = mj.add([veca.x, veca.y],[vecb.x,vecb.y]); 
@@ -178,6 +196,29 @@ export class RowSumArea {
       .attr('stroke',color)
       .style("stroke-dasharray", ("3, 3"))
       .attr('fill', 'none');
+  }
+
+  makeShade(veca:Coord,vecb:Coord){
+    const data = [
+
+      {
+        // line1 data
+        x:[veca.x*10,-veca.x*10],
+        y:[veca.y*10,-veca.y*10],
+      },
+      {
+        // line2 data
+        x:[veca.x*10+vecb.x,-veca.x*10+vecb.x],
+        y:[veca.y*10+vecb.y,-veca.y*10+vecb.y],
+      }
+      ];
+      const areaLines = [ {x:veca.x*10,y:veca.y*10},{x:-veca.x*10,y:-veca.y*10},{x:-veca.x*10+vecb.x,y:-veca.y*10+vecb.y},{x:veca.x*10+vecb.x,y:veca.y*10+vecb.y }  ];
+      this.svg
+        .append('path')
+        .style("stroke", "none")
+        .style("fill", "yellow")
+        .style('opacity','0.5')
+        .attr("d", d => this.drawLine(areaLines))
   }
 
   makeLine(vec:Coord, color:string, offset?:Coord){

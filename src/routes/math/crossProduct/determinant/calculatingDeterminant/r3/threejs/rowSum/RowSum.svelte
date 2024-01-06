@@ -6,7 +6,7 @@
 	import { Multiverse } from './Multiverse';
 	import * as mj from 'mathjs';
 	import Latex from '$lib/components/Latex/Latex.svelte';
-	import { RowSumArea } from './rowSumArea';
+	import { RowSumArea } from './RowSumArea';
 	// import { Universe4 } from './Universe4';
 	let grandDiv: HTMLDivElement;
 	let canvasHeight: number = 0;
@@ -38,6 +38,7 @@
 		universe.eventBroker.emit('setMathMeshes');
 		universe2.eventBroker.emit('setMathMeshes');
 		universe3.eventBroker.emit('setMathMeshes');
+		universe3.eventBroker.emit('setRightHand');
 		// universe2.eventBroker.emit('setMathMeshes');
 		multiverse.start();
 		d3RowSumArea = new RowSumArea(
@@ -114,7 +115,7 @@
 				href="#"
 				on:click={() => {
 					universe3.eventBroker.emit('toggleShowHeight');
-				}}>Thse two parallelepipeds have the same height</a
+				}}>These two parallelepipeds have the same height</a
 			>.
 		</p>
 		<p>
@@ -157,7 +158,13 @@
 
 			are the same, which implies that they have the same area.
 		</p>
-		<p>Orientation: the orientation also remains the same because <Latex math={`\\vec{b'}`} /> is always co-plane with <Latex math={`\\vec{b}`} /> on the yellow plane. </p>
+		<p>Orientation: the 			<a
+			href="#"
+			on:click={() => {
+				universe3.eventBroker.emit('toggleRightHand');
+			}}>orientation</a
+		> also remains the same because <Latex math={`\\vec{b'}`} /> is always co-plane with <Latex math={`\\vec{b}`} /> on the yellow area. 
+		 </p>
 
 
 	</div>
