@@ -1,16 +1,19 @@
 <script lang='ts'>
 	import { slide } from 'svelte/transition';
-	let visible = false;
+	export let visible = false;
 </script>
 
 <label>
 	<input type="checkbox" bind:checked={visible} />
-  {!visible? 'expand' : 'close'}
+  {!visible? 'show' : 'close'}
 </label>
 
 {#if visible}
 	<div transition:slide={{duration:500}}>
-		<slot />
+		<slot name='text'/>
   </div>
 {/if}
+<slot name='viewport'/>
 <p></p>
+
+
