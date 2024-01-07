@@ -38,8 +38,10 @@
   <dd>
 		First, a linear functional is defined as a linear function that maps a vector to a scalar value. So by definition,
 		we can see that  <Latex math={'\\phi ( \\vec{v} ):= \\det'} /><RowsVec cols={['v', 'a', 'b']} dim={3} /> is a linear functional
-		if <Latex math={'a_i'} /> and <Latex math={'b_i'}/> are constants because
-		then  <Latex math={' \\det'} /><RowsVec cols={['v', 'a', 'b']} dim={3} /> 
+		if <Latex math={'a_i'} /> and <Latex math={'b_i'}/> are constant. Because we know determinant of this matrix can be calculated by 
+		multiplying a series of <Latex math={'det(E)'} />s, and with <Latex math={'\\vec{a}'} />  and <Latex math={'\\vec{b}'} /> being constants,
+		the final product will be linear combination of <Latex math={'v_1,v_2,v_3'} />. Which gives   <br /> 
+		  <Latex math={' \\det'} /><RowsVec cols={['v', 'a', 'b']} dim={3} /> 
 		<Latex math={' =  p_1 v_1 + p_2 v_2 + p_3 v_3 \\text{ ,where } p_i \\in \\mathbb{R} '} />
 		<Latex center math={'\\Rightarrow \\phi ( \\vec{v} )=  p_1 v_1 + p_2 v_2 + p_3 v_3  \\text{ ,where } p_i \\in \\mathbb{R}'} />
 	</dd>
