@@ -6,7 +6,7 @@
 	import { Multiverse } from './Multiverse';
 	import * as mj from 'mathjs';
 	import Latex from '$lib/components/Latex/Latex.svelte';
-	import { RowSumArea } from './d3/RowSumArea';
+	import { RowSumArea } from '../../d3/RowSumArea';
 	// import { Universe4 } from './Universe4';
 	let grandDiv: HTMLDivElement;
 	let canvasHeight: number = 0;
