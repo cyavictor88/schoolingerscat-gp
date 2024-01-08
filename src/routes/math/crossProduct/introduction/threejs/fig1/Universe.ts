@@ -88,8 +88,8 @@ export class Universe {
     //   console.log('Camera Position:', cameraPosition);
     // });
 
-    this.veca = new Vector(3,-2,3,0xff0000);
-    this.vecb = new Vector(2,1,-2,0x0000ff);
+    this.veca = new Vector(1,-2,3,0xff0000);
+    this.vecb = new Vector(3,1,-2,0x0000ff);
     const cp = new THREE.Vector3().crossVectors(this.veca.coord,this.vecb.coord);
     this.vecCrossProduct = new Vector(cp.x,cp.y,cp.z,0xffff00);
     const n = cp.normalize();
@@ -101,7 +101,12 @@ export class Universe {
     this.scene.add(this.vecn.vector);
     this.axes = new Axes(this.scene,10,10,10);
 
+    const vecabSum =new THREE.Vector3().copy(this.veca.coord).add(this.vecb.coord);
 
+    const shadedArea = new Polygon2D([vecabSum,this.veca.coord,this.vecb.coord],'white')
+    this.scene.add(shadedArea.mesh);
+    const shadedArea2 = new Polygon2D([this.veca.coord,this.vecb.coord,new THREE.Vector3()],'white')
+    this.scene.add(shadedArea2.mesh);
     // const loader = new FontLoader();
     // loader.load('/fonts/helvetiker_regular.typeface.json', (font) => {
     //   this.font = font;
@@ -143,6 +148,8 @@ export class Universe {
     }
 
   }
+
+
 
   async setMathMeshes(){
     const mathText = await MathText.Init('\\vec{a} \\\\ (a_x,a_y,a_z)','red');

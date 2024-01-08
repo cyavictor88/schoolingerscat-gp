@@ -25,8 +25,9 @@
 <Title hLevel={1}>Cross Product - Introduction</Title>
 
 <p>The definition of Cross Product is:</p>
-<Latex center math={'\\color{yellow} \\vec{a} \\times \\vec{b} \\color{black}=  \\color{red} \\| a \\|  \\color{blue} \\| b \\| \\color{black} sin(\\theta) \\color{orange} \\hat{u}'} />
-
+<Latex center math={'\\boxed{\\;\\color{yellow} \\vec{a} \\times \\vec{b} \\color{black}=  \\color{red} \\| \\vec{a} \\|  \\color{blue} \\| \\vec{b} \\| \\color{black} sin(\\theta) \\color{orange} \\hat{u}}\\;'} />
+<Latex center math={`\\text{where }  \\color{red} \\| \\vec{a} \\|  \\color{blue} \\| \\vec{b} \\| \\color{black} sin(\\theta) \\text{ is the white shaded area formed by }  \\color{red} \\vec{a} \\color{black}, \\color{blue}  \\vec{b}`}/>
+<Latex center math={`\\text{and }  \\color{orange} \\hat{u} \\color{black}\\text{ is the unit vector orthogonal to the white shaded area }`} />
 <div bind:this={divFig1} />
 
 <p>
