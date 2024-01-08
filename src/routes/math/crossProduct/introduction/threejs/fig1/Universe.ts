@@ -157,7 +157,7 @@ export class Universe {
     mathText3.mesh.position.set(this.vecCrossProduct.coord.x, this.vecCrossProduct.coord.y, this.vecCrossProduct.coord.z)
     this.scene.add(mathText3.mesh);
 
-    const mathText4 = await MathText.Init('\\hat{n}','orange');
+    const mathText4 = await MathText.Init('\\hat{u}','orange');
     mathText4.mesh.position.set(this.vecn.coord.x, this.vecn.coord.y, this.vecn.coord.z)
     this.scene.add(mathText4.mesh);
 

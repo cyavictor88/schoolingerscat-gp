@@ -35,8 +35,8 @@ export class VolumeAreaHeight {
   marginRight: number = 20;
   marginBottom: number = 20;
   marginLeft: number = 20;
-  xDomain: number[] = [-10, 10];
-  yDomain: number[] = [-10, 10];
+  xDomain: number[] = [-6, 9];
+  yDomain: number[] = [-1, 4];
   vec0 = {x:0,y:0};
 
   svg: d3.Selection<SVGSVGElement, undefined, null, undefined>
@@ -50,12 +50,15 @@ export class VolumeAreaHeight {
     y: number;
   }>
 
-  toggleGroupNewArea : d3.Selection<SVGGElement, undefined, null, undefined>;
+  // toggleGroupNewArea : d3.Selection<SVGGElement, undefined, null, undefined>;
   toggleGroupOldArea : d3.Selection<SVGGElement, undefined, null, undefined>;
 
   constructor(
-    veca:Coord,vecb:Coord, vecbPrime:Coord,    d3Base?: D3Base
+    d3Base?: D3Base
   ) {
+    const vecv = {x:-4,y:3};
+		const veca = {x:6, y:0};
+		const vecb = {x:3, y:1};
     if (d3Base) {
       this.width = d3Base.width ?? this.width;
       this.height = d3Base.height ?? this.height;
@@ -88,14 +91,14 @@ export class VolumeAreaHeight {
     this.svgNode = svg.node();
 
     // Add the x-axis.
-    const xAxis = svg.append("g")
-      .attr("transform", `translate(0,${this.height/2})`)
-      .call(d3.axisBottom(this.xScale).tickFormat(()=>'').ticks(Math.abs(this.xDomain[0]-this.xDomain[1])));
+    // const xAxis = svg.append("g")
+    //   .attr("transform", `translate(0,${this.height/2})`)
+    //   .call(d3.axisBottom(this.xScale).tickFormat(()=>'').ticks(Math.abs(this.xDomain[0]-this.xDomain[1])));
 
-    // Add the y-axis.
-    const yAxis = svg.append("g")
-      .attr("transform", `translate(${this.width/2},0)`)
-      .call(d3.axisLeft(this.yScale).tickFormat(()=>"").ticks(Math.abs(this.yDomain[0]-this.yDomain[1])));
+    // // Add the y-axis.
+    // const yAxis = svg.append("g")
+    //   .attr("transform", `translate(${this.width/2},0)`)
+    //   .call(d3.axisLeft(this.yScale).tickFormat(()=>"").ticks(Math.abs(this.yDomain[0]-this.yDomain[1])));
 
     this.initArrow();
 
@@ -104,25 +107,30 @@ export class VolumeAreaHeight {
     .y(d => this.yScale(d.y));
     this.makeShade(veca,vecb);
 
-    this.makeLine(veca,'#b3b3cc');
-    this.makeLine(veca,'#b3b3cc',vecb);
-    this.makeSeg(vecbPrime, vecb,'black');
-    this.makeSeg(vecbPrime, {x:veca.x*2,y:veca.y*2},'black');
     // this.makeLine(veca,'#b3b3cc');
-    this.makeHeight(veca,vecb);
+    // this.makeLine(veca,'#b3b3cc',vecb);
+    this.makeSeg(this.vec0, {x:0,y:vecv.y},'brown');
+    this.makeLatex(svg, {x:0.3,y:vecv.y*3/4},`\\color{brown}height = \\overrightarrow{v}\\cdot\\hat{u}`);
+    this.makeLatex(svg, {x:  (veca.x+vecb.x)*0.4,y:(veca.y+vecb.y)*0.7},`\\color{orange}Area_{\\vec{a}\\vec{b}}`);
+
+    // this.makeSeg(vecbPrime, {x:veca.x*2,y:veca.y*2},'black');
+    // this.makeLine(veca,'#b3b3cc');
+    // this.makeHeight(veca,vecb);
 
 
 
-    this.makeVec({x:veca.x*2,y:veca.y*2},'2v','#e066ff', `2\\overrightarrow{v}`);
-    this.makeVec(vecbPrime,'2v+b','purple', `\\overrightarrow{b\\prime}`);
+    // this.makeVec(vecbPrime,'2v+b','purple', `\\overrightarrow{b\\prime}`);
 
-    this.makeVec(veca,'v','Red',`\\overrightarrow{v}`);
-    this.makeVec(vecb,'b','Blue',`\\overrightarrow{b}`);
+    this.makeVec(vecv,'v','Red',`\\overrightarrow{v}`);
+    this.makeVec(veca,'a','Blue',`\\overrightarrow{a}`);
+    this.makeVec(vecb,'b','Green',`\\overrightarrow{b}`);
+    this.makeVec({x:0,y:1},'u','Black',`\\text{   }\\hat{u}`);
+    // this.makeVec(vecb,'b','Black',`\\overrightarrow{b}`);
     const fontSize = 20;
    
 
     this.toggleGroupOldArea = this.makeToggleGroup(veca,vecb);
-    this.toggleGroupNewArea = this.makeToggleGroup(veca,vecbPrime);
+    // this.toggleGroupNewArea = this.makeToggleGroup(veca,vecbPrime);
     // this.makeVecaDecomp(veca);
   
     this.eventBroker.addListener('toggleShowOldArea',()=>{
@@ -135,16 +143,16 @@ export class VolumeAreaHeight {
       }
 
     })
-    this.eventBroker.addListener('toggleShowNewArea',()=>{
-      const showing =  this.toggleGroupNewArea.style('display');
-      if(showing!=='none'){
-        this.toggleGroupNewArea.style('display','none');
-      }
-      else{
-        this.toggleGroupNewArea.style('display','inline');
-      }
+    // this.eventBroker.addListener('toggleShowNewArea',()=>{
+    //   const showing =  this.toggleGroupNewArea.style('display');
+    //   if(showing!=='none'){
+    //     this.toggleGroupNewArea.style('display','none');
+    //   }
+    //   else{
+    //     this.toggleGroupNewArea.style('display','inline');
+    //   }
 
-    })
+    // })
   }
   makeHeight(veca: Coord, vecb:Coord){
     const magA = Math.sqrt(veca.x*veca.x + veca.y*veca.y);
@@ -199,20 +207,14 @@ export class VolumeAreaHeight {
   }
 
   makeShade(veca:Coord,vecb:Coord){
-    const data = [
 
-      {
-        // line1 data
-        x:[veca.x*10,-veca.x*10],
-        y:[veca.y*10,-veca.y*10],
-      },
-      {
-        // line2 data
-        x:[veca.x*10+vecb.x,-veca.x*10+vecb.x],
-        y:[veca.y*10+vecb.y,-veca.y*10+vecb.y],
-      }
-      ];
-      const areaLines = [ {x:veca.x*10,y:veca.y*10},{x:-veca.x*10,y:-veca.y*10},{x:-veca.x*10+vecb.x,y:-veca.y*10+vecb.y},{x:veca.x*10+vecb.x,y:veca.y*10+vecb.y }  ];
+      const areaLines = [ 
+        {x:0,y:0},
+        {x:veca.x,y:veca.y},
+        {x:veca.x+vecb.x,y:veca.y+vecb.y},
+        {x:vecb.x,y:vecb.y } ,
+        {x:0,y:0},
+       ];
       this.svg
         .append('path')
         .style("stroke", "none")
@@ -255,16 +257,9 @@ export class VolumeAreaHeight {
       .attr('fill', 'none');
 
     // make latex
-    let xPos = (vec.x*1.2)
+    let xPos = (vec.x*1.1)
     let yPos =(vec.y *1.2)
-    if(vecName === 'b'){
-      xPos = (vec.x*1.2)
-      yPos =(-1.2)
-    }
-    if(vecName === '2v+b') {
-      xPos = (-vec.x*0.)
-      yPos =(vec.y *1.3)
-    }
+
     this.makeLatex(svg, {x:xPos,y:yPos},`\\color{${color}}${latex}`)
   }
 

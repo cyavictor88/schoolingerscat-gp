@@ -25,7 +25,7 @@
 <Title hLevel={1}>Cross Product - Introduction</Title>
 
 <p>The definition of Cross Product is:</p>
-<Latex center math={'\\color{yellow} \\vec{a} \\times \\vec{b} \\color{black}=  \\color{red} \\| a \\|  \\color{blue} \\| b \\| \\color{black} sin(\\theta) \\color{orange} \\hat{n}'} />
+<Latex center math={'\\color{yellow} \\vec{a} \\times \\vec{b} \\color{black}=  \\color{red} \\| a \\|  \\color{blue} \\| b \\| \\color{black} sin(\\theta) \\color{orange} \\hat{u}'} />
 
 <div bind:this={divFig1} />
 
@@ -94,7 +94,7 @@
 		<ol>
 			<li>
 				Next we prove that <Latex math={`\\vec{p} = \\vec{a} \\times  \\vec{b} `} /> by showing that
-				<Latex math={`\\vec{p}`} /> is aligned with unit vector <Latex math={'\\hat{n}'} /> and
+				<Latex math={`\\vec{p}`} /> is aligned with unit vector <Latex math={'\\hat{u}'} /> and
 				<Latex math={`\\| \\vec{p} \\| = \\text{ Area formed by } \\vec{a} \\text{ , } \\vec{b}`} />
 			</li>
 
